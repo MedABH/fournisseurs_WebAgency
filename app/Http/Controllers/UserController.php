@@ -193,58 +193,68 @@ class UserController extends Controller
     }
 
     public function update(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required|exists:users,id',
-            'newName' => 'required|string|max:155',
-            'newContact' => 'required|string|max:50',
-            'newAdresse' => 'required|string|max:266',
-            'newEmail' => 'required|email|string|max:266',
-            'newRole' => 'required|string|in:super-admin,admin,utilisateur',
-            'newPassword' => 'nullable|string|min:9|confirmed',
-            'newPassword_confirmation' => 'nullable|string|min:9',
-        ], [
-            'id.required' => "L'identifiant de l'utilisateur est obligatoire!",
-            'id.exists' => "L'utilisateur spécifié n'existe pas!",
-            'newName.required' => 'Le nom est obligatoire!',
-            'newName.string' => 'Le nom doit être de type string!',
-            'newContact.required' => 'Le contact est obligatoire!',
-            'newContact.string' => 'Le contact doit être de type string!',
-            'newAdresse.string' => "L'adresse doit être de type string!",
-            'newAdresse.required' => "L'adresse est obligatoire!",
-            'newEmail.required' => "L'émail est obligatoire!",
-            'newEmail.string' => "L'émail doit être de type string!",
-            'newRole.required' => "Le rôle est obligatoire!",
-            'newRole.in' => "Le rôle sélectionné n'est pas valide!",
-            'newPassword.min' => "Le mot de passe doit avoir au minimum 9 caractères!",
-            'newPassword.confirmed' => "La confirmation de mot de passe ne correspond pas!",
-            'newPassword_confirmation.min' => "Le mot de passe doit avoir au minimum 9 caractères!",
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'id' => 'required|exists:users,id',
+        'newName' => 'required|string|max:155',
+        'newContact' => 'required|string|max:50',
+        'newAdresse' => 'required|string|max:266',
+        'newEmail' => 'required|email|string|max:266',
+        'newRole' => 'required|string|in:super-admin,admin,utilisateur',
+        'newPassword' => 'nullable|string|min:9|confirmed',
+        'newPassword_confirmation' => 'nullable|string|min:9',
+    ], [
+        'id.required' => "L'identifiant de l'utilisateur est obligatoire!",
+        'id.exists' => "L'utilisateur spécifié n'existe pas!",
+        'newName.required' => 'Le nom est obligatoire!',
+        'newName.string' => 'Le nom doit être de type string!',
+        'newContact.required' => 'Le contact est obligatoire!',
+        'newContact.string' => 'Le contact doit être de type string!',
+        'newAdresse.string' => "L'adresse doit être de type string!",
+        'newAdresse.required' => "L'adresse est obligatoire!",
+        'newEmail.required' => "L'émail est obligatoire!",
+        'newEmail.string' => "L'émail doit être de type string!",
+        'newRole.required' => "Le rôle est obligatoire!",
+        'newRole.in' => "Le rôle sélectionné n'est pas valide!",
+        'newPassword.min' => "Le mot de passe doit avoir au minimum 9 caractères!",
+        'newPassword.confirmed' => "La confirmation de mot de passe ne correspond pas!",
+        'newPassword_confirmation.min' => "Le mot de passe doit avoir au minimum 9 caractères!",
+    ]);
 
-        // dd($validator);
-
-        if ($validator->fails()) {
-
-            return redirect()->back()
-                ->withInput()
-                ->with('modalType', 'update')
-                ->withErrors($validator)
-                ->with('errors_displayed', true);
-        }
-
-        $user = User::find($request->id);
-
-
-        $user->name = $request->newName;
-        $user->email = $request->newEmail;
-        $user->contact = $request->newContact;
-        $user->adresse = $request->newAdresse;
-        $user->role = $request->newRole;
-        $user->password = Hash::make($request->newPassword ?? '');
-        $user->save();
-
-        alert()->success('Succès', $user->name . " a été mis à jour avec succès");
-
-        return redirect()->to(url()->previous());
+    // Vérification des erreurs de validation
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withInput()
+            ->with('modalType', 'update')
+            ->withErrors($validator)
+            ->with('errors_displayed', true);
     }
+
+    // Récupérer l'utilisateur à mettre à jour
+    $user = User::find($request->id);
+
+    // Mettre à jour les informations de l'utilisateur
+    $user->name = $request->newName;
+    $user->email = $request->newEmail;
+    $user->contact = $request->newContact;
+    $user->adresse = $request->newAdresse;
+    $user->role = $request->newRole;
+    
+    // Mise à jour du mot de passe si spécifié
+    if ($request->newPassword) {
+        $user->password = Hash::make($request->newPassword);
+    }
+
+    // Générer un token de 10 caractères
+    $user->remember_token = Str::random(10); // Génération d'un token de 10 caractères
+
+    // Sauvegarder l'utilisateur avec les nouvelles informations
+    $user->save();
+
+    // Afficher une alerte de succès
+    alert()->success('Succès', $user->name . " a été mis à jour avec succès");
+
+    // Rediriger vers la page précédente
+    return redirect()->to(url()->previous());
+}
 }
