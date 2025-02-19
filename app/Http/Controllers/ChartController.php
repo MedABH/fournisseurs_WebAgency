@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Fournisseur;
+use App\Models\Categorie;
+use App\Models\SousCategorie;
+use App\Models\SousCategorieUser;
+
+class ChartController extends Controller
+{
+    public function index(){
+        $sumUsers = User::count();
+        $sumSuppliers = Fournisseur::count();
+        $sumCategories = Categorie::count();
+
+        $categories = Categorie::withCount('sousCategories')->get();
+        $categoryNames = $categories->pluck('nom_categorie');
+        $subcategoryCounts = $categories->pluck('sous_categories_count');
+        $suppliersNumberByCategory = Categorie::withCount('fournisseurs')->get();
+
+       
+        $lastUsers = User::orderBy('created_at','desc')
+                       ->take(6)->get();
+
+
+
+
+        return view('myApp.admin.links.chart',compact(
+                    'sumUsers',
+                    'sumSuppliers',
+                    'sumCategories',
+                    'categoryNames',
+                    'subcategoryCounts',
+                    'suppliersNumberByCategory',
+                    'lastUsers',
+                 ));
+
+    }
+
+
+}
