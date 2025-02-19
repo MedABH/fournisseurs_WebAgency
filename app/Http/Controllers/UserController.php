@@ -14,13 +14,17 @@ use Dompdf\Options;
 use App\Models\SousCategorie;
 use Illuminate\Support\Str;
 
-
 class UserController extends Controller
 {
     public function viewLogin()
     {
+        if (auth()->check()) {
+            return redirect()->route('dashboardSection');
+        }
+
         return view('userAuth.login');
     }
+
 
     public function login(Request $request)
     {
@@ -62,14 +66,14 @@ class UserController extends Controller
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::logout();
-        return view('userAuth/login');
-        // return response()->json([
-        //     'status'=>'loged out successfully'
-        // ]);
+        Auth::logout(); // Déconnecte l'utilisateur
 
+        $request->session()->invalidate(); // Invalide la session
+        $request->session()->regenerateToken(); // Régénère le token CSRF
+
+        return redirect('/'); // Redirige vers la page de connexion
     }
 
     public function store(Request $request)

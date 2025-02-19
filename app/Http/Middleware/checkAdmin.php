@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class checkAdmin
@@ -15,13 +16,11 @@ class checkAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user() && $request->user()->role === 'admin')
-
+        if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
-
-        else {
-            abort(403, 'Accès non autorisé');
         }
-        
+
+        // Rediriger vers la page d'accueil si l'utilisateur n'est pas admin ou non connecté
+        return redirect('/');
     }
 }

@@ -11,16 +11,13 @@ body {
     bottom: 50px;
     background-color: #4a6ecf;
     display: flex;
-   flex-direction: column;
-   position: relative;
-   max-width: 470px;
-   width: 100%;
+    flex-direction: column;
+    position: relative;
+    max-width: 470px;
+    width: 100%;
     border-radius: 10px;
-    /* margin: 30px; */
     padding: 50px;
     gap: 50px;
-    /* justify-content: center; */
-    /* margin: 20px; */
 }
 
 .form{
@@ -40,51 +37,47 @@ body {
     font-style: italic;
 }
 
-input{
+input {
     height: 60px;
-  outline: none;
-  border: none;
-  padding: 0
-    15px;
-  font-size: 16px;
-  font-weight: 400;
-  color: #333;
-  border-radius: 8px;
-  background: #fff;
+    outline: none;
+    border: none;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    border-radius: 8px;
+    background: #fff;
+    width: 100%;
 }
 
-
-.input-group{
+.input-group {
     margin-top: 15px;
     display: flex;
     flex-direction: column;
-    /* align-items: center;
-    justify-content: center; */
     gap: 17px;
 }
 
-
-.forget-password{
-    text-decoration: none;
-    color: white;
-
-
-}
-
-.forget-password-group{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    /* margin-bottom: 50px; */
+.password-wrapper {
     position: relative;
-    bottom: 30px;
-     /*left: 105px; */
-    color: #fff;
-
+    display: flex;
+    width: 100%;
 }
 
-.input-submit{
+.password-wrapper input {
+    padding-right: 40px; /* Space for the eye icon */
+}
+
+button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.input-submit {
     font-weight: 700;
     font-size: 28px;
     color: black;
@@ -93,7 +86,8 @@ input{
     position: relative;
     bottom: 40px;
 }
-.error-container{
+
+.error-container {
     background-color: azure;
     border: 1px solid azure;
     border-radius: 12px;
@@ -101,13 +95,19 @@ input{
     margin-bottom: 22px;
 }
 
-.error-message{
+.error-message {}
 
-
-
+.message-container {
+    color: rgb(231, 135, 135);
 }
 
-.message-container{
-    color: rgb(231, 135, 135);
+/* Default eye icon color */
+#eyeIcon {
+    color: rgb(183, 182, 182);
+    transition: color 0.3s;
+}
 
+/* When the password is visible, the eye icon turns green */
+#eyeIcon.visible {
+    color: rgb(0, 45, 0);
 }
