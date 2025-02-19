@@ -32,8 +32,9 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
-
-    ];
+        'email_verified_at',
+        'remember_token',
+    ];    
 
     public function fournisseurs()
     {
