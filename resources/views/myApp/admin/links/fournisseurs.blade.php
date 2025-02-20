@@ -756,7 +756,6 @@
                     const supplierRemark = button.getAttribute('data-remark');
                     const supplierUser = button.getAttribute('data-user');
 
-
                     document.querySelector(`#showNameDetail-${supplierId}`).innerText = supplierName
                     document.querySelector(`#showEmailDetail-${supplierId}`).innerText = supplierEmail
                     document.querySelector(`#showContactDetail-${supplierId}`).innerText = supplierContact
