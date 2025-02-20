@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{asset('CSS/prospects.css')}}"/>
     <link rel="stylesheet" href="{{asset('CSS/clients.css')}}"/>
     <link rel="stylesheet" href="{{asset('CSS/fournisseurClients.css')}}"/>
+    <link rel="stylesheet" href="{{asset('CSS/templatemo-style.css')}}" />
 
     <title>@yield('title')</title>
 </head>
