@@ -64,7 +64,7 @@
                             @error('nom_fournisseur', 'default')
                                 <span class="text-danger">{{ $message }}</span> <br>
                             @enderror
-                            <label class="form-label">numero de telephone</label>
+                            <label class="form-label">Numero de telephone</label>
                             <input type="text" class="form-control" name="tele_fournisseur"
                                 placeholder="Entrer le contact..." value="{{ old('tele_fournisseur') }}" />
                             @error('tele_fournisseur', 'default')
@@ -141,7 +141,7 @@
                                     <tr>
                                         <th>Nom de la société</th>
                                         <th>Personne à contacter</th>
-                                        <th>numero de telephone</th>
+                                        <th>Numero de telephone</th>
                                         <th>Email</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
@@ -448,7 +448,7 @@
                                                                 </h6>
                                                             </div>
                                                             <div class="show-info-supplier show-contact">
-                                                                <label class="label-detail-supplier">numero de telephone</label>
+                                                                <label class="label-detail-supplier">Numero de telephone</label>
                                                                 <h6 class="info-supplier showContactSupplier"
                                                                     id="showContactDetail-{{ $fournisseur->id }}">
                                                                 </h6>
@@ -579,7 +579,7 @@
 
                                                         </div>
                                                         <div>
-                                                            <label class="form-label">numero de telephone</label>
+                                                            <label class="form-label">Numero de telephone</label>
                                                             <input id="updateSupplierContact" type="text"
                                                                 class="form-control" name="newTele_fournisseur"
                                                                 placeholder="Entrer le contact..."
@@ -1217,7 +1217,7 @@ if (detailButtons.length > 0) { // Assurez-vous qu'il y a au moins un bouton
                             <h6 class="info-supplier" id="showNameSupplier"></h6>
                         </div>
                         <div class="show-info-supplier show-contact">
-                            <label class="label-detail-supplier">numero de telephone</label>
+                            <label class="label-detail-supplier">Numero de telephone</label>
                             <h6 class="info-supplier" id="showContactSupplier"></h6>
                         </div>
                         <div class="show-info-supplier show-email">

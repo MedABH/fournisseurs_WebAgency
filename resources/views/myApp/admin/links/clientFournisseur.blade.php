@@ -58,7 +58,7 @@
                         @error('nom_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">numero de telephone</label>
+                        <label class="form-label">Numero de telephone</label>
                         <input type="text" class="form-control" name="tele_fournisseurClient"
                             placeholder="Entrer le contact..." value="{{ old('tele_fournisseurClient') }}" />
                         @error('tele_fournisseurClient', 'default')
@@ -132,7 +132,7 @@
                                     <tr>
                                         <th>Nom de la société</th>
                                         <th>Personne à contacter</th>
-                                        <th>numero de telephone</th>
+                                        <th>Numero de telephone</th>
                                         <th>Email</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
@@ -451,7 +451,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="show-info-fournisseurClient show-contact">
-                                                            <label class="label-detail-fournisseurClient">numero de telephone</label>
+                                                            <label class="label-detail-fournisseurClient">Numero de telephone</label>
                                                             <h6 class="info-fournisseurClient showContactfc"
                                                                 id="showContactDetail-{{ $fc->id }}">
                                                             </h6>
@@ -574,7 +574,7 @@
 
                                 </div>
                                 <div>
-                                    <label class="form-label">numero de telephone</label>
+                                    <label class="form-label">Numero de telephone</label>
                                     <input id="updateFCContact" type="text" class="form-control"
                                         name="newTele_fournisseurClient" placeholder="Entrer le contact..."
                                         value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
@@ -1131,7 +1131,7 @@ document.querySelectorAll('.detailButtonQuery').forEach(button => {
                             <h6 class="info-fournisseurClient" id="showNamefc"></h6>
                         </div>
                         <div class="show-info-fournisseurClient show-contact">
-                            <label class="label-detail-fournisseurClient">numero de telephone</label>
+                            <label class="label-detail-fournisseurClient">Numero de telephone</label>
                             <h6 class="info-fournisseurClient" id="showContactfc"></h6>
                         </div>
                         <div class="show-info-fournisseurClient show-email">
