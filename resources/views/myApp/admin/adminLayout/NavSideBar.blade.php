@@ -114,46 +114,31 @@
                                 <a href="{{ route('suppliersSection') }}">
                                     <i class="fas fa-people-carry"></i>
                                     <p>Les fournisseurs</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('suppliersAndClientsSection') }}">
                                     <i class="fas fa-users-cog"></i>
-
                                     <p>Fournisseurs et Clients</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('categoriesSection') }}">
                                     <i class="fas fa-list"></i>
-
                                     <p>Les catégories</p>
-
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('productsSection') }}">
                                     <i class="fas fa-boxes"></i>
                                     <p>Les sous-catégories</p>
-
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('historiqueSection') }}">
                                     <i class="fas fa-history"></i>
                                     <p>Historique</p>
-
-
                                 </a>
-
                             </li>
                         @elseif (auth()->user()->role == 'admin')
                             <li class="nav-section">
@@ -165,76 +150,51 @@
                             <li class="nav-item">
                                 <a href="{{ route('prospectsSection') }}">
                                     <i class="fas fa-user"></i>
-
                                     <p>Les tiers</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('clientsSection') }}">
                                     <i class="fas fa-user-check"></i>
-
                                     <p>Les clients</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('suppliersSection') }}">
                                     <i class="fas fa-people-carry"></i>
                                     <p>Les fournisseurs</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('suppliersAndClientsSection') }}">
                                     <i class="fas fa-users-cog"></i>
-
                                     <p>Fournisseurs et Clients</p>
-
                                 </a>
-
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('categoriesSection') }}">
                                     <i class="fas fa-list"></i>
-
                                     <p>Les catégories</p>
-
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('productsSection') }}">
                                     <i class="fas fa-boxes"></i>
                                     <p>Les sous-catégories</p>
-
-
                                 </a>
-
                             </li>
                         @elseif (auth()->user()->role == 'utilisateur')
                             <li class="nav-item">
                                 <a href="{{ route('prospectsSection') }}">
                                     <i class="fas fa-user"></i>
-
                                     <p>Les tiers</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('clientsSection') }}">
                                     <i class="fas fa-user-check"></i>
-
                                     <p>Les clients</p>
-
                                 </a>
-
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('suppliersSection') }}">
@@ -268,14 +228,10 @@
                                 <a href="{{ route('productsSection') }}">
                                     <i class="fas fa-boxes"></i>
                                     <p>Les sous-catégories</p>
-
-
                                 </a>
 
                             </li>
                         @endif
-
-
                         <li class="nav-item">
                             <a href="#"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -319,8 +275,6 @@
                     <div class="container-fluid">
                         <nav
                             class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
-
-
                             {{--
            --}}
                             @yield('search-bar')
