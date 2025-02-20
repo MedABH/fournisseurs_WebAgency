@@ -7,17 +7,14 @@ use App\Models\User;
 
 class HistoriqueController extends Controller
 {
-
-
-public function showHistorique()
-{
-     $users = User::with(['historiques' => function($query) {
-        $query->distinct();
-    }])->get();
-
-
-    //  dd($users);
-     return view('myApp.admin.links.historiques', compact('users'));
-}
-
+     public function showHistorique()
+     {
+         // Récupérer tous les historiques avec les utilisateurs associés et trier par login_at (desc)
+         $historiques = \App\Models\Historique::with('user')
+             ->orderBy('login_at', 'desc')
+             ->get();
+     
+         return view('myApp.admin.links.historiques', compact('historiques'));
+     }
+     
 }

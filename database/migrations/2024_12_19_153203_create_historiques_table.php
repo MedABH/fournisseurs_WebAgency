@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamp('login_at')->useCurrent();
             $table->timestamps();
+
+            // Ajout d'une contrainte unique pour éviter les doublons
+            $table->unique(['user_id', 'login_at']);
         });
     }
 

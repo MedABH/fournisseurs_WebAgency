@@ -4,8 +4,6 @@
 @endsection
 @section('content')
     <div class="page-inner">
-
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -18,37 +16,24 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Nom</th>
-                                        <th scope="col">role</th>
+                                        <th scope="col">Rôle</th>
                                         <th scope="col">Historique de Connexion</th>
                                     </tr>
                                 </thead>
-
-
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($historiques as $historique)
                                         <tr>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->role }}</td>
-                                            <td>
-                                                @if ($user->historiques->isEmpty())
-                                                    <div>Aucun historique trouvé</div>
-                                                @else
-                                                    @foreach ($user->historiques as $historique)
-                                                        <div>{{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}</div>
-                                                    @endforeach
-                                                @endif
-                                            </td>
+                                            <td>{{ $historique->user->name }}</td>
+                                            <td>{{ $historique->user->role }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 @endsection
