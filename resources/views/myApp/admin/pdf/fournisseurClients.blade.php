@@ -36,12 +36,9 @@
         <thead>
             <tr>
                 <th>Nom de la société</th>
-                <th>GSM1</th>
-                <th>GSM2</th>
                 <th>Personne à contacter</th>
                 <th>Téléphone</th>
                 <th>Email</th>
-                <th>Adresse</th>
                 <th>Ville</th>
                 <th>Catégorie</th>
 
@@ -51,12 +48,9 @@
             @foreach ($fcs as $fc)
             <tr>
                 <td>{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
-                <td>{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}
-                <td>{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}
                 <td>{{ $fc->nom_fournisseurClient }}</td>
                 <td>{{ $fc->tele_fournisseurClient}}</td>
                 <td>{{ $fc->email_fournisseurClient}}</td>
-                <td>{{ $fc->adresse_fournisseurClient}}</td>
                 <td>{{ $fc->ville_fournisseurClient}}</td>
                 <td>
                     @forelse ($fc->categorieClientFournisseurs as $assoc)

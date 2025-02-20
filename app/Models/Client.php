@@ -18,11 +18,11 @@ class Client extends Model
         'nom_client',
         'email_client',
         'tele_client',
-        'adresse_client',
+       
         'ville_client',
         'nomSociete_client',
-        'GSM1_client',
-        'GSM2_client',
+       
+        
         'user_id',
         'remark'
     ];

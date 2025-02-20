@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('groupId_fournisseurClient')->nullable();
             $table->string('nomSociete_fournisseurClient');
-            $table->string('GSM1_fournisseurClient');
-            $table->string('GSM2_fournisseurClient');
             $table->string('nom_fournisseurClient');
             $table->string('tele_fournisseurClient');
             $table->string('email_fournisseurClient');
-            $table->string('adresse_fournisseurClient');
             $table->string('ville_fournisseurClient');
             $table->integer('version_fournisseurClient')->default(1);
             $table->unsignedBigInteger('user_id')->nullable();

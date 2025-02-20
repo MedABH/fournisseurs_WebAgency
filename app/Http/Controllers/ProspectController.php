@@ -352,11 +352,8 @@ class ProspectController extends Controller
                 $fournisseur->nom_fournisseur = $prospectItem->nom_prospect;
                 $fournisseur->email_fournisseur = $prospectItem->email_prospect;
                 $fournisseur->tele_fournisseur = $prospectItem->tele_prospect;
-                $fournisseur->adresse_fournisseur = $prospectItem->adresse_prospect;
                 $fournisseur->ville_fournisseur = $prospectItem->ville_prospect;
                 $fournisseur->nomSociete_fournisseur = $prospectItem->nomSociete_prospect;
-                $fournisseur->GSM1_fournisseur = $prospectItem->GSM1_prospect;
-                $fournisseur->GSM2_fournisseur = $prospectItem->GSM2_prospect;
                 $fournisseur->user_id = $prospectItem->user_id;
                 $fournisseur->remark = $prospectItem->remark;
                 $fournisseur->groupId_fournisseur = $prospectItem->groupId_prospect;
@@ -383,8 +380,6 @@ class ProspectController extends Controller
                 $client->adresse_client = $prospectItem->adresse_prospect;
                 $client->ville_client = $prospectItem->ville_prospect;
                 $client->nomSociete_client = $prospectItem->nomSociete_prospect;
-                $client->GSM1_client = $prospectItem->GSM1_prospect;
-                $client->GSM2_client = $prospectItem->GSM2_prospect;
                 $client->user_id = $prospectItem->user_id;
                 $client->remark = $prospectItem->remark;
                 $client->groupId_client = $prospectItem->groupId_prospect;
@@ -409,11 +404,8 @@ class ProspectController extends Controller
                 $fc->nom_fournisseurClient = $prospectItem->nom_prospect;
                 $fc->email_fournisseurClient = $prospectItem->email_prospect;
                 $fc->tele_fournisseurClient = $prospectItem->tele_prospect;
-                $fc->adresse_fournisseurClient = $prospectItem->adresse_prospect;
                 $fc->ville_fournisseurClient = $prospectItem->ville_prospect;
                 $fc->nomSociete_fournisseurClient = $prospectItem->nomSociete_prospect;
-                $fc->GSM1_fournisseurClient = $prospectItem->GSM1_prospect;
-                $fc->GSM2_fournisseurClient = $prospectItem->GSM2_prospect;
                 $fc->user_id = $prospectItem->user_id;
                 $fc->remark = $prospectItem->remark;
                 $fc->groupId_fournisseurClient = $prospectItem->groupId_prospect;

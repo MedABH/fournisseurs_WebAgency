@@ -17,11 +17,8 @@ class FournisseurClient extends Model
         'nom_clientFournisseur',
         'email_clientFournisseur',
         'tele_clientFournisseur',
-        'adresse_clientFournisseur',
         'ville_clientFournisseur',
         'nomSociete_clientFournisseur',
-        'GSM1_clientFournisseur',
-        'GSM2_clientFournisseur',
         'user_id',
         'remark'
     ];

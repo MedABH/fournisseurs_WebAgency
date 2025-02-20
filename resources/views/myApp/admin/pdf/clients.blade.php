@@ -36,12 +36,9 @@
         <thead>
             <tr>
                 <th>Nom de la société</th>
-                <th>GSM1</th>
-                <th>GSM2</th>
                 <th>Personne à contacter</th>
                 <th>Téléphone</th>
                 <th>Email</th>
-                <th>Adresse</th>
                 <th>Ville</th>
                 <th>Catégorie</th>
 
@@ -51,12 +48,9 @@
             @foreach ($clients as $client)
             <tr>
                 <td>{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}
-                <td>{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}
-                <td>{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}
-                <td>{{ $client->nom_client }}</td>
+                    <td>{{ $client->nom_client}}</td>
                 <td>{{ $client->tele_client}}</td>
                 <td>{{ $client->email_client}}</td>
-                <td>{{ $client->adresse_client}}</td>
                 <td>{{ $client->ville_client}}</td>
                 <td>
                     @forelse ($client->categorieClients as $assoc)

@@ -19,11 +19,8 @@ class Fournisseur extends Model
         'nom_fournisseur',
         'email_fournisseur',
         'tele_fournisseur',
-        'adresse_fournisseur',
         'ville_fournisseur',
         'nomSociete_fournisseur',
-        'GSM1_fournisseur',
-        'GSM2_fournisseur',
         'user_id',
         'remark'
     ];

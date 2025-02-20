@@ -23,11 +23,8 @@ class FournisseurController extends Controller
             'nom_fournisseur' => ['nullable','max:50','string'],
             'email_fournisseur' => ['nullable','email:rfc,dns','string','max:266','unique:fournisseurs,email_fournisseur'],
             'tele_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,tele_fournisseur'],
-            'adresse_fournisseur' => ['nullable','max:266','string'],
             'ville_fournisseur' => ['required','max:60','string'],
             'nomSociete_fournisseur' => ['nullable','max:200','unique:fournisseurs,nomSociete_fournisseur'],
-            'GSM1_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,GSM1_fournisseur'],
-            'GSM2_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,GSM2_fournisseur'],
             'categorie_id' => ['required','integer','exists:categories,id'],
         ];
 
@@ -42,12 +39,6 @@ class FournisseurController extends Controller
             // 'tele_fournisseur.required' => 'Le contact est obligatoire!',
             'tele_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'tele_fournisseur.unique' => 'Le contact doit être unique!',
-            'GSM1_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            'GSM1_fournisseur.unique' => 'Le contact de la société doit être unique!',
-            'GSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            'GSM2_fournisseur.unique' => 'Le contact de la société doit être unique!',
-            // 'adresse_fournisseur.required' => "L'adresse est obligatoire!",
-            'adresse_fournisseur.string' => "L'adresse doit être en chaine de caractère!",
             'nomSociete_fournisseur.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
@@ -65,11 +56,8 @@ class FournisseurController extends Controller
 
         $fournisseur = new Fournisseur();
         $fournisseur->nom_fournisseur = $request->nom_fournisseur ?? '';
-        $fournisseur->adresse_fournisseur = $request->adresse_fournisseur ?? '';
         $fournisseur->ville_fournisseur = $request->ville_fournisseur;
         $fournisseur->tele_fournisseur = $request->tele_fournisseur ?? '';
-        $fournisseur->GSM1_fournisseur = $request->GSM1_fournisseur ?? '';
-        $fournisseur->GSM2_fournisseur = $request->GSM2_fournisseur ?? '';
         $fournisseur->email_fournisseur = $request->email_fournisseur ?? '';
         $fournisseur->nomSociete_fournisseur = $request->nomSociete_fournisseur ?? '';
         $fournisseur->user_id = null;
@@ -211,11 +199,8 @@ class FournisseurController extends Controller
             'newNom_fournisseur' => ['nullable','max:50','string'],
             'newEmail_fournisseur' => ['nullable','email:rfc,dns','string','max:266'],
             'newTele_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newAdresse_fournisseur' => ['nullable','max:266','string'],
             'newVille_fournisseur' => ['required','max:60','string'],
             'newNomSociete_fournisseur' => ['nullable','max:200','string'],
-            'newGSM1_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newGSM2_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
             'newCategorie_id' => ['required','integer','exists:categories,id']
         ];
 
@@ -226,11 +211,7 @@ class FournisseurController extends Controller
             'newEmail_fournisseur.string' => "L'émail doit être en chaine de caractère!",
             // 'newTele_fournisseur.required' => 'Le contact est obligatoire!',
             'newTele_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            // 'newAdresse_fournisseur.required' => "L'adresse est obligatoire!",
-            'newAdresse_fournisseur.string' => "L'adresse doit être en chaine de caractère!",
             'newNomSociete_fournisseur.string' => "Le nom de la société doit être en chaine de caractère!",
-            'newGSM1_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            'newGSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'newVille_fournisseur.required' => "La ville est obligatoire!",
             'newVille_fournisseur.string' => 'La ville doit être en chaine de caractère!',
             'newCategorie_id.required' => 'La catégorie est obligatoire!',
@@ -250,9 +231,6 @@ class FournisseurController extends Controller
 
 
         $nomSociety = $request->newNomSociete_fournisseur ?? '';
-        $GSM1 = $request->newGSM1_fournisseur ?? '';
-        $GSM2 = $request->newGSM2_fournisseur ?? '';
-        $adresse = $request->newAdresse_fournisseur ?? '';
         $email =$request->newEmail_fournisseur?? '';
         $name = $request->newNom_fournisseur ?? '';
         $tele = $request->newTele_fournisseur ?? '';
@@ -262,11 +240,8 @@ class FournisseurController extends Controller
         $existingFournisseur = Fournisseur::where('nom_fournisseur', $name)
         ->where('email_fournisseur', $email)
         ->where('tele_fournisseur', $tele)
-        ->where('adresse_fournisseur', $adresse)
         ->where('ville_fournisseur', $request->newVille_fournisseur)
         ->where('nomSociete_fournisseur', $nomSociety)
-        ->where('GSM1_fournisseur', $GSM1)
-        ->where('GSM2_fournisseur', $GSM2)
         ->whereHas('categories', function ($query) use ($newCategorieId) {
            $query->where('categories.id', $newCategorieId);
         })
@@ -294,11 +269,8 @@ class FournisseurController extends Controller
     $fournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
     $fournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
     $fournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
-    $fournisseur->adresse_fournisseur = $request->newAdresse_fournisseur ?? '';
     $fournisseur->ville_fournisseur = $request->newVille_fournisseur;
     $fournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
-    $fournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
-    $fournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
 
     if ($fournisseur->save()) {
         alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
@@ -311,11 +283,8 @@ foreach ($fournisseursSimilaires as $similarFournisseur) {
     $similarFournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
     $similarFournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
     $similarFournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
-    $similarFournisseur->adresse_fournisseur = $request->newAdresse_fournisseur ?? '';
     $similarFournisseur->ville_fournisseur = $request->newVille_fournisseur;
     $similarFournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
-    $similarFournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
-    $similarFournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
     if ($similarFournisseur->save()) {
         alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
     }
@@ -354,11 +323,8 @@ foreach ($fournisseursSimilaires as $similarFournisseur) {
     return $fournisseur->nom_fournisseur !== ($request->newNom_fournisseur ?? '')||
            $fournisseur->email_fournisseur !== ($request->newEmail_fournisseur ?? '') ||
            $fournisseur->tele_fournisseur !== ($request->newTele_fournisseur ?? '')||
-           $fournisseur->adresse_fournisseur !== ($request->newAdresse_fournisseur ?? '')||
            $fournisseur->ville_fournisseur !== $request->newVille_fournisseur||
-           $fournisseur->nomSociete_fournisseur !== ($request->newNomSociete_fournisseur ?? '') ||
-           $fournisseur->GSM1_fournisseur !== ($request->newGSM1_fournisseur ?? '') ||
-           $fournisseur->GSM2_fournisseur !== ($request->newGSM2_fournisseur ?? '');
+           $fournisseur->nomSociete_fournisseur !== ($request->newNomSociete_fournisseur ?? '');
 }
 
 public function fournisseur(Request $request, $id)
@@ -375,11 +341,8 @@ public function fournisseur(Request $request, $id)
             $prospect->nom_prospect = $fournisseurItem->nom_fournisseur;
             $prospect->email_prospect = $fournisseurItem->email_fournisseur;
             $prospect->tele_prospect = $fournisseurItem->tele_fournisseur;
-            $prospect->adresse_prospect = $fournisseurItem->adresse_fournisseur;
             $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
             $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
-            $prospect->GSM1_prospect = $fournisseurItem->GSM1_fournisseur;
-            $prospect->GSM2_prospect = $fournisseurItem->GSM2_fournisseur;
             $prospect->user_id = $fournisseurItem->user_id;
             $prospect->remark = $fournisseurItem->remark;
             $prospect->groupId_prospect = $fournisseurItem->groupId_fournisseur;
@@ -403,11 +366,10 @@ public function fournisseur(Request $request, $id)
             $client->nom_client = $fournisseurItem->nom_fournisseur;
             $client->email_client = $fournisseurItem->email_fournisseur;
             $client->tele_client = $fournisseurItem->tele_fournisseur;
-            $client->adresse_client = $fournisseurItem->adresse_fournisseur;
             $client->ville_client = $fournisseurItem->ville_fournisseur;
             $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
-            $client->GSM1_client = $fournisseurItem->GSM1_fournisseur;
-            $client->GSM2_client = $fournisseurItem->GSM2_fournisseur;
+            
+            
             $client->user_id = $fournisseurItem->user_id;
             $client->remark = $fournisseurItem->remark;
             $client->groupId_client = $fournisseurItem->groupId_fournisseur;
@@ -429,11 +391,8 @@ public function fournisseur(Request $request, $id)
             $fc->nom_fournisseurClient = $fournisseurItem->nom_fournisseur;
             $fc->email_fournisseurClient = $fournisseurItem->email_fournisseur;
             $fc->tele_fournisseurClient = $fournisseurItem->tele_fournisseur;
-            $fc->adresse_fournisseurClient = $fournisseurItem->adresse_fournisseur;
             $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
             $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
-            $fc->GSM1_fournisseurClient = $fournisseurItem->GSM1_fournisseur;
-            $fc->GSM2_fournisseurClient = $fournisseurItem->GSM2_fournisseur;
             $fc->user_id = $fournisseurItem->user_id;
             $fc->remark = $fournisseurItem->remark;
             $fc->groupId_fournisseurClient = $fournisseurItem->groupId_fournisseur;

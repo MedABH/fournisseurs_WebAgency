@@ -49,7 +49,7 @@
                 <!-- Logo Header -->
                 <div class="logo-header" data-background-color="dark">
                     <a href="#" class="logo">
-                        <h3 id="logo">MyWebSite</h3>
+                        <h3 id="logo">Fournisseur</h3>
                     </a>
 
                     <div class="nav-toggle">

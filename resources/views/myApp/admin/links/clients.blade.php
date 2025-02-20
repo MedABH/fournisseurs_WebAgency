@@ -50,18 +50,8 @@
                         @error('nomSociete_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">GSM1 de la société</label>
-                        <input type="text" class="form-control" name="GSM1_client" placeholder="Entrer le GSM1..."
-                            value="{{ old('GSM1_client') }}" />
-                        @error('GSM1_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                        <label class="form-label">GSM2 de la société</label>
-                        <input type="text" class="form-control" name="GSM2_client" placeholder="Entrer le GSM2..."
-                            value="{{ old('GSM2_client') }}" />
-                        @error('GSM2_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
+                      
+                        
 
                         <label class="form-label">Personne à contacter</label>
                         <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
@@ -69,7 +59,7 @@
                         @error('nom_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Contact du GSM</label>
+                        <label class="form-label">numero de telephone</label>
                         <input type="text" class="form-control" name="tele_client" placeholder="Entrer le contact..."
                             value="{{ old('tele_client') }}" />
                         @error('tele_client', 'default')
@@ -81,12 +71,8 @@
                         @error('email_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Adresse</label>
-                        <input type="text" class="form-control" name="adresse_client" placeholder="Entrer l'adresse..."
-                            value="{{ old('adresse_client') }}" />
-                        @error('adresse_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
+                        
+                       
                         <label class="form-label">Ville</label>
                         <input type="text" class="form-control" name="ville_client" placeholder="Entrer la ville..."
                             value="{{ old('ville_client') }}" />
@@ -145,17 +131,12 @@
                                 <thead>
                                     <tr>
                                         <th>Nom de la société</th>
-                                        <th>GSM1 de la société</th>
-                                        <th>GSM2 de la société</th>
                                         <th>Personne à contacter</th>
-                                        <th>Contact du GSM</th>
+                                        <th>numero de telephone</th>
                                         <th>Email</th>
-                                        <th>Adresse</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
                                         <th>Contacté Par</th>
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -166,14 +147,9 @@
                                         <tr>
                                             <td>{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}
                                             </td>
-                                            <td>{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}
-                                            </td>
-                                            <td>{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}
-                                            </td>
                                             <td>{{!empty($client->nom_client) ? $client->nom_client : 'Non disponible'}}</td>
                                             <td>{{ !empty($client->tele_client) ? $client->tele_client : 'Non disponible'}}</td>
                                             <td>{{!empty($client->email_client) ? $client->email_client : 'Non disponible'}}</td>
-                                            <td>{{!empty($client->adresse_client) ? $client->adresse_client : 'Non disponible' }}</td>
                                             <td>{{ $client->ville_client }}</td>
                                             <td>
                                                 @forelse ($client->categorieClients as $assoc)
@@ -194,12 +170,12 @@
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                                         data-bs-target="#update_client" data-id="{{ $client->id }}"
                                                         data-society="{{ $client->nomSociete_client }}"
-                                                        data-GSM1="{{ $client->GSM1_client }}"
-                                                        data-GSM2="{{ $client->GSM2_client }}"
+                                                      
+                                                        
                                                         data-name="{{ $client->nom_client }}"
                                                         data-tele="{{ $client->tele_client }}"
                                                         data-email="{{ $client->email_client }}"
-                                                        data-adress="{{ $client->adresse_client }}"
+                                                        
                                                         data-ville="{{ $client->ville_client }}"
                                                         data-category="{{ $client->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -241,11 +217,8 @@
                                                         data-name="{{ $client->nom_client }}"
                                                         data-email="{{ $client->email_client }}"
                                                         data-tele="{{ $client->tele_client }}"
-                                                        data-adress="{{ $client->adresse_client }}"
                                                         data-ville="{{ $client->ville_client }}"
                                                         data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
                                                         data-remark="{{ $client->remark }}"
                                                         data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}"
 
@@ -289,12 +262,12 @@
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                                         data-bs-target="#update_client" data-id="{{ $client->id }}"
                                                         data-society="{{ $client->nomSociete_client }}"
-                                                        data-GSM1="{{ $client->GSM1_client }}"
-                                                        data-GSM2="{{ $client->GSM2_client }}"
+                                                       
+                                                        
                                                         data-name="{{ $client->nom_client }}"
                                                         data-tele="{{ $client->tele_client }}"
                                                         data-email="{{ $client->email_client }}"
-                                                        data-adress="{{ $client->adresse_client }}"
+                                                        
                                                         data-ville="{{ $client->ville_client }}"
                                                         data-category="{{ $client->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -336,11 +309,11 @@
                                                         data-name="{{ $client->nom_client }}"
                                                         data-email="{{ $client->email_client }}"
                                                         data-tele="{{ $client->tele_client }}"
-                                                        data-adress="{{ $client->adresse_client }}"
+                                                        
                                                         data-ville="{{ $client->ville_client }}"
                                                         data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                        
+                                                        
                                                         data-remark="{{ $client->remark }}"
                                                         data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}"
 
@@ -401,11 +374,11 @@
                                                         data-name="{{ $client->nom_client }}"
                                                         data-email="{{ $client->email_client }}"
                                                         data-tele="{{ $client->tele_client }}"
-                                                        data-adress="{{ $client->adresse_client }}"
+                                                        
                                                         data-ville="{{ $client->ville_client }}"
                                                         data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                       
+                                                        
                                                         data-remark="{{ $client->remark }}"
                                                         data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}"
 
@@ -469,20 +442,8 @@
                                                                 id="showSocietyDetail-{{ $client->id }}">
                                                             </h6>
                                                         </div>
-                                                        <div class="show-info-client show-GSM1">
-                                                            <label class="label-detail-client">GSM1 de la
-                                                                société</label>
-                                                            <h6 class="info-client showGSM1Client"
-                                                                id="showGSM1Detail-{{ $client->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-client show-GSM2">
-                                                            <label class="label-detail-client">GSM2 de la
-                                                                société</label>
-                                                            <h6 class="info-client showGSM2Client"
-                                                                id="showGSM2Detail-{{ $client->id }}">
-                                                            </h6>
-                                                        </div>
+                                                      
+                                                      
                                                         <div class="show-info-client show-name">
                                                             <label class="label-detail-client">Personne à
                                                                 contacter</label>
@@ -491,7 +452,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="show-info-client show-contact">
-                                                            <label class="label-detail-client">Contact du GSM</label>
+                                                            <label class="label-detail-client">numero de telephone</label>
                                                             <h6 class="info-client showContactClient"
                                                                 id="showContactDetail-{{ $client->id }}">
                                                             </h6>
@@ -503,12 +464,7 @@
                                                             </h6>
                                                         </div>
 
-                                                        <div class="show-info-client show-adress">
-                                                            <label class="label-detail-client">Adresse</label>
-                                                            <h6 class="info-client showAdressClient"
-                                                                id="showAdressDetail-{{ $client->id }}">
-                                                            </h6>
-                                                        </div>
+                                                        
                                                         <div class="show-info-client show-ville">
                                                             <label class="label-detail-client">Ville</label>
                                                             <h6 class="info-client showVilleClient"
@@ -603,30 +559,8 @@
                                     @endif
 
                                 </div>
-                                <div>
-                                    <label class="form-label">GSM1 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM1_client"
-                                        placeholder="Entrer GSM1..." id="updateClientGSM1"
-                                        value="{{ old('newGSM1_client', $client->GSM1_client) }}" />
-                                    @if ($errors->has('newGSM1_client'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM1_client') }}</span>
-                                    @endif
-
-                                </div>
-                                <div>
-                                    <label class="form-label">GSM2 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM2_client"
-                                        placeholder="Entrer GSM2..." id="updateClientGSM2"
-                                        value="{{ old('newGSM2_client', $client->GSM2_client) }}" />
-                                    @if ($errors->has('newGSM2_client'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM2_client') }}</span>
-                                    @endif
-
-                                </div>
+                              
+                             
                                 <div>
                                     <label class="form-label">Personne à contacter</label>
                                     <input id="updateClientName" type="text" class="form-control"
@@ -639,7 +573,7 @@
 
                                 </div>
                                 <div>
-                                    <label class="form-label">Contact du GSM</label>
+                                    <label class="form-label">numero de telephone</label>
                                     <input id="updateClientContact" type="text" class="form-control"
                                         name="newTele_client" placeholder="Entrer le contact..."
                                         value="{{ old('newTele_client', $client->tele_client) }}" />
@@ -661,17 +595,6 @@
 
                                 </div>
 
-                                <div>
-                                    <label class="form-label">Adresse</label>
-                                    <input id="updateClientAdress" type="text" class="form-control"
-                                        name="newAdresse_client" placeholder="Entrer l'adresse..."
-                                        value="{{ old('newAdresse_client', $client->adresse_client) }}" />
-                                    @if ($errors->has('newAdresse_client'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newAdresse_client') }}</span>
-                                    @endif
-
-                                </div>
                                 <div>
                                     <label class="form-label">Ville</label>
                                     <input id="updateClientVille" type="text" class="form-control"
@@ -796,11 +719,8 @@
                     document.querySelector(`#showNameDetail-${clientId}`).innerText = clientName
                     document.querySelector(`#showEmailDetail-${clientId}`).innerText = clientEmail
                     document.querySelector(`#showContactDetail-${clientId}`).innerText = clientContact
-                    document.querySelector(`#showAdressDetail-${clientId}`).innerText = clientAdress
                     document.querySelector(`#showVilleDetail-${clientId}`).innerText = clientVille
                     document.querySelector(`#showSocietyDetail-${clientId}`).innerText = clientSociety
-                    document.querySelector(`#showGSM1Detail-${clientId}`).innerText = clientGSM1
-                    document.querySelector(`#showGSM2Detail-${clientId}`).innerText = clientGSM2
                     document.querySelector(`#showRemarkDetail-${clientId}`).innerText = clientRemark
                     document.querySelector(`#showUserDetail-${clientId}`).innerText = clientUser
                 })
@@ -951,12 +871,12 @@
 
                                 ${role === "super-admin" ? `
                                                   <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                    <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                    <td>${client.GSM2_client || 'Non disponible'}</td>
+                                                    
+                                                    
                                                     <td>${client.nom_client || 'Non disponible'}</td>
                                                     <td>${client.tele_client || 'Non disponible'}</td>
                                                     <td>${client.email_client || 'Non disponible'}</td>
-                                                    <td>${client.adresse_client || 'Non disponible'}</td>
+                                                    
                                                     <td>${client.ville_client}</td>
                                                     <td>${categoriesList}</td>
                                                      <td>${client.utilisateur.name || 'Personne'}</td>
@@ -967,11 +887,11 @@
                                                         data-name="${client.nom_client}"
                                                         data-email="${client.email_client}"
                                                         data-tele="${client.tele_client}"
-                                                        data-adress="${client.adresse_client}"
+                                                        
                                                         data-ville="${client.ville_client}"
                                                         data-society="${client.nomSociete_client}"
-                                                        data-GSM1=" ${client.GSM1_client }"
-                                                        data-GSM2="${client.GSM2_client }"
+                                                       
+                                                        
                                                         data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
                                                     </a>
                                                 </td>
@@ -982,13 +902,12 @@
                                                         data-name="${client.nom_client}"
                                                         data-email="${client.email_client}"
                                                         data-contact="${client.tele_client}"
-                                                        data-adress="${client.adresse_client}"
                                                         data-ville="${client.ville_client}"
                                                         data-remark="${client.remark}"
                                                         data-user="${client.utilisateur.name}"
                                                         data-society-name="${client.nomSociete_client}"
-                                                        data-GSM1="${client.GSM1_client}"
-                                                        data-GSM2="${client.GSM2_client}"
+                                                        
+                                                        
                                                         data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
                                                     >
                                                     Détails
@@ -1023,12 +942,12 @@
                                                 `:''}
                                 ${role === "admin" ? `
                                                <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                    <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                    <td>${client.GSM2_client || 'Non disponible'}</td>
+                                                    
+                                                    
                                                  <td>${client.nom_client || 'Non disponible'}</td>
                                                     <td>${client.tele_client || 'Non disponible'}</td>
                                                     <td>${client.email_client || 'Non disponible'}</td>
-                                                    <td>${client.adresse_client || 'Non disponible'}</td>
+                                                    
                                                     <td>${client.ville_client}</td>
                                                     <td>${categoriesList}</td>
                                                      <td>${client.utilisateur.name || 'Personne'}</td>
@@ -1039,11 +958,11 @@
                                                         data-name="${client.nom_client}"
                                                         data-email="${client.email_client}"
                                                         data-tele="${client.tele_client}"
-                                                        data-adress="${client.adresse_client}"
+                                                        
                                                         data-ville="${client.ville_client}"
                                                         data-society="${client.nomSociete_client}"
-                                                        data-GSM1=" ${client.GSM1_client }"
-                                                        data-GSM2="${client.GSM2_client }"
+                                                        
+                                                        
                                                         data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
                                                     </a>
                                                 </td>
@@ -1054,13 +973,12 @@
                                                         data-name="${client.nom_client}"
                                                         data-email="${client.email_client}"
                                                         data-contact="${client.tele_client}"
-                                                        data-adress="${client.adresse_client}"
                                                         data-ville="${client.ville_client}"
                                                         data-remark="${client.remark}"
                                                         data-user="${client.utilisateur.name}"
                                                         data-society-name="${client.nomSociete_client}"
-                                                        data-GSM1="${client.GSM1_client}"
-                                                        data-GSM2="${client.GSM2_client}"
+                                                        
+                                                        
                                                         data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
                                                     >
                                                     Détails
@@ -1082,12 +1000,12 @@
 
                                                 `:''}${role === "utilisateur" ? `
                                                 <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                    <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                    <td>${client.GSM2_client || 'Non disponible'}</td>
+                                                    
+                                                    
                                                     <td>${client.nom_client || 'Non disponible'}</td>
                                                     <td>${client.tele_client || 'Non disponible'}</td>
                                                      <td>${client.email_client || 'Non disponible'}</td>
-                                                    <td>${client.adresse_client || 'Non disponible'}</td>
+                                                    
                                                     <td>${client.ville_client}</td>
                                                     <td>${categoriesList}</td>
                                                      <td>${client.utilisateur.name || 'Personne'}</td>
@@ -1099,13 +1017,12 @@
                                                         data-name="${client.nom_client}"
                                                         data-email="${client.email_client}"
                                                         data-contact="${client.tele_client}"
-                                                        data-adress="${client.adresse_client}"
                                                         data-ville="${client.ville_client}"
                                                         data-remark="${client.remark}"
                                                         data-user="${client.utilisateur.name}"
                                                         data-society-name="${client.nomSociete_client}"
-                                                        data-GSM1="${client.GSM1_client}"
-                                                        data-GSM2="${client.GSM2_client}"
+                                                        
+                                                       
                                                         data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
                                                     >
                                                     Détails
@@ -1237,22 +1154,14 @@ document.querySelectorAll('.detailButtonQuery').forEach(button => {
                             <h6 class="info-client" id="showSocietyClient">
                             </h6>
                         </div>
-                        <div class="show-info-client show-society">
-                            <label class="label-detail-client">GSM1 de la société</label>
-                            <h6 class="info-client" id="showGSM1Client">
-                            </h6>
-                        </div>
-                        <div class="show-info-client show-society">
-                            <label class="label-detail-client">GSM2 de la société</label>
-                            <h6 class="info-client" id="showGSM2Client">
-                            </h6>
-                        </div>
+                     
+                       
                         <div class="show-info-client show-name">
                             <label class="label-detail-client">Personne à contacter</label>
                             <h6 class="info-client" id="showNameClient"></h6>
                         </div>
                         <div class="show-info-client show-contact">
-                            <label class="label-detail-client">Contact du GSM</label>
+                            <label class="label-detail-client">numero de telephone</label>
                             <h6 class="info-client" id="showContactClient"></h6>
                         </div>
                         <div class="show-info-client show-email">
@@ -1261,11 +1170,7 @@ document.querySelectorAll('.detailButtonQuery').forEach(button => {
                             </h6>
                         </div>
 
-                        <div class="show-info-client show-adress">
-                            <label class="label-detail-client">Adresse</label>
-                            <h6 class="info-client" id="showAdressClient">
-                            </h6>
-                        </div>
+                       
 
                         <div class="show-info-client show-ville">
                             <label class="label-detail-client">Ville</label>

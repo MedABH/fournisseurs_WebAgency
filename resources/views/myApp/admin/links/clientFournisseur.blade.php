@@ -52,26 +52,13 @@
                         @error('nomSociete_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">GSM1 de la société</label>
-                        <input type="text" class="form-control" name="GSM1_fournisseurClient"
-                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_fournisseurClient') }}" />
-                        @error('GSM1_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                        <label class="form-label">GSM2 de la société</label>
-                        <input type="text" class="form-control" name="GSM2_fournisseurClient"
-                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_fournisseurClient') }}" />
-                        @error('GSM2_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-
                         <label class="form-label">Personne à contacter</label>
                         <input type="text" class="form-control" name="nom_fournisseurClient"
                             placeholder="Entrer le fournisseurClient..." value="{{ old('nom_fournisseurClient') }}" />
                         @error('nom_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Contact du GSM</label>
+                        <label class="form-label">numero de telephone</label>
                         <input type="text" class="form-control" name="tele_fournisseurClient"
                             placeholder="Entrer le contact..." value="{{ old('tele_fournisseurClient') }}" />
                         @error('tele_fournisseurClient', 'default')
@@ -83,12 +70,7 @@
                         @error('email_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Adresse</label>
-                        <input type="text" class="form-control" name="adresse_fournisseurClient"
-                            placeholder="Entrer l'adresse..." value="{{ old('adresse_fournisseurClient') }}" />
-                        @error('adresse_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
+                     
                         <label class="form-label">Ville</label>
                         <input type="text" class="form-control" name="ville_fournisseurClient"
                             placeholder="Entrer la ville..." value="{{ old('ville_fournisseurClient') }}" />
@@ -149,12 +131,9 @@
                                 <thead>
                                     <tr>
                                         <th>Nom de la société</th>
-                                        <th>GSM1 de la société</th>
-                                        <th>GSM2 de la société</th>
                                         <th>Personne à contacter</th>
-                                        <th>Contact du GSM</th>
+                                        <th>numero de telephone</th>
                                         <th>Email</th>
-                                        <th>Adresse</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
                                         <th>Contacté Par</th>
@@ -169,14 +148,9 @@
                                         <tr>
                                             <td>{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
                                             </td>
-                                            <td>{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}
-                                            </td>
-                                            <td>{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}
-                                            </td>
                                             <td>{{  !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : 'Non disponible' }}</td>
                                             <td>{{ !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : 'Non disponible'}}</td>
                                             <td>{{ !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : 'Non disponible'}}</td>
-                                            <td>{{!empty($fc->adresse_fournisseurClient) ? $fc->adresse_fournisseurClient : 'Non disponible' }}</td>
                                             <td>{{ $fc->ville_fournisseurClient }}</td>
                                             <td>
                                                 @forelse ($fc->categorieClientFournisseurs as $assoc)
@@ -198,12 +172,9 @@
                                                         data-bs-target="#update_fournisseurClient"
                                                         data-id="{{ $fc->id }}"
                                                         data-society="{{ $fc->nomSociete_fournisseurClient }}"
-                                                        data-GSM1="{{ $fc->GSM1_fournisseurClient }}"
-                                                        data-GSM2="{{ $fc->GSM2_fournisseurClient }}"
                                                         data-name="{{ $fc->nom_fournisseurClient }}"
                                                         data-tele="{{ $fc->tele_fournisseurClient }}"
                                                         data-email="{{ $fc->email_fournisseurClient }}"
-                                                        data-adress="{{ $fc->adresse_fournisseurClient }}"
                                                         data-ville="{{ $fc->ville_fournisseurClient }}"
                                                         data-category="{{ $fc->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -246,11 +217,8 @@
                                                         data-name="{{ $fc->nom_fournisseurClient }}"
                                                         data-email="{{ $fc->email_fournisseurClient }}"
                                                         data-tele="{{ $fc->tele_fournisseurClient }}"
-                                                        data-adress="{{ $fc->adresse_fournisseurClient }}"
                                                         data-ville="{{ $fc->ville_fournisseurClient }}"
                                                         data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
                                                         data-remark="{{ $fc->remark }}"
                                                         data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}"
                                                         >
@@ -299,12 +267,9 @@
                                                         data-bs-target="#update_fournisseurClient"
                                                         data-id="{{ $fc->id }}"
                                                         data-society="{{ $fc->nomSociete_fournisseurClient }}"
-                                                        data-GSM1="{{ $fc->GSM1_fournisseurClient }}"
-                                                        data-GSM2="{{ $fc->GSM2_fournisseurClient }}"
                                                         data-name="{{ $fc->nom_fournisseurClient }}"
                                                         data-tele="{{ $fc->tele_fournisseurClient }}"
                                                         data-email="{{ $fc->email_fournisseurClient }}"
-                                                        data-adress="{{ $fc->adresse_fournisseurClient }}"
                                                         data-ville="{{ $fc->ville_fournisseurClient }}"
                                                         data-category="{{ $fc->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -347,11 +312,8 @@
                                                         data-name="{{ $fc->nom_fournisseurClient }}"
                                                         data-email="{{ $fc->email_fournisseurClient }}"
                                                         data-tele="{{ $fc->tele_fournisseurClient }}"
-                                                        data-adress="{{ $fc->adresse_fournisseurClient }}"
                                                         data-ville="{{ $fc->ville_fournisseurClient }}"
                                                         data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
                                                         data-remark="{{ $fc->remark }}"
                                                         data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}"
                                                         >
@@ -415,11 +377,8 @@
                                                         data-name="{{ $fc->nom_fournisseurClient }}"
                                                         data-email="{{ $fc->email_fournisseurClient }}"
                                                         data-tele="{{ $fc->tele_fournisseurClient }}"
-                                                        data-adress="{{ $fc->adresse_fournisseurClient }}"
                                                         data-ville="{{ $fc->ville_fournisseurClient }}"
                                                         data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
                                                         data-remark="{{ $fc->remark }}"
                                                         data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}"
                                                         >
@@ -482,20 +441,8 @@
                                                                 id="showSocietyDetail-{{ $fc->id }}">
                                                             </h6>
                                                         </div>
-                                                        <div class="show-info-fournisseurClient show-GSM1">
-                                                            <label class="label-detail-fournisseurClient">GSM1 de la
-                                                                société</label>
-                                                            <h6 class="info-fournisseurClient showGSM1fc"
-                                                                id="showGSM1Detail-{{ $fc->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-fournisseurClient show-GSM2">
-                                                            <label class="label-detail-fournisseurClient">GSM2 de la
-                                                                société</label>
-                                                            <h6 class="info-fournisseurClient showGSM2fc"
-                                                                id="showGSM2Detail-{{ $fc->id }}">
-                                                            </h6>
-                                                        </div>
+                                                     
+                                                      
                                                         <div class="show-info-fournisseurClient show-name">
                                                             <label class="label-detail-fournisseurClient">Personne à
                                                                 contacter</label>
@@ -504,7 +451,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="show-info-fournisseurClient show-contact">
-                                                            <label class="label-detail-fournisseurClient">Contact du GSM</label>
+                                                            <label class="label-detail-fournisseurClient">numero de telephone</label>
                                                             <h6 class="info-fournisseurClient showContactfc"
                                                                 id="showContactDetail-{{ $fc->id }}">
                                                             </h6>
@@ -516,12 +463,7 @@
                                                             </h6>
                                                         </div>
 
-                                                        <div class="show-info-fournisseurClient show-adress">
-                                                            <label class="label-detail-fournisseurClient">Adresse</label>
-                                                            <h6 class="info-fournisseurClient showAdressfc"
-                                                                id="showAdressDetail-{{ $fc->id }}">
-                                                            </h6>
-                                                        </div>
+                                                       
                                                         <div class="show-info-fournisseurClient show-ville">
                                                             <label class="label-detail-fournisseurClient">Ville</label>
                                                             <h6 class="info-fournisseurClient showVillefc"
@@ -618,30 +560,8 @@
                                     @endif
 
                                 </div>
-                                <div>
-                                    <label class="form-label">GSM1 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM1_fournisseurClient"
-                                        placeholder="Entrer GSM1..." id="updateFCGSM1"
-                                        value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" />
-                                    @if ($errors->has('newGSM1_fournisseurClient'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM1_fournisseurClient') }}</span>
-                                    @endif
-
-                                </div>
-                                <div>
-                                    <label class="form-label">GSM2 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM2_fournisseurClient"
-                                        placeholder="Entrer GSM2..." id="updateFCGSM2"
-                                        value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" />
-                                    @if ($errors->has('newGSM2_fournisseurClient'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM2_fournisseurClient') }}</span>
-                                    @endif
-
-                                </div>
+                              
+                              
                                 <div>
                                     <label class="form-label">Personne à contacter</label>
                                     <input id="updateFCName" type="text" class="form-control"
@@ -654,7 +574,7 @@
 
                                 </div>
                                 <div>
-                                    <label class="form-label">Contact du GSM</label>
+                                    <label class="form-label">numero de telephone</label>
                                     <input id="updateFCContact" type="text" class="form-control"
                                         name="newTele_fournisseurClient" placeholder="Entrer le contact..."
                                         value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
@@ -676,17 +596,7 @@
 
                                 </div>
 
-                                <div>
-                                    <label class="form-label">Adresse</label>
-                                    <input id="updateFCAdress" type="text" class="form-control"
-                                        name="newAdresse_fournisseurClient" placeholder="Entrer l'adresse..."
-                                        value="{{ old('newAdresse_fournisseurClient', $fc->adresse_fournisseurClient) }}" />
-                                    @if ($errors->has('newAdresse_fournisseurClient'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newAdresse_fournisseurClient') }}</span>
-                                    @endif
-
-                                </div>
+                            
                                 <div>
                                     <label class="form-label">Ville</label>
                                     <input id="updateFCVille" type="text" class="form-control"
@@ -857,11 +767,8 @@
                     document.querySelector(`#showNameDetail-${fcId}`).innerText = fcName
                     document.querySelector(`#showEmailDetail-${fcId}`).innerText = fcEmail
                     document.querySelector(`#showContactDetail-${fcId}`).innerText = fcContact
-                    document.querySelector(`#showAdressDetail-${fcId}`).innerText = fcAdress
                     document.querySelector(`#showVilleDetail-${fcId}`).innerText = fcVille
                     document.querySelector(`#showSocietyDetail-${fcId}`).innerText = fcSociety
-                    document.querySelector(`#showGSM1Detail-${fcId}`).innerText = fcGSM1
-                    document.querySelector(`#showGSM2Detail-${fcId}`).innerText = fcGSM2
                     document.querySelector(`#showRemarkDetail-${fcId}`).innerText = fcRemark
                     document.querySelector(`#showUserDetail-${fcId}`).innerText = fcUser
                 })
@@ -959,12 +866,9 @@
 
                                 ${role === "super-admin" ? `
                                         <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.adresse_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.ville_fournisseurClient}</td>
                                             <td>${categoriesList}</td>
                                              <td>${fc.utilisateur.name || 'Personne'}</td>
@@ -975,11 +879,8 @@
                                                 data-name="${fc.nom_fournisseurClient}"
                                                 data-email="${fc.email_fournisseurClient}"
                                                 data-tele="${fc.tele_fournisseurClient}"
-                                                data-adress="${fc.adresse_fournisseurClient}"
                                                 data-ville="${fc.ville_fournisseurClient}"
                                                 data-society="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                data-GSM2="${fc.GSM2_fournisseurClient }"
                                                 data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
                                             </a>
                                         </td>
@@ -990,13 +891,10 @@
                                                 data-name="${fc.nom_fournisseurClient}"
                                                 data-email="${fc.email_fournisseurClient}"
                                                 data-contact="${fc.tele_fournisseurClient}"
-                                                data-adress="${fc.adresse_fournisseurClient}"
                                                 data-ville="${fc.ville_fournisseurClient}"
                                                 data-remark="${fc.remark}"
                                                 data-user="${fc.utilisateur.name}"
                                                 data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
                                                 data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
                                             >
                                             Détails
@@ -1031,12 +929,9 @@
 
                                 ${role === "admin" ? `
                                         <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
                                               <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
                                               <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.adresse_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.ville_fournisseurClient}</td>
                                             <td>${categoriesList}</td>
                                              <td>${fc.utilisateur.name || 'Personne'}</td>
@@ -1047,11 +942,8 @@
                                                 data-name="${fc.nom_fournisseurClient}"
                                                 data-email="${fc.email_fournisseurClient}"
                                                 data-tele="${fc.tele_fournisseurClient}"
-                                                data-adress="${fc.adresse_fournisseurClient}"
                                                 data-ville="${fc.ville_fournisseurClient}"
                                                 data-society="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                data-GSM2="${fc.GSM2_fournisseurClient }"
                                                 data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
                                             </a>
                                         </td>
@@ -1062,13 +954,10 @@
                                                 data-name="${fc.nom_fournisseurClient}"
                                                 data-email="${fc.email_fournisseurClient}"
                                                 data-contact="${fc.tele_fournisseurClient}"
-                                                data-adress="${fc.adresse_fournisseurClient}"
                                                 data-ville="${fc.ville_fournisseurClient}"
                                                 data-remark="${fc.remark}"
                                                 data-user="${fc.utilisateur.name}"
                                                 data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
                                                 data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
                                             >
                                             Détails
@@ -1091,12 +980,9 @@
 
                                         `:''} ${role === "utilisateur" ? `
                                          <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
                                                 <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.adresse_fournisseurClient || 'Non disponible'}</td>
                                             <td>${fc.ville_fournisseurClient}</td>
                                             <td>${categoriesList}</td>
                                              <td>${fc.utilisateur.name || 'Personne'}</td>
@@ -1108,13 +994,10 @@
                                                 data-name="${fc.nom_fournisseurClient}"
                                                 data-email="${fc.email_fournisseurClient}"
                                                 data-contact="${fc.tele_fournisseurClient}"
-                                                data-adress="${fc.adresse_fournisseurClient}"
                                                 data-ville="${fc.ville_fournisseurClient}"
                                                 data-remark="${fc.remark}"
                                                 data-user="${fc.utilisateur.name}"
                                                 data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
                                                 data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
                                             >
                                             Détails
@@ -1241,22 +1124,14 @@ document.querySelectorAll('.detailButtonQuery').forEach(button => {
                             <h6 class="info-fournisseurClient" id="showSocietyfc">
                             </h6>
                         </div>
-                        <div class="show-info-fournisseurClient show-society">
-                            <label class="label-detail-fournisseurClient">GSM1 de la société</label>
-                            <h6 class="info-fournisseurClient" id="showGSM1fc">
-                            </h6>
-                        </div>
-                        <div class="show-info-fournisseurClient show-society">
-                            <label class="label-detail-fournisseurClient">GSM2 de la société</label>
-                            <h6 class="info-fournisseurClient" id="showGSM2fc">
-                            </h6>
-                        </div>
+                      
+                       
                         <div class="show-info-fournisseurClient show-name">
                             <label class="label-detail-fournisseurClient">Personne à contacter</label>
                             <h6 class="info-fournisseurClient" id="showNamefc"></h6>
                         </div>
                         <div class="show-info-fournisseurClient show-contact">
-                            <label class="label-detail-fournisseurClient">Contact du GSM</label>
+                            <label class="label-detail-fournisseurClient">numero de telephone</label>
                             <h6 class="info-fournisseurClient" id="showContactfc"></h6>
                         </div>
                         <div class="show-info-fournisseurClient show-email">
@@ -1265,11 +1140,7 @@ document.querySelectorAll('.detailButtonQuery').forEach(button => {
                             </h6>
                         </div>
 
-                        <div class="show-info-fournisseurClient show-adress">
-                            <label class="label-detail-fournisseurClient">Adresse</label>
-                            <h6 class="info-fournisseurClient" id="showAdressfc">
-                            </h6>
-                        </div>
+                       
 
                         <div class="show-info-fournisseurClient show-ville">
                             <label class="label-detail-fournisseurClient">Ville</label>

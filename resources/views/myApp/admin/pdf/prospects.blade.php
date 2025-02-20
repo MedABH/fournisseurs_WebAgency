@@ -37,12 +37,9 @@
         <thead>
             <tr>
                 <th>Nom de la société</th>
-                <th>GSM1</th>
-                <th>GSM2</th>
                 <th>Personne à contacter</th>
                 <th>Téléphone</th>
                 <th>Email</th>
-                <th>Adresse</th>
                 <th>Ville</th>
                 <th>Catégorie</th>
 
@@ -57,7 +54,6 @@
                 <td>{{ $prospect->nom_prospect }}</td>
                 <td>{{ $prospect->tele_prospect}}</td>
                 <td>{{ $prospect->email_prospect}}</td>
-                <td>{{ $prospect->adresse_prospect}}</td>
                 <td>{{ $prospect->ville_prospect}}</td>
                 <td>
                     @forelse ($prospect->categorieProspects as $assoc)

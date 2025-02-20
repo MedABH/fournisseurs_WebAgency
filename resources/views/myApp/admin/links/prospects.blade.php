@@ -51,18 +51,8 @@
                         @error('nomSociete_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">GSM1 de la société</label>
-                        <input type="text" class="form-control" name="GSM1_prospect" placeholder="Entrer le GSM1..."
-                            value="{{ old('GSM1_prospect') }}" />
-                        @error('GSM1_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                        <label class="form-label">GSM2 de la société</label>
-                        <input type="text" class="form-control" name="GSM2_prospect" placeholder="Entrer le GSM2..."
-                            value="{{ old('GSM2_prospect') }}" />
-                        @error('GSM2_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
+                       
+                       
 
                         <label class="form-label">Personne à contacter</label>
                         <input type="text" class="form-control" name="nom_prospect" placeholder="Entrer le prospect..."
@@ -70,7 +60,7 @@
                         @error('nom_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Contact du GSM</label>
+                        <label class="form-label">numero de telephone</label>
                         <input type="text" class="form-control" name="tele_prospect" placeholder="Entrer le contact..."
                             value="{{ old('tele_prospect') }}" />
                         @error('tele_prospect', 'default')
@@ -146,10 +136,10 @@
                                 <thead>
                                     <tr>
                                         <th>Nom de la société</th>
-                                        <th>GSM1 de la société</th>
-                                        <th>GSM2 de la société</th>
+                                        
+                                        
                                         <th>Personne à contacter</th>
-                                        <th>Contact du GSM</th>
+                                        <th>numero de telephone</th>
                                         <th>Email</th>
                                         <th>Adresse</th>
                                         <th>Ville</th>
@@ -477,20 +467,8 @@
                                                                 id="showSocietyDetail-{{ $prospect->id }}">
                                                             </h6>
                                                         </div>
-                                                        <div class="show-info-prospect show-GSM1">
-                                                            <label class="label-detail-prospect">GSM1 de la
-                                                                société</label>
-                                                            <h6 class="info-prospect showGSM1Prospect"
-                                                                id="showGSM1Detail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-prospect show-GSM2">
-                                                            <label class="label-detail-prospect">GSM2 de la
-                                                                société</label>
-                                                            <h6 class="info-prospect showGSM2Prospect"
-                                                                id="showGSM2Detail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
+                                                     
+                                                       
                                                         <div class="show-info-prospect show-name">
                                                             <label class="label-detail-prospect">Personne à
                                                                 contacter</label>
@@ -499,7 +477,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="show-info-prospect show-contact">
-                                                            <label class="label-detail-prospect">Contact du GSM</label>
+                                                            <label class="label-detail-prospect">numero de telephone</label>
                                                             <h6 class="info-prospect showContactProspect"
                                                                 id="showContactDetail-{{ $prospect->id }}">
                                                             </h6>
@@ -648,7 +626,7 @@
 
                                 </div>
                                 <div>
-                                    <label class="form-label">Contact du GSM</label>
+                                    <label class="form-label">numero de telephone</label>
                                     <input id="updateProspectContact" type="text" class="form-control"
                                         name="newTele_prospect" placeholder="Entrer le contact..."
                                         value="{{ old('newTele_prospect', $prospect->tele_prospect) }}" />
@@ -856,8 +834,6 @@
                     document.querySelector(`#showAdressDetail-${prospectId}`).innerText = prospectAdress
                     document.querySelector(`#showVilleDetail-${prospectId}`).innerText = prospectVille
                     document.querySelector(`#showSocietyDetail-${prospectId}`).innerText = prospectSociety
-                    document.querySelector(`#showGSM1Detail-${prospectId}`).innerText = prospectGSM1
-                    document.querySelector(`#showGSM2Detail-${prospectId}`).innerText = prospectGSM2
                     document.querySelector(`#showRemarkDetail-${prospectId}`).innerText = prospectRemark
                     document.querySelector(`#showUserDetail-${prospectId}`).innerText = prospectUser
                 })
@@ -972,7 +948,6 @@
                                                                 data-name="${prospect.nom_prospect}"
                                                                 data-email="${prospect.email_prospect}"
                                                                 data-tele="${prospect.tele_prospect}"
-                                                                data-adress="${prospect.adresse_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
                                                                 data-GSM1=" ${prospect.GSM1_prospect }"
@@ -987,7 +962,6 @@
                                                                 data-name="${prospect.nom_prospect}"
                                                                 data-email="${prospect.email_prospect}"
                                                                 data-contact="${prospect.tele_prospect}"
-                                                                data-adress="${prospect.adresse_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
                                                                 data-GSM1="${prospect.GSM1_prospect}"
@@ -1034,7 +1008,6 @@
                                                        <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                        <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.adresse_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.ville_prospect}</td>
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
@@ -1045,7 +1018,6 @@
                                                                 data-name="${prospect.nom_prospect}"
                                                                 data-email="${prospect.email_prospect}"
                                                                 data-tele="${prospect.tele_prospect}"
-                                                                data-adress="${prospect.adresse_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
                                                                 data-GSM1=" ${prospect.GSM1_prospect }"
@@ -1060,7 +1032,6 @@
                                                                 data-name="${prospect.nom_prospect}"
                                                                 data-email="${prospect.email_prospect}"
                                                                 data-contact="${prospect.tele_prospect}"
-                                                                data-adress="${prospect.adresse_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
                                                                 data-GSM1="${prospect.GSM1_prospect}"
@@ -1091,7 +1062,6 @@
                                                          <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.adresse_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.ville_prospect}</td>
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
@@ -1102,7 +1072,6 @@
                                                                 data-name="${prospect.nom_prospect}"
                                                                 data-email="${prospect.email_prospect}"
                                                                 data-contact="${prospect.tele_prospect}"
-                                                                data-adress="${prospect.adresse_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
                                                                 data-GSM1="${prospect.GSM1_prospect}"
@@ -1244,22 +1213,14 @@ if (detailButtonsProspect.length > 0) { // Assurez-vous qu'il y a au moins un bo
                             <h6 class="info-prospect" id="showSocietyProspect">
                             </h6>
                         </div>
-                        <div class="show-info-prospect show-society">
-                            <label class="label-detail-prospect">GSM1 de la société</label>
-                            <h6 class="info-prospect" id="showGSM1Prospect">
-                            </h6>
-                        </div>
-                        <div class="show-info-prospect show-society">
-                            <label class="label-detail-prospect">GSM2 de la société</label>
-                            <h6 class="info-prospect" id="showGSM2Prospect">
-                            </h6>
-                        </div>
+                       
+                       
                         <div class="show-info-prospect show-name">
                             <label class="label-detail-prospect">Personne à contacter</label>
                             <h6 class="info-prospect" id="showNameProspect"></h6>
                         </div>
                         <div class="show-info-prospect show-contact">
-                            <label class="label-detail-prospect">Contact du GSM</label>
+                            <label class="label-detail-prospect">numero de telephone</label>
                             <h6 class="info-prospect" id="showContactProspect"></h6>
                         </div>
                         <div class="show-info-prospect show-email">
@@ -1268,11 +1229,7 @@ if (detailButtonsProspect.length > 0) { // Assurez-vous qu'il y a au moins un bo
                             </h6>
                         </div>
 
-                        <div class="show-info-prospect show-adress">
-                            <label class="label-detail-prospect">Adresse</label>
-                            <h6 class="info-prospect" id="showAdressProspect">
-                            </h6>
-                        </div>
+                      
 
                         <div class="show-info-prospect show-ville">
                             <label class="label-detail-prospect">Ville</label>
