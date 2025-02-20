@@ -72,12 +72,7 @@
                         @error('email_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Adresse</label>
-                        <input type="text" class="form-control" name="adresse_prospect" placeholder="Entrer l'adresse..."
-                            value="{{ old('adresse_prospect') }}" />
-                        @error('adresse_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
+                        
                         <label class="form-label">Ville</label>
                         <input type="text" class="form-control" name="ville_prospect" placeholder="Entrer la ville..."
                             value="{{ old('ville_prospect') }}" />
@@ -136,18 +131,12 @@
                                 <thead>
                                     <tr>
                                         <th>Nom de la société</th>
-                                        
-                                        
                                         <th>Personne à contacter</th>
                                         <th>numero de telephone</th>
                                         <th>Email</th>
-                                        <th>Adresse</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
                                         <th>Contacté Par</th>
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -158,14 +147,9 @@
                                         <tr>
                                             <td>{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}
                                             </td>
-                                            <td>{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}
-                                            </td>
-                                            <td>{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}
-                                            </td>
                                             <td>{{!empty($prospect->nom_prospect) ? $prospect->nom_prospect : 'Non disponible' }}</td>
                                             <td>{{ !empty($prospect->tele_prospect) ? $prospect->tele_prospect : 'Non disponible'  }}</td>
                                             <td>{{ !empty($prospect->email_prospect) ? $prospect->email_prospect : 'Non disponible' }}</td>
-                                            <td>{{ !empty($prospect->adresse_prospect) ? $prospect->adresse_prospect : 'Non disponible' }}</td>
                                             <td>{{ $prospect->ville_prospect }}</td>
                                             <td>
                                                 @forelse ($prospect->categorieProspects as $assoc)
@@ -185,12 +169,9 @@
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                                         data-bs-target="#update_prospect" data-id="{{ $prospect->id }}"
                                                         data-society="{{ $prospect->nomSociete_prospect }}"
-                                                        data-GSM1="{{ $prospect->GSM1_prospect }}"
-                                                        data-GSM2="{{ $prospect->GSM2_prospect }}"
                                                         data-name="{{ $prospect->nom_prospect }}"
                                                         data-tele="{{ $prospect->tele_prospect }}"
                                                         data-email="{{ $prospect->email_prospect }}"
-                                                        data-adress="{{ $prospect->adresse_prospect }}"
                                                         data-ville="{{ $prospect->ville_prospect }}"
                                                         data-category="{{ $prospect->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -233,11 +214,8 @@
                                                         data-name="{{ $prospect->nom_prospect }}"
                                                         data-email="{{ $prospect->email_prospect }}"
                                                         data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-adress="{{ $prospect->adresse_prospect }}"
                                                         data-ville="{{ $prospect->ville_prospect }}"
                                                         data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
                                                         data-remark="{{ $prospect->remark }}"
                                                         data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
 
@@ -285,12 +263,9 @@
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                                                         data-bs-target="#update_prospect" data-id="{{ $prospect->id }}"
                                                         data-society="{{ $prospect->nomSociete_prospect }}"
-                                                        data-GSM1="{{ $prospect->GSM1_prospect }}"
-                                                        data-GSM2="{{ $prospect->GSM2_prospect }}"
                                                         data-name="{{ $prospect->nom_prospect }}"
                                                         data-tele="{{ $prospect->tele_prospect }}"
                                                         data-email="{{ $prospect->email_prospect }}"
-                                                        data-adress="{{ $prospect->adresse_prospect }}"
                                                         data-ville="{{ $prospect->ville_prospect }}"
                                                         data-category="{{ $prospect->categories->first()?->id ?? '' }}">
                                                         Modifier
@@ -333,11 +308,8 @@
                                                         data-name="{{ $prospect->nom_prospect }}"
                                                         data-email="{{ $prospect->email_prospect }}"
                                                         data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-adress="{{ $prospect->adresse_prospect }}"
                                                         data-ville="{{ $prospect->ville_prospect }}"
                                                         data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
                                                         data-remark="{{ $prospect->remark }}"
                                                         data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
 
@@ -400,11 +372,8 @@
                                                         data-name="{{ $prospect->nom_prospect }}"
                                                         data-email="{{ $prospect->email_prospect }}"
                                                         data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-adress="{{ $prospect->adresse_prospect }}"
                                                         data-ville="{{ $prospect->ville_prospect }}"
                                                         data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
-                                                        data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
                                                         data-remark="{{ $prospect->remark }}"
                                                         data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
 
@@ -489,12 +458,7 @@
                                                             </h6>
                                                         </div>
 
-                                                        <div class="show-info-prospect show-adress">
-                                                            <label class="label-detail-prospect">Adresse</label>
-                                                            <h6 class="info-prospect showAdressProspect"
-                                                                id="showAdressDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
+                                                        
                                                         <div class="show-info-prospect show-ville">
                                                             <label class="label-detail-prospect">Ville</label>
                                                             <h6 class="info-prospect showVilleProspect"
@@ -590,30 +554,8 @@
                                     @endif
 
                                 </div>
-                                <div>
-                                    <label class="form-label">GSM1 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM1_prospect"
-                                        placeholder="Entrer GSM1..." id="updateProspectGSM1"
-                                        value="{{ old('newGSM1_prospect', $prospect->GSM1_prospect) }}" />
-                                    @if ($errors->has('newGSM1_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM1_prospect') }}</span>
-                                    @endif
-
-                                </div>
-                                <div>
-                                    <label class="form-label">GSM2 de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newGSM2_prospect"
-                                        placeholder="Entrer GSM2..." id="updateProspectGSM2"
-                                        value="{{ old('newGSM2_prospect', $prospect->GSM2_prospect) }}" />
-                                    @if ($errors->has('newGSM2_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newGSM2_prospect') }}</span>
-                                    @endif
-
-                                </div>
+                              
+                               
                                 <div>
                                     <label class="form-label">Personne à contacter</label>
                                     <input id="updateProspectName" type="text" class="form-control"
@@ -648,17 +590,7 @@
 
                                 </div>
 
-                                <div>
-                                    <label class="form-label">Adresse</label>
-                                    <input id="updateProspectAdress" type="text" class="form-control"
-                                        name="newAdresse_prospect" placeholder="Entrer l'adresse..."
-                                        value="{{ old('newAdresse_prospect', $prospect->adresse_prospect) }}" />
-                                    @if ($errors->has('newAdresse_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newAdresse_prospect') }}</span>
-                                    @endif
-
-                                </div>
+                         
                                 <div>
                                     <label class="form-label">Ville</label>
                                     <input id="updateProspectVille" type="text" class="form-control"
@@ -831,7 +763,6 @@
                     document.querySelector(`#showNameDetail-${prospectId}`).innerText = prospectName
                     document.querySelector(`#showEmailDetail-${prospectId}`).innerText = prospectEmail
                     document.querySelector(`#showContactDetail-${prospectId}`).innerText = prospectContact
-                    document.querySelector(`#showAdressDetail-${prospectId}`).innerText = prospectAdress
                     document.querySelector(`#showVilleDetail-${prospectId}`).innerText = prospectVille
                     document.querySelector(`#showSocietyDetail-${prospectId}`).innerText = prospectSociety
                     document.querySelector(`#showRemarkDetail-${prospectId}`).innerText = prospectRemark
@@ -932,12 +863,9 @@
                                    
                                     ${role === "super-admin" ? `
                                                           <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.adresse_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.ville_prospect}</td>
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
@@ -950,8 +878,6 @@
                                                                 data-tele="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
-                                                                data-GSM1=" ${prospect.GSM1_prospect }"
-                                                                data-GSM2="${prospect.GSM2_prospect }"
                                                                 data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
                                                             </a>
                                                         </td>
@@ -964,8 +890,6 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
-                                                                data-GSM1="${prospect.GSM1_prospect}"
-                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
@@ -1003,8 +927,6 @@
                                     ${role === "admin" ? `
 
                                                          <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                        <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                        <td>${prospect.email_prospect || 'Non disponible'}</td>
@@ -1020,8 +942,6 @@
                                                                 data-tele="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
-                                                                data-GSM1=" ${prospect.GSM1_prospect }"
-                                                                data-GSM2="${prospect.GSM2_prospect }"
                                                                 data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
                                                             </a>
                                                         </td>
@@ -1034,8 +954,6 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
-                                                                data-GSM1="${prospect.GSM1_prospect}"
-                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
@@ -1057,8 +975,6 @@
                                                             </td>
                                                         ` : '' } ${role === "utilisateur" ? `
                                                          <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                          <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.email_prospect || 'Non disponible'}</td>
@@ -1074,8 +990,6 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
-                                                                data-GSM1="${prospect.GSM1_prospect}"
-                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"

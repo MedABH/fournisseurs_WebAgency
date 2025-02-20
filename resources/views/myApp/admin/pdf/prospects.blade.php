@@ -49,8 +49,6 @@
             @foreach ($prospects as $prospect)
             <tr>
                 <td>{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}
-                <td>{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}
-                <td>{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}
                 <td>{{ $prospect->nom_prospect }}</td>
                 <td>{{ $prospect->tele_prospect}}</td>
                 <td>{{ $prospect->email_prospect}}</td>

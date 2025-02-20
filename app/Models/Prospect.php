@@ -19,11 +19,8 @@ class Prospect extends Model
         'nom_prospect',
         'email_prospect',
         'tele_prospect',
-        'adresse_prospect',
         'ville_prospect',
         'nomSociete_prospect',
-        'GSM1_prospect',
-        'GSM2_prospect',
         'user_id',
         'remark'
     ];
