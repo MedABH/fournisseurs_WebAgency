@@ -60,7 +60,7 @@
                         @error('nom_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">numero de telephone</label>
+                        <label class="form-label">Numero de telephone</label>
                         <input type="text" class="form-control" name="tele_prospect" placeholder="Entrer le contact..."
                             value="{{ old('tele_prospect') }}" />
                         @error('tele_prospect', 'default')
@@ -132,7 +132,7 @@
                                     <tr>
                                         <th>Nom de la société</th>
                                         <th>Personne à contacter</th>
-                                        <th>numero de telephone</th>
+                                        <th>Numero de telephone</th>
                                         <th>Email</th>
                                         <th>Ville</th>
                                         <th>Catégorie</th>
@@ -446,7 +446,7 @@
                                                             </h6>
                                                         </div>
                                                         <div class="show-info-prospect show-contact">
-                                                            <label class="label-detail-prospect">numero de telephone</label>
+                                                            <label class="label-detail-prospect">Numero de telephone</label>
                                                             <h6 class="info-prospect showContactProspect"
                                                                 id="showContactDetail-{{ $prospect->id }}">
                                                             </h6>
@@ -568,7 +568,7 @@
 
                                 </div>
                                 <div>
-                                    <label class="form-label">numero de telephone</label>
+                                    <label class="form-label">Numero de telephone</label>
                                     <input id="updateProspectContact" type="text" class="form-control"
                                         name="newTele_prospect" placeholder="Entrer le contact..."
                                         value="{{ old('newTele_prospect', $prospect->tele_prospect) }}" />
@@ -1134,7 +1134,7 @@ if (detailButtonsProspect.length > 0) { // Assurez-vous qu'il y a au moins un bo
                             <h6 class="info-prospect" id="showNameProspect"></h6>
                         </div>
                         <div class="show-info-prospect show-contact">
-                            <label class="label-detail-prospect">numero de telephone</label>
+                            <label class="label-detail-prospect">Numero de telephone</label>
                             <h6 class="info-prospect" id="showContactProspect"></h6>
                         </div>
                         <div class="show-info-prospect show-email">
