@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('historiques', function (Blueprint $table) {
-            $table->unique(['user_id', 'login_at']);
-        });
+        // No need to add the unique constraint here anymore
+        // It was already added in the 2024_12_19_153203_create_historiques_table.php migration
     }
 
     public function down(): void
