@@ -5,50 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('CSS/login.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/login.css">
     <title>Connexion</title>
 </head>
 
 <body>
 
-    <div class="formLogin">
-        <header class="header">Se connecter</header>
-        <form action="{{ route('login') }}" method="POST" class="form">
-            @csrf
-            <div class="input-group">
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <h2>Se connecter</h2>
+                    <br />
 
-                @if ($errors->any())
-                    <div class="error-container">
-                        <ul class="message-container">
-                            @foreach ($errors->all() as $error)
-                                <li class="error-message">{{ $error }}</li>
-                            @endforeach
-                        </ul>
+                    <div>
+
+                        @if ($errors->any())
+                            <div class="error-container">
+                                <ul class="message-container">
+                                    @foreach ($errors->all() as $error)
+                                        <li class="error-message">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <div class="inputbox">
+                            <ion-icon name="mail-outline"></ion-icon>
+                            <input type="email" name="email" class="input-text" value="{{ old('email') }}" />
+                            <label for="">Email</label>
+                        </div>
+
+                        <div class="inputbox">
+                            <input type="password" name="password" id="password" class="input-text"
+                                value="{{ old('password') }}" />
+                            <ion-icon name="lock-closed-outline" id="togglePassword"
+                                style="cursor: pointer;"></ion-icon>
+                            <label for="">Mot de passe</label>
+                        </div>
+
+
                     </div>
-                @endif
-
-                <div class="password-wrapper">
-                    <input type="text" placeholder="Entrer votre émail" name="email" class="input-text"
-                        value="{{ old('email') }}" />
-                </div>
-
-                <div class="password-wrapper">
-                    <input type="password" placeholder="Entrer votre mot de passe" name="password" class="input-text"
-                        value="{{ old('password') }}" />
-                    <button type="button" id="togglePassword" style="background: none; border: none; cursor: pointer;">
-                        <i class="fas fa-eye" id="eyeIcon"></i>  <!-- Default Eye icon -->
-                    </button>
-                </div>
-                
+                    <br>
+                    <div class="forget-password-group"></div>
+                    <input type="submit" value="Se connecter" class="buttonLogin" />
+                </form>
             </div>
-            <div class="forget-password-group"></div>
-            <input type="submit" value="Se connecter" class="input-submit" />
-        </form>
-    </div>
 
-    <!-- Include the JavaScript -->
-    <script src="{{ asset('js/login.js') }}"></script>
+            <!-- Include the JavaScript -->
+            <script src="{{ asset('js/login.js') }}"></script>
+            <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+            <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+            <script src="{{ asset('assets/js/password-login.js') }}"></script>
+
 
 </body>
 
