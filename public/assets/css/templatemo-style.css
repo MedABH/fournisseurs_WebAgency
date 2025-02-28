@@ -434,6 +434,144 @@ th {
 	font-weight: 800;
 }
 
+
+/* kaiadmin.min.css */
+body {
+    min-height: 100vh;
+    position: relative;
+    background: #f5f7fd;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat
+ }
+
+ .chat-contacts .list-group-item.unread {
+    background: #f5f7fd
+ }
+
+ .list-group-messages .list-group-item.unread {
+    background: #f5f7fd
+ }
+
+ body {
+    background: #f5f7fd
+ }
+
+ body[data-background-color=bg1] {
+    background: #f5f7fd
+ }
+
+ .bg-gray1 {
+    background: #f5f7fd !important
+ }
+
+
+ /* motachabik menu */
+ .layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+}
+
+.main-content {
+    flex: 1;
+    margin-left: 200px; /* largeur de la sidebar */
+    margin-top: 60px;   /* hauteur du header */
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 200px; /* largeur de la sidebar */
+    right: 0;
+    height: 60px;
+}
+
+/* Sidebar */
+.app-sidepanel {
+    position: fixed;
+    min-height: 100vh;
+    height: 100%;
+    left: 0;
+    top: 0;
+    font-size: .875rem;
+    border-right: 1px solid #e7e9ed;
+}
+
+.app-sidepanel .panel-drop {
+    display: none;
+}
+
+.app-sidepanel .sidepanel-inner {
+    position: relative;
+    z-index: 10;
+    background: #000; /* Set black background */
+    box-shadow: rgba(0, 0, 0, .05) 0px 8px 15px;
+    width: 250px;
+    height: 100%;
+}
+
+.app-sidepanel .sidepanel-close {
+    display: none;
+    position: absolute;
+    z-index: 20;
+    right: -2rem;
+    top: 0;
+    color: #fff;
+    font-size: 2rem;
+}
+
+.app-sidepanel.sidepanel-hidden {
+    left: -400px;
+}
+
+.app-sidepanel.sidepanel-visible {
+    left: 0;
+}
+
+.app-sidepanel .app-nav-main {
+    overflow-y: auto;
+    scrollbar-color: rgba(0, 0, 0, .1) #e7e9ed;
+    scrollbar-width: thin;
+}
+
+.app-sidepanel .app-nav-main::-webkit-scrollbar {
+    width: 6px;
+    background-color: #e7e9ed;
+}
+
+.app-sidepanel .app-nav-main::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: .5rem;
+}
+
+/* Header */
+.app-header {
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
+    border-bottom: 1px solid #e7e9ed;
+    height: 56px;
+    background: #fff;
+}
+
+
+/* Content */
+.content-wrapper {
+    margin-left: 250px; /* Space for the sidebar */
+    margin-top: 56px;   /* Space for the header */
+    padding: 20px;
+    min-height: 100vh;  /* Ensure the content takes the full height of the page */
+}
+
+
+
+
 @media screen and (max-width: 1199px) and (min-width: 991px) {
 	.templatemo-site-header {
 		margin: 25px;
@@ -460,3 +598,4 @@ th {
 	}
 
 }
+

@@ -2,19 +2,7 @@
 @section('title')
 Les catégories
 @endsection
-@section('search-bar')
-    <form action="{{ route('search.categories') }}" method="GET">
-        <div class="input-group-prepend input-group">
-            <button type="button" class="btn btn-search pe-1">
-                <i class="fa fa-search search-icon" id="fa-search"></i>
-            </button>
 
-            <input type="text" placeholder="Search ..." class="form-control" name="search" />
-
-        </div>
-
-    </form>
-@endsection
 @section('errorContent')
     <script>
         document.addEventListener("DOMContentLoaded", function() {

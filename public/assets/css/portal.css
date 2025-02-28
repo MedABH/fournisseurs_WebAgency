@@ -13899,12 +13899,12 @@
      display: none !important
  }
  
- .app-header {
+ /* {
      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
      border-bottom: 1px solid #e7e9ed;
      height: 56px;
      background: #fff
- }
+ }*/
  
  .app-header-inner {
      position: relative
@@ -14150,7 +14150,7 @@
      }
  }
  
- .app-sidepanel {
+ /*.app-sidepanel {
      position: fixed;
      min-height: 100vh;
      height: 100%;
@@ -14164,15 +14164,15 @@
      display: none
  }
  
- /* Sidebar content background color fix */
+ 
  .app-sidepanel .sidepanel-inner {
      position: relative;
      z-index: 10;
-     background: #000; /* Set black background */
+     background: #000; 
      box-shadow: rgba(0, 0, 0, .05) 0px 8px 15px;
      width: 250px;
      height: 100%;
- }
+ }*/
  
  /* Sidebar on mobile: Update the background color */
  @media (max-width: 1200px) {
@@ -14182,7 +14182,7 @@
  }
  
  
- .app-sidepanel .sidepanel-close {
+ /*.app-sidepanel .sidepanel-close {
      display: none;
      position: absolute;
      z-index: 20;
@@ -14214,7 +14214,7 @@
  .app-sidepanel .app-nav-main::-webkit-scrollbar-thumb {
      background-color: rgba(0, 0, 0, .1);
      border-radius: .5rem
- }
+ }*/
  
  .app-branding {
      height: 60px;
@@ -14435,10 +14435,10 @@
  }
  
  .app-page-title {
-     font-size: 1.5rem;
-     font-weight: bolder;
-     margin-bottom: 1.5rem
- }
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin-bottom: 1.5rem
+}
  
  .app-card {
      position: relative;

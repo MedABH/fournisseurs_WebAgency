@@ -3,169 +3,274 @@
     Profile
 @endsection
 @section('script')
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-    var modalType = document.getElementById('modals').getAttribute('data-error');
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modalType = document.getElementById('modals').getAttribute('data-error');
 
-    if (modalType === 'updatePassword') {
-        var updateModal = new bootstrap.Modal(document.getElementById('editPassword'));
-        updateModal.show();
-    }
-});
-
-</script>
-
+            if (modalType === 'updatePassword') {
+                var updateModal = new bootstrap.Modal(document.getElementById('editPassword'));
+                updateModal.show();
+            }
+        });
+    </script>
 @endsection
 @section('info-edit-user')
-  
-
     <div id="modals" style="display: none" data-error="{{ session('modalType') }}"></div>
-    <div class="container-form-update">
-        <form action="{{route('update.user.auth')}}" method="POST" class="row g-3 needs-validation form-profile" novalidate
-        >
-       @csrf
-       <div class="row">
-        <div class="col-md-4 profile" >
-            <i class="fas fa-user fa-auth" id="icon-user"></i>
-            <h4 style="margin-top:15px">Salut, {{$user->name}}</h4>
 
+
+    <form action="{{ route('update.user.auth') }}" method="POST" class="row g-3 needs-validation form-profile" novalidate>
+        @csrf
+        <div class="container-xl">
+            <h1 class="app-page-title" style="">Mon Compte</h1>
+            <div class="row gy-4">
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+                        <div class="app-card-header p-3 border-bottom-0">
+                            <div class="row align-items-center gx-3">
+                                <div class="col-auto">
+                                    <div class="app-icon-holder">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                                        </svg>
+                                    </div><!--//icon-holder-->
+
+                                </div><!--//col-->
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Profil</h4>
+                                </div><!--//col-->
+                            </div><!--//row-->
+                        </div><!--//app-card-header-->
+                        <div class="app-card-body px-4 w-100">
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Nom</strong></div>
+                                        <input type="text" class="item-data" value="James Doe"
+                                            style="border: none; background: transparent; width: 100%; 
+          font-size: inherit; color: #5d677c; outline: none;">
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Contact</strong></div>
+                                        <input type="tel" class="item-data" value="+17742176808"
+                                            style="border: none; background: transparent; width: 100%; 
+          font-size: inherit; color: #5d677c; outline: none;">
+
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Adresse</strong></div>
+                                        <input type="text" class="item-data"
+                                            value="6730 Solon PikePort Jovanny, VT 78683-4235"
+                                            style="border: none; background: transparent; width: 100%; 
+          font-size: inherit; color: #5d677c; outline: none;">
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Rôle</strong></div>
+                                        <select class="item-data"
+                                            style="border: none; background: transparent; width: 100%; 
+                             font-size: inherit; color: #5d677c; outline: none;">
+                                            <option value="utilisateur">Utilisateur</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="super-admin" selected>Super-Admin</option>
+                                        </select>
+
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                        </div><!--//app-card-body-->
+                        <div class="app-card-footer p-4 mt-auto">
+                            <a class="btn app-btn-secondary" href="#">Mettre à jour Profil</a>
+                        </div><!--//app-card-footer-->
+                    </div><!--//app-card-->
+                </div><!--//col-->
+                <div class="col-12 col-lg-6">
+                    <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
+                        <div class="app-card-header p-3 border-bottom-0">
+                            <div class="row align-items-center gx-3">
+                                <div class="col-auto">
+                                    <div class="app-icon-holder">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-shield-check"
+                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M5.443 1.991a60.17 60.17 0 0 0-2.725.802.454.454 0 0 0-.315.366C1.87 7.056 3.1 9.9 4.567 11.773c.736.94 1.533 1.636 2.197 2.093.333.228.626.394.857.5.116.053.21.089.282.11A.73.73 0 0 0 8 14.5c.007-.001.038-.005.097-.023.072-.022.166-.058.282-.111.23-.106.525-.272.857-.5a10.197 10.197 0 0 0 2.197-2.093C12.9 9.9 14.13 7.056 13.597 3.159a.454.454 0 0 0-.315-.366c-.626-.2-1.682-.526-2.725-.802C9.491 1.71 8.51 1.5 8 1.5c-.51 0-1.49.21-2.557.491zm-.256-.966C6.23.749 7.337.5 8 .5c.662 0 1.77.249 2.813.525a61.09 61.09 0 0 1 2.772.815c.528.168.926.623 1.003 1.184.573 4.197-.756 7.307-2.367 9.365a11.191 11.191 0 0 1-2.418 2.3 6.942 6.942 0 0 1-1.007.586c-.27.124-.558.225-.796.225s-.526-.101-.796-.225a6.908 6.908 0 0 1-1.007-.586 11.192 11.192 0 0 1-2.417-2.3C2.167 10.331.839 7.221 1.412 3.024A1.454 1.454 0 0 1 2.415 1.84a61.11 61.11 0 0 1 2.772-.815z" />
+                                            <path fill-rule="evenodd"
+                                                d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                        </svg>
+                                    </div><!--//icon-holder-->
+
+                                </div><!--//col-->
+                                <div class="col-auto">
+                                    <h4 class="app-card-title">Sécurité</h4>
+                                </div><!--//col-->
+                            </div><!--//row-->
+                        </div><!--//app-card-header-->
+                        <div class="app-card-body px-4 w-100">
+
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Email</strong></div>
+                                        <input type="text" id="displayEmail" class="item-data"
+                                            value="james.doe@website.com" readonly
+                                            style="border: none; background: transparent; width: 100%; 
+                                        font-size: inherit; color: #5d677c; outline: none;">
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                            <div class="item border-bottom py-3">
+                                <div class="justify-content-between align-items-center">
+                                    <div class="">
+                                        <div class="item-label"><strong>Mot de passe</strong></div>
+                                        <input type="password" id="displayPassword" class="item-data" value="••••••••"
+                                            readonly
+                                            style="border: none; background: transparent; width: 100%; 
+                                        font-size: inherit; color: #5d677c; outline: none;">
+                                    </div><!--//col-->
+                                </div><!--//row-->
+                            </div><!--//item-->
+                        </div><!--//app-card-body-->
+
+                        <div class="app-card-footer p-4 mt-auto ">
+                            <!-- Update the button to trigger the modal -->
+                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre
+                                à jour Sécurité</a>
+                        </div><!--//app-card-footer-->
+
+
+
+                        <!-- Overlay noir transparent -->
+                        <div id="overlay"
+                            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 999;">
+                        </div>
+
+
+
+
+                        <div class="" id="securityModal"
+                            style="display: none; position: fixed; top: 50%; left: 50%; 
+                           transform: translate(-50%, -50%); background: white; 
+                           padding: 20px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); 
+                           border-radius: 8px; z-index: 1000; width: 400px;">
+                            <h3 style="color: black; padding-bottom: 2rem;">Modifier la Sécurité</h3>
+
+                            <div class="item border-bottom">
+                                <label>
+                                    <div class="item-label"><strong>Email :</strong></div>
+                                </label>
+                                <input type="email" id="newEmail" placeholder="Nouvel email"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                            </div>
+
+                            <div class="item border-bottom pt-4">
+                                <label>
+                                    <div class="item-label"><strong>Ancien mot de passe :</strong></div>
+                                </label>
+                                <input type="password" id="oldPassword" placeholder="Ancien mot de passe"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                            </div>
+
+                            <div class="item border-bottom pt-4">
+                                <label>
+                                    <div class="item-label"><strong>Nouveau mot de passe :</strong></div>
+                                </label>
+                                <input type="password" id="newPassword" placeholder="Nouveau mot de passe"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                            </div>
+
+                            <div class="item border-bottom pt-4">
+                                <label>
+                                    <div class="item-label"><strong>Confirmer mot de passe :</strong></div>
+                                </label>
+                                <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                            </div>
+
+                            <div class="pt-5">
+                                <button onclick="saveChanges()"
+                                    style="background: green; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 8px;">
+                                    Enregistrer
+                                </button>
+                                <button onclick="closeModal()"
+                                    style="background: red; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 8px;">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store the current password -->
+                        <input type="text" id="currentPassword" value="••••••••" readonly style="display: none;">
+
+                        <script src="assets/js/updateSecurite.js"></script>
+
+                    </div><!--//app-card-->
+                </div><!--//col-->
+            </div><!--//row-->
         </div>
+    </form>
 
-       </div>
-       <div class="row profile" style="margin-top: 10px">
-
-           <div class="col-md-3">
-
-
-               <label class="form-label" style="font-size: 70px;
-                font-weight: bold;">Nom</label>
-               <input type="text" class="form-control" id="updateUserName" name="newName" placeholder="Entrer le nom..."
-                   value="{{ old('newName', $user->name) }}"
-                   style="font-size: 17px">
-
-               @if ($errors->has('newName'))
-                   <span class="text-danger">
-                       {{ $errors->first('newName') }}</span>
-               @endif
-
-
-
-           </div>
-           <div class="col-md-6" >
-               <label class="form-label"v
-               style="font-size: 50px;
-                font-weight: bold;">Email</label>
-               <input type="email" class="form-control" id="updateUserEmail" name="newEmail"
-                   placeholder="Entrer l'email..." value="{{ old('newEmail', $user->email) }}"
-                   style="font-size: 17px">
-
-               @if ($errors->has('newEmail'))
-                   <span class="text-danger">
-                       {{ $errors->first('newEmail') }}</span>
-               @endif
-           </div>
-
-       </div>
-
-
-       <div class="row profile" style="margin-top: 10px">
-           <div class="col-md-3">
-               <label  class="form-label">Contact</label>
-               <input type="text" class="form-control" id="updateUserContact" name="newContact"
-                   placeholder="Entrer le contact..." value="{{ old('newContact', $user->contact) }}"
-                   style="font-size: 17px">
-
-               @if ($errors->has('newContact'))
-                   <span class="text-danger">
-                       {{ $errors->first('newContact') }}</span>
-               @endif
-           </div>
-           <div class="col-md-3">
-               <label class="form-label">Adresse</label>
-               <input type="text" class="form-control" id="updateUserAdresse" name="newAdresse"
-                   placeholder="Entrer l'adresse..." value="{{ old('newAdresse', $user->adresse) }}"
-                   style="font-size: 17px">
-
-               @if ($errors->has('newAdresse'))
-                   <span class="text-danger">
-                       {{ $errors->first('newAdresse') }}</span>
-               @endif
-           </div>
-           <div class="col-md-3">
-               <label  class="form-label">Rôle</label>
-               <input type="text" class="form-control" id="updateUserAdresse" name="newRole"
-                   placeholder="Entrer l'adresse..." value="{{ old('newRole', $user->role) }}"
-                   style="font-size: 17px">
-
-
-               @if ($errors->has('newRole'))
-                   <span class="text-danger">
-                       {{ $errors->first('newRole') }}</span>
-               @endif
-
-           </div>
-
-       </div>
-
-       <div class="col-12">
-           <a href="#" data-bs-toggle="modal" data-bs-target="#editPassword">
-            Voulez-vous changer le mot de passe ?</a>
-       </div>
-       <div class="col-12" style="margin-top: 26px">
-           <button class="btn btn-primary" type="submit">Mettre à jour</button>
-       </div>
-   </form>
-    </div>
 
     <div class="modal fade" id="editPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-            <div class="modal-body" id="modal-body">
-                <form action="{{route('change.password')}}" method="POST">
-                @csrf
-                    <div>
-                        <h3 style="display: flex; justify-content:center; align-items:center">Changer le mot de passe</h3 >
-                    </div>
-                    <div class="">
-                        <label class="form-label">Entrer l'ancien mot de passe</label>
-                        <input type="password" class="form-control " name="password"
-                        placeholder="Entrer le mot de passe...">
-                        @error('password', 'updatePassword')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                      </div>
+                <div class="modal-body" id="modal-body">
+                    <form action="{{ route('change.password') }}" method="POST">
+                        @csrf
+                        <div>
+                            <h3 style="display: flex; justify-content:center; align-items:center">Changer le mot de passe
+                            </h3>
+                        </div>
+                        <div class="">
+                            <label class="form-label">Entrer l'ancien mot de passe</label>
+                            <input type="password" class="form-control " name="password"
+                                placeholder="Entrer le mot de passe...">
+                            @error('password', 'updatePassword')
+                                <span class="text-danger">{{ $message }}</span> <br>
+                            @enderror
+                        </div>
 
-                      <div class="">
-                        <label class="form-label">Entrer le nouveau mot de passe</label>
-                        <input type="password" class="form-control " name="newPassword"
-                        placeholder="Entrer le mot de passe...">
-                        @error('newPassword', 'updatePassword')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                      </div>
+                        <div class="">
+                            <label class="form-label">Entrer le nouveau mot de passe</label>
+                            <input type="password" class="form-control " name="newPassword"
+                                placeholder="Entrer le mot de passe...">
+                            @error('newPassword', 'updatePassword')
+                                <span class="text-danger">{{ $message }}</span> <br>
+                            @enderror
+                        </div>
 
-                      <div class="" style="padding-bottom: 33px">
-                        <label class="form-label">Confirmer le nouveau mot de passe</label>
-                        <input type="password" class="form-control " name="newPassword_confirmation"
-                        placeholder="Confirmer le mot de passe...">
-                        @error('newPassword_confirmation', 'updatePassword')
-                            <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                      </div>
+                        <div class="" style="padding-bottom: 33px">
+                            <label class="form-label">Confirmer le nouveau mot de passe</label>
+                            <input type="password" class="form-control " name="newPassword_confirmation"
+                                placeholder="Confirmer le mot de passe...">
+                            @error('newPassword_confirmation', 'updatePassword')
+                                <span class="text-danger">{{ $message }}</span> <br>
+                            @enderror
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                        </div>
 
-                </form>
+                    </form>
+
+                </div>
 
             </div>
-
-          </div>
         </div>
-      </div>
+    </div>
 @endsection
-
