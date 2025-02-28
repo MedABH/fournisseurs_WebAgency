@@ -27,10 +27,11 @@
     <link rel="stylesheet" href="{{asset('assets/css/portal.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/templatemo-style.css')}}" />
     <script src="assets/js/app.js"></script>
+    <!--
     <script src="assets/plugins/fontawesome/js/all.min.js"></script>
     <script src="assets/plugins/popper.min.js"></script>
     <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-    
+    -->
     
 
     <title>@yield('title')</title>
