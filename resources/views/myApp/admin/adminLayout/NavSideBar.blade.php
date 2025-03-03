@@ -91,30 +91,30 @@
                         <!-- Menu items (inside the sidebar) -->
                         <nav class="templatemo-left-nav">
                             <ul>
-                                <li><a href="{{ route('dashboardSection') }}" class="active"><i
+                                <li><a href="{{ route('dashboardSection') }}" class="{{ request()->routeIs('dashboardSection') ? 'active' : '' }}"><i
                                             class="fa fa-chart-bar fa-fw"></i>
                                         Tableau de bord</a>
                                 </li>
-                                <li><a href="{{ route('usersSection') }}"><i class="fa fa-users fa-fw"></i> Les
+                                <li><a href="{{ route('usersSection') }}" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fa fa-users fa-fw"></i> Les
                                         utilisateurs</a>
                                 </li>
 
 
                                 <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
 
-                                <li><a href="#"><i class="fas fa-users-cog"></i> Parties
+                                <li><a href="#" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fas fa-users-cog"></i> Parties
                                         Prenantes</a></li>
 
 
                                 <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
 
-                                <li><a href="#"><i class="fas fa-list"></i> Les
+                                <li><a href="#" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fas fa-list"></i> Les
                                         classifications</a></li>
 
 
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
 
-                                <li><a href="#"><i class="fas fa-history"></i> Historique
+                                <li><a href="#" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
                                         et Journaux</a></li>
 
 

@@ -47,7 +47,7 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Nom</strong></div>
-                                        <input type="text" class="item-data" value="James Doe"
+                                        <input type="text" class="item-data" value="{{ $user->name }}"
                                             style="border: none; background: transparent; width: 100%; 
           font-size: inherit; color: #5d677c; outline: none;">
                                     </div><!--//col-->
@@ -57,7 +57,8 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Contact</strong></div>
-                                        <input type="tel" class="item-data" value="+17742176808"
+                                        <input type="tel" class="item-data"
+                                            value="{{ old('newContact', $user->contact) }}"
                                             style="border: none; background: transparent; width: 100%; 
           font-size: inherit; color: #5d677c; outline: none;">
 
@@ -69,7 +70,7 @@
                                     <div class="">
                                         <div class="item-label"><strong>Adresse</strong></div>
                                         <input type="text" class="item-data"
-                                            value="6730 Solon PikePort Jovanny, VT 78683-4235"
+                                            value="{{ old('newAdresse', $user->adresse) }}"
                                             style="border: none; background: transparent; width: 100%; 
           font-size: inherit; color: #5d677c; outline: none;">
                                     </div><!--//col-->
@@ -82,9 +83,15 @@
                                         <select class="item-data"
                                             style="border: none; background: transparent; width: 100%; 
                              font-size: inherit; color: #5d677c; outline: none;">
-                                            <option value="utilisateur">Utilisateur</option>
-                                            <option value="admin">Admin</option>
-                                            <option value="super-admin" selected>Super-Admin</option>
+                                            <option value="utilisateur"
+                                                {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
+                                                Utilisateur</option>
+                                            <option value="admin"
+                                                {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                            </option>
+                                            <option value="super-admin"
+                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
+                                                Super-Admin</option>
                                         </select>
 
                                     </div><!--//col-->
@@ -124,7 +131,7 @@
                                     <div class="">
                                         <div class="item-label"><strong>Email</strong></div>
                                         <input type="text" id="displayEmail" class="item-data"
-                                            value="james.doe@website.com" readonly
+                                            value="{{ old('newEmail', $user->email) }}" readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">
                                     </div><!--//col-->
@@ -213,7 +220,7 @@
                         <!-- Hidden field to store the current password -->
                         <input type="text" id="currentPassword" value="••••••••" readonly style="display: none;">
 
-                        <script src="assets/js/updateSecurite.js"></script>
+                        <script src="{{ asset('assets/js/updateSecurite.js') }}"></script>
 
                     </div><!--//app-card-->
                 </div><!--//col-->
