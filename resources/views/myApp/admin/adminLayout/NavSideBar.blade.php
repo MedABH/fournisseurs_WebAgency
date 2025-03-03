@@ -36,6 +36,9 @@
 <body>
     <header class="app-header fixed-top">
         @include('sweetalert::alert', ['cdn' => 'https://cdn.jsdelivr.net/npm/sweetalert2@9'])
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
         <div class="app-header-inner">
             <div class="container-fluid py-2">
                 <div class="app-header-content">
@@ -62,7 +65,7 @@
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="#"
+                                    <li><a class="dropdown-item" href="{{route('logout')}}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se
                                             déconnecter</a></li>
                                 </ul>
@@ -117,7 +120,7 @@
 
                                 <!-- make this page in the first link with conditions ( deja fait ) -->
 
-                                <li><a href="#"
+                                <li><a href="{{route('logout')}}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                             class="fas fa-sign-out-alt"></i> Se déconnecter</a></li>
                             </ul>

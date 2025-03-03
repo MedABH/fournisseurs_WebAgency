@@ -563,7 +563,7 @@ body {
     background: #fff;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
     border-bottom: 1px solid #e7e9ed;
-    z-index: 2000; /* Ensure header stays on top of content */
+    
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -576,9 +576,17 @@ body {
     padding: 20px;
     min-height: 100vh;  /* Ensure the content takes the full height of the page */
     position: relative;
-    z-index: 1; /* Ensure content is below the header and sidebar */
+    
 }
 
+.app-user-dropdown {
+    display: inline-block
+}
+
+.app-user-dropdown img {
+    width: 36px;
+    height: 36px
+}
 
 
 @media screen and (max-width: 1199px) and (min-width: 991px) {

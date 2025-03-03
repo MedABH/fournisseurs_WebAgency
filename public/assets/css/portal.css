@@ -14080,14 +14080,6 @@
      height: 20px
  }
  
- .app-user-dropdown {
-     display: inline-block
- }
- 
- .app-user-dropdown img {
-     width: 36px;
-     height: 36px
- }
  
  @media(min-width: 576px) {
      .app-notifications-dropdown .dropdown-menu {
