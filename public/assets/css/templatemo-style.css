@@ -503,6 +503,7 @@ body {
     top: 0;
     font-size: .875rem;
     border-right: 1px solid #e7e9ed;
+    z-index: 1000; /* Ensure sidebar stays on top */
 }
 
 .app-sidepanel .panel-drop {
@@ -554,21 +555,29 @@ body {
 
 /* Header */
 .app-header {
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
-    border-bottom: 1px solid #e7e9ed;
+    position: fixed;
+    top: 0;
+    left: 262px; /* Account for the width of the sidebar */
+    width: calc(100% - 262px); /* Adjust width */
     height: 56px;
     background: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
+    border-bottom: 1px solid #e7e9ed;
+    z-index: 2000; /* Ensure header stays on top of content */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }
-
 
 /* Content */
 .content-wrapper {
-    margin-left: 250px; /* Space for the sidebar */
-    margin-top: 56px;   /* Space for the header */
+    margin-left: 262px; /* Space for the sidebar */
+    margin-top: 76px;   /* Space for the header */
     padding: 20px;
     min-height: 100vh;  /* Ensure the content takes the full height of the page */
+    position: relative;
+    z-index: 1; /* Ensure content is below the header and sidebar */
 }
-
 
 
 

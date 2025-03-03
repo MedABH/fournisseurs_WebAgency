@@ -89,7 +89,7 @@
                         <nav class="templatemo-left-nav">
                             <ul>
                                 <li><a href="{{ route('dashboardSection') }}" class="active"><i
-                                            class="fa fa-home fa-fw"></i>
+                                            class="fa fa-chart-bar fa-fw"></i>
                                         Tableau de bord</a>
                                 </li>
                                 <li><a href="{{ route('usersSection') }}"><i class="fa fa-users fa-fw"></i> Les
