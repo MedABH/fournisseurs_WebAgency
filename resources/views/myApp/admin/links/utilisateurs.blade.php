@@ -1,409 +1,342 @@
-   @extends('myApp.admin.adminLayout.adminPage')
-
-   @section('title')
-       Les utilisateurs
-   @endsection
-
-   
-   @section('errorContent')
-       <script>
-           document.addEventListener("DOMContentLoaded", function() {
-               var modalType = document.getElementById('modals').getAttribute('data-error');
-
-               if (modalType === 'update') {
-                   var updateModal = new bootstrap.Modal(document.getElementById('updateUserModal'));
-                   updateModal.show();
-               } else if (modalType === 'default') {
-                   var addModal = new bootstrap.Modal(document.getElementById('ModalAddUser'));
-                   addModal.show();
-               }
-           });
-       </script>
-   @endsection
-   @section('content')
-       <div id="modals" style="display:none;" data-error="{{ session('modalType') }}"></div>
-
-
-       <div>
-           <form action="/addUser" method="POST">
-               @csrf
-               <div class="modal fade" id="ModalAddUser" tabindex="-1" aria-labelledby="ModalAddUserLabel"
-                   aria-hidden="true">
-                   <div class="modal-dialog">
-                       <div class="modal-content">
-                           <div class="modal-header">
-                               <h5 class="modal-title" id="exampleModalLabel">Ajouter un utilisateur</h5>
-                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                           </div>
-                           <div class="modal-body">
-                               <div class="form-group">
-                                   <label class="form-label">Nom</label>
-                                   <input type="text" class="form-control " name="name" placeholder="Entrer le nom..."
-                                       value="{{ old('name') }}">
-                                   @error('name', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-                                   <label class="form-label">Email</label>
-                                   <input type="email" class="form-control " name="email"
-                                       placeholder="Entrer l'émail..." value="{{ old('email') }}" />
-                                   @error('email', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-
-                                   <label class="col-sm-1 col-form-label form-label">Mot de passe</label>
-                                   <input type="password" class="form-control " name="password"
-                                       placeholder="Entrer le mot de passe...">
-                                   @error('password', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-
-                                   <label class="col-sm-1 col-form-label form-label"> Confirmer le mot de passe</label>
-                                   <input type="password" class="form-control " name="password_confirmation"
-                                       placeholder="Confirmer votre mot de passe...">
-                                   @error('password_confirmation', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-
-                                   <label class="form-label">Adresse</label>
-                                   <input type="text" class="form-control " name="adresse"
-                                       placeholder="Entrer l'adresse..." value="{{ old('adresse') }}" />
-                                   @error('adresse', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-                                   <label class="form-label">Contact</label>
-                                   <input type="text" class="form-control " name="contact"
-                                       placeholder="Entrer le contact..." value="{{ old('contact') }}" />
-                                   @error('contact', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-
-
-                                   <label class="form-label">Role</label>
-                                   <select id="" class="form-select form-select-sm"
-                                       aria-label=".form-select-sm example" name="role" style="height: 39px">
-                                       <option value="">Selectionner le rôle</option>
-                                       <option value="super-admin" {{ old('role') == 'super-admin' ? 'selected' : '' }}>
-                                           super-admin</option>
-                                       <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>admin</option>
-                                       <option value="utilisateur" {{ old('role') == 'utilisateur' ? 'selected' : '' }}>
-                                           utilisateur</option>
-                                   </select>
-                                   @error('role', 'default')
-                                       <span class="text-danger">{{ $message }}</span> <br>
-                                   @enderror
-
-
-
-                               </div>
-                           </div>
-                           <div class="modal-footer">
-                               <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
-                           </div>
-                       </div>
-                   </div>
-               </div>
-
-           </form>
-
-
-
-
-
-
-           <div class="page-inner">
-               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAddUser">
-                   Ajouter les utilisateurs
-               </button>
-               <a href="{{ route('users.pdf') }}" class="btn btn-primary" style="margin-left: 975px">
-                   <i class="fas fa-file-pdf"></i>
-               </a>
-
-               <div class="row">
-                   <div class="col-md-12">
-                       <div class="card">
-                           <div class="card-header">
-                               <h4 class="card-title">Les utilisateurs</h4>
-                           </div>
-                           <div class="card-body">
-                               <div class="table-responsive">
-                                   <table id="basic-datatables" class="display table table-striped table-hover">
-                                       <thead>
-                                           <tr>
-                                               <th>Nom complet</th>
-                                               <th>Email</th>
-                                               <th>Contact</th>
-                                               <th>Adresse</th>
-                                               <th>Rôle</th>
-                                               <th rowspan="2"></th>
-                                           </tr>
-                                       </thead>
-
-
-                                       <tbody>
-
-                                           @foreach ($users as $user)
-                                               <tr>
-                                                   <td>{{ $user->name }}</td>
-                                                   <td>{{ $user->email }}</td>
-                                                   <td>{{ $user->contact }}</td>
-                                                   <td>{{ $user->adresse }}</td>
-                                                   <td>{{ $user->role }}</td>
-                                                   <td>
-                                                       <a class="btn btn-primary" data-bs-toggle="modal"
-                                                           data-bs-target="#updateUserModal"
-                                                           data-id="{{ $user->id }}" data-name="{{ $user->name }}"
-                                                           data-email="{{ $user->email }}"
-                                                           data-contact="{{ $user->contact }}"
-                                                           data-adresse="{{ $user->adresse }}"
-                                                           data-role="{{ $user->role }}">
-                                                           Modifier
-                                                       </a>
-                                                   </td>
-                                                   <div class="modal fade" id="updateUserModal" tabindex="-1"
-                                                       aria-labelledby="updateUserModalLabel" aria-hidden="true">
-                                                       <div class="modal-dialog">
-                                                           <div class="modal-content">
-                                                               <form action="/updateUser" method="POST">
-                                                                   @csrf
-
-                                                                   <div class="modal-header">
-                                                                       <h5 class="modal-title" id="updateUserModalLabel">
-                                                                           Modifier l'utilisateur</h5>
-                                                                       <button type="button" class="btn-close"
-                                                                           data-bs-dismiss="modal"
-                                                                           aria-label="Close"></button>
-                                                                   </div>
-                                                                   <div class="modal-body">
-                                                                       <div class="form-group">
-                                                                           <input type="hidden" name="id"
-                                                                               value="{{ $user->id }}"
-                                                                               id="updateUserId">
-
-                                                                           <div>
-                                                                               <label class="form-label">Nom</label>
-                                                                               <input type="text" class="form-control"
-                                                                                   id="updateUserName" name="newName"
-                                                                                   placeholder="Entrer le nom..."
-                                                                                   value="{{ old('newName', $user->name) }}">
-
-                                                                               @if ($errors->has('newName'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newName') }}</span>
-                                                                               @endif
-
-
-                                                                           </div>
-                                                                           <div>
-                                                                               <label class="form-label">Email</label>
-                                                                               <input type="email" class="form-control"
-                                                                                   id="updateUserEmail" name="newEmail"
-                                                                                   placeholder="Entrer l'email..."
-                                                                                   value="{{ old('newEmail', $user->email) }}">
-
-                                                                               @if ($errors->has('newEmail'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newEmail') }}</span>
-                                                                               @endif
-
-                                                                           </div>
-                                                                           <div>
-                                                                               <label class="form-label">Adresse</label>
-                                                                               <input type="text" class="form-control"
-                                                                                   id="updateUserAdresse"
-                                                                                   name="newAdresse"
-                                                                                   placeholder="Entrer l'adresse..."
-                                                                                   value="{{ old('newAdresse', $user->adresse) }}">
-
-                                                                               @if ($errors->has('newAdresse'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newAdresse') }}</span>
-                                                                               @endif
-
-                                                                           </div>
-                                                                           <div>
-                                                                               <label class="form-label">Contact</label>
-                                                                               <input type="text" class="form-control"
-                                                                                   id="updateUserContact"
-                                                                                   name="newContact"
-                                                                                   placeholder="Entrer le contact..."
-                                                                                   value="{{ old('newContact', $user->contact) }}">
-
-                                                                               @if ($errors->has('newContact'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newContact') }}</span>
-                                                                               @endif
-                                                                           </div>
-                                                                           <div>
-                                                                               <label class="form-label">Role</label>
-                                                                               <select id="updateUserRole"
-                                                                                   class="form-select form-select-sm"
-                                                                                   aria-label=".form-select-sm example"
-                                                                                   name="newRole" style="height: 39px">
-
-                                                                                   <option value="super-admin"
-                                                                                       {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
-                                                                                       super-admin
-                                                                                   </option>
-                                                                                   <option value="admin"
-                                                                                       {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>
-                                                                                       admin
-                                                                                   </option>
-                                                                                   <option value="utilisateur"
-                                                                                       {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
-                                                                                       utilisateur
-                                                                                   </option>
-                                                                               </select>
-                                                                               @if ($errors->has('newRole'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newRole') }}</span>
-                                                                               @endif
-
-                                                                           </div>
-                                                                           <div class="">
-                                                                               <label class="form-label">Entrer le mot de
-                                                                                   passe</label>
-                                                                               <input type="password" class="form-control"
-                                                                                   name="newPassword"
-                                                                                   placeholder="Entrer le mot de passe...">
-                                                                               @if ($errors->has('newPassword'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newPassword') }}</span>
-                                                                               @endif
-
-
-                                                                           </div>
-
-                                                                           <div class="">
-                                                                               <label class="form-label">Confirmer le mot
-                                                                                   de passe</label>
-                                                                               <input type="password"
-                                                                                   class="form-control "
-                                                                                   name="newPassword_confirmation"
-                                                                                   placeholder="Confirmer le mot de passe...">
-                                                                               @if ($errors->has('newPassword_confirmation'))
-                                                                                   <span class="text-danger">
-                                                                                       {{ $errors->first('newPassword_confirmation') }}</span>
-                                                                               @endif
-                                                                           </div>
-
-
-
-
-
-
-                                                                       </div>
-                                                                   </div>
-                                                                   <div class="modal-footer">
-                                                                       <button type="submit"
-                                                                           class="btn btn-primary">Ajouter</button>
-                                                                   </div>
-
-                                                               </form>
-                                                           </div>
-                                                       </div>
-
-
-                                                   </div>
-
-                                                   <td>
-                                                       <a>
-                                                           <form action="{{ route('user.destroy', $user->id) }}"
-                                                               id="delete-form-{{ $user->id }}" method="POST"
-                                                               style="display: inline;">
-                                                               @csrf
-                                                               @method('DELETE')
-                                                               <button type="button" class="btn btn-danger"
-                                                                   onclick="confirmDelete({{ $user->id }})">Supprimer</button>
-                                                           </form>
-                                                       </a>
-                                                   </td>
-
-
-                                               </tr>
-                                           @endforeach
-
-                                           <div class="modal fade" id="ModalUserDetail" tabindex="-1"
-                                               aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                               <div class="modal-dialog">
-                                                   <div class="modal-content">
-                                                       <div class="modal-header">
-                                                           <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                           <button type="button" class="btn-close"
-                                                               data-bs-dismiss="modal" aria-label="Close"></button>
-                                                       </div>
-                                                       <div class="modal-body">
-                                                           <div class="show-info-user show-name-user">
-                                                               <label class="label-detail-user">Nom</label>
-                                                               <h6 class="info-user" id="showNameUser"></h6>
-                                                           </div>
-                                                           <div class="show-info-user show-email-user">
-                                                               <label class="label-detail-user">Email</label>
-                                                               <h6 class="info-user" id="showEmailUser"></h6>
-                                                           </div>
-                                                           <div class="show-info-user show-contact-user">
-                                                               <label class="label-detail-user">Contact</label>
-                                                               <h6 class="info-user" id="showContactUser"></h6>
-                                                           </div>
-                                                           <div class="show-info-user show-adress-user">
-                                                               <label class="label-detail-user">Adresse</label>
-                                                               <h6 class="info-user" id="showAdressUser"></h6>
-                                                           </div>
-                                                           <div class="show-info-user show-adress-role">
-                                                               <label class="label-detail-user">Rôle</label>
-                                                               <h6 class="info-user" id="showRoleUser"></h6>
-                                                           </div>
-
-                                                       </div>
-                                                       <div class="modal-footer">
-                                                           <button type="button" class="btn btn-info "
-                                                               data-bs-dismiss="modal">Fermer</button>
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                           </div>
-
-
-
-
-
-                                       </tbody>
-                                   </table>
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-
-
-
-                   <div class="d-flex justify-content-between align-items-center">
-                    @if ($users->total() >= 10)
-                       <form id="pagination-form" action="{{ route('users.pagination') }}" method="GET"
-                           class="d-inline-flex">
-                           @csrf
-                           <select name="per_page" id="perPage" class="form-select form-select-sm"
-                               onchange="document.getElementById('pagination-form').submit();">
-                               <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                               <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                               <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
-                               <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
-                               <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                               <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
-                           </select>
-                       </form>
-
-
-               @endif
-               <div>
-                {{ $users->links('vendor.pagination.bootstrap-4') }}
-
-               </div>
-           </div>
-
-
-
-           </div>
-       @endsection
+@extends('myApp.admin.adminLayout.adminPage')
+
+@section('search-bar')
+    <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-auto">
+            <h1 class="app-page-title mb-0">Les Utilisateurs</h1>
+        </div>
+        <div class="col-auto">
+            <div class="page-utilities">
+                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                    <div class="col-auto">
+                        <form action="{{ route('search.users') }}" method="GET" class="table-search-form row gx-1 align-items-center">
+                            <div class="col-auto">
+                                <input type="text" name="search"
+                                    class="form-control search-orders" placeholder="Search ... ">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn app-btn-secondary">Search</button>
+                            </div>
+                        </form>
+
+                    </div><!--//col-->
+
+                    <div class="col-auto">
+                        <a class="btn app-btn-secondary" href="#">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                <path fill-rule="evenodd"
+                                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                            </svg>
+
+                        </a>
+                    </div>
+                </div><!--//row-->
+            </div><!--//table-utilities-->
+        </div><!--//col-auto-->
+    </div><!--//row-->
+
+
+@endsection
+@section('errorContent')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var modalType = document.getElementById('modals').getAttribute('data-error');
+
+            if (modalType === 'update') {
+                var updateModal = new bootstrap.Modal(document.getElementById('updateUserModal'));
+                updateModal.show();
+            } else if (modalType === 'default') {
+                var addModal = new bootstrap.Modal(document.getElementById('ModalAddUser'));
+                addModal.show();
+            }
+        });
+    </script>
+@endsection
+@section('content')
+                <div id="modals" style="display:none;" data-error="{{ session('modalType') }}"></div>
+
+
+                <div>
+                    <form action="/addUser" method="POST">
+                        @csrf
+                        <div class="modal fade" id="ModalAddUser" tabindex="-1" aria-labelledby="ModalAddUserLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un utilisateur
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Nom</strong></label>
+                                            <input type="text" class="form-control" name="name" placeholder="Entrer le nom..."
+                                                value="{{ old('name') }}">
+                                            @error('name', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Email</strong></label>
+                                            <input type="email" class="form-control" name="email" placeholder="Entrer l'email..."
+                                                value="{{ old('email') }}">
+                                            @error('email', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Mot de
+                                                    passe</strong></label>
+                                            <input type="password" class="form-control" name="password"
+                                                placeholder="Entrer le mot de passe...">
+                                            @error('password', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Confirmer le mot de passe</strong></label>
+                                            <input type="password" class="form-control" name="password_confirmation"
+                                                placeholder="Confirmer votre mot de passe...">
+                                            @error('password_confirmation', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Adresse</strong></label>
+                                            <input type="text" class="form-control" name="address" placeholder="Entrer l'adresse..."
+                                                value="{{ old('adresse') }}">
+                    
+                                            @error('adresse', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Contact</strong></label>
+                                            <input type="tel" class="form-control" name="contact" placeholder="Entrer le contact..."
+                                                value="{{ old('contact') }}">
+                                            @error('contact', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="mb-3">
+                                            <label class="form-label"><strong class="det">Rôle</strong></label>
+                                            <select class="form-select" id="" name="role" style="color: #5d677c;">
+                                                <option value="">Sélectionner le rôle</option>
+                                                <option value="admin" {{ old('role')=='admin' ? 'selected' : '' }}>Admin</option>
+                                                <option value="utilisateur" {{ old('role')=='utilisateur' ? 'selected' : '' }}>Utilisateur
+                                                </option>
+                                                <option value="super-admin" {{ old('role')=='super-admin' ? 'selected' : '' }}>Super Admin
+                                                </option>
+                                            </select>
+                                            @error('role', 'default')
+                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            @enderror
+                                        </div>
+                    
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-success" data-bs-dismiss="modal"
+                                                value="Ajouter">Ajouter</button>
+                                        </div>
+                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                    <div class="tab-content" id="orders-table-tab-content">
+                        <div class="tab-pane fade show active" id="orders-all" role="tabpanel"
+                            aria-labelledby="orders-all-tab">
+                            <div class="app-card app-card-orders-table shadow-sm mb-5">
+                                <div class="app-card-body">
+                                    <div class="table-responsive">
+                                        <table id="basic-datatables" class="table app-table-hover mb-0 text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="cell">Nom complet</th>
+                                                        <th class="cell">Email</th>
+                                                        <th class="cell">Contact</th>
+                                                        <th class="cell">Adresse</th>
+                                                        <th class="cell">Rôle</th>
+                                                        <th class="cell text-end"><button type="button" class="btn app-btn-secondary"
+                                                            data-bs-toggle="modal" data-bs-target="#ModalAddUser">
+                                                            Ajouter
+                                                        </button></th>
+                                                      
+                                                    </tr>
+                                                </thead>
+
+
+                                                <tbody>
+
+                                                    @foreach ($users as $user)
+                                                    <tr>
+                                                        <td class="cell">{{ $user->name }}</td>
+                                                        <td class="cell">{{ $user->email }}</td>
+                                                        <td class="cell">{{ $user->contact }}</td>
+                                                        <td class="cell">{{ $user->adresse }}</td>
+                                                        <td class="cell">{{ $user->role }}</td>
+                                                        <td><button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                data-bs-target="#updateUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                                                data-email="{{ $user->email }}" data-contact="{{ $user->contact }}" data-adresse="{{ $user->adresse }}"
+                                                                data-role="{{ $user->role }}">Modifier</button>
+                                                                <a>
+                                                                    <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-{{ $user->id }}" method="POST"
+                                                                        style="display: inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="button" class="btn btn-outline-danger border-btn"
+                                                                            onclick="confirmDelete({{ $user->id }})">Supprimer</button>
+                                                                    </form>
+                                                                </a>
+                                                        </td>
+                                                        <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="updateUserModalLabel">Modifier
+                                                                            l'utilisateur</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="id" value="{{ $user->id }}" id="updateUserId">
+                                                                        <form>
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Nom</strong></label>
+                                                                                <input type="text" class="form-control" id="updateUserName" name="newName"
+                                                                                    placeholder="Entrer le nom..." value="{{ old('newName', $user->name) }}">
+                                                                                @if ($errors->has('newName'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newName') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Email</strong></label>
+                                                                                <input type="email" class="form-control" id="updateUserEmail" name="newEmail"
+                                                                                    placeholder="Entrer l'email..." value="{{ old('newEmail', $user->email) }}">
+                                                                                @if ($errors->has('newEmail'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newEmail') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Adresse</strong></label>
+                                                                                <input type="text" class="form-control" id="updateUserAdresse" name="newAdresse"
+                                                                                    placeholder="Entrer l'adresse..." value="{{ old('newAdresse', $user->adresse) }}">
+                                                                                @if ($errors->has('newAdresse'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newAdresse') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Contact</strong></label>
+                                                                                <input type="tel" class="form-control" id="updateUserContact" name="newContact"
+                                                                                    placeholder="Entrer le contact..." value="{{ old('newContact', $user->contact) }}">
+                                                                                @if ($errors->has('newContact'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newContact') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Rôle</strong></label>
+                                                                                <select id="updateUserRole" class="form-select" name="newRole" style="color: #5d677c;">
+                                                                                    <option value="admin" {{ old('newRole', $user->role) == 'admin' ? 'selected' : ''
+                                                                                        }}>Admin</option>
+                                                                                    <option value="utilisateur" {{ old('newRole', $user->role) == 'utilisateur' ?
+                                                                                        'selected'
+                                                                                        : '' }}>Utilisateur</option>
+                                                                                    <option value="super-admin" {{ old('newRole', $user->role) == 'super-admin' ?
+                                                                                        'selected'
+                                                                                        : '' }}>Super Admin</option>
+                                                                                </select>
+                                                                                @if ($errors->has('newRole'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newRole') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Entrer le mot de
+                                                                                        passe</strong></label>
+                                                                                <input type="password" class="form-control" name="newPassword"
+                                                                                    placeholder="Entrer le mot de passe...">
+                                                                                @if ($errors->has('newPassword'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newPassword') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <label class="form-label"><strong class="det">Confirmer
+                                                                                        le mot de passe</strong></label>
+                                                                                <input type="password" class="form-control" name="newPassword_confirmation"
+                                                                                    placeholder="Confirmer le mot de passe...">
+                                                                                @if ($errors->has('newPassword_confirmation'))
+                                                                                <span class="text-danger">
+                                                                                    {{ $errors->first('newPassword_confirmation') }}</span>
+                                                                                @endif
+                                                                            </div>
+                                                
+                                                                            <div class="d-grid">
+                                                                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            @if ($users->total() >= 10)
+                                <form id="pagination-form" action="{{ route('users.pagination') }}" method="GET"
+                                    class="d-inline-flex">
+                                    @csrf
+                                    <select name="per_page" id="perPage" class="form-select form-select-sm"
+                                        onchange="document.getElementById('pagination-form').submit();">
+                                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                                        <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                                        <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
+                                        <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
+                                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                                        <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
+                                    </select>
+                                </form>
+                            @endif
+                            <div>
+                                {{ $users->links('vendor.pagination.bootstrap-4') }}
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+@endsection
 
        @section('script')
            <script>

@@ -25,6 +25,7 @@
     </div>
 
     <div class="content-wrapper">
+    @yield('search-bar')
     @yield('content')
     @yield('errorContent')
     @yield('script')

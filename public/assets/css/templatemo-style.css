@@ -410,6 +410,12 @@ footer {
     margin: 10px 0; /* Spacing similar to an <hr> */
 }
 
+
+.det{
+    color: #1f2124;
+    font-size: 14px;
+}
+
 .border-btn {
     border-radius: 1cap;
     border-style: inherit;
