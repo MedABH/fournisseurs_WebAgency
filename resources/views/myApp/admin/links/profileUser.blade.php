@@ -93,7 +93,6 @@
                                                 {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
                                                 Super-Admin</option>
                                         </select>
-
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -141,7 +140,7 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Mot de passe</strong></div>
-                                        <input type="password" id="displayPassword" class="item-data" value="••••••••"
+                                        <input type="password" id="displayPassword" class="item-data" value="{{ old('newPassword', $user->password) }}"
                                             readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">

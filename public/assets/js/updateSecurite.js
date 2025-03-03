@@ -32,7 +32,7 @@ function saveChanges() {
 
     // Update the readonly fields with the new email and password hash (showing just the hashed password for security)
     document.getElementById("displayEmail").value = email;
-    document.getElementById("displayPassword").value = "••••••••"; // You could implement an actual hash here.
+    document.getElementById("displayPassword").value = password; // You could implement an actual hash here.
 
     // Close the modal after saving
     closeModal();
