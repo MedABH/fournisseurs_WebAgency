@@ -111,7 +111,8 @@ Route::post('/fournisseurClient/{id}', [FournisseurClientController::class, 'fou
 // Routes pour la mise à jour du profil utilisateur
 Route::get('/updateAuth', [ProfileAuthController::class, 'showUpdateForm'])->name('update.user.auth.form')->middleware('auth');
 Route::post('/updateAuth', [ProfileAuthController::class, 'updateUser'])->name('update.user.auth')->middleware('auth');
-Route::post('/changePassword', [ProfileAuthController::class, 'changePassword'])->name('change.password')->middleware('auth');
+/*Route::post('/changePassword', [ProfileAuthController::class, 'changePassword'])->name('change.password')->middleware('auth');*/
+Route::post('/update-security', [ProfileAuthController::class, 'updateSecurity'])->name('updateSecurity')->middleware('auth');
 
 // Pagination
 Route::get('/users/pagination', [UserController::class, 'index'])->name('users.pagination');

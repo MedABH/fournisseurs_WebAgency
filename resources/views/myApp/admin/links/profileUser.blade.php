@@ -117,6 +117,12 @@
                         </div><!--//app-card-footer-->
                     </div><!--//app-card-->
                 </div><!--//col-->
+
+
+
+
+
+
                 <div class="col-12 col-lg-6">
                     <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
                         <div class="app-card-header p-3 border-bottom-0">
@@ -148,6 +154,7 @@
                                             value="{{ old('newEmail', $user->email) }}" readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">
+
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -155,10 +162,11 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Mot de passe</strong></div>
-                                        <input type="password" id="displayPassword" class="item-data"
-                                            value="{{ old('newPassword', $user->password) }}" readonly
+                                        <input type="password" id="displayPassword" class="item-data" value="••••••••"
+                                            readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">
+
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -166,9 +174,10 @@
 
                         <div class="app-card-footer p-4 mt-auto ">
                             <!-- Update the button to trigger the modal -->
-                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre
-                                à jour Sécurité</a>
+                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre à
+                                jour Sécurité</a>
                         </div><!--//app-card-footer-->
+
 
 
 
@@ -234,63 +243,12 @@
                         <!-- Hidden field to store the current password -->
                         <input type="text" id="currentPassword" value="••••••••" readonly style="display: none;">
 
-                        <script src="{{ asset('assets/js/updateSecurite.js') }}"></script>
+                        
 
                     </div><!--//app-card-->
                 </div><!--//col-->
             </div><!--//row-->
         </div>
     </form>
-
-    <div class="modal fade" id="editPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body" id="modal-body">
-                    <form action="{{ route('change.password') }}" method="POST">
-                        @csrf
-                        <div>
-                            <h3 style="display: flex; justify-content:center; align-items:center">Changer le mot de passe
-                            </h3>
-                        </div>
-                        <div class="">
-                            <label class="form-label">Entrer l'ancien mot de passe</label>
-                            <input type="password" class="form-control " name="password"
-                                placeholder="Entrer le mot de passe...">
-                            @error('password', 'updatePassword')
-                                <span class="text-danger">{{ $message }}</span> <br>
-                            @enderror
-                        </div>
-
-                        <div class="">
-                            <label class="form-label">Entrer le nouveau mot de passe</label>
-                            <input type="password" class="form-control " name="newPassword"
-                                placeholder="Entrer le mot de passe...">
-                            @error('newPassword', 'updatePassword')
-                                <span class="text-danger">{{ $message }}</span> <br>
-                            @enderror
-                        </div>
-
-                        <div class="" style="padding-bottom: 33px">
-                            <label class="form-label">Confirmer le nouveau mot de passe</label>
-                            <input type="password" class="form-control " name="newPassword_confirmation"
-                                placeholder="Confirmer le mot de passe...">
-                            @error('newPassword_confirmation', 'updatePassword')
-                                <span class="text-danger">{{ $message }}</span> <br>
-                            @enderror
-                        </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <script defer src="{{ asset('assets/js/updateSecurite.js') }}"></script>
 @endsection
