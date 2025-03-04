@@ -17,7 +17,6 @@
 @section('info-edit-user')
     <div id="modals" style="display: none" data-error="{{ session('modalType') }}"></div>
 
-
     <form action="{{ route('update.user.auth') }}" method="POST" class="row g-3 needs-validation form-profile" novalidate>
         @csrf
         <div class="container-xl">
@@ -47,9 +46,14 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Nom</strong></div>
-                                        <input type="text" class="item-data" value="{{ $user->name }}"
+                                        <input type="text" id="newName" name="newName" class="item-data"
+                                            value="{{ old('newName', $user->name) }}"
                                             style="border: none; background: transparent; width: 100%; 
-          font-size: inherit; color: #5d677c; outline: none;">
+          font-size: inherit; color: #5d677c; outline: none;"
+                                            required>
+                                        @error('newName')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -57,10 +61,13 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Contact</strong></div>
-                                        <input type="tel" class="item-data"
+                                        <input type="tel" id="newContact" name="newContact" class="item-data"
                                             value="{{ old('newContact', $user->contact) }}"
                                             style="border: none; background: transparent; width: 100%; 
           font-size: inherit; color: #5d677c; outline: none;">
+                                        @error('newContact')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
 
                                     </div><!--//col-->
                                 </div><!--//row-->
@@ -69,10 +76,13 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Adresse</strong></div>
-                                        <input type="text" class="item-data"
+                                        <input type="text" id="newAdresse" name="newAdresse" class="item-data"
                                             value="{{ old('newAdresse', $user->adresse) }}"
                                             style="border: none; background: transparent; width: 100%; 
           font-size: inherit; color: #5d677c; outline: none;">
+                                        @error('newAdresse')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -80,25 +90,30 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Rôle</strong></div>
-                                        <select class="item-data"
+                                        <select id="newRole" name="newRole" class="item-data"
                                             style="border: none; background: transparent; width: 100%; 
                              font-size: inherit; color: #5d677c; outline: none;">
-                                            <option value="utilisateur"
-                                                {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
-                                                Utilisateur</option>
+                                            <option value="super-admin"
+                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>Super
+                                                Admin</option>
                                             <option value="admin"
                                                 {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>Admin
                                             </option>
-                                            <option value="super-admin"
-                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
-                                                Super-Admin</option>
+                                            <option value="utilisateur"
+                                                {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
+                                                Utilisateur</option>
                                         </select>
+                                        @error('newRole')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
                         </div><!--//app-card-body-->
                         <div class="app-card-footer p-4 mt-auto">
-                            <a class="btn app-btn-secondary" href="#">Mettre à jour Profil</a>
+                            <!--<a class="btn app-btn-secondary" href="#" onclick="updateProfile()">Mettre à jour Profil</a>-->
+                            <button class="btn app-btn-secondary" type="submit">Mettre à jour
+                                Profil</button>
                         </div><!--//app-card-footer-->
                     </div><!--//app-card-->
                 </div><!--//col-->
@@ -140,8 +155,8 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Mot de passe</strong></div>
-                                        <input type="password" id="displayPassword" class="item-data" value="{{ old('newPassword', $user->password) }}"
-                                            readonly
+                                        <input type="password" id="displayPassword" class="item-data"
+                                            value="{{ old('newPassword', $user->password) }}" readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">
                                     </div><!--//col-->
@@ -159,7 +174,7 @@
 
                         <!-- Overlay noir transparent -->
                         <div id="overlay"
-                            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.7); z-index: 999;">
+                            style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 9998;">
                         </div>
 
 
@@ -169,7 +184,7 @@
                             style="display: none; position: fixed; top: 50%; left: 50%; 
                            transform: translate(-50%, -50%); background: white; 
                            padding: 20px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); 
-                           border-radius: 8px; z-index: 1000; width: 400px;">
+                           border-radius: 8px; z-index: 9999; width: 400px;">
                             <h3 style="color: black; padding-bottom: 2rem;">Modifier la Sécurité</h3>
 
                             <div class="item border-bottom">
@@ -226,7 +241,6 @@
             </div><!--//row-->
         </div>
     </form>
-
 
     <div class="modal fade" id="editPassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

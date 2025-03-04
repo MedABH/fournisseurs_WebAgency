@@ -10,21 +10,22 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileAuthController extends Controller
 {
-
-    public function showUpdateForm () {
+    public function showUpdateForm()
+    {
         $user = Auth::user();
-        return view('myApp.admin.links.profileUser',compact('user'));
+        return view('myApp.admin.links.profileUser', compact('user'));
     }
+
     public function updateUser(Request $request)
     {
         $rules = [
             'newName' => 'required|string|max:155',
             'newContact' => 'required|string|max:50',
             'newAdresse' => 'required|string|max:266',
-            'newEmail' => 'required|email|string|max:266' ,
-            'newRole' =>'required|string|in:super-admin,admin,utilisateur',
+            'newEmail' => 'required|email|string|max:266',
+            'newRole' => 'required|string|in:super-admin,admin,utilisateur',
         ];
-
+    
         $parametres = [
             'newName.required' => 'Le nom est obligatoire!',
             'newContact.required' => 'Le contact est obligatoire!',
@@ -33,49 +34,51 @@ class ProfileAuthController extends Controller
             'role.required' => "Le rôle est obligatoire!",
             'role.in' => "Le rôle sélectionné n'est pas valide!",
         ];
-
+    
         $validator = Validator::make($request->all(), $rules, $parametres);
-
+    
         if ($validator->fails()) {
             return redirect()->back()
                 ->withInput()
                 ->with('form', 'updateAuthUser')
                 ->withErrors($validator);
         }
-
+    
         $user = Auth::user();
 
-        $identique = (
-            $user->name === $request->newName &&
-            $user->email === $request->newEmail &&
-            $user->contact === $request->newContact &&
-            $user->adresse === $request->newAdresse &&
-            $user->role === $request->newRole
-        );
+        // Check if the data is identical before updating
+    $changes = false;
+    $fieldsToUpdate = ['newName', 'newEmail', 'newContact', 'newAdresse', 'newRole'];
 
-        if ($identique) {
-            alert()->error('Erreur', 'Les mêmes informations existe déjà. Veuillez modifier au moins un champ.');
-           return redirect()->back()->withInput();
+    foreach ($fieldsToUpdate as $field) {
+        if ($user->{$field} !== $request->{$field}) {
+            $changes = true;
+            break;
         }
+    }
 
-        try {
-            $user->name = $request->newName;
-            $user->email = $request->newEmail;
-            $user->contact = $request->newContact;
-            $user->adresse = $request->newAdresse;
-            $user->role = $request->newRole;
-            $user->save();
-            // dd($user);
+    if (!$changes) {
+        alert()->error('Erreur', 'Les mêmes informations existent déjà. Veuillez modifier au moins un champ.');
+        return redirect()->back()->withInput();
+    }
 
+    try {
+        // Update the user details
+        $user->update([
+            'name' => $request->newName,
+            'email' => $request->newEmail,
+            'contact' => $request->newContact,
+            'adresse' => $request->newAdresse,
+            'role' => $request->newRole,
+        ]);
 
-            alert()->success('Succès', "La mise à jour a été effectuée avec succès");
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with('error', "Erreur : " . $e->getMessage());
-        }
+        alert()->success('Succès', "La mise à jour a été effectuée avec succès.");
+    } catch (\Exception $e) {
+        return redirect()->back()
+            ->with('error', "Erreur : " . $e->getMessage());
+    }
 
-        alert()->success('Succès', " Vous êtes mis à jour avec succès");
-        return redirect()->to(url()->previous());
+    return redirect()->back();
     }
 
     public function changePassword(Request $request)
@@ -120,6 +123,4 @@ class ProfileAuthController extends Controller
 
         return redirect()->back();
     }
-
-
 }

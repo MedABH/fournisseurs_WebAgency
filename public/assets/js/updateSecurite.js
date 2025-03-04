@@ -30,10 +30,61 @@ function saveChanges() {
         return;
     }
 
-    // Update the readonly fields with the new email and password hash (showing just the hashed password for security)
+    // Optionally, hash the new password (for display only, real hashing should be done server-side)
+    // Simulating a hash for demonstration purposes (you can remove this if not necessary):
+    let hashedPassword = btoa(newPass); // Base64 encoding just for demonstration, use a proper hash function server-side
+
+    // Update the readonly fields with the new email and hashed password
     document.getElementById("displayEmail").value = email;
-    document.getElementById("displayPassword").value = password; // You could implement an actual hash here.
+    document.getElementById("displayPassword").value = hashedPassword; // Display the hashed password
 
     // Close the modal after saving
     closeModal();
 }
+
+/*function updateProfile() {
+    let name = document.getElementById("name").value;
+    let contact = document.getElementById("contact").value;
+    let adresse = document.getElementById("adresse").value;
+    let email = document.getElementById("email").value;
+    
+    // Basic client-side validation
+    if (!name || !contact || !adresse || !email) {
+        alert("All fields are required!");
+        return;
+    }
+    
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    let data = {
+        name: name,
+        contact: contact,
+        adresse: adresse,
+        email: email,
+        _token: csrfToken
+    };
+
+    fetch('/updateAuth', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Profile updated successfully!');
+        } else {
+            alert(`Failed to update profile: ${data.message}`);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}*/
+
+function updateProfile() {
+    // Your custom logic here (if any)
+    document.querySelector('form').submit();
+}
+
