@@ -123,34 +123,35 @@ class ProfileAuthController extends Controller
 
     public function updateSecurity(Request $request)
     {
-        // Validate the input data
-        $request->validate([
+        // Validation des données
+        $validatedData = $request->validate([
             'email' => 'nullable|email|unique:users,email',
             'old_password' => 'required',
             'new_password' => 'nullable|min:8|confirmed',
         ]);
 
-        // Find the current user
+        // Vérification de l'ancien mot de passe
         $user = Auth::user();
 
-        // Check if the old password is correct
+        // Vérifier l'ancien mot de passe
         if (!Hash::check($request->old_password, $user->password)) {
-            return response()->json(['success' => false, 'message' => 'Ancien mot de passe incorrect.']);
+            return redirect()->back()->withErrors(['old_password' => 'L\'ancien mot de passe est incorrect.']);
         }
 
-        // Update the email if provided
-        if ($request->email) {
+        // Mettre à jour l'email si nécessaire
+        if ($request->filled('email')) {
             $user->email = $request->email;
         }
 
-        // Update the password if provided
-        if ($request->new_password) {
+        // Mettre à jour le mot de passe si nécessaire
+        if ($request->filled('new_password')) {
             $user->password = Hash::make($request->new_password);
         }
 
-        // Save the user
+        // Sauvegarder les modifications
         $user->save();
 
-        return response()->json(['success' => true]);
+        // Retourner une réponse de succès
+        return redirect()->back()->with('success', 'Les informations ont été mises à jour avec succès.');
     }
 }

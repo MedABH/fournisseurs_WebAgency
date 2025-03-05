@@ -150,10 +150,11 @@
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
                                         <div class="item-label"><strong>Email</strong></div>
-                                        <input type="text" id="displayEmail" class="item-data"
-                                            value="{{ old('newEmail', $user->email) }}" readonly
+                                        <input type="text" id="displayEmail" class="item-data" name="email"
+                                            value="{{ old('email', $user->email) }}" readonly
                                             style="border: none; background: transparent; width: 100%; 
-                                        font-size: inherit; color: #5d677c; outline: none;">
+                                        font-size: inherit; color: #5d677c; outline: none;"
+                                            data-email="{{ old('newEmail', $user->email) }}">
 
                                     </div><!--//col-->
                                 </div><!--//row-->
@@ -196,12 +197,31 @@
                            border-radius: 8px; z-index: 9999; width: 400px;">
                             <h3 style="color: black; padding-bottom: 2rem;">Modifier la Sécurité</h3>
 
+                            <!-- Affichage des erreurs globales -->
+                            @if ($errors->any())
+                                <div style="color: red; font-size: 14px; margin-bottom: 10px;">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
                             <div class="item border-bottom">
                                 <label>
                                     <div class="item-label"><strong>Email :</strong></div>
                                 </label>
-                                <input type="email" id="newEmail" placeholder="Nouvel email"
-                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                <input type="email" id="newEmail" placeholder="Nouvel email" name="email"
+                                    value="{{ old('email', $user->email) }}"
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;"
+                                    data-email="{{ old('email', $user->email) }}">
+                                <!-- Affichage des erreurs de l'email -->
+                                @if ($errors->has('email'))
+                                    <div style="color: red; font-size: 14px;">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="item border-bottom pt-4">
@@ -209,7 +229,14 @@
                                     <div class="item-label"><strong>Ancien mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="oldPassword" placeholder="Ancien mot de passe"
+                                    name="old_password"
                                     style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                <!-- Affichage des erreurs de l'ancien mot de passe -->
+                                @if ($errors->has('old_password'))
+                                    <div style="color: red; font-size: 14px;">
+                                        {{ $errors->first('old_password') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="item border-bottom pt-4">
@@ -217,7 +244,14 @@
                                     <div class="item-label"><strong>Nouveau mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="newPassword" placeholder="Nouveau mot de passe"
+                                    name="new_password"
                                     style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                <!-- Affichage des erreurs du nouveau mot de passe -->
+                                @if ($errors->has('new_password'))
+                                    <div style="color: red; font-size: 14px;">
+                                        {{ $errors->first('new_password') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="item border-bottom pt-4">
@@ -225,15 +259,23 @@
                                     <div class="item-label"><strong>Confirmer mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe"
+                                    name="new_password_confirmation"
                                     style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                <!-- Affichage des erreurs de confirmation de mot de passe -->
+                                @if ($errors->has('new_password_confirmation'))
+                                    <div style="color: red; font-size: 14px;">
+                                        {{ $errors->first('new_password_confirmation') }}
+                                    </div>
+                                @endif
                             </div>
 
                             <div class="pt-5">
-                                <button onclick="saveChanges()"
+                                <button type="button"
+                                onclick="saveSecurityChanges()"
                                     style="background: green; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 8px;">
                                     Enregistrer
                                 </button>
-                                <button onclick="closeModal()"
+                                <button type="button" onclick="cancelSecurityChanges()"
                                     style="background: red; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 8px;">
                                     Annuler
                                 </button>
@@ -243,7 +285,7 @@
                         <!-- Hidden field to store the current password -->
                         <input type="text" id="currentPassword" value="••••••••" readonly style="display: none;">
 
-                        
+
 
                     </div><!--//app-card-->
                 </div><!--//col-->

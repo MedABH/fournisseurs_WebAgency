@@ -1,7 +1,7 @@
-// Import bcrypt.js (if in Node.js environment)
+// Import bcrypt.js (si nécessaire dans l'environnement)
 const bcrypt = require('bcryptjs');
 
-// Ouvrir le modal et afficher l'overlay
+// Ouvrir le modal
 function openModal() {
     let modal = document.getElementById("securityModal");
     let overlay = document.getElementById("overlay");
@@ -9,11 +9,20 @@ function openModal() {
     if (modal && overlay) {
         modal.style.display = "block";
         overlay.style.display = "block";
-    } 
+    }
+
+    // Récupérer la valeur du data-email pour les deux champs et assigner
+    let emailField = document.getElementById("newEmail");
+    let emailDisplayField = document.getElementById("displayEmail");
+
+    let emailValue = emailField.getAttribute("data-email");
+    emailField.value = emailValue;  // Réinitialiser le champ email
+    emailDisplayField.value = emailValue;  // Réinitialiser l'affichage de l'email
 }
 
-// Fermer le modal et masquer l'overlay
-function closeModal() {
+// Fermer le modal sans sauvegarder les changements
+function cancelSecurityChanges() {
+    // Fermer simplement le modal et masquer l'overlay sans effectuer de changements
     let modal = document.getElementById("securityModal");
     let overlay = document.getElementById("overlay");
 
@@ -21,41 +30,56 @@ function closeModal() {
         modal.style.display = "none";
         overlay.style.display = "none";
     }
+
+    // Réinitialiser les champs du modal pour ne pas garder les valeurs modifiées
+    let emailField = document.getElementById("newEmail");
+    let emailDisplayField = document.getElementById("displayEmail");
+
+    let emailValue = emailField.getAttribute("data-email");
+
+    // Réinitialiser les champs email
+    emailField.value = emailValue;
+    emailDisplayField.value = emailValue;
+
+    // Réinitialiser les autres champs
+    document.getElementById("oldPassword").value = "";
+    document.getElementById("newPassword").value = "";
+    document.getElementById("confirmPassword").value = "";
 }
 
-// Fonction pour sauvegarder les changements et mettre à jour les inputs en lecture seule
-function saveChanges() {
-
+// Sauvegarder les changements de sécurité (email et mot de passe)
+function saveSecurityChanges() {
     let email = document.getElementById("newEmail").value;
     let oldPass = document.getElementById("oldPassword").value;
     let newPass = document.getElementById("newPassword").value;
     let confirmPass = document.getElementById("confirmPassword").value;
-    let currentPassword = document.getElementById("currentPassword").value; // Récupérer le mot de passe actuel
 
-    // Vérification si l'ancien mot de passe correspond
-    if (oldPass !== currentPassword) {
-        alert("L'ancien mot de passe est incorrect !");
+    console.log("Formulaire prêt à être soumis :");
+    console.log("Email: ", email);
+    console.log("Ancien mot de passe: ", oldPass);
+    console.log("Nouveau mot de passe: ", newPass);
+
+    // Validation des champs avant envoi
+    if (!oldPass) {
+        alert("L'ancien mot de passe est requis.");
         return;
     }
 
-    // Vérification si le nouveau mot de passe correspond à la confirmation
     if (newPass !== confirmPass) {
-        alert("Les nouveaux mots de passe ne correspondent pas !");
+        alert("Les nouveaux mots de passe ne correspondent pas.");
         return;
     }
 
-    // Hash du mot de passe avec bcrypt
-    bcrypt.hash(newPass, 10, function(err, hashedPassword) {
+    // Hachage du mot de passe si nécessaire (si le hachage est fait côté serveur, cette partie n'est pas nécessaire)
+    bcrypt.hash(newPass, 10, function (err, hashedPassword) {
         if (err) {
             console.error("Erreur lors du hachage du mot de passe : ", err);
             return;
         }
 
-        // Mise à jour des champs readonly avec le nouvel email et mot de passe
-        document.getElementById("displayEmail").value = email;
-        document.getElementById("displayPassword").value = hashedPassword; // Affichage du mot de passe hashé
-
-        // Fermer le modal après sauvegarde
-        closeModal();
+        // Soumettre le formulaire après avoir haché le mot de passe
+        console.log("Soumission du formulaire avec le nouveau mot de passe.");
+        document.getElementById("newPassword").value = hashedPassword;
+        document.getElementById("securityForm").submit();
     });
 }
