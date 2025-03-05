@@ -76,9 +76,9 @@
 @endsection
 @section('parties-prenantes')
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-    <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Les Tiers</a>
+    <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Les Tiers</a>
     <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
-    <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
+    <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link active">Les Fournisseurs</a>
     <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs et Clients</a>
 </nav>
 @endsection

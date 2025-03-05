@@ -2,25 +2,11 @@
 @section('search-bar')
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0">Parties Prenantes</h1>
+            <h1 class="app-page-title mb-0">Les Classifications</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
-                    <div class="col-auto">
-                        <form action="{{ route('search.users') }}" method="GET"
-                            class="table-search-form row gx-1 align-items-center">
-                            <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders"
-                                    placeholder="Search ... ">
-                            </div>
-                            <div class="col-auto">
-                                <button type="submit" class="btn app-btn-secondary">Search</button>
-                            </div>
-                        </form>
-
-                    </div><!--//col-->
-
                     <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
                             <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
@@ -57,10 +43,8 @@
 @endsection
 
 @section('parties-prenantes')
-    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Les Tiers</a>
-        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
-        <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
-        <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs et Clients</a>
-    </nav>
+<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+    <a href="/categoriesSection" class="flex-sm-fill text-sm-center nav-link">Les Categories</a>
+    <a href="/productsSection" class="flex-sm-fill text-sm-center nav-link">Les Sous-Categories</a>
+</nav>
 @endsection

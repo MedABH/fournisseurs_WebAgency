@@ -5,6 +5,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\SousCategorieController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\ClassificationsController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\FournisseurClientController;
 use App\Http\Controllers\HistoriqueController;
@@ -149,3 +150,4 @@ Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientControlle
 Route::get('/historique', [HistoriqueController::class, 'showHistorique'])->name('historiqueSection');
 
 Route::get('/partiesPrenantes', [PartiesPrenantesController::class, 'index']);
+Route::get('/classifications', [ClassificationsController::class, 'index']);

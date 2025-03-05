@@ -1,6 +1,52 @@
 @extends('myApp.admin.adminLayout.adminPage')
-@section('title')
-Les catégories
+@section('search-bar')
+    <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-auto">
+            <h1 class="app-page-title mb-0">Les Categories</h1>
+        </div>
+        <div class="col-auto">
+            <div class="page-utilities">
+                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                    <div class="col-auto">
+                        @if (auth()->user()->role == 'super-admin')
+                            <a class="btn app-btn-secondary" href="{{ route('categories.pdf') }}">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+
+                            </a>
+                        @elseif (auth()->user()->role == 'admin')
+                            <a href="{{ route('categories.pdf') }}" class="btn btn-primary" style="margin-left:996px">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+
+                            <a class="btn app-btn-secondary" href="{{ route('categories.pdf') }}">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+
+                            </a>
+                        @endif
+                    </div>
+                </div><!--//row-->
+            </div><!--//table-utilities-->
+        </div><!--//col-auto-->
+    </div><!--//row-->
+@endsection
+
+@section('parties-prenantes')
+<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+    <a href="#" class="flex-sm-fill text-sm-center nav-link active">Les Categories</a>
+    <a href="/productsSection" class="flex-sm-fill text-sm-center nav-link">Les Sous-Categories</a>
+</nav>
 @endsection
 
 @section('errorContent')
@@ -26,7 +72,7 @@ Les catégories
             @csrf
             <div class="modal fade" id="ModalAddCategory" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Ajouter une catégorie</h5>
@@ -34,174 +80,133 @@ Les catégories
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label class="form-label">Nom de la catégorie</label>
+                                <label class="form-label"><strong class="det">Nom de la catégorie</strong></label>
                                 <input type="text" class="form-control" name="nom_categorie"
                                     placeholder="Entrer la catégorie" value="{{ old('nom_categorie') }}" />
                                 @error('nom_categorie', 'default')
                                     <span class="text-danger">{{ $message }}</span> <br>
                                 @enderror
 
-
-
-
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
+                            <input type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Ajouter">
                         </div>
                     </div>
                 </div>
             </div>
-
         </form>
 
 
         <div class="page-inner">
-            @if (auth()->user()->role == 'super-admin')
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAddCategory">
-                    Ajouter la catégorie
-                </button>
-                <a href="{{ route('categories.pdf') }}" class="btn btn-primary" style="margin-left: 986px">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-            @elseif (auth()->user()->role == 'admin')
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAddCategory">
-                    Ajouter la catégorie
-                </button>
-                <a href="{{ route('categories.pdf') }}" class="btn btn-primary" style="margin-left: 986px">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-            @endif
 
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Les catégories</h4>
-                        </div>
-
-                        <div class="card-body">
+            <div class="tab-content" id="orders-table-tab-content">
+                    <div class="app-card app-card-orders-table shadow-sm mb-5">
+                        <div class="app-card-body">
                             <div class="table-responsive">
-                                <table id="basic-datatables" class="display table table-striped table-hover">
+                                <table class="table app-table-hover mb-0 text-left">
                                     <thead>
                                         <tr>
-
-                                            <th>Nom de la catégorie</th>
-                                           
-
-                                            
+                                            <th class="cell">Nom de la catégorie</th>
+                                            <th class="cell text-end">
+                                                @if (auth()->user()->role == 'super-admin')
+                                                <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#ModalAddCategory">
+                                                    Ajouter
+                                                </button>
+                                                @elseif (auth()->user()->role == 'admin')
+                                                <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#ModalAddCategory">
+                                                    Ajouter
+                                                </button>
+                                                @endif
+                                            </th>
                                         </tr>
                                     </thead>
 
                                     <tbody>
                                         @foreach ($categories as $categorie)
                                             <tr>
-                                                <td>{{ $categorie->nom_categorie }}</td>
+                                                <td class="cell">{{ $categorie->nom_categorie }}</td>
 
                                                 @if (auth()->user()->role == 'super-admin')
-                                                    <td>
-                                                        <a class="btn btn-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#updateCategoryModal"
-                                                            data-id={{ $categorie->id }}
-                                                            data-name={{ $categorie->nom_categorie }}>
-                                                            Modifier</a>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info detailButton"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
-                                                            data-name="{{ $categorie->nom_categorie }}">
-                                                            Details
-                                                        </button>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#">
-                                                            <form action="{{ route('category.destroy', $categorie->id) }}"
-                                                                method="POST" style="display: inline;"
-                                                                id="delete-form-{{ $categorie->id }}">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="button" class="btn btn-danger"
-                                                                    onclick="confirmDelete({{ $categorie->id }})">Supprimer</button>
-                                                            </form>
-
-                                                        </a>
-                                                    </td>
-                                                @elseif (auth()->user()->role == 'admin')
-                                                    <td>
-                                                        <a class="btn btn-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#updateCategoryModal"
-                                                            data-id={{ $categorie->id }}
-                                                            data-name={{ $categorie->nom_categorie }}>
-                                                            Modifier</a>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info detailButton"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
-                                                            data-name="{{ $categorie->nom_categorie }}">
-                                                            Details
-                                                        </button>
-                                                    </td>
-                                                @elseif (auth()->user()->role == 'utilisateur')
                                                 <td>
-                                                    <button type="button" class="btn btn-info detailButton"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
-                                                        data-name="{{ $categorie->nom_categorie }}">
+                                                    <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal" data-bs-target="#updateCategoryModal" data-id={{ $categorie->id }} data-name={{ $categorie->nom_categorie }}>
+                                                        Modifier</button>
+                                        
+                                                    <button type="button" class="btn btn-outline-info border-btn me-5 detailButton" data-bs-toggle="modal"
+                                                        data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}" data-name="{{ $categorie->nom_categorie }}">
                                                         Details
                                                     </button>
+                                        
+                                                    
+                                                        <form action="{{ route('category.destroy', $categorie->id) }}" method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                            id="delete-form-{{ $categorie->id }}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-outline-danger border-btn"
+                                                                onclick="confirmDelete({{ $categorie->id }})">Supprimer</button>
+                                                        </form>
+                                        
+                                                    
+                                                </td>
+                                                @elseif (auth()->user()->role == 'admin')
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
+                                                            data-bs-target="#updateCategoryModal"
+                                                            data-id={{ $categorie->id }}
+                                                            data-name={{ $categorie->nom_categorie }}>
+                                                            Modifier</button>
+                                                   
+                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
+                                                            data-name="{{ $categorie->nom_categorie }}">
+                                                            Details
+                                                        </button>
+                                                    
+                                                        @elseif (auth()->user()->role == 'utilisateur')
+                                                        
+                                                            <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
+                                                                data-name="{{ $categorie->nom_categorie }}">
+                                                                Details
+                                                            </button>
                                                 </td>
                                                 @endif
 
 
-                                                <div class="modal fade" id="ModalCategoryDetail-{{ $categorie->id }}"
-                                                    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
+                                                <div class="modal fade" id="ModalCategoryDetail-{{ $categorie->id }}" tabindex="-1"
+                                                    aria-labelledby="detailsCategoryLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-
-
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                <h5 class="modal-title" id="detailsCategoryLabel">Catégorie</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
+                                                
                                                             <div class="modal-body">
-                                                                <div class="show-info-category show-category">
-                                                                    <label class="label-detail-category">Catégorie</label>
-                                                                    <h6 class="info-category showCategory"
-                                                                        id="showCategory-{{ $categorie->id }}">
-                                                                    </h6>
+                                                                <div class="mb-3 show-info-category show-category">
+                                                                    <strong class="det">Catégorie :</strong><span id="showCategory-{{ $categorie->id }}">
+                                                                        PLOMBERIE - DROGUERIE (GROS)</span>
                                                                 </div>
-
-                                                                <div class="show-info-category show-product">
-                                                                    <label class="label-detail-category">Les
-                                                                        produits</label>
-                                                                    <select
-                                                                        class="form-select form-select-sm info-category showProductCategory"
-                                                                        aria-label=".form-select-sm example"
-                                                                        style="width: 200px; height: 30px">
-                                                                        <option selected>Voir les produits associés
-                                                                        </option>
+                                                                <div class="d-flex align-items-center mb-3 show-info-category show-product">
+                                                                    <label class="form-label info-category showProductCategory"><strong class="det">Les
+                                                                            produits :</strong></label>
+                                                                    <select id="productSelect" class="form-select" style="color: #5d6778;">
+                                                                        <option>Voir les produits associés</option>
                                                                         @foreach ($categorie->sousCategories as $product)
-                                                                            <option disabled>
-                                                                                {{ $product->nom_produit }}
-                                                                            </option>
+                                                                        <option disabled>
+                                                                            {{ $product->nom_produit }}
+                                                                        </option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
-
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-info"
-                                                                    data-bs-dismiss="modal">Fermer</button>
-
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
 
 
@@ -218,7 +223,7 @@ Les catégories
 
             <div class="modal fade" id="updateCategoryModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <form action="/updateCategory" method="POST">
                             @csrf
@@ -231,20 +236,14 @@ Les catégories
                             <div class="modal-body">
                                 <div class="form-group">
                                     <div>
-                                        <label class="form-label">Nom de la catégorie</label>
+                                        <label class="det">Nom de la catégorie</label>
                                         <input type="text" class="form-control" id="updateCategoryName"
                                             name="newNom_categorie" placeholder="Entrer la catégorie" />
                                         @if ($errors->has('newNom_categorie'))
                                             <span class="text-danger">
                                                 {{ $errors->first('newNom_categorie') }}</span>
                                         @endif
-
                                     </div>
-
-
-
-
-
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -252,7 +251,6 @@ Les catégories
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
@@ -282,7 +280,7 @@ Les catégories
     @section('content2')
         <div class="modal fade" id="QueryModalCategoryDetail" tabindex="-1" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
 
@@ -417,31 +415,29 @@ Les catégories
                                                 <td>${category.nom_categorie}</td>
                                                  ${role === "super-admin" ? `
                                                  <td>
-                                                <a class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#updateCategoryModal"
-                                                    data-id="${category.id}"
-                                                     data-name="${category.nom_categorie}"
-                                                   >Modifier
-                                                </a>
-                                                </td>
-                                                <td>
-                                                <button type="button" class="btn btn-info "
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#QueryModalCategoryDetail"
-                                                        data-name="${category.nom_categorie}"
-                                                        data-product="${products}">
-                                                        Details
-                                                </button>
-                                                </td>
-                                                <td>
-                                                <form action="/category/destroy/${category.id}"
-                                                    method="POST" style="display: inline;"
-                                                    id="delete-form-${category.id}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="confirmDelete(${category.id})">Supprimer</button>
-                                                </form>
+                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
+                                                            data-bs-target="#updateCategoryModal"
+                                                            data-id="${category.id}"
+                                                            data-name="${category.nom_categorie}"
+                                                        >Modifier
+                                                        </button>
+                                                        
+                                                        <button type="button" class="btn btn-outline-info border-btn me-5 "
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#QueryModalCategoryDetail"
+                                                                data-name="${category.nom_categorie}"
+                                                                data-product="${products}">
+                                                                Details
+                                                        </button>
+                                                        
+                                                        <form action="/category/destroy/${category.id}"
+                                                            method="POST" style="display: inline;"
+                                                            id="delete-form-${category.id}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-outline-danger border-btn"
+                                                                onclick="confirmDelete(${category.id})">Supprimer</button>
+                                                        </form>
                                                 </td>
 
 
@@ -450,36 +446,35 @@ Les catégories
                                                     ${role == 'admin' ?
                                                     `
                                                 <td>
-                                                <a class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#updateCategoryModal"
-                                                    data-id="${category.id}"
-                                                     data-name="${category.nom_categorie}"
-                                                   >Modifier
-                                                </a>
-                                                </td>
-                                                <td>
-                                                <button type="button" class="btn btn-info "
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#QueryModalCategoryDetail"
-                                                        data-name="${category.nom_categorie}"
-                                                        data-product="${products}">
-                                                        Details
-                                                </button>
+                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
+                                                            data-bs-target="#updateCategoryModal"
+                                                            data-id="${category.id}"
+                                                            data-name="${category.nom_categorie}"
+                                                        >Modifier
+                                                        </button>
+                                                        
+                                                        <button type="button" class="btn btn-outline-info border-btn me-5 "
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#QueryModalCategoryDetail"
+                                                                data-name="${category.nom_categorie}"
+                                                                data-product="${products}">
+                                                                Details
+                                                        </button>
                                                 </td>
 
 
                                                ` : ""
 
                                                     }  ${role == 'utilisateur' ?  `
-                                                      <td>
-                                                <button type="button" class="btn btn-info "
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#QueryModalCategoryDetail"
-                                                        data-name="${category.nom_categorie}"
-                                                        data-product="${products}">
-                                                        Details
-                                                </button>
-                                                </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-outline-info border-btn me-5 "
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#QueryModalCategoryDetail"
+                                                                    data-name="${category.nom_categorie}"
+                                                                    data-product="${products}">
+                                                                    Details
+                                                            </button>
+                                                        </td>
 
                                                       
                                                     ` : ""}

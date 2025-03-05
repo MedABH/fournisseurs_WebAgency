@@ -1,6 +1,51 @@
 @extends('myApp.admin.adminLayout.adminPage')
-@section('title')
-    Les sous-catégories
+@section('search-bar')
+    <div class="row g-3 mb-4 align-items-center justify-content-between">
+        <div class="col-auto">
+            <h1 class="app-page-title mb-0">Les SousCategories</h1>
+        </div>
+        <div class="col-auto">
+            <div class="page-utilities">
+                <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
+                    <div class="col-auto">
+                        @if (auth()->user()->role == 'super-admin')
+                            <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+
+                            </a>
+                        @elseif (auth()->user()->role == 'admin')
+                            <a href="{{ route('sousCategories.pdf') }}" class="btn btn-primary" style="margin-left:996px">
+                                <i class="fas fa-file-pdf"></i>
+                            </a>
+
+                            <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+
+                            </a>
+                        @endif
+                    </div>
+                </div><!--//row-->
+            </div><!--//table-utilities-->
+        </div><!--//col-auto-->
+    </div><!--//row-->
+@endsection
+@section('parties-prenantes')
+<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+    <a href="/categoriesSection" class="flex-sm-fill text-sm-center nav-link">Les Categories</a>
+    <a href="#" class="flex-sm-fill text-sm-center nav-link active">Les Sous-Categories</a>
+</nav>
 @endsection
 
 @section('errorContent')
@@ -23,104 +68,80 @@
         <div id="update_add_modals" style="display: none" data-error="{{ session('modalType') }}">
 
         </div>
-        <form action="/addSousCategory" method="POST">
-            @csrf
-            <div class="modal fade" id="ModalAddProduct" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="form-label">Nom de la sous-catégorie</label>
-                                <input type="text" class="form-control" name="nom_produit"
-                                    placeholder="Entrer la sous-catégorie" value="{{ old('nom_produit') }}" />
-                                @error('nom_produit', 'default')
-                                    <span class="text-danger">{{ $message }}</span> <br>
-                                @enderror
+        
+<form action="/addSousCategory" method="POST">
+    @csrf
+    <div class="modal fade" id="ModalAddProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 form-group">
+                        <label class="form-label"><strong class="det">Nom de la
+                                sous-catégorie</strong></label>
+                        <input type="text" class="form-control" id="nom_produit" placeholder="Entrer La sous-catégorie"
+                            value="{{ old('nom_produit') }}" required>
+                        @error('nom_produit', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+                        <label class="form-label"><strong class="det">Description</strong></label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            placeholder="Entrer une description" name="texte">{{ old('texte') }}</textarea>
+                        @error('texte', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+                        <label class="form-label"><strong class="det">Catégorie
+                                :</strong></label>
 
+                        <select class="form-select" style="color: #5d6778;">
+                            <option>Voir les produits associés</option>
+                            @foreach ($categories as $categorie)
+                            <option value="{{ $categorie->id }}" {{ old('categorie_id')==$categorie->id ? 'selected' :
+                                '' }}>
+                                {{ $categorie->nom_categorie }}</option>
+                            @endforeach
+                        </select>
+                        @error('categorie_id', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
 
-                                <div class="mb-3">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Entrer une description"
-                                        name="texte">{{ old('texte') }}</textarea>
-                                    @error('texte', 'default')
-                                        <span class="text-danger">{{ $message }}</span> <br>
-                                    @enderror
-                                </div>
-
-
-                                <label style="margin-left: 5px; font-size:40px; font-weight:bold; color:rgb(122, 118, 118)">
-                                    Catégorie</label>
-                                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                    name="categorie_id" style="height: 39px">
-                                    <option value="">Selectionner la catégorie</option>
-                                    @foreach ($categories as $categorie)
-                                        <option value="{{ $categorie->id }}"
-                                            {{ old('categorie_id') == $categorie->id ? 'selected' : '' }}>
-                                            {{ $categorie->nom_categorie }}</option>
-                                    @endforeach
-                                </select>
-                                @error('categorie_id', 'default')
-                                    <span class="text-danger">{{ $message }}</span> <br>
-                                @enderror
-
-
-
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
-                        </div>
                     </div>
+                    <button type="submit" class="btn btn-success">Ajouter</button>
+
                 </div>
             </div>
-
-        </form>
+        </div>
+    </div>
 
         <!---->
 
 
         <div class="page-inner">
-            @if (auth()->user()->role == 'super-admin')
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAddProduct">
-                    Ajouter les sous-catégories
-                </button>
-
-                <a href="{{ route('sousCategories.pdf') }}" class="btn btn-primary" style="margin-left: 935px">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-            @elseif (auth()->user()->role == 'admin')
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalAddProduct">
-                    Ajouter les sous-catégories
-                </button>
-
-                <a href="{{ route('sousCategories.pdf') }}" class="btn btn-primary" style="margin-left: 935px">
-                    <i class="fas fa-file-pdf"></i>
-                </a>
-            @endif
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Les sous-catégories</h4>
-                        </div>
-
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="basic-datatables" class="display table table-striped table-hover">
+                <div class="app-card app-card-orders-table mb-5">
+                    <div class="app-card-body">
+                        <div class="table-responsive">
+                            <table class="table mb-0 text-center">
                                     <thead>
                                         <tr>
-                                            <th>Nom du produit</th>
+                                            <th class="cell">Nom du produit</th>
 
-                                            <th>Catégorie</th>
-                                            
-
+                                            <th class="cell">Catégorie</th>
+                                            <th class="cell text-end">
+                                                @if (auth()->user()->role == 'super-admin')
+                                                <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#ModalAddProduct">
+                                                    Ajouter
+                                                </button>
+                                                @elseif (auth()->user()->role == 'admin')
+                                                <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                                    data-bs-target="#ModalAddProduct">
+                                                    Ajouter
+                                                </button>
+                                                @endif
                                             </th>
                                         </tr>
                                     </thead>
@@ -128,20 +149,19 @@
                                     <tbody>
                                         @foreach ($getSousCategories as $sousCategorie)
                                             <tr>
-                                                <td>{{ $sousCategorie->nom_produit }}</td>
+                                                <td class="cell">{{ $sousCategorie->nom_produit }}</td>
 
-                                                <td>{{ $sousCategorie->categorie->nom_categorie }}</td>
+                                                <td class="cell">{{ $sousCategorie->categorie->nom_categorie }}</td>
                                                 @if (auth()->user()->role == 'super-admin')
                                                     <td>
-                                                        <a class="btn btn-primary" data-bs-toggle="modal"
+                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
                                                             data-bs-target="#updateProductModal"
                                                             data-id={{ $sousCategorie->id }}
                                                             data-name={{ $sousCategorie->nom_produit }}
                                                             data-texte={{ $sousCategorie->texte }}
-                                                            data-categorie_id={{ $sousCategorie->categorie_id }}>Modifier</a>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info detailButton"
+                                                            data-categorie_id={{ $sousCategorie->categorie_id }}>Modifier</button>
+                                                    
+                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#ModalProductDetail-{{ $sousCategorie->id }}"
                                                             data-name="{{ $sousCategorie->nom_produit }}"
@@ -149,31 +169,28 @@
                                                             data-texte = "{{ $sousCategorie->texte }}">
                                                             Details
                                                         </button>
-                                                    </td>
-                                                    <td>
-                                                        <a>
+                                                    
                                                             <form
                                                                 action="{{ route('product.destroy', $sousCategorie->id) }}"
-                                                                method="POST" style="display: inline;"
+                                                                method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
                                                                 id="delete-form-{{ $sousCategorie->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="button" class="btn btn-danger"
+                                                                <button type="button" class="btn btn-outline-danger border-btn"
                                                                     onclick="confirmDelete({{ $sousCategorie->id }})">Supprimer</button>
                                                             </form>
-                                                        </a>
+                                                       
                                                     </td>
                                                 @elseif (auth()->user()->role == 'admin')
                                                     <td>
-                                                        <a class="btn btn-primary" data-bs-toggle="modal"
+                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
                                                             data-bs-target="#updateProductModal"
                                                             data-id={{ $sousCategorie->id }}
                                                             data-name={{ $sousCategorie->nom_produit }}
                                                             data-texte={{ $sousCategorie->texte }}
-                                                            data-categorie_id={{ $sousCategorie->categorie_id }}>Modifier</a>
-                                                    </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-info detailButton"
+                                                            data-categorie_id={{ $sousCategorie->categorie_id }}>Modifier</button>
+                                                    
+                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#ModalProductDetail-{{ $sousCategorie->id }}"
                                                             data-name="{{ $sousCategorie->nom_produit }}"
@@ -184,7 +201,7 @@
                                                     </td>
                                                 @elseif (auth()->user()->role == 'utilisateur')
                                                 <td>
-                                                    <button type="button" class="btn btn-info detailButton"
+                                                    <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#ModalProductDetail-{{ $sousCategorie->id }}"
                                                         data-name="{{ $sousCategorie->nom_produit }}"
@@ -303,7 +320,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
+                                <input type="submit" class="btn btn-outline-primary border-btn me-5" data-bs-dismiss="modal" value="Ajouter">
                             </div>
                         </form>
                     </div>
@@ -472,16 +489,15 @@
                                                     <td>${product.categorie.nom_categorie }</td>
                                                     ${role === "super-admin" ? `
                                                                                     <td>
-                                                                                        <a class="btn btn-primary" data-bs-toggle="modal"
+                                                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
                                                                                             data-bs-target="#updateProductModal"
                                                                                             data-id=${product.id }
                                                                                             data-name=${product.nom_produit }
                                                                                             data-texte=${product.texte }
-                                                                                            data-categorie_id=${product.categorie_id }>Modifier</a>
-                                                                                    </td>
-                                                                                     <td>
+                                                                                            data-categorie_id=${product.categorie_id }>Modifier</button>
+                                                                                    
                                                                                         <!-- Button trigger modal -->
-                                                                                        <button type="button" class="btn btn-info detailButton"
+                                                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                                                             data-bs-toggle="modal"
                                                                                             data-bs-target="#QueryModalProductDetail"
                                                                                             data-name="${product.nom_produit }"
@@ -491,19 +507,18 @@
                                                                                             >
                                                                                             Details
                                                                                         </button>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <a>
+                                                                                    
+                                                                                       
                                                                                             <form
                                                                                                 action="/product/destroy/${product.id}"
-                                                                                                method="POST" style="display: inline;"
+                                                                                                method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
                                                                                                 id="delete-form-${product.id }">
                                                                                                 @csrf
                                                                                                 @method('DELETE')
-                                                                                                <button type="button" class="btn btn-danger"
+                                                                                                <button type="button" class="btn btn-outline-danger border-btn"
                                                                                                     onclick="confirmDelete(${product.id })">Supprimer</button>
                                                                                             </form>
-                                                                                        </a>
+                                                                                       
                                                                                     </td>
 
                                                                                     ` : ""
@@ -511,16 +526,15 @@
                                                     ${role == 'admin' ?
                                                     `
                                                                                     <td>
-                                                                                        <a class="btn btn-primary" data-bs-toggle="modal"
+                                                                                        <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
                                                                                             data-bs-target="#updateProductModal"
                                                                                             data-id=${product.id }
                                                                                             data-name=${product.nom_produit }
                                                                                             data-texte=${product.texte }
-                                                                                            data-categorie_id=${product.categorie_id }>Modifier</a>
-                                                                                    </td>
-                                                                                     <td>
+                                                                                            data-categorie_id=${product.categorie_id }>Modifier</button>
+                                                                                    
                                                                                         <!-- Button trigger modal -->
-                                                                                        <button type="button" class="btn btn-info detailButton"
+                                                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                                                             data-bs-toggle="modal"
                                                                                             data-bs-target="#QueryModalProductDetail"
                                                                                             data-name="${product.nom_produit }"
@@ -538,7 +552,7 @@
 
                                                      <td>
                                                                                         
-                                                                                        <button type="button" class="btn btn-info detailButton"
+                                                                                        <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
                                                                                             data-bs-toggle="modal"
                                                                                             data-bs-target="#QueryModalProductDetail"
                                                                                             data-name="${product.nom_produit }"

@@ -109,7 +109,7 @@
 
                                 <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
 
-                                <li><a href="#" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fas fa-list"></i> Les
+                                <li><a href="/classifications"><i class="fas fa-list"></i> Les
                                         classifications</a></li>
 
 

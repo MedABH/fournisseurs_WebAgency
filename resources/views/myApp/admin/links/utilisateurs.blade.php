@@ -121,7 +121,7 @@
                     
                                         <div class="mb-3">
                                             <label class="form-label"><strong class="det">Contact</strong></label>
-                                            <input type="tel" class="form-control" name="contact" placeholder="Entrer le contact..."
+                                            <input type="tel" class="form-control" required name="contact" placeholder="Entrer le contact..."
                                                 value="{{ old('contact') }}">
                                             @error('contact', 'default')
                                             <span class="text-danger">{{ $message }}</span> <br>
@@ -246,7 +246,7 @@
                                                                             <div class="mb-3">
                                                                                 <label class="form-label"><strong class="det">Contact</strong></label>
                                                                                 <input type="tel" class="form-control" id="updateUserContact" name="newContact"
-                                                                                    placeholder="Entrer le contact..." value="{{ old('newContact', $user->contact) }}">
+                                                                                    placeholder="Entrer le contact..." required value="{{ old('newContact', $user->contact) }}">
                                                                                 @if ($errors->has('newContact'))
                                                                                 <span class="text-danger">
                                                                                     {{ $errors->first('newContact') }}</span>

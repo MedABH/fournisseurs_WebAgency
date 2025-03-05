@@ -58,8 +58,8 @@
 
 @section('parties-prenantes')
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-    <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Les Tiers</a>
-    <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
+    <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Les Tiers</a>
+    <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link active">Les Clients</a>
     <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
     <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs et Clients</a>
 </nav>
@@ -103,13 +103,13 @@
                         @enderror
 
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
-                        <input type="text" class="form-control" name="GSM1_client" placeholder="Entrer le GSM1..."
+                        <input type="tel" class="form-control" name="GSM1_client" required placeholder="Entrer le GSM1..."
                             value="{{ old('GSM1_client') }}" />
                         @error('GSM1_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
-                        <input type="text" class="form-control" name="GSM2_client" placeholder="Entrer le GSM2..."
+                        <input type="tel" class="form-control" name="GSM2_client" required placeholder="Entrer le GSM2..."
                             value="{{ old('GSM2_client') }}" />
                         @error('GSM2_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
@@ -124,7 +124,7 @@
                         @enderror
 
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
-                        <input type="text" class="form-control" name="tele_client" placeholder="Entrer le contact..."
+                        <input type="tel" class="form-control" name="tele_client" required placeholder="Entrer le contact..."
                             value="{{ old('tele_client') }}" />
                         @error('tele_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
@@ -444,41 +444,54 @@
                                             </div>
                                             <div class="modal-body">
                                                 <div class="show-info-client show-society">
-                                                    <label class="label-detail-client">Nom de la
-                                                        société</label>
-                                                    <h6 class="info-client showSocietyClient"
+                                                    <label class="label-detail-client"><strong class="det">Nom de la
+                                                        société</strong></label>
+                                                    <p class="info-client showSocietyClient"
                                                         id="showSocietyDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
+                                                </div>
+
+                                                <div class="show-info-client show-GSM1">
+                                                    <label class="label-detail-client">GSM1 de la
+                                                        société</label>
+                                                    <p class="info-client showGSM1Client"
+                                                        id="showGSM1Detail-{{ $client->id }}">
+                                                    </p>
+                                                </div>
+                                                <div class="show-info-client show-GSM2">
+                                                    <label class="label-detail-client">GSM2 de la
+                                                        société</label>
+                                                    <p class="info-client showGSM2Client"
+                                                        id="showGSM2Detail-{{ $client->id }}">
+                                                    </p>
                                                 </div>
                                                 
-        
-        
                                                 <div class="show-info-client show-name">
                                                     <label class="label-detail-client">Personne à
                                                         contacter</label>
-                                                    <h6 class="info-client showNameClient"
+                                                    <p class="info-client showNameClient"
                                                         id="showNameDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-client show-contact">
                                                     <label class="label-detail-client">Numero de telephone</label>
-                                                    <h6 class="info-client showContactClient"
+                                                    <p class="info-client showContactClient"
                                                         id="showContactDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-client show-email">
                                                     <label class="label-detail-client">Email</label>
-                                                    <h6 class="info-client showEmailClient"
+                                                    <p class="info-client showEmailClient"
                                                         id="showEmailDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
         
         
                                                 <div class="show-info-client show-ville">
                                                     <label class="label-detail-client">Ville</label>
-                                                    <h6 class="info-client showVilleClient"
+                                                    <p class="info-client showVilleClient"
                                                         id="showVilleDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
         
                                                 <div class="show-info-client show-category" style="margin-top:10px">
@@ -510,9 +523,9 @@
                                                 </div>
                                                 <div class="show-info-client show-user">
                                                     <label class="label-detail-client">Contacté Par</label>
-                                                    <h6 class="info-client showUserClient"
+                                                    <p class="info-client showUserClient"
                                                         id="showUserDetail-{{ $client->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-client show-remark">
                                                     <label class="label-detail-client">Remarque</label>
