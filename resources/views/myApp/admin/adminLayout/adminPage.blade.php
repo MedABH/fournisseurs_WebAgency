@@ -26,6 +26,7 @@
 
     <div class="content-wrapper">
     @yield('search-bar')
+    @yield('parties-prenantes')
     @yield('content')
     @yield('errorContent')
     @yield('script')

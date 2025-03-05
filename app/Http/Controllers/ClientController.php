@@ -22,20 +22,21 @@ class ClientController extends Controller
 
         $rules = [
             'nom_client' => ['nullable','max:50','string'],
+            'GSM1_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,GSM1_client'],
+            'GSM2_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,GSM2_client'],
             'email_client' => ['nullable','email','string','max:266','unique:clients,email_client'],
             'tele_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,tele_client'],
-            
-            'ville_client' => ['required','max:60','string'],
             'nomSociete_client' => ['nullable','max:200','unique:clients,nomSociete_client'],
-            
-            
             'categorie_id' => ['required','integer','exists:categories,id'],
         ];
 
         $messages = [
             // 'nom_client.required' => 'Le nom est obligatoire!',
             'nom_client.string' => 'Le nom doit être en chaine de caractère!',
-           
+            'GSM1_client.regex' => 'Le numéro de téléphone doit être valide!',
+            'GSM1_client.unique' => 'Le contact de la societe doit être unique!',
+            'GSM2_client.regex' => 'Le numéro de téléphone doit être valide!',
+            'GSM2_client.unique' => 'Le contact de la societe doit être unique!',
             'email_client.string' => "L'émail doit être en chaine de caractère!",
             'email_client.unique' => "L'émail doit être unique!",
             'ville_client.required' => "La ville est obligatoire!",
@@ -64,11 +65,10 @@ class ClientController extends Controller
 
         $client = new Client();
         $client->nom_client = $request->nom_client ?? '';
-      
+        $client->GSM1_client = $request->GSM1_client ?? '' ;
+        $client->GSM2_client = $request->GSM2_client ?? '';
         $client->ville_client = $request->ville_client;
         $client->tele_client = $request->tele_client ?? '';
-       
-        
         $client->email_client = $request->email_client ?? '';
         $client->nomSociete_client = $request->nomSociete_client ?? '';
         $client->groupId_client = Str::uuid();
@@ -201,13 +201,12 @@ class ClientController extends Controller
 
         $rules = [
             'newNom_client' => ['nullable','max:50','string'],
+            'newGSM1_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
+            'newGSM2_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
             'newEmail_client' => ['nullable','email:rfc,dns','string','max:266'],
             'newTele_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            
             'newVille_client' => ['required','max:60','string'],
             'newNomSociete_client' => ['nullable','max:200'],
-            
-            
             'newCategorie_id' => ['required','integer','exists:categories,id'],
         ];
 
@@ -220,9 +219,8 @@ class ClientController extends Controller
             'newVille_client.string' => 'La ville doit être en chaine de caractère!',
             // 'newTele_client.required' => 'Le contact est obligatoire!',
             'newTele_client.regex' => 'Le numéro de téléphone doit être valide!',
-            
-            
-       
+            'newGSM1_client.regex' => 'Le numéro de téléphone doit être valide!',
+            'newGSM2_client.regex' => 'Le numéro de téléphone doit être valide!',
             'newCategorie_id.required' => 'La catégorie est obligatoire!',
             'newCategorie_id.integer' => 'La catégorie doit être un entier!',
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
@@ -238,19 +236,18 @@ class ClientController extends Controller
         }
 
         $nomSociety = $request->newNomSociete_client ?? '';
-        
-        
-        
+        $GSM1 = $request->newGSM1_client ?? '';
+        $GSM2 = $request->newGSM2_client ?? '';
         $email =$request->newEmail_client?? '';
         $name = $request->newNom_client ?? '';
         $tele = $request->newTele_client ?? '';
-
         $newCategorieId = $request->newCategorie_id;
         $existingClient = Client::
         where('nom_client', $name)
         ->where('email_client', $email)
         ->where('tele_client', $tele)
-        
+        ->where('GSM1_client', $GSM1)
+        ->where('GSM2_client', $GSM2)
         ->where('ville_client', $request->newVille_client)
         ->where('nomSociete_client', $nomSociety)
         
@@ -280,7 +277,8 @@ class ClientController extends Controller
         $client->nom_client = $request->newNom_client ?? '';
         $client->email_client = $request->newEmail_client ?? '';
         $client->tele_client = $request->newTele_client ?? '';
-        
+        $client->GSM1_client = $request->newGSM1_client ?? '';
+        $client->GSM2_client = $request->newGSM2_client ?? '';
         $client->ville_client = $request->newVille_client;
         $client->nomSociete_client = $request->newNomSociete_client ?? '';
        
@@ -298,7 +296,8 @@ class ClientController extends Controller
         $similarClient->nom_client = $request->newNom_client ?? '';
         $similarClient->email_client = $request->newEmail_client ?? '';
         $similarClient->tele_client = $request->newTele_client ?? '';
-       
+        $similarClient->GSM1_client = $request->newGSM1_client ?? '';
+        $similarClient->GSM2_client = $request->newGSM2_client ?? '';
         $similarClient->ville_client = $request->newVille_client;
         $similarClient->nomSociete_client = $request->newNomSociete_client ?? '';
 
@@ -316,7 +315,8 @@ class ClientController extends Controller
         return $client->nom_client !== ($request->newNom_client ?? '')||
                $client->email_client !== ($request->newEmail_client ?? '')||
                $client->tele_client !== ($request->newTele_client ?? '')||
-               
+               $client->GSM1_client !== ($request->newGSM1_client ?? '') ||
+               $client->GSM2_client !== ($request->newGSM2_client ?? '')||
                $client->ville_client !== $request->newVille_client||
                $client->nomSociete_client !== ($request->newNomSociete_client ?? '');
     }
@@ -335,11 +335,10 @@ class ClientController extends Controller
                 $fournisseur->nom_fournisseur = $clientItem->nom_client;
                 $fournisseur->email_fournisseur= $clientItem->email_client;
                 $fournisseur->tele_fournisseur= $clientItem->tele_client;
-                
+                $fournisseur->GSM1_fournisseur= $clientItem->GSM1_client;
+                $fournisseur->GSM2_fournisseur= $clientItem->GSM2_client;
                 $fournisseur->ville_fournisseur= $clientItem->ville_client;
                 $fournisseur->nomSociete_fournisseur= $clientItem->nomSociete_client;
-                
-                
                 $fournisseur->user_id= $clientItem->user_id;
                 $fournisseur->remark= $clientItem->remark;
                 $fournisseur->groupId_fournisseur= $clientItem->groupId_client;
@@ -361,11 +360,10 @@ class ClientController extends Controller
                 $prospect->nom_prospect = $clientItem->nom_client;
                 $prospect->email_prospect= $clientItem->email_client;
                 $prospect->tele_prospect= $clientItem->tele_client;
-                
+                $prospect->GSM1_prospect= $clientItem->GSM1_client;
+                $prospect->GSM2_prospect= $clientItem->GSM2_client;
                 $prospect->ville_prospect= $clientItem->ville_client;
                 $prospect->nomSociete_prospect= $clientItem->nomSociete_client;
-               
-                
                 $prospect->user_id= $clientItem->user_id;
                 $prospect->remark= $clientItem->remark;
                 $prospect->groupId_prospect= $clientItem->groupId_client;
@@ -388,11 +386,10 @@ class ClientController extends Controller
                 $fc->nom_fournisseurClient = $clientItem->nom_client;
                 $fc->email_fournisseurClient= $clientItem->email_client;
                 $fc->tele_fournisseurClient= $clientItem->tele_client;
-                
+                $fc->GSM1_fournisseurClient= $clientItem->GSM1_client;
+                $fc->GSM2_fournisseurClient= $clientItem->GSM2_client;
                 $fc->ville_fournisseurClient= $clientItem->ville_client;
                 $fc->nomSociete_fournisseurClient= $clientItem->nomSociete_client;
-               
-                
                 $fc->user_id= $clientItem->user_id;
                 $fc->remark= $clientItem->remark;
                 $fc->groupId_fournisseurClient= $clientItem->groupId_client;

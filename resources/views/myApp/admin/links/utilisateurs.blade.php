@@ -22,7 +22,7 @@
                     </div><!--//col-->
 
                     <div class="col-auto">
-                        <a class="btn app-btn-secondary" href="#">
+                        <a class="btn app-btn-secondary" href="{{ route('users.pdf') }}">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -111,7 +111,7 @@
                     
                                         <div class="mb-3">
                                             <label class="form-label"><strong class="det">Adresse</strong></label>
-                                            <input type="text" class="form-control" name="address" placeholder="Entrer l'adresse..."
+                                            <input type="text" class="form-control" name="adresse" placeholder="Entrer l'adresse..."
                                                 value="{{ old('adresse') }}">
                     
                                             @error('adresse', 'default')
@@ -192,15 +192,15 @@
                                                                 data-bs-target="#updateUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                                                                 data-email="{{ $user->email }}" data-contact="{{ $user->contact }}" data-adresse="{{ $user->adresse }}"
                                                                 data-role="{{ $user->role }}">Modifier</button>
-                                                                <a>
-                                                                    <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-{{ $user->id }}" method="POST"
-                                                                        style="display: inline;">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="button" class="btn btn-outline-danger border-btn"
-                                                                            onclick="confirmDelete({{ $user->id }})">Supprimer</button>
-                                                                    </form>
-                                                                </a>
+                                                                
+                                                                <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-{{ $user->id }}" method="POST"
+                                                                    style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="button" class="btn btn-outline-danger border-btn"
+                                                                        onclick="confirmDelete({{ $user->id }})">Supprimer</button>
+                                                                </form>
+                                                                
                                                         </td>
                                                         <div class="modal fade" id="updateUserModal" tabindex="-1" aria-labelledby="updateUserModalLabel"
                                                             aria-hidden="true">
@@ -464,11 +464,11 @@
 
 
                                         <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-${user.id}" method="POST"
-                                                               style="display: inline;">
+                                                               style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
 
                                             @method('DELETE')
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <button type="button" class="btn btn-danger"
+                                            <button type="button" class="btn btn-outline-danger border-btn"
                                                     onclick="confirmDelete(${user.id})">Supprimer</button>
                                         </form>
                                         </td>

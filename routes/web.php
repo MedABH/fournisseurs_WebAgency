@@ -10,6 +10,7 @@ use App\Http\Controllers\FournisseurClientController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\ProfileAuthController;
 use App\Http\Controllers\ProspectController;
+use App\Http\Controllers\PartiesPrenantesController;
 use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Fournisseur;
@@ -146,3 +147,5 @@ Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientControlle
 
 // Route pour l'historique
 Route::get('/historique', [HistoriqueController::class, 'showHistorique'])->name('historiqueSection');
+
+Route::get('/partiesPrenantes', [PartiesPrenantesController::class, 'index']);

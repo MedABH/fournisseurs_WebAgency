@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->uuid('groupId_client')->nullable();
             $table->string('nomSociete_client');
-            
-            
             $table->string('nom_client');
             $table->string('tele_client');
             $table->string('email_client');
-            
             $table->string('ville_client');
             $table->integer('version_client')->default(1);
             $table->unsignedBigInteger('user_id')->nullable();
@@ -39,3 +36,5 @@ return new class extends Migration
         Schema::dropIfExists('clients');
     }
 };
+
+
