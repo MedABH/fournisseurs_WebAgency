@@ -149,7 +149,7 @@ Route::post('/contactClient/remark/{id}', [ClientController::class, 'updateRemar
 Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientController::class, 'updateRemarkFC'])->name('remark.fc');
 
 // Route pour l'historique
-Route::get('/historique', [HistoriqueController::class, 'showHistorique'])->name('historiqueSection');
+Route::get('/historiqueJournauxSection', [HistoriqueController::class, 'showHistorique'])->name('historiqueJournauxSection');
 
 Route::get('/PartiesPrenantesSection', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
 Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');

@@ -115,7 +115,7 @@
 
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
 
-                                <li><a href="{{ route('historiqueSection') }}" class="{{ request()->routeIs('historiqueSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
+                                <li><a href="{{ route('historiqueJournauxSection') }}" class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
                                         et Journaux</a></li>
 
 

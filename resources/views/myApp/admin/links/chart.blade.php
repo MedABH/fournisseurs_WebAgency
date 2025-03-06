@@ -80,22 +80,73 @@
          <!-- lfoog mgad f style -->
 
 
-         <div>
+         <div class="row g-4 mb-4">
+             <!-- Graphique Linéaire -->
+             <div class="col-12 col-lg-6">
+                 <div class="app-card app-card-chart h-100 shadow-sm">
+                     <div class="app-card-header p-3">
+                         <div class="row justify-content-between align-items-center">
+                             <div class="col-auto">
+                                 <h4 class="app-card-title">Graphique Linéaire</h4>
+                             </div><!--//col-->
+                             <div class="col-auto">
+                                 <div class="card-header-action">
+                                     <a href="">Plus</a>
+                                 </div><!--//card-header-actions-->
+                             </div><!--//col-->
+                         </div><!--//row-->
+                     </div><!--//app-card-header-->
+                     <div class="app-card-body p-3 p-lg-4">
+                         <div class="mb-3 d-flex">
+                             <!-- Unique ID for Graphique Linéaire Dropdown -->
+                             <select class="form-select form-select-sm ms-auto d-inline-flex w-auto line-chart-select"
+                                 id="lineChartSelect">
+                                 <option value="1" selected>Cette semaine</option>
+                                 <option value="2">Aujourd'hui</option>
+                                 <option value="3">Ce mois-ci</option>
+                                 <option value="4">Cette année</option>
+                             </select>
+                         </div>
+                         <div class="chart-container">
+                             <canvas id="canvas-linechart"></canvas>
+                         </div>
+                     </div><!--//app-card-body-->
+                 </div><!--//app-card-->
+             </div><!--//col-->
 
-
-             <div class="col-md-12">
-                 <div class="card">
-                     <div class="card-body" style="position: relative; height: 30vh; width: 100%;">
-                         <canvas id="myChart"></canvas>
-                     </div>
-                 </div>
-             </div>
-
-
-         </div>
-
-
-
+             <!-- Graphique à Barres -->
+             <div class="col-12 col-lg-6">
+                 <div class="app-card app-card-chart h-100 shadow-sm">
+                     <div class="app-card-header p-3">
+                         <div class="row justify-content-between align-items-center">
+                             <div class="col-auto">
+                                 <h4 class="app-card-title">Graphique à Barres</h4>
+                             </div><!--//col-->
+                             <div class="col-auto">
+                                 <div class="card-header-action">
+                                     <a href="">Plus</a>
+                                 </div><!--//card-header-actions-->
+                             </div><!--//col-->
+                         </div><!--//row-->
+                     </div><!--//app-card-header-->
+                     <div class="app-card-body p-3 p-lg-4">
+                         <div class="mb-3 d-flex">
+                             <!-- Unique ID for Graphique à Barres Dropdown -->
+                             <select class="form-select form-select-sm ms-auto d-inline-flex w-auto bar-chart-select"
+                                 id="barChartSelect">
+                                 <option value="1" selected>Cette semaine</option>
+                                 <option value="2">Aujourd'hui</option>
+                                 <option value="3">Ce mois-ci</option>
+                                 <option value="4">Cette année</option>
+                             </select>
+                         </div>
+                         <div class="chart-container">
+                             <canvas id="canvas-barchart"></canvas>
+                         </div>
+                     </div><!--//app-card-body-->
+                 </div><!--//app-card-->
+             </div><!--//col-->
+         </div><!--//row-->
 
 
 
@@ -103,87 +154,83 @@
          <!-- les tableaus lte7t -->
 
          <div class="row g-4 mb-4">
-            <div class="col-12 col-lg-6">
-                <div class="app-card app-card-progress-list h-100 shadow-sm">
-                    <div class="app-card-header p-3">
-                        <div class="row justify-content-between align-items-center">
-                            <div class="col-auto">
-                                <h4 class="app-card-title">Nombre de fournisseurs par catégorie</h4>
-                            </div><!--//col-->
-                            <div class="col-auto">
-                                <div class="card-header-action">
-                                    <a href="PartiesPrenantesSection">Plus</a>
-                                </div><!--//card-header-actions-->
-                            </div><!--//col-->
-                        </div><!--//row-->
-                    </div><!--//app-card-header-->
-                    <div class="app-card-body p-3 p-lg-4">
-                        <div class="table-responsive">
-                            <table class="table table-borderless mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="meta">Catégorie</th>
-                                        <th class="meta stat-cell">Nombre de fournisseurs</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($suppliersNumberByCategory as $categorie)
-                                    <tr>
-                                        <td>{{ $categorie->nom_categorie }}</td>
-                                        <td class="stat-cell">{{ $categorie->fournisseurs_count }}</td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div><!--//table-responsive-->
-                    </div><!--//app-card-body-->
-                </div><!--//app-card-->
-            </div><!--//col-->
-
-             <div class="col-md-6">
-                 <div class="card">
-                     <div class="card-header">
-                         <h4 class="card-title"></h4>
-                     </div>
-                     <div class="card-body">
+             <div class="col-12 col-lg-6">
+                 <div class="app-card app-card-progress-list h-100 shadow-sm">
+                     <div class="app-card-header p-3">
+                         <div class="row justify-content-between align-items-center">
+                             <div class="col-auto">
+                                 <h4 class="app-card-title">Nombre de fournisseurs par catégorie</h4>
+                             </div><!--//col-->
+                             <div class="col-auto">
+                                 <div class="card-header-action">
+                                     <a href="PartiesPrenantesSection">Plus</a>
+                                 </div><!--//card-header-actions-->
+                             </div><!--//col-->
+                         </div><!--//row-->
+                     </div><!--//app-card-header-->
+                     <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                             <table id="basic-datatables" class="display table table-striped table-hover">
-                                 <h3>Les utilisateurs récemment inscris</h3>
+                             <table class="table table-borderless mb-0">
                                  <thead>
                                      <tr>
-
-                                         <th>Nom</th>
-                                         <th rowspan="1"></th>
-
-                                         </th>
-
+                                         <th class="meta">Catégorie</th>
+                                         <th class="meta stat-cell">Nombre de fournisseurs</th>
                                      </tr>
                                  </thead>
                                  <tbody>
-                                     @foreach ($lastUsers as $user)
+                                     @foreach ($suppliersNumberByCategory as $categorie)
                                          <tr>
-                                             <td>{{ $user->name }}</td>
-                                             <td>
-                                                 <button
-                                                     style="border-style: none;
-                                               background-color:transparent"
-                                                     data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                     data-user-name="{{ $user->name }}"
-                                                     data-user-email="{{ $user->email }}"
-                                                     data-user-contact="{{ $user->contact }}"
-                                                     data-user-adresse="{{ $user->adresse }}">
-                                                     <i class="fas fa-info-circle" style="color: #31CE36;"></i>
-                                                 </button>
+                                             <td>{{ $categorie->nom_categorie }}</td>
+                                             <td class="stat-cell">{{ $categorie->fournisseurs_count }}</td>
+                                         </tr>
+                                     @endforeach
+                                 </tbody>
+                             </table>
+                         </div><!--//table-responsive-->
+                     </div><!--//app-card-body-->
+                 </div><!--//app-card-->
+             </div><!--//col-->
 
+             <div class="col-12 col-lg-6">
+                 <div class="app-card app-card-stats-table h-100 shadow-sm">
+                     <div class="app-card-header p-3">
+                         <div class="row justify-content-between align-items-center">
+                             <div class="col-auto">
+                                 <h4 class="app-card-title">Utilisateurs récemment connectés</h4>
+                             </div><!--//col-->
+                             <div class="col-auto">
+                                 <div class="card-header-action">
+                                     <a href="historiqueJournauxSection">Plus</a>
+                                 </div><!--//card-header-actions-->
+                             </div><!--//col-->
+                         </div><!--//row-->
+                     </div><!--//app-card-header-->
+                     <div class="app-card-body p-3 p-lg-4">
+                         <div class="table-responsive">
+                             <table class="table table-borderless mb-0">
+                                 <thead>
+                                     <tr>
+                                         <th class="meta">Nom</th>
+                                         <th class="meta stat-cell">Role</th>
+                                         <th class="meta stat-cell">Historique de Connexion</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     @foreach ($historiques as $historique)
+                                         <tr>
+                                             <td>{{ $historique->user->name }}</td>
+                                             <td class="stat-cell">{{ $historique->user->role }}</td>
+                                             <td class="stat-cell">
+                                                 {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
                                              </td>
                                          </tr>
                                      @endforeach
                                  </tbody>
                              </table>
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                         </div><!--//table-responsive-->
+                     </div><!--//app-card-body-->
+                 </div><!--//app-card-->
+             </div><!--//col-->
 
          </div>
      </div>
@@ -266,4 +313,9 @@
              });
          });
      </script>
+
+     <!-- Charts JS -->
+	<script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+	<script src="{{ asset('assets/js/index-charts.js') }}"></script>
+
  @endsection

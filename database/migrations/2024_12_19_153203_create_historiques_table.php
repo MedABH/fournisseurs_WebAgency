@@ -17,7 +17,7 @@ return new class extends Migration
             $table->timestamp('login_at')->useCurrent();
             $table->timestamps();
 
-            // Ajout d'une contrainte unique pour éviter les doublons
+            // Ensure no duplicate logins for the same user at the same time
             $table->unique(['user_id', 'login_at']);
         });
     }
