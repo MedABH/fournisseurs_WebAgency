@@ -23,7 +23,7 @@
 
                     <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
-                            <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
+                            <a class="btn app-btn-secondary" href="{{ route('prospects.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -34,7 +34,7 @@
 
                             </a>
                         @elseif (auth()->user()->role == 'admin')
-                            <a href="{{ route('clients.pdf') }}" class="btn btn-primary" style="margin-left:996px">
+                            <a href="{{ route('prospects.pdf') }}" class="btn btn-primary" style="margin-left:996px">
                                 <i class="fas fa-file-pdf"></i>
                             </a>
 
@@ -67,7 +67,7 @@
             } else if (modalType === 'update') {
                 var updateModal = new bootstrap.Modal(document.getElementById('update_prospect'));
                 updateModal.show();
-            }else if (modalType === 'remark') {
+            } else if (modalType === 'remark') {
                 var remark = new bootstrap.Modal(document.getElementById('remark'));
                 remark.show();
             }
@@ -75,12 +75,12 @@
     </script>
 @endsection
 @section('parties-prenantes')
-<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-    <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Les Tiers</a>
-    <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
-    <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
-    <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs et Clients</a>
-</nav>
+    <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Les Tiers</a>
+        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
+        <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
+        <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs et Clients</a>
+    </nav>
 @endsection
 
 @section('content')
@@ -91,47 +91,61 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un tiers</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Tier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label class="form-label">Nom de la société</label>
+                        <label class="form-label"><strong class="det">Nom de la société</strong></label>
                         <input type="text" class="form-control" name="nomSociete_prospect"
                             placeholder="Entrer le nom de la société..." value="{{ old('nomSociete_prospect') }}" />
                         @error('nomSociete_prospect', 'default')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+
+                        <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
+                        <input type="tel" class="form-control" name="GSM1_prospect" required
+                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_prospect') }}" />
+                        @error('GSM1_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                       
-                       
+                        <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
+                        <input type="tel" class="form-control" name="GSM2_prospect" required
+                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_prospect') }}" />
+                        @error('GSM2_prospect', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
 
-                        <label class="form-label">Personne à contacter</label>
-                        <input type="text" class="form-control" name="nom_prospect" placeholder="Entrer le prospect..."
-                            value="{{ old('nom_prospect') }}" />
+
+                        <label class="form-label"><strong class="det">Personne à contacter</strong></label>
+                        <input type="text" class="form-control" name="nom_prospect"
+                            placeholder="Entrer le prospect..." value="{{ old('nom_prospect') }}" />
                         @error('nom_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Numero de telephone</label>
-                        <input type="text" class="form-control" name="tele_prospect" placeholder="Entrer le contact..."
-                            value="{{ old('tele_prospect') }}" />
+
+                        <label class="form-label"><strong class="det">Numero de telephone</strong></label>
+                        <input type="tel" class="form-control" name="tele_prospect" required
+                            placeholder="Entrer le contact..." value="{{ old('tele_prospect') }}" />
                         @error('tele_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Email</label>
+                        <label class="form-label"><strong class="det">Email</strong></label>
                         <input type="email" class="form-control" name="email_prospect" placeholder="Entrer l'émail..."
                             value="{{ old('email_prospect') }}" />
                         @error('email_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        
-                        <label class="form-label">Ville</label>
-                        <input type="text" class="form-control" name="ville_prospect" placeholder="Entrer la ville..."
-                            value="{{ old('ville_prospect') }}" />
+
+
+                        <label class="form-label"><strong class="det">Ville</strong></label>
+                        <input type="text" class="form-control" name="ville_prospect"
+                            placeholder="Entrer la ville..." value="{{ old('ville_prospect') }}" />
                         @error('ville_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <label class="form-label">Catégorie</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="categorie_id"
-                            style="height: 39px">
+                        <label class="form-label"><strong class="det">Catégorie</strong></label>
+                        <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                            name="categorie_id" style="color: #a6a6a6;">
                             <option value="">Selectionner la catégorie</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -146,773 +160,794 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Ajouter" data-bs-dismiss="modal">
+                        <input type="submit" class="btn btn-success" value="Ajouter" data-bs-dismiss="modal">
                     </div>
                 </div>
             </div>
         </div>
     </form>
+
     <div class="page-inner">
-        @if (auth()->user()->role == 'super-admin')
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_prospect">
-                Ajouter un tiers
-            </button>
-            <a href="{{ route('prospects.pdf') }}" class="btn btn-primary" style="margin-left: 989px">
-                <i class="fas fa-file-pdf"></i>
-            </a>
-        @elseif (auth()->user()->role == 'admin')
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_prospect">
-                Ajouter un tiers
-            </button>
-            <a href="{{ route('prospects.pdf') }}" class="btn btn-primary" style="margin-left: 989px">
-                <i class="fas fa-file-pdf"></i>
-            </a>
-        @endif
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Les tiers</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="basic-datatables" class="display table table-striped table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Nom de la société</th>
-                                        <th>Personne à contacter</th>
-                                        <th>Numero de telephone</th>
-                                        <th>Email</th>
-                                        <th>Ville</th>
-                                        <th>Catégorie</th>
-                                        <th>Contacté Par</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $utilisateurs = \App\Models\User::get();
-                                    @endphp
-                                    @foreach ($prospects as $prospect)
-                                        <tr>
-                                            <td>{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}
-                                            </td>
-                                            <td>{{!empty($prospect->nom_prospect) ? $prospect->nom_prospect : 'Non disponible' }}</td>
-                                            <td>{{ !empty($prospect->tele_prospect) ? $prospect->tele_prospect : 'Non disponible'  }}</td>
-                                            <td>{{ !empty($prospect->email_prospect) ? $prospect->email_prospect : 'Non disponible' }}</td>
-                                            <td>{{ $prospect->ville_prospect }}</td>
-                                            <td>
-                                                @forelse ($prospect->categorieProspects as $assoc)
-                                                    @if ($assoc->categorie)
-                                                        {{ $assoc->categorie->nom_categorie }}
-                                                    @endif
-                                                @empty
-                                                    Non catégorisé
-                                                @endforelse
-                                            </td>
-                                            <td>
-                                                {{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}
-                                            </td>
-
-                                            @if (auth()->user()->role == 'super-admin')
-                                                <td>
-                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#update_prospect" data-id="{{ $prospect->id }}"
-                                                        data-society="{{ $prospect->nomSociete_prospect }}"
-                                                        data-name="{{ $prospect->nom_prospect }}"
-                                                        data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-email="{{ $prospect->email_prospect }}"
-                                                        data-ville="{{ $prospect->ville_prospect }}"
-                                                        data-category="{{ $prospect->categories->first()?->id ?? '' }}">
-                                                        Modifier
-                                                    </a>
-
-                                                </td>
-                                                <td>
-                                                    <form class="user-form"
-                                                        action="{{ route('user.select.prospect', $prospect->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <select class="form-select userSelect"
-                                                            aria-label="Default select example"
-                                                            data-prospect-id="{{ $prospect->id }}"
-                                                            style="margin-right:100px" name="user_id">
-                                                            <option value="">Contacté Par</option>
-                                                            @foreach ($utilisateurs as $user)
-                                                                <option value="{{ $user->id }}"
-                                                                    {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                    {{ $user->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#remark-{{ $prospect->id }}">
-                                                        Remarque
-                                                    </button>
-                                                    
-
-
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-info detailButton"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalProspectDetails-{{ $prospect->id }}"
-                                                        data-name="{{ $prospect->nom_prospect }}"
-                                                        data-email="{{ $prospect->email_prospect }}"
-                                                        data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-ville="{{ $prospect->ville_prospect }}"
-                                                        data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-remark="{{ $prospect->remark }}"
-                                                        data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
-
-                                                        >
-
-                                                        Details
-                                                    </button>
-                                                </td>
-
-
-
-                                                <td>
-                                                    <a>
-                                                        <form action="{{ route('prospect.destroy', $prospect->id) }}"
-                                                            method="POST" style="display: inline"
-                                                            id="delete-form-{{ $prospect->id }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-danger"
-                                                                onclick="confirmDelete({{ $prospect->id }})">
-                                                                Supprimer
-                                                            </button>
-                                                        </form>
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <form class="prospect-form"
-                                                        action="{{ route('prospect.select', $prospect->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <select name="status" id=""
-                                                            class="form-select status-select">
-                                                            <option value="" selected>Selectionner la table</option>
-                                                            @foreach ($select as $item)
-                                                                <option value="{{ $item }}">{{ $item }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </form>
-
-                                                </td>
-                                            @elseif (auth()->user()->role == 'admin')
-                                                <td>
-                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#update_prospect" data-id="{{ $prospect->id }}"
-                                                        data-society="{{ $prospect->nomSociete_prospect }}"
-                                                        data-name="{{ $prospect->nom_prospect }}"
-                                                        data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-email="{{ $prospect->email_prospect }}"
-                                                        data-ville="{{ $prospect->ville_prospect }}"
-                                                        data-category="{{ $prospect->categories->first()?->id ?? '' }}">
-                                                        Modifier
-                                                    </a>
-
-                                                </td>
-                                                <td>
-                                                    <form class="user-form"
-                                                        action="{{ route('user.select.prospect', $prospect->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <select class="form-select userSelect"
-                                                            aria-label="Default select example"
-                                                            data-prospect-id="{{ $prospect->id }}"
-                                                            style="margin-right:100px" name="user_id">
-                                                            <option value="">Contacté Par</option>
-                                                            @foreach ($utilisateurs as $user)
-                                                                <option value="{{ $user->id }}"
-                                                                    {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                    {{ $user->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#remark-{{ $prospect->id }}">
-                                                        Remarque
-                                                    </button>
-                                                    
-
-
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-info detailButton"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalProspectDetails-{{ $prospect->id }}"
-                                                        data-name="{{ $prospect->nom_prospect }}"
-                                                        data-email="{{ $prospect->email_prospect }}"
-                                                        data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-ville="{{ $prospect->ville_prospect }}"
-                                                        data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-remark="{{ $prospect->remark }}"
-                                                        data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
-
-                                                        >
-
-                                                        Details
-                                                    </button>
-                                                </td>
-                                                <td>
-                                                    <form class="prospect-form"
-                                                        action="{{ route('prospect.select', $prospect->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <select name="status" id=""
-                                                            class="form-select status-select">
-                                                            <option value="" selected>Selectionner la table</option>
-                                                            @foreach ($select as $item)
-                                                                <option value="{{ $item }}">{{ $item }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </form>
-
-                                                </td>
-                                            @elseif (auth()->user()->role == 'utilisateur')
-                                                <td>
-                                                    <form class="user-form"
-                                                        action="{{ route('user.select.prospect', $prospect->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('POST')
-                                                        <select class="form-select userSelect"
-                                                            aria-label="Default select example"
-                                                            data-prospect-id="{{ $prospect->id }}"
-                                                            style="margin-right:100px" name="user_id">
-                                                            <option value="">Contacté Par</option>
-                                                            @foreach ($utilisateurs as $user)
-                                                                <option value="{{ $user->id }}"
-                                                                    {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                    {{ $user->name }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#remark-{{ $prospect->id }}">
-                                                        Remarque
-                                                    </button>
-                                                    
-
-
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-info detailButton"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#ModalProspectDetails-{{ $prospect->id }}"
-                                                        data-name="{{ $prospect->nom_prospect }}"
-                                                        data-email="{{ $prospect->email_prospect }}"
-                                                        data-tele="{{ $prospect->tele_prospect }}"
-                                                        data-ville="{{ $prospect->ville_prospect }}"
-                                                        data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
-                                                        data-remark="{{ $prospect->remark }}"
-                                                        data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}"
-
-                                                        >
-
-                                                        Details
-                                                    </button>
-                                                </td>
-
+        <div class="app-card app-card-orders-table mb-5">
+            <div class="app-card-body">
+                <div class="table-responsive">
+                    <table id="basic-datatables" class="table app-table-hover mb-0 text-center">
+                        <thead>
+                            <tr>
+                                <th class="cell">Nom de la société</th>
+                                <th class="cell">GSM1 de la société</th>
+                                <th class="cell">GSM2 de la société</th>
+                                <th class="cell">Personne à contacter</th>
+                                <th class="cell">Numero de telephone</th>
+                                <th class="cell">Email</th>
+                                <th class="cell">Ville</th>
+                                <th class="cell">Catégorie</th>
+                                <th class="cell">Contacté Par</th>
+                                <th class="cell text-end">
+                                    @if (auth()->user()->role == 'super-admin')
+                                        <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#add_prospect">
+                                            Ajouter
+                                        </button>
+                                    @elseif (auth()->user()->role == 'admin')
+                                        <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#add_prospect">
+                                            Ajouter
+                                        </button>
+                                    @endif
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $utilisateurs = \App\Models\User::get();
+                            @endphp
+                            @foreach ($prospects as $prospect)
+                                <tr>
+                                    <td class="cell">
+                                        {{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->nom_prospect) ? $prospect->nom_prospect : 'Non disponible' }}
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->tele_prospect) ? $prospect->tele_prospect : 'Non disponible' }}
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->email_prospect)
+                                            ? $prospect->email_prospect
+                                            : 'Non
+                                                                            disponible' }}
+                                    </td>
+                                    <td class="cell">{{ $prospect->ville_prospect }}</td>
+                                    <td class="cell">
+                                        @forelse ($prospect->categorieprospects as $assoc)
+                                            @if ($assoc->categorie)
+                                                {{ $assoc->categorie->nom_categorie }}
                                             @endif
-                                            <form action="{{ route('remark.prospect', $prospect->id) }}"
+                                        @empty
+                                            Non catégorisé
+                                        @endforelse
+                                    </td>
+                                    <td class="cell">
+                                        {{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}
+                                    </td>
+
+                                    @if (auth()->user()->role == 'super-admin')
+                                        <td class="button-container">
+                                            <div class="d-flex align-items-center gap-2"
+                                                style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+
+                                                <button type="button" class="btn btn-outline-primary border-btn me-4"
+                                                    data-bs-toggle="modal" data-bs-target="#update_prospect"
+                                                    data-id="{{ $prospect->id }}"
+                                                    data-society="{{ $prospect->nomSociete_prospect }}"
+                                                    data-GSM1="{{ $prospect->GSM1_prospect }}"
+                                                    data-GSM2="{{ $prospect->GSM2_prospect }}"
+                                                    data-name="{{ $prospect->nom_prospect }}"
+                                                    data-tele="{{ $prospect->tele_prospect }}"
+                                                    data-email="{{ $prospect->email_prospect }}"
+                                                    data-ville="{{ $prospect->ville_prospect }}"
+                                                    data-category="{{ $prospect->categories->first()?->id ?? '' }}">Modifier
+                                                </button>
+
+                                                <button type="button" class="btn btn-outline-success border-btn me-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#remark-{{ $prospect->id }}">Remarque</button>
+
+
+                                                <button type="button"
+                                                    class="btn btn-outline-info detailButton border-btn me-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalprospectDetails-{{ $prospect->id }}"
+                                                    data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
+                                                    data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
+                                                    data-name="{{ $prospect->nom_prospect }}"
+                                                    data-email="{{ $prospect->email_prospect }}"
+                                                    data-tele="{{ $prospect->tele_prospect }}"
+                                                    data-ville="{{ $prospect->ville_prospect }}"
+                                                    data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
+                                                    data-remark="{{ $prospect->remark }}"
+                                                    data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">Details</button>
+
+                                                <form action="{{ route('prospect.destroy', $prospect->id) }}"
+                                                    method="POST"
+                                                    style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                    id="delete-form-{{ $prospect->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                        onclick="confirmDelete({{ $prospect->id }})">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+
+
+                                                <form class="user-form"
+                                                    action="{{ route('user.select.prospect', $prospect->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select class="form-select userSelect me-4" aria-label="Default select example"
+                                                        data-prospect-id="{{ $prospect->id }}" name="user_id">
+                                                        <option value="" style="width: 20rem">Contacté Par</option>
+                                                        @foreach ($utilisateurs as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+
+
+                                                <form class="prospect-form"
+                                                    action="{{ route('prospect.select', $prospect->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select name="status" id="" class="form-select status-select w-25">
+                                                        <option value=""></option>
+                                                        @foreach ($select as $item)
+                                                            <option value="{{ $item }}">{{ $item }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                            </div>
+                                        </td>
+
+
+                                        <!-- admin role -->
+                                    @elseif (auth()->user()->role == 'admin')
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary border-btn me-4"
+                                                data-bs-toggle="modal" data-bs-target="#update_prospect"
+                                                data-id="{{ $prospect->id }}"
+                                                data-society="{{ $prospect->nomSociete_prospect }}"
+                                                data-GSM1="{{ $prospect->GSM1_prospect }}"
+                                                data-GSM2="{{ $prospect->GSM2_prospect }}"
+                                                data-name="{{ $prospect->nom_prospect }}"
+                                                data-tele="{{ $prospect->tele_prospect }}"
+                                                data-email="{{ $prospect->email_prospect }}"
+                                                data-ville="{{ $prospect->ville_prospect }}"
+                                                data-category="{{ $prospect->categories->first()?->id ?? '' }}">Modifier
+                                            </button>
+
+
+
+                                            <button type="button" class="btn btn-outline-success border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#remark-{{ $prospect->id }}">Remarque
+                                            </button>
+
+
+
+                                            <button type="button"
+                                                class="btn btn-outline-info detailButton border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalprospectDetails-{{ $prospect->id }}"
+                                                data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
+                                                data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
+                                                data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
+                                                data-name="{{ $prospect->nom_prospect }}"
+                                                data-email="{{ $prospect->email_prospect }}"
+                                                data-tele="{{ $prospect->tele_prospect }}"
+                                                data-ville="{{ $prospect->ville_prospect }}"
+                                                data-remark="{{ $prospect->remark }}"
+                                                data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">Details
+                                            </button>
+
+
+
+                                            <form class="user-form"
+                                                action="{{ route('user.select.prospect', $prospect->id) }}"
                                                 method="POST">
                                                 @csrf
-                                                <div class="modal fade" id="remark-{{ $prospect->id }}" tabindex="-1"
-                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal"
-                                                                    aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <div class="form-group">
-                                                                    <label for="remarque">Remarque</label>
-                                                                    <textarea name="remark" id="remarque" class="form-control" rows="4">{{ old('remark', $prospect->remark) }}</textarea>
-                                                                    @error('remark')
-                                                                        <div class="alert alert-danger">
-                                                                            {{ $message }}</div>
-                                                                    @enderror
-                                                                </div>
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Ajouter la
-                                                                    remarque</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @method('POST')
+                                                <select class="form-select userSelect w-auto me-4"
+                                                    aria-label="Default select example"
+                                                    data-prospect-id="{{ $prospect->id }}" style="margin-right:100px"
+                                                    name="user_id">
+                                                    <option value="">Contacté Par</option>
+                                                    @foreach ($utilisateurs as $user)
+                                                        <option value="{{ $user->id }}"
+                                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                             </form>
-                                        </tr>
 
-                                        <div class="modal fade" id="ModalProspectDetails-{{ $prospect->id }}"
-                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <form class="prospect-form"
+                                                action="{{ route('prospect.select', $prospect->id) }}" method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select name="status" id=""
+                                                    class="form-select status-select w-auto">
+                                                    <option value="">Selectionner la table</option>
+                                                    @foreach ($select as $item)
+                                                        <option value="{{ $item }}">{{ $item }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+
+                                        </td>
+
+                                        <!-- utilisateur role -->
+                                    @elseif (auth()->user()->role == 'utilisateur')
+                                        <td>
+
+                                            <button type="button" class="btn btn-outline-success border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#remark-{{ $prospect->id }}">Remarque
+                                            </button>
+
+                                            <button type="button"
+                                                class="btn btn-outline-info detailButton border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalprospectDetails-{{ $prospect->id }}"
+                                                data-name="{{ $prospect->nom_prospect }}"
+                                                data-email="{{ $prospect->email_prospect }}"
+                                                data-tele="{{ $prospect->tele_prospect }}"
+                                                data-ville="{{ $prospect->ville_prospect }}"
+                                                data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
+                                                data-remark="{{ $prospect->remark }}"
+                                                data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">Details
+                                            </button>
+
+                                            <form class="user-form"
+                                                action="{{ route('user.select.prospect', $prospect->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select class="form-select userSelect" aria-label="Default select example"
+                                                    data-prospect-id="{{ $prospect->id }}" style="margin-right:100px"
+                                                    name="user_id">
+                                                    <option value="">Contacté Par</option>
+                                                    @foreach ($utilisateurs as $user)
+                                                        <option value="{{ $user->id }}"
+                                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        </td>
+                                    @endif
+
+
+                                    <form action="{{ route('remark.prospect', $prospect->id) }}" method="POST">
+                                        @csrf
+
+
+
+                                        <!--//Remarque-prospect-->
+                                        <div class="modal fade" id="remark-{{ $prospect->id }}" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
+                                                        <h5 class="modal-title" id="prospectremarqueModalLabel">Remarque
+                                                        </h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="show-info-prospect show-society">
-                                                            <label class="label-detail-prospect">Nom de la
-                                                                société</label>
-                                                            <h6 class="info-prospect showSocietyProspect"
-                                                                id="showSocietyDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-                                                     
-                                                       
-                                                        <div class="show-info-prospect show-name">
-                                                            <label class="label-detail-prospect">Personne à
-                                                                contacter</label>
-                                                            <h6 class="info-prospect showNameProspect"
-                                                                id="showNameDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-prospect show-contact">
-                                                            <label class="label-detail-prospect">Numero de telephone</label>
-                                                            <h6 class="info-prospect showContactProspect"
-                                                                id="showContactDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-prospect show-email">
-                                                            <label class="label-detail-prospect">Email</label>
-                                                            <h6 class="info-prospect showEmailProspect"
-                                                                id="showEmailDetail-{{ $prospect->id }}">
-                                                            </h6>
+
+                                                        <textarea name="remark" id="remarque" class="form-control" rows="4">{{ old('remark', $prospect->remark) }}</textarea>
+                                                        @error('remark')
+                                                            <div class="alert alert-danger">
+                                                                {{ $message }}</div>
+                                                        @enderror
+                                                        <div class="d-grid">
+                                                            <button type="submit"
+                                                                class="btn btn-success">Ajouter</button>
                                                         </div>
 
-                                                        
-                                                        <div class="show-info-prospect show-ville">
-                                                            <label class="label-detail-prospect">Ville</label>
-                                                            <h6 class="info-prospect showVilleProspect"
-                                                                id="showVilleDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-
-                                                        <div class="show-info-prospect show-category"
-                                                            style="margin-top:10px">
-                                                            <label class="label-detail-prospect">Les
-                                                                catégories</label>
-                                                            <select
-                                                                class="form-select form-select-sm info-prospect showCategoryProspect"
-                                                                aria-label=".form-select-sm example"
-                                                                style="width: 200px; height: 30px"
-                                                                id="categories-{{ $prospect->id }}">
-                                                                <option value="" selected>Voir
-                                                                    la(les)
-                                                                    catégories</option>
-                                                                @foreach ($prospect->allCategories as $categorie)
-                                                                    <option value="{{ $categorie->id }}">
-                                                                        {{ $categorie->nom_categorie }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                        <div class="show-info-prospect show-product"
-                                                            style="margin-bottom: 40px; margin-top:10px">
-                                                            <label class="form-label label-detail-prospect">Sous-Catégorie</label>
-                                                            <select
-                                                                class="form-select form-select-sm info-prospect showProductProspect"
-                                                                aria-label=".form-select-sm example"
-                                                                id="products-{{ $prospect->id }}"
-                                                                style="width: 200px; height: 30px">
-                                                                <option value="" selected>Voir les
-                                                                    produits associés</option>
-
-                                                            </select>
-                                                        </div>
-                                                        <div class="show-info-prospect show-user">
-                                                            <label class="label-detail-prospect">Contacté Par</label>
-                                                            <h6 class="info-prospect showUserProspect"
-                                                                id="showUserDetail-{{ $prospect->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-prospect show-remark">
-                                                            <label class="label-detail-prospect">Remarque</label>
-                                                            <p class="info-prospect showRemarkProspect"
-                                                                id="showRemarkDetail-{{ $prospect->id }}" style="font-size:12px">
-                                                            </p>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal">Fermer</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
+                                </tr>
+                                <div class="modal fade" id="ModalprospectDetails-{{ $prospect->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="show-info-prospect show-society">
+                                                    <label class="label-detail-prospect"><strong class="det">Nom de la
+                                                            société</strong></label>
+                                                    <p class="info-prospect showSocietyprospect"
+                                                        id="showSocietyDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+
+                                                <div class="show-info-prospect show-GSM1">
+                                                    <label class="label-detail-prospect"><strong class="det">GSM1 de la
+                                                        société</strong></label>
+                                                    <p class="info-prospect showGSM1prospect"
+                                                        id="showGSM1Detail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+                                                <div class="show-info-prospect show-GSM2">
+                                                    <label class="label-detail-prospect"><strong class="det">GSM2 de la
+                                                        société</strong></label>
+                                                    <p class="info-prospect showGSM2prospect"
+                                                        id="showGSM2Detail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+
+                                                <div class="show-info-prospect show-name">
+                                                    <label class="label-detail-prospect"><strong class="det">Personne à
+                                                        contacter</strong></label>
+                                                    <p class="info-prospect showNameprospect"
+                                                        id="showNameDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+                                                <div class="show-info-prospect show-contact">
+                                                    <label class="label-detail-prospect"><strong class="det">Numero de telephone</strong></label>
+                                                    <p class="info-prospect showContactprospect"
+                                                        id="showContactDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+                                                <div class="show-info-prospect show-email">
+                                                    <label class="label-detail-prospect"><strong class="det">Email</strong></label>
+                                                    <p class="info-prospect showEmailprospect"
+                                                        id="showEmailDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+
+
+                                                <div class="show-info-prospect show-ville">
+                                                    <label class="label-detail-prospect"><strong class="det">Ville</strong></label>
+                                                    <p class="info-prospect showVilleprospect"
+                                                        id="showVilleDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+
+                                                <div class="show-info-prospect show-category" style="margin-top:10px">
+                                                    <label class="label-detail-prospect"><strong class="det">Les
+                                                        catégories</strong></label>
+                                                    <select
+                                                        class="form-select form-select-sm info-prospect showCategoryprospect"
+                                                        aria-label=".form-select-sm example"
+                                                        style="width: 200px; height: 30px"
+                                                        id="categories-{{ $prospect->id }}">
+                                                        <option value="" selected>Voir
+                                                            la(les)
+                                                            catégories</option>
+                                                        @foreach ($prospect->allCategories as $categorie)
+                                                            <option value="{{ $categorie->id }}">
+                                                                {{ $categorie->nom_categorie }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="show-info-prospect show-product"
+                                                    style="margin-bottom: 40px; margin-top:10px">
+                                                    <label class="form-label label-detail-prospect"><strong class="det">Sous-Catégorie</strong></label>
+                                                    <select
+                                                        class="form-select form-select-sm info-prospect showProductprospect"
+                                                        aria-label=".form-select-sm example"
+                                                        id="products-{{ $prospect->id }}"
+                                                        style="width: 200px; height: 30px">
+                                                        <option value="" selected>Voir les
+                                                            produits associés</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="show-info-prospect show-user">
+                                                    <label class="label-detail-prospect"><strong class="det">Contacté Par</strong></label>
+                                                    <p class="info-prospect showUserprospect"
+                                                        id="showUserDetail-{{ $prospect->id }}">
+                                                    </p>
+                                                </div>
+                                                <div class="show-info-prospect show-remark">
+                                                    <label class="label-detail-prospect"><strong class="det">Remarque</strong></label>
+                                                    <p class="info-prospect showRemarkprospect"
+                                                        id="showRemarkDetail-{{ $prospect->id }}"
+                                                        style="font-size: 12px">
+                                                    </p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
 
-        @if (isset($prospect))
-            <div class="modal fade" id="update_prospect" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="{{ route('prospect.update') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="id" id="updateProspectId">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modifier le tiers</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div>
-                                    <label class="form-label">Nom de la
-                                        société</label>
-                                    <input type="text" class="form-control" name="newNomSociete_prospect"
-                                        placeholder="Entrer le nom de la société..." id="updateProspectSociety"
-                                        value="{{ old('newNomSociete_prospect', $prospect->nomSociete_prospect) }}" />
-                                    @if ($errors->has('newNomSociete_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newNomSociete_prospect') }}</span>
-                                    @endif
-
-                                </div>
-                              
-                               
-                                <div>
-                                    <label class="form-label">Personne à contacter</label>
-                                    <input id="updateProspectName" type="text" class="form-control"
-                                        name="newNom_prospect" placeholder="Entrer le prospect..."
-                                        value="{{ old('newNom_prospect', $prospect->nom_prospect) }}" />
-                                    @if ($errors->has('newNom_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newNom_prospect') }}</span>
-                                    @endif
-
-                                </div>
-                                <div>
-                                    <label class="form-label">Numero de telephone</label>
-                                    <input id="updateProspectContact" type="text" class="form-control"
-                                        name="newTele_prospect" placeholder="Entrer le contact..."
-                                        value="{{ old('newTele_prospect', $prospect->tele_prospect) }}" />
-                                    @if ($errors->has('newTele_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newTele_prospect') }}</span>
-                                    @endif
-
-                                </div>
-                                <div>
-                                    <label class="form-label">Email</label>
-                                    <input id="updateProspectEmail" type="email" class="form-control"
-                                        name="newEmail_prospect" placeholder="Entrer l'émail..."
-                                        value="{{ old('newEmail_prospect', $prospect->email_prospect) }}" />
-                                    @if ($errors->has('newEmail_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newEmail_prospect') }}</span>
-                                    @endif
-
-                                </div>
-
-                         
-                                <div>
-                                    <label class="form-label">Ville</label>
-                                    <input id="updateProspectVille" type="text" class="form-control"
-                                        name="newVille_prospect" placeholder="Entrer la ville..."
-                                        value="{{ old('newVille_prospect', $prospect->ville_prospect) }}" />
-                                    @if ($errors->has('newVille_prospect'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newVille_prospect') }}</span>
-                                    @endif
-
-                                </div>
-
-                                <div>
-                                    <label class="form-label">Catégorie</label>
-                                    <select id="updateProspectCategory" class="form-select form-select-sm"
-                                        aria-label=".form-select-sm example" name="newCategorie_id" style="height: 39px">
-                                        @foreach ($categories as $cat)
-                                            <option value="{{ $cat->id }}">
-
-                                                {{ $cat->nom_categorie }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @if ($errors->has('newCategorie_id'))
-                                        <span class="text-danger">
-                                            {{ $errors->first('newCategorie_id') }}</span>
-                                    @endif
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
-                            </div>
-                        </form>
-                    </div>
-                </div>
+ <!--//modifier-prospect-->
+@if (isset($prospect))
+<div class="modal fade" id="update_prospect" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modifier Le
+                    Tier</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-        @endif
-        <div class="d-flex justify-content-between align-items-center">
-            @if ($prospects->total() >= 10)
-                <form id="pagination-form" action="{{ route('prospects.pagination') }}" method="GET"
-                    class="d-inline-flex">
+            <div class="modal-body">
+                <form action="{{ route('prospect.update') }}" method="POST">
                     @csrf
-                    <select name="per_page" id="perPage" class="form-select form-select-sm"
-                        onchange="document.getElementById('pagination-form').submit();">
-                        <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                        <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                        <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
-                        <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
-                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                        <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
-                    </select>
-                </form>
-            @endif
-            <div>
-                {{ $prospects->links('vendor.pagination.bootstrap-4') }}
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Nom de la société</strong></label>
+                        <input type="text" class="form-control" name="newNomSociete_prospect"
+                            placeholder="Entrer le nom de la société..." id="updateprospectSociety"
+                            value="{{ old('newNomSociete_prospect', $prospect->nomSociete_prospect) }}">
+                        @if ($errors->has('newNomSociete_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newNomSociete_prospect') }}</span>
+                        @endif
+                    </div>
 
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
+                        <input type="tel" class="form-control" name="newGSM1_prospect" placeholder="Entrer le GSM1..."
+                            id="updateprospectGSM1" value="{{ old('newGSM1_prospect', $prospect->GSM1_prospect) }}">
+                        @if ($errors->has('newGSM1_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newGSM1_prospect') }}</span>
+                        @endif
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
+                        <input type="tel" class="form-control" name="newGSM2_prospect" placeholder="Entrer GSM2..."
+                            id="updateprospectGSM2" value="{{ old('newGSM2_prospect', $prospect->GSM2_prospect) }}">
+                        @if ($errors->has('newGSM2_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newGSM2_prospect') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Personne à contacter</strong></label>
+                        <input type="text" class="form-control" id="updateprospectName" name="newNom_prospect"
+                            placeholder="Entrer le prospect..." value="{{ old('newNom_prospect', $prospect->nom_prospect) }}">
+                        @if ($errors->has('newNom_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newNom_prospect') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Numéro de téléphone</strong></label>
+                        <input type="tel" class="form-control" id="updateprospectContact" name="newTele_prospect"
+                            placeholder="Entrer le contact..."
+                            value="{{ old('newTele_prospect', $prospect->tele_prospect) }}">
+                        @if ($errors->has('newTele_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newTele_prospect') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Email</strong></label>
+                        <input id="updateprospectEmail" type="email" class="form-control" name="newEmail_prospect"
+                            placeholder="Entrer l'émail..." value="{{ old('newEmail_prospect', $prospect->email_prospect) }}">
+                        @if ($errors->has('newEmail_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newEmail_prospect') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Ville</strong></label>
+                        <input id="updateprospectVille" type="text" class="form-control" name="newVille_prospect"
+                            placeholder="Entrer la ville..."
+                            value="{{ old('newVille_prospect', $prospect->ville_prospect) }}">
+
+                        @if ($errors->has('newVille_prospect'))
+                        <span class="text-danger">
+                            {{ $errors->first('newVille_prospect') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label"><strong class="det">Catégorie</strong></label>
+                        <select class="form-select" id="updateprospectCategory" aria-label=".form-select-sm example"
+                            name="newCategorie_id" style="color: #a6a6a6;">
+                            @foreach ($categories as $cat)
+                            <option value="{{ $cat->id }}">
+
+                                {{ $cat->nom_categorie }}
+                            </option>
+                            @endforeach
+                        </select>
+                        @if ($errors->has('newCategorie_id'))
+                        <span class="text-danger">
+                            {{ $errors->first('newCategorie_id') }}</span>
+                        @endif
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </form>
             </div>
+        </div>
+    </div>
+</div>
+@endif
+    <div class="d-flex justify-content-between align-items-center">
+        @if ($prospects->total() >= 10)
+            <form id="pagination-form" action="{{ route('prospects.pagination') }}" method="GET"
+                class="d-inline-flex">
+                @csrf
+                <select name="per_page" id="perPage" class="form-select form-select-sm"
+                    onchange="document.getElementById('pagination-form').submit();">
+                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
+                    <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
+                    <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
+                </select>
+            </form>
+        @endif
+        <div>
+            {{ $prospects->links('vendor.pagination.bootstrap-4') }}
 
         </div>
-    @endsection
-    @section('script')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const select = document.getElementById('pagination-select');
-                const form = document.getElementById('pagination-form');
-                const perPageInput = document.getElementById('per-page-input');
 
+    </div>
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('pagination-select');
+            const form = document.getElementById('pagination-form');
+            const perPageInput = document.getElementById('per-page-input');
+
+            select.addEventListener('change', function() {
+                perPageInput.value = this.value;
+                form.submit();
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const updateProspectModal = document.getElementById('update_prospect');
+            updateProspectModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+
+                const prospectId = button.getAttribute('data-id');
+                const prospectName = button.getAttribute('data-name');
+                const prospectEmail = button.getAttribute('data-email');
+                const prospectContact = button.getAttribute('data-tele');
+                const prospectVille = button.getAttribute('data-ville');
+                const prospectSociety = button.getAttribute('data-society');
+                const prospectGSM1 = button.getAttribute('data-GSM1');
+                const prospectGSM2 = button.getAttribute('data-GSM2');
+                const prospectCategory = button.getAttribute('data-category')
+
+                document.getElementById('updateProspectId').value = prospectId;
+                document.getElementById('updateProspectName').value = prospectName;
+                document.getElementById('updateProspectEmail').value = prospectEmail;
+                document.getElementById('updateProspectContact').value = prospectContact;
+                document.getElementById('updateProspectVille').value = prospectVille;
+                document.getElementById('updateProspectSociety').value = prospectSociety;
+                document.getElementById('updateProspectGSM1').value = prospectGSM1;
+                document.getElementById('updateProspectGSM2').value = prospectGSM2;
+                document.getElementById('updateProspectCategory').value = prospectCategory;
+
+
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('.status-select');
+            selects.forEach(select => {
                 select.addEventListener('change', function() {
-                    perPageInput.value = this.value;
-                    form.submit();
-                });
-            });
-        </script>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const updateProspectModal = document.getElementById('update_prospect');
-                updateProspectModal.addEventListener('show.bs.modal', event => {
-                    const button = event.relatedTarget;
-
-                    const prospectId = button.getAttribute('data-id');
-                    const prospectName = button.getAttribute('data-name');
-                    const prospectEmail = button.getAttribute('data-email');
-                    const prospectContact = button.getAttribute('data-tele');
-                    const prospectAdress = button.getAttribute('data-adress');
-                    const prospectVille = button.getAttribute('data-ville');
-                    const prospectSociety = button.getAttribute('data-society');
-                    const prospectGSM1 = button.getAttribute('data-GSM1');
-                    const prospectGSM2 = button.getAttribute('data-GSM2');
-                    const prospectCategory = button.getAttribute('data-category')
-
-                    document.getElementById('updateProspectId').value = prospectId;
-                    document.getElementById('updateProspectName').value = prospectName;
-                    document.getElementById('updateProspectEmail').value = prospectEmail;
-                    document.getElementById('updateProspectContact').value = prospectContact;
-                    document.getElementById('updateProspectAdress').value = prospectAdress;
-                    document.getElementById('updateProspectVille').value = prospectVille;
-                    document.getElementById('updateProspectSociety').value = prospectSociety;
-                    document.getElementById('updateProspectGSM1').value = prospectGSM1;
-                    document.getElementById('updateProspectGSM2').value = prospectGSM2;
-                    document.getElementById('updateProspectCategory').value = prospectCategory;
-
-
-                });
-            });
-        </script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const selects = document.querySelectorAll('.status-select');
-                selects.forEach(select => {
-                    select.addEventListener('change', function() {
-                        const form = this.closest('.prospect-form');
-                        if (form) {
-                            form.submit();
-                        }
-                    });
-                });
-            });
-        </script>
-         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const selects = document.querySelectorAll('.userSelect'); // Sélectionne tous les selects
-                selects.forEach(select => {
-                    select.addEventListener('change', function() {
-                        const form = this.closest(
-                            '.user-form'); // Trouve le formulaire correspondant
-                        if (form) {
-                            form.submit();
-                        }
-                    });
-                });
-            });
-        </script>
-
-        <script>
-            function confirmDelete(prospectId) {
-                Swal.fire({
-                    title: 'Supprimer le prospect !',
-                    text: "êtes-vous sûr que vous voulez supprimer ce prospect ?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    cancelButtonText: 'Annuler',
-                    confirmButtonText: 'Oui, Supprimer-le !'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        document.getElementById('delete-form-' + prospectId).submit();
+                    const form = this.closest('.prospect-form');
+                    if (form) {
+                        form.submit();
                     }
                 });
-            }
-        </script>
-
-        <script>
-            document.querySelectorAll(`.detailButton`).forEach(button => {
-
-                button.addEventListener('click', function() {
-                    const prospectId = this.getAttribute('data-bs-target').split('-').pop();
-                    const prospectName = this.getAttribute('data-name')|| 'Non disponible'
-                    const prospectEmail = this.getAttribute('data-email')|| 'Non disponible'
-                    const prospectContact = this.getAttribute('data-tele')|| 'Non disponible'
-                    const prospectAdress = this.getAttribute('data-adress') || 'Non disponible'
-                    const prospectVille = this.getAttribute('data-ville')
-                    const prospectSociety = this.getAttribute('data-society-name')
-                    const prospectGSM1 = this.getAttribute('data-GSM1')
-                    const prospectGSM2 = this.getAttribute('data-GSM2')
-                    const prospectRemark = this.getAttribute('data-remark')
-                    const prospectUser = this.getAttribute('data-user')
-
-                    document.querySelector(`#showNameDetail-${prospectId}`).innerText = prospectName
-                    document.querySelector(`#showEmailDetail-${prospectId}`).innerText = prospectEmail
-                    document.querySelector(`#showContactDetail-${prospectId}`).innerText = prospectContact
-                    document.querySelector(`#showVilleDetail-${prospectId}`).innerText = prospectVille
-                    document.querySelector(`#showSocietyDetail-${prospectId}`).innerText = prospectSociety
-                    document.querySelector(`#showRemarkDetail-${prospectId}`).innerText = prospectRemark
-                    document.querySelector(`#showUserDetail-${prospectId}`).innerText = prospectUser
-                })
             });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('.userSelect'); // Sélectionne tous les selects
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const form = this.closest(
+                        '.user-form'); // Trouve le formulaire correspondant
+                    if (form) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 
-            document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        function confirmDelete(prospectId) {
+            Swal.fire({
+                title: 'Supprimer le prospect !',
+                text: "êtes-vous sûr que vous voulez supprimer ce prospect ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Annuler',
+                confirmButtonText: 'Oui, Supprimer-le !'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + prospectId).submit();
+                }
+            });
+        }
+    </script>
 
-                const categories = @json($categories);
-                // console.log(categories);
+    <script>
+        document.querySelectorAll(`.detailButton`).forEach(button => {
 
-                document.querySelectorAll('.showCategoryProspect').forEach(selectCategory => {
-                    const prospectId = selectCategory.id.split('-').pop();
-                    const products = document.getElementById(`products-${prospectId}`);
+            button.addEventListener('click', function() {
+                const prospectId = this.getAttribute('data-bs-target').split('-').pop();
+                const prospectName = this.getAttribute('data-name') || 'Non disponible'
+                const prospectEmail = this.getAttribute('data-email') || 'Non disponible'
+                const prospectContact = this.getAttribute('data-tele') || 'Non disponible'
+                const prospectVille = this.getAttribute('data-ville')
+                const prospectSociety = this.getAttribute('data-society-name')
+                const prospectGSM1 = this.getAttribute('data-GSM1')
+                const prospectGSM2 = this.getAttribute('data-GSM2')
+                const prospectRemark = this.getAttribute('data-remark')
+                const prospectUser = this.getAttribute('data-user')
+
+                document.querySelector(`#showNameDetail-${prospectId}`).innerText = prospectName
+                document.querySelector(`#showEmailDetail-${prospectId}`).innerText = prospectEmail
+                document.querySelector(`#showContactDetail-${prospectId}`).innerText = prospectContact
+                document.querySelector(`#showVilleDetail-${prospectId}`).innerText = prospectVille
+                document.querySelector(`#showSocietyDetail-${prospectId}`).innerText = prospectSociety
+                document.querySelector(`#showGSM1Detail-${prospectId}`).innerText = prospectGSM1
+                document.querySelector(`#showGSM2Detail-${prospectId}`).innerText = prospectGSM2
+                document.querySelector(`#showRemarkDetail-${prospectId}`).innerText = prospectRemark
+                document.querySelector(`#showUserDetail-${prospectId}`).innerText = prospectUser
+            })
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const categories = @json($categories);
+            // console.log(categories);
+
+            document.querySelectorAll('.showCategoryProspect').forEach(selectCategory => {
+                const prospectId = selectCategory.id.split('-').pop();
+                const products = document.getElementById(`products-${prospectId}`);
 
 
-                    if (products) {
-                        selectCategory.addEventListener('change', function() {
-                            const selectedCategoryId = this.value;
-                            products.innerHTML = '';
+                if (products) {
+                    selectCategory.addEventListener('change', function() {
+                        const selectedCategoryId = this.value;
+                        products.innerHTML = '';
 
-                            if (selectedCategoryId) {
-                                const selectedCategory = categories.find(category => {
-                                    return category.id == selectedCategoryId;
+                        if (selectedCategoryId) {
+                            const selectedCategory = categories.find(category => {
+                                return category.id == selectedCategoryId;
+                            });
+
+                            if (selectedCategory && selectedCategory.sous_categories.length > 0) {
+                                selectedCategory.sous_categories.forEach(sous_category => {
+                                    const option = document.createElement('option');
+                                    option.value = sous_category.id;
+                                    option.textContent = sous_category.nom_produit;
+                                    option.selected = true;
+                                    option.disabled = true;
+
+                                    products.appendChild(option);
                                 });
-
-                                if (selectedCategory && selectedCategory.sous_categories.length > 0) {
-                                    selectedCategory.sous_categories.forEach(sous_category => {
-                                        const option = document.createElement('option');
-                                        option.value = sous_category.id;
-                                        option.textContent = sous_category.nom_produit;
-                                        option.selected = true;
-                                        option.disabled = true;
-
-                                        products.appendChild(option);
-                                    });
-                                } else {
-                                    const emptyOption = document.createElement('option');
-                                    emptyOption.textContent = 'Aucun produit trouvé';
-                                    emptyOption.disabled = true;
-                                    products.appendChild(emptyOption);
-                                }
+                            } else {
+                                const emptyOption = document.createElement('option');
+                                emptyOption.textContent = 'Aucun produit trouvé';
+                                emptyOption.disabled = true;
+                                products.appendChild(emptyOption);
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
             });
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const searchInput = document.querySelector('input[name="search"]');
-
-                searchInput.addEventListener('keydown', function(event) {
-                    if (event.key === 'Enter') {
-                        event.preventDefault();
-                    }
-                });
-
-                searchInput.addEventListener('input', function() {
-                    const searchQuery = searchInput.value;
-
-                    if (searchQuery.length > 0) {
-                        fetch(`/search-prospects?search=${searchQuery}`)
-                            .then(response => {
-                                if (!response.ok) {
-                                    throw new Error(`HTTP error! status: ${response.status}`);
-                                }
-                                return response.json();
-                            })
-                            .then(data => {
-                                console.log(data);
-                                const {
-                                    prospects,
-                                    selectOptions
-                                } = data;
-
-                                const tbody = document.querySelector('tbody');
-                                tbody.innerHTML = '';
-
-                                prospects.forEach(prospect => {
-
-                                    const categories = prospect.categories || [];
-
-                                    let categoriesList = 'Non catégorisé';
-
-                                    categories.forEach(category => {
-                                        categoriesList =
-                                            `${category.nom_categorie }<br>`;
-                                    });
+        });
+    </script>
 
 
-                                    const row = document.createElement('tr');
-                                    const role = "{{ auth()->user()->role }}"
-                                    row.innerHTML =
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.querySelector('input[name="search"]');
 
-                                        `
+        searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        });
+
+        searchInput.addEventListener('input', function() {
+            const searchQuery = searchInput.value;
+
+            if (searchQuery.length > 0) {
+                fetch(`/search-prospects?search=${searchQuery}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        const {
+                            prospects,
+                            selectOptions
+                        } = data;
+
+                        const tbody = document.querySelector('tbody');
+                        tbody.innerHTML = '';
+
+                        prospects.forEach(prospect => {
+
+                            const categories = prospect.categories || [];
+
+                            let categoriesList = 'Non catégorisé';
+
+                            categories.forEach(category => {
+                                categoriesList =
+                                    `${category.nom_categorie}<br>`;
+                            });
+
+
+                            const row = document.createElement('tr');
+                            const role = "{{ auth()->user()->role }}"
+                            row.innerHTML =
+
+                                `
                                    
                                     ${role === "super-admin" ? `
                                                           <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.email_prospect || 'Non disponible'}</td>
@@ -920,7 +955,7 @@
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
                                                         <td>
-                                                            <a class="btn btn-primary" data-bs-toggle="modal"
+                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#update_prospect"
                                                                 data-id="${prospect.id}"
                                                                 data-name="${prospect.nom_prospect}"
@@ -928,11 +963,12 @@
                                                                 data-tele="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
+                                                                data-GSM1=" ${prospect.GSM1_prospect}"
+                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
-                                                            </a>
-                                                        </td>
-                                                         <td>
-                                                            <button type="button" class="btn btn-info detailButtonQuery"
+                                                            </button>
+                                                        
+                                                            <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#QueryProspectDetails"
                                                                 data-name="${prospect.nom_prospect}"
@@ -940,43 +976,45 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
+                                                                data-GSM1="${prospect.GSM1_prospect}"
+                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
                                                             >
                                                             Détails
                                                             </button>
-                                                        </td>
-                                                        <td>
-                                                            <a>
+                                                        
+                                                            
                                                                 <form
                                                                     action="/prospect/destroy/${prospect.id}"
                                                                     method="POST" style="display: inline;"
-                                                                    id="delete-form-${prospect.id }">
+                                                                    id="delete-form-${prospect.id}">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="button" class="btn btn-danger"
-                                                                        onclick="confirmDelete(${prospect.id })">Supprimer</button>
+                                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                                        onclick="confirmDelete(${prospect.id})">Supprimer</button>
                                                                 </form>
-                                                            </a>
-                                                        </td>
-                                                           <td>
+                                                            
+                                                        
                                                                 <form class="prospect-form" action="/prospect/select/${prospect.id}" method="POST">
                                                                     @csrf
                                                                     <select class="form-select status-select" name="status">
                                                                         <option value="" selected>Selectionner la table</option>
                                                                         ${selectOptions.map(option => `
-                                                <option value="${option}">${option}</option>
-                                            `).join('')}
+                                                                        <option value="${option}">${option}</option>
+                                                                        `).join('')}
                                                                     </select>
                                                                 </form>
-                                                            </td>
+                                                        </td>
 
-                                                        `:''}
+                                                        `: ''}
 
                                     ${role === "admin" ? `
 
                                                          <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                        <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                        <td>${prospect.email_prospect || 'Non disponible'}</td>
@@ -984,7 +1022,7 @@
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
                                                         <td>
-                                                            <a class="btn btn-primary" data-bs-toggle="modal"
+                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#update_prospect"
                                                                 data-id="${prospect.id}"
                                                                 data-name="${prospect.nom_prospect}"
@@ -992,11 +1030,12 @@
                                                                 data-tele="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society="${prospect.nomSociete_prospect}"
+                                                                data-GSM1=" ${prospect.GSM1_prospect}"
+                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
-                                                            </a>
-                                                        </td>
-  <td>
-                                                            <button type="button" class="btn btn-info detailButtonQuery"
+                                                            </button>
+                                                        
+                                                            <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#QueryProspectDetails"
                                                                 data-name="${prospect.nom_prospect}"
@@ -1004,27 +1043,29 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
+                                                                data-GSM1="${prospect.GSM1_prospect}"
+                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
                                                             >
                                                             Détails
                                                             </button>
-                                                        </td>
-
-                                                           <td>
+                                                        
                                                                 <form class="prospect-form" action="/prospect/select/${prospect.id}" method="POST">
                                                                     @csrf
                                                                     <select class="form-select status-select" name="status">
                                                                         <option value="" selected>Selectionner la table</option>
                                                                         ${selectOptions.map(option => `
-                                                <option value="${option}">${option}</option>
-                                            `).join('')}
-                                                                    </select>
+                                                                        <option value="${option}">${option}</option>
+                                                                    `).join('')}
+                                                                                            </select>
                                                                 </form>
-                                                            </td>
-                                                        ` : '' } ${role === "utilisateur" ? `
+                                                        </td>
+                                                        ` : ''} ${role === "utilisateur" ? `
                                                          <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                        <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                        <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
                                                          <td>${prospect.nom_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.tele_prospect || 'Non disponible'}</td>
                                                         <td>${prospect.email_prospect || 'Non disponible'}</td>
@@ -1032,7 +1073,7 @@
                                                         <td>${categoriesList}</td>
                                                          <td>${prospect.utilisateur.name || 'Personne'}</td>
                                                         <td>
-                                                            <button type="button" class="btn btn-info detailButtonQuery"
+                                                            <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#QueryProspectDetails"
                                                                 data-name="${prospect.nom_prospect}"
@@ -1040,6 +1081,8 @@
                                                                 data-contact="${prospect.tele_prospect}"
                                                                 data-ville="${prospect.ville_prospect}"
                                                                 data-society-name="${prospect.nomSociete_prospect}"
+                                                                data-GSM1="${prospect.GSM1_prospect}"
+                                                                data-GSM2="${prospect.GSM2_prospect}"
                                                                 data-remark="${prospect.remark}"
                                                                 data-user="${prospect.utilisateur.name}"
                                                                 data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
@@ -1053,188 +1096,193 @@
 
                                 `
 
-                                    tbody.appendChild(row);
+                            tbody.appendChild(row);
 
-                                    const selectElement = row.querySelector('.status-select');
-if (selectElement) { // Vérifiez que l'élément existe
-    selectElement.addEventListener('change', function() {
-        const form = this.closest('.prospect-form');
-        if (form) {
-            form.submit(); // Exécute la logique seulement si l'élément existe
-        }
-    });
-}
-                             // Ajouter un événement de détail pour chaque bouton "Détails"
-const detailButtonsProspect = document.querySelectorAll('.detailButtonQuery');
+                            const selectElement = row.querySelector('.status-select');
+                            if (selectElement) { // Vérifiez que l'élément existe
+                                selectElement.addEventListener('change', function() {
+                                    const form = this.closest('.prospect-form');
+                                    if (form) {
+                                        form.submit(); // Exécute la logique seulement si l'élément existe
+                                    }
+                                });
+                            }
+                            // Ajouter un événement de détail pour chaque bouton "Détails"
+                            const detailButtonsProspect = document.querySelectorAll('.detailButtonQuery');
 
-if (detailButtonsProspect.length > 0) { // Assurez-vous qu'il y a au moins un bouton
-    detailButtonsProspect.forEach(button => {
-        button.addEventListener('click', function() {
-            // Récupération des données du prospect
-            const prospectName = this.getAttribute('data-name') || 'Non disponible';
-            const prospectEmail = this.getAttribute('data-email')|| 'Non disponible';
-            const prospectContact = this.getAttribute('data-contact') || 'Non disponible';
-            const prospectAdress = this.getAttribute('data-adress')|| 'Non disponible';
-            const prospectSociety = this.getAttribute('data-society') || 'Particulier';
-            const prospectGSM1 = this.getAttribute('data-GSM1') || 'Non disponible';
-            const prospectGSM2 = this.getAttribute('data-GSM2') || 'Non disponible';
-            const prospectVille = this.getAttribute('data-ville');
-            const prospectRemark = this.getAttribute('data-remark');
-            const prospectUser = this.getAttribute('data-user')  || 'Personne';
+                            if (detailButtonsProspect.length > 0) { // Assurez-vous qu'il y a au moins un bouton
+                                detailButtonsProspect.forEach(button => {
+                                    button.addEventListener('click', function() {
+                                        // Récupération des données du prospect
+                                        const prospectName = this.getAttribute('data-name') || 'Non disponible';
+                                        const prospectEmail = this.getAttribute('data-email') || 'Non disponible';
+                                        const prospectContact = this.getAttribute('data-contact') || 'Non disponible';
+                                        const prospectAdress = this.getAttribute('data-adress') || 'Non disponible';
+                                        const prospectSociety = this.getAttribute('data-society') || 'Particulier';
+                                        const prospectGSM1 = this.getAttribute('data-GSM1') || 'Non disponible';
+                                        const prospectGSM2 = this.getAttribute('data-GSM2') || 'Non disponible';
+                                        const prospectVille = this.getAttribute('data-ville');
+                                        const prospectRemark = this.getAttribute('data-remark');
+                                        const prospectUser = this.getAttribute('data-user') || 'Personne';
 
-            // Mise à jour des éléments HTML
-            const updateTextContent = (selector, text) => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    element.innerText = text ; // Défaut : 'N/A' si la donnée est vide
-                }
-            };
+                                        // Mise à jour des éléments HTML
+                                        const updateTextContent = (selector, text) => {
+                                            const element = document.querySelector(selector);
+                                            if (element) {
+                                                element.innerText = text; // Défaut : 'N/A' si la donnée est vide
+                                            }
+                                        };
 
-            updateTextContent('#showNameProspect', prospectName);
-            updateTextContent('#showEmailProspect', prospectEmail);
-            updateTextContent('#showContactProspect', prospectContact);
-            updateTextContent('#showAdressProspect', prospectAdress);
-            updateTextContent('#showSocietyProspect', prospectSociety);
-            updateTextContent('#showGSM1Prospect', prospectGSM1);
-            updateTextContent('#showGSM2Prospect', prospectGSM2);
-            updateTextContent('#showVilleProspect', prospectVille);
-            updateTextContent('#showRemarkProspect', prospectRemark);
-            updateTextContent('#showUserProspect', prospectUser)  ;
+                                        updateTextContent('#showNameProspect', prospectName);
+                                        updateTextContent('#showEmailProspect', prospectEmail);
+                                        updateTextContent('#showContactProspect', prospectContact);
+                                        updateTextContent('#showAdressProspect', prospectAdress);
+                                        updateTextContent('#showSocietyProspect', prospectSociety);
+                                        updateTextContent('#showGSM1Prospect', prospectGSM1);
+                                        updateTextContent('#showGSM2Prospect', prospectGSM2);
+                                        updateTextContent('#showVilleProspect', prospectVille);
+                                        updateTextContent('#showRemarkProspect', prospectRemark);
+                                        updateTextContent('#showUserProspect', prospectUser);
 
-            // Gestion des catégories
-            const categories = JSON.parse(decodeURIComponent(this.getAttribute('data-categories')));
-            console.log("Données des catégories :", categories);
+                                        // Gestion des catégories
+                                        const categories = JSON.parse(decodeURIComponent(this.getAttribute('data-categories')));
+                                        console.log("Données des catégories :", categories);
 
-            if (categories && Array.isArray(categories)) {
-                let categoriesHTML = '<option value="" selected>Selectionner la catégorie</option>';
-                categories.forEach(category => {
-                    categoriesHTML += `<option value="${category.id}">${category.nom_categorie}</option>`;
-                });
+                                        if (categories && Array.isArray(categories)) {
+                                            let categoriesHTML = '<option value="" selected>Selectionner la catégorie</option>';
+                                            categories.forEach(category => {
+                                                categoriesHTML += `<option value="${category.id}">${category.nom_categorie}</option>`;
+                                            });
 
-                const categoriesSelect = document.querySelector('#categoriesQuery-1');
-                if (categoriesSelect) {
-                    categoriesSelect.innerHTML = categoriesHTML;
+                                            const categoriesSelect = document.querySelector('#categoriesQuery-1');
+                                            if (categoriesSelect) {
+                                                categoriesSelect.innerHTML = categoriesHTML;
 
-                    // Écouteur pour le changement de catégorie
-                    categoriesSelect.addEventListener('change', function() {
-                        const selectedCategoryId = this.value;
-                        const selectedCategory = categories.find(category => category.id == selectedCategoryId);
+                                                // Écouteur pour le changement de catégorie
+                                                categoriesSelect.addEventListener('change', function() {
+                                                    const selectedCategoryId = this.value;
+                                                    const selectedCategory = categories.find(category => category.id == selectedCategoryId);
 
-                        console.log("Catégorie sélectionnée :", selectedCategory);
+                                                    console.log("Catégorie sélectionnée :", selectedCategory);
 
-                        let productsHTML = '<option value="" selected>Voir les sous catégories associées</option>';
-                        if (selectedCategory && selectedCategory.sous_categories) {
-                            console.log("Sous-catégories de cette catégorie :", selectedCategory.sous_categories);
-                            selectedCategory.sous_categories.forEach(product => {
-                                productsHTML += `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
-                            });
-                        } else {
-                            console.log("Aucune sous-catégorie trouvée pour cette catégorie.");
-                        }
+                                                    let productsHTML = '<option value="" selected>Voir les sous catégories associées</option>';
+                                                    if (selectedCategory && selectedCategory.sous_categories) {
+                                                        console.log("Sous-catégories de cette catégorie :", selectedCategory.sous_categories);
+                                                        selectedCategory.sous_categories.forEach(product => {
+                                                            productsHTML += `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
+                                                        });
+                                                    } else {
+                                                        console.log("Aucune sous-catégorie trouvée pour cette catégorie.");
+                                                    }
 
-                        const productsSelect = document.querySelector('#productsQuery-1');
-                        if (productsSelect) {
-                            productsSelect.innerHTML = productsHTML;
-                        } else {
-                            console.log("Le sélecteur de produits #productsQuery-1 n'existe pas.");
-                        }
+                                                    const productsSelect = document.querySelector('#productsQuery-1');
+                                                    if (productsSelect) {
+                                                        productsSelect.innerHTML = productsHTML;
+                                                    } else {
+                                                        console.log("Le sélecteur de produits #productsQuery-1 n'existe pas.");
+                                                    }
+                                                });
+                                            } else {
+                                                console.log("Le sélecteur de catégories #categoriesQuery-1 n'existe pas.");
+                                            }
+                                        } else {
+                                            console.log("Les données des catégories ne sont pas valides ou sont vides.");
+                                        }
+                                    });
+                                });
+                            }
+
+
+
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching prospects:', error);
                     });
-                } else {
-                    console.log("Le sélecteur de catégories #categoriesQuery-1 n'existe pas.");
-                }
             } else {
-                console.log("Les données des catégories ne sont pas valides ou sont vides.");
+                location.reload();
             }
         });
     });
-}
+</script>
 
 
 
-                                });
-                            })
-                            .catch(error => {
-                                console.error('Error fetching prospects:', error);
-                            });
-                    } else {
-                        location.reload();
-                    }
-                });
-            });
-        </script>
-    @endsection
-    @section('content2')
-        <div class="modal fade" id="QueryProspectDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+
+
+@endsection
+@section('content2')
+    <div class="modal fade" id="QueryProspectDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="show-info-prospect show-society">
+                        <label class="label-detail-prospect">Nom de la société</label>
+                        <h6 class="info-prospect" id="showSocietyProspect">
+                        </h6>
                     </div>
-                    <div class="modal-body">
-                        <div class="show-info-prospect show-society">
-                            <label class="label-detail-prospect">Nom de la société</label>
-                            <h6 class="info-prospect" id="showSocietyProspect">
-                            </h6>
-                        </div>
-                       
-                       
-                        <div class="show-info-prospect show-name">
-                            <label class="label-detail-prospect">Personne à contacter</label>
-                            <h6 class="info-prospect" id="showNameProspect"></h6>
-                        </div>
-                        <div class="show-info-prospect show-contact">
-                            <label class="label-detail-prospect">Numero de telephone</label>
-                            <h6 class="info-prospect" id="showContactProspect"></h6>
-                        </div>
-                        <div class="show-info-prospect show-email">
-                            <label class="label-detail-prospect">Email</label>
-                            <h6 class="info-prospect" id="showEmailProspect">
-                            </h6>
-                        </div>
-
-                      
-
-                        <div class="show-info-prospect show-ville">
-                            <label class="label-detail-prospect">Ville</label>
-                            <h6 class="info-prospect" id="showVilleProspect">
-                            </h6>
-                        </div>
-                        <div class="show-info-prospect show-category" style="margin-top:10px">
-                            <label class="label-detail-prospect">Les catégories</label>
-                            <select class="form-select form-select-sm info-prospect showCategoryProspect"
-                                aria-label=".form-select-sm example" style="width: 200px; height: 30px"
-                                id="categoriesQuery-1">
-                                <option value="" selected>Voir la(les) catégories</option>
-
-                            </select>
-                        </div>
-
-                        <div class="show-info-prospect show-product" style="margin-bottom: 40px; margin-top:10px">
-                            <label class="form-label label-detail-prospect">Sous-Catégorie</label>
-                            <select class="form-select form-select-sm info-prospect showProductProspect"
-                                aria-label=".form-select-sm example" id="productsQuery-1"
-                                style="width: 200px; height: 30px">
-
-                            </select>
-                        </div>
-                        <div class="show-info-prospect show-user">
-                            <label class="label-detail-prospect">Contacté Par</label>
-                            <h6 class="info-prospect" id="showUserProspect">
-                            </h6>
-                        </div>
-                        <div class="show-info-prospect show-remark">
-                            <label class="label-detail-prospect">Remarque</label>
-                            <p class="info-prospect" id="showRemarkProspect" style="font-size: 12px">
-                            </p>
-                        </div>
 
 
+                    <div class="show-info-prospect show-name">
+                        <label class="label-detail-prospect">Personne à contacter</label>
+                        <h6 class="info-prospect" id="showNameProspect"></h6>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    <div class="show-info-prospect show-contact">
+                        <label class="label-detail-prospect">Numero de telephone</label>
+                        <h6 class="info-prospect" id="showContactProspect"></h6>
                     </div>
+                    <div class="show-info-prospect show-email">
+                        <label class="label-detail-prospect">Email</label>
+                        <h6 class="info-prospect" id="showEmailProspect">
+                        </h6>
+                    </div>
+
+
+
+                    <div class="show-info-prospect show-ville">
+                        <label class="label-detail-prospect">Ville</label>
+                        <h6 class="info-prospect" id="showVilleProspect">
+                        </h6>
+                    </div>
+                    <div class="show-info-prospect show-category" style="margin-top:10px">
+                        <label class="label-detail-prospect">Les catégories</label>
+                        <select class="form-select form-select-sm info-prospect showCategoryProspect"
+                            aria-label=".form-select-sm example" style="width: 200px; height: 30px"
+                            id="categoriesQuery-1">
+                            <option value="" selected>Voir la(les) catégories</option>
+
+                        </select>
+                    </div>
+
+                    <div class="show-info-prospect show-product" style="margin-bottom: 40px; margin-top:10px">
+                        <label class="form-label label-detail-prospect">Sous-Catégorie</label>
+                        <select class="form-select form-select-sm info-prospect showProductProspect"
+                            aria-label=".form-select-sm example" id="productsQuery-1" style="width: 200px; height: 30px">
+
+                        </select>
+                    </div>
+                    <div class="show-info-prospect show-user">
+                        <label class="label-detail-prospect">Contacté Par</label>
+                        <h6 class="info-prospect" id="showUserProspect">
+                        </h6>
+                    </div>
+                    <div class="show-info-prospect show-remark">
+                        <label class="label-detail-prospect">Remarque</label>
+                        <p class="info-prospect" id="showRemarkProspect" style="font-size: 12px">
+                        </p>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

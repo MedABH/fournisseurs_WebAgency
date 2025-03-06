@@ -269,7 +269,7 @@
                                             method="POST">
                                             @csrf
                                             @method('POST')
-                                            <select class="form-select me-4"
+                                            <select class="form-select userSelect me-4"
                                                 aria-label="Default select example" data-client-id="{{ $client->id }}"
                                                  name="user_id">
                                                 <option value="" style="width: 20rem">Contacté Par</option>
@@ -288,7 +288,7 @@
                                             method="POST" >
                                             @csrf
                                             @method('POST')
-                                            <select name="status" id="" class="form-select w-25">
+                                            <select name="status" id="" class="form-select status-select w-25">
                                                 <option value=""></option>
                                                 @foreach ($select as $item)
                                                 <option value="{{ $item }}">{{ $item }}
@@ -452,35 +452,35 @@
                                                 </div>
 
                                                 <div class="show-info-client show-GSM1">
-                                                    <label class="label-detail-client">GSM1 de la
-                                                        société</label>
+                                                    <label class="label-detail-client"><strong class="det">GSM1 de la
+                                                        société</strong></label>
                                                     <p class="info-client showGSM1Client"
                                                         id="showGSM1Detail-{{ $client->id }}">
                                                     </p>
                                                 </div>
                                                 <div class="show-info-client show-GSM2">
-                                                    <label class="label-detail-client">GSM2 de la
-                                                        société</label>
+                                                    <label class="label-detail-client"><strong class="det">GSM2 de la
+                                                        société</strong></label>
                                                     <p class="info-client showGSM2Client"
                                                         id="showGSM2Detail-{{ $client->id }}">
                                                     </p>
                                                 </div>
                                                 
                                                 <div class="show-info-client show-name">
-                                                    <label class="label-detail-client">Personne à
-                                                        contacter</label>
+                                                    <label class="label-detail-client"><strong class="det">Personne à
+                                                        contacter</strong></label>
                                                     <p class="info-client showNameClient"
                                                         id="showNameDetail-{{ $client->id }}">
                                                     </p>
                                                 </div>
                                                 <div class="show-info-client show-contact">
-                                                    <label class="label-detail-client">Numero de telephone</label>
+                                                    <label class="label-detail-client"><strong class="det">Numero de telephone</strong></label>
                                                     <p class="info-client showContactClient"
                                                         id="showContactDetail-{{ $client->id }}">
                                                     </p>
                                                 </div>
                                                 <div class="show-info-client show-email">
-                                                    <label class="label-detail-client">Email</label>
+                                                    <label class="label-detail-client"><strong class="det">Email</strong></label>
                                                     <p class="info-client showEmailClient"
                                                         id="showEmailDetail-{{ $client->id }}">
                                                     </p>
@@ -488,15 +488,15 @@
         
         
                                                 <div class="show-info-client show-ville">
-                                                    <label class="label-detail-client">Ville</label>
+                                                    <label class="label-detail-client"><strong class="det">Ville</strong></label>
                                                     <p class="info-client showVilleClient"
                                                         id="showVilleDetail-{{ $client->id }}">
                                                     </p>
                                                 </div>
         
                                                 <div class="show-info-client show-category" style="margin-top:10px">
-                                                    <label class="label-detail-client">Les
-                                                        catégories</label>
+                                                    <label class="label-detail-client"><strong class="det">Les
+                                                        catégories</strong></label>
                                                     <select class="form-select form-select-sm info-client showCategoryClient"
                                                         aria-label=".form-select-sm example" style="width: 200px; height: 30px"
                                                         id="categories-{{ $client->id }}">
@@ -512,7 +512,7 @@
                                                 </div>
                                                 <div class="show-info-client show-product"
                                                     style="margin-bottom: 40px; margin-top:10px">
-                                                    <label class="form-label label-detail-client">Sous-Catégorie</label>
+                                                    <label class="form-label label-detail-client"><strong class="det">Sous-Catégorie</strong></label>
                                                     <select class="form-select form-select-sm info-client showProductClient"
                                                         aria-label=".form-select-sm example" id="products-{{ $client->id }}"
                                                         style="width: 200px; height: 30px">
@@ -522,22 +522,18 @@
                                                     </select>
                                                 </div>
                                                 <div class="show-info-client show-user">
-                                                    <label class="label-detail-client">Contacté Par</label>
+                                                    <label class="label-detail-client"><strong class="det">Contacté Par</strong></label>
                                                     <p class="info-client showUserClient"
                                                         id="showUserDetail-{{ $client->id }}">
                                                     </p>
                                                 </div>
                                                 <div class="show-info-client show-remark">
-                                                    <label class="label-detail-client">Remarque</label>
+                                                    <label class="label-detail-client"><strong class="det">Remarque</strong></label>
                                                     <p class="info-client showRemarkClient"
                                                         id="showRemarkDetail-{{ $client->id }}" style="font-size: 12px">
                                                     </p>
                                                 </div>
         
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Fermer</button>
                                             </div>
                                         </div>
                                     </div>
@@ -917,7 +913,7 @@
                                                 <td>${categoriesList}</td>
                                                  <td>${client.utilisateur.name || 'Personne'}</td>
                                             <td>
-                                                <a class="btn btn-primary" data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#update_client"
                                                     data-id="${client.id}"
                                                     data-name="${client.nom_client}"
@@ -928,9 +924,8 @@
                                                     data-GSM1=" ${client.GSM1_client }"
                                                     data-GSM2="${client.GSM2_client }"
                                                     data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                </a>
-                                            </td>
-                                               <td>
+                                                </button>
+                                            
                                                 <button type="button" class="btn btn-info detailButtonQuery"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#QueryClientsDetails"
@@ -947,9 +942,8 @@
                                                 >
                                                 Détails
                                                 </button>
-                                            </td>
-                                            <td>
-                                                <a>
+                                           
+                                               
                                                     <form
                                                         action="/client/destroy/${client.id}"
                                                         method="POST" style="display: inline;"
@@ -959,18 +953,17 @@
                                                         <button type="button" class="btn btn-danger"
                                                             onclick="confirmDelete(${client.id })">Supprimer</button>
                                                     </form>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                    <form class="client-form" action="/client/select/${client.id}" method="POST">
-                                                    @csrf
-                                                        <select class="form-select status-select" name="status">
-                                                            <option value="" selected>Selectionner la table</option>
-                                                                ${selectOptions.map(option => `
-                                            <option value="${option}">${option}</option>
-                                            `).join('')}
-                                                         </select>
-                                                    </form>
+                                                
+                                            
+                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                            @csrf
+                                                                <select class="form-select status-select" name="status">
+                                                                    <option value="" selected>Selectionner la table</option>
+                                                                        ${selectOptions.map(option => `
+                                                    <option value="${option}">${option}</option>
+                                                    `).join('')}
+                                                                </select>
+                                                            </form>
                                             </td>
 
 
@@ -986,7 +979,7 @@
                                                 <td>${categoriesList}</td>
                                                  <td>${client.utilisateur.name || 'Personne'}</td>
                                             <td>
-                                                <a class="btn btn-primary" data-bs-toggle="modal"
+                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#update_client"
                                                     data-id="${client.id}"
                                                     data-name="${client.nom_client}"
@@ -997,9 +990,8 @@
                                                     data-GSM1=" ${client.GSM1_client }"
                                                     data-GSM2="${client.GSM2_client }"
                                                     data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                </a>
-                                            </td>
-                                            <td>
+                                                </button>
+                                            
                                                 <button type="button" class="btn btn-info detailButtonQuery"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#QueryClientsDetails"
@@ -1016,18 +1008,16 @@
                                                 >
                                                 Détails
                                                 </button>
-                                            </td>
-
-                                            <td>
-                                                    <form class="client-form" action="/client/select/${client.id}" method="POST">
-                                                    @csrf
-                                                        <select class="form-select status-select" name="status">
-                                                            <option value="" selected>Selectionner la table</option>
-                                                                ${selectOptions.map(option => `
-                                            <option value="${option}">${option}</option>
-                                            `).join('')}
-                                                         </select>
-                                                    </form>
+                                           
+                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                            @csrf
+                                                                <select class="form-select status-select" name="status">
+                                                                    <option value="" selected>Selectionner la table</option>
+                                                                        ${selectOptions.map(option => `
+                                                    <option value="${option}">${option}</option>
+                                                    `).join('')}
+                                                                </select>
+                                                            </form>
                                             </td>
 
 
