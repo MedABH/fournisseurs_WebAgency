@@ -103,19 +103,19 @@
                                 <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
 
                                
-                                        <li><a href="/partiesPrenantes"><i class="fas fa-users-cog"></i> Parties
+                                        <li><a href="{{ route('partiesPrenantesSection') }}" class="{{ request()->routeIs('partiesPrenantesSection') ? 'active' : '' }}"><i class="fas fa-users-cog"></i> Parties
                                             Prenantes</a></li>
 
 
                                 <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
 
-                                <li><a href="/classifications"><i class="fas fa-list"></i> Les
+                                <li><a href="{{ route('classificationsSection') }}" class="{{ request()->routeIs('classificationsSection') ? 'active' : '' }}"><i class="fas fa-list"></i> Les
                                         classifications</a></li>
 
 
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
 
-                                <li><a href="#" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
+                                <li><a href="{{ route('historiqueSection') }}" class="{{ request()->routeIs('historiqueSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
                                         et Journaux</a></li>
 
 
