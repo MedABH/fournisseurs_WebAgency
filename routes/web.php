@@ -151,5 +151,5 @@ Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientControlle
 // Route pour l'historique
 Route::get('/historique', [HistoriqueController::class, 'showHistorique'])->name('historiqueSection');
 
-Route::get('/partiesPrenantes', [PartiesPrenantesController::class, 'index']);
-Route::get('/classifications', [ClassificationsController::class, 'index']);
+Route::get('/partiesPrenantes', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
+Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');

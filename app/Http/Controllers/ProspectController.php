@@ -24,6 +24,8 @@ class ProspectController extends Controller
             'tele_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:prospects,tele_prospect'],
             'ville_prospect' => ['required','max:60','string'],
             'nomSociete_prospect' => ['nullable','max:200','unique:prospects,nomSociete_prospect'],
+            'GSM1_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:prospects,GSM1_prospect'],
+            'GSM2_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:prospects,GSM2_prospect'],
             'categorie_id' => ['required','integer','exists:categories,id'],
         ];
 
@@ -38,6 +40,10 @@ class ProspectController extends Controller
             // 'tele_prospect.required' => 'Le contact est obligatoire!',
             'tele_prospect.regex' => 'Le numéro de téléphone doit être valide!',
             'tele_prospect.unique' => 'Le contact doit être unique!',
+            'GSM1_prospect.regex' => 'Le numéro de téléphone doit être valide!',
+            'GSM1_prospect.unique' => 'Le contact de la societe doit être unique!',
+            'GSM2_prospect.regex' => 'Le numéro de téléphone doit être valide!',
+            'GSM2_prospect.unique' => 'Le contact de la societe doit être unique!',
             'nomSociete_prospect.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
@@ -56,6 +62,8 @@ class ProspectController extends Controller
 
         $prospect = new Prospect();
         $prospect->nom_prospect = $request->nom_prospect ?? '';
+        $prospect->GSM1_prospect = $request->GSM1_prospect ?? '' ;
+        $prospect->GSM2_prospect = $request->GSM2_prospect ?? '';
         $prospect->ville_prospect = $request->ville_prospect;
         $prospect->tele_prospect = $request->tele_prospect ?? '';
         $prospect->email_prospect = $request->email_prospect ?? '';
@@ -187,6 +195,8 @@ class ProspectController extends Controller
             'newTele_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
             'newVille_prospect' => ['required','max:60','string'],
             'newNomSociete_prospect' => ['nullable','max:200'],
+            'newGSM1_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
+            'newGSM2_prospect' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
             'newCategorie_id' => ['required','integer','exists:categories,id'],
         ];
 
@@ -199,6 +209,8 @@ class ProspectController extends Controller
             'newVille_prospect.string' => 'La ville doit être en chaine de caractère!',
             // 'newTele_prospect.required' => 'Le contact est obligatoire!',
             'newTele_prospect.regex' => 'Le numéro de téléphone doit être valide!',
+            'newGSM1_prospect.regex' => 'Le numéro de téléphone doit être valide!',
+            'newGSM2_prospect.regex' => 'Le numéro de téléphone doit être valide!',
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'newCategorie_id.integer' => 'La catégorie doit être un entier!',
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
@@ -217,8 +229,8 @@ class ProspectController extends Controller
         $email = $request->newEmail_prospect ?? '';
         $name = $request->newNom_prospect ?? '';
         $tele = $request->newTele_prospect ?? '';
-
-
+        $GSM1 = $request->newGSM1_prospect ?? '';
+        $GSM2 = $request->newGSM2_prospect ?? '';
         $newCategorieId = $request->newCategorie_id;
         $existingProspect = Prospect::
         where('nom_prospect', $name)
@@ -226,6 +238,8 @@ class ProspectController extends Controller
         ->where('tele_prospect', $tele)
         ->where('ville_prospect', $request->newVille_prospect)
         ->where('nomSociete_prospect', $nomSociety)
+        ->where('GSM1_prospect', $GSM1)
+        ->where('GSM2_prospect', $GSM2)
         ->whereHas('categories', function ($query) use ($newCategorieId) {
             $query->where('categories.id', $newCategorieId);
         })
@@ -253,6 +267,8 @@ class ProspectController extends Controller
         $prospect->tele_prospect = $request->newTele_prospect ?? '';
         $prospect->ville_prospect = $request->newVille_prospect;
         $prospect->nomSociete_prospect = $request->newNomSociete_prospect ?? '';
+        $prospect->GSM1_prospect = $request->newGSM1_prospect ?? '';
+        $prospect->GSM2_prospect = $request->newGSM2_prospect ?? '';
 
         if ($prospect->save()) {
             alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
@@ -268,6 +284,8 @@ class ProspectController extends Controller
         $similarProspect->tele_prospect = $request->newTele_prospect ?? '';
         $similarProspect->ville_prospect = $request->newVille_prospect;
         $similarProspect->nomSociete_prospect = $request->newNomSociete_prospect ?? '';
+        $similarProspect->GSM1_prospect = $request->newGSM1_prospect ?? '';
+        $similarProspect->GSM2_prospect = $request->newGSM2_prospect ?? '';
         if ($similarProspect->save()) {
             alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
         }
@@ -299,7 +317,9 @@ class ProspectController extends Controller
                $prospect->email_prospect !== ($request->newEmail_prospect ?? '')||
                $prospect->tele_prospect !== ($request->newTele_prospect ?? '')||
                $prospect->ville_prospect !== $request->newVille_prospect||
-               $prospect->nomSociete_prospect !== ($request->newNomSociete_prospect ?? '') ;
+               $prospect->nomSociete_prospect !== ($request->newNomSociete_prospect ?? '')||
+               $prospect->GSM1_prospect !== ($request->newGSM1_prospect ?? '') ||
+               $prospect->GSM2_prospect !== ($request->newGSM2_prospect ?? '');
     }
 
     public function prospect(Request $request, $id)
@@ -320,6 +340,8 @@ class ProspectController extends Controller
                 $fournisseur->tele_fournisseur = $prospectItem->tele_prospect;
                 $fournisseur->ville_fournisseur = $prospectItem->ville_prospect;
                 $fournisseur->nomSociete_fournisseur = $prospectItem->nomSociete_prospect;
+                $fournisseur->GSM1_fournisseur = $prospectItem->GSM1_prospect;
+                $fournisseur->GSM2_fournisseur = $prospectItem->GSM2_prospect;
                 $fournisseur->user_id = $prospectItem->user_id;
                 $fournisseur->remark = $prospectItem->remark;
                 $fournisseur->groupId_fournisseur = $prospectItem->groupId_prospect;
@@ -345,6 +367,8 @@ class ProspectController extends Controller
                 $client->tele_client = $prospectItem->tele_prospect;
                 $client->ville_client = $prospectItem->ville_prospect;
                 $client->nomSociete_client = $prospectItem->nomSociete_prospect;
+                $client->GSM1_client = $prospectItem->GSM1_prospect;
+                $client->GSM2_client = $prospectItem->GSM2_prospect;
                 $client->user_id = $prospectItem->user_id;
                 $client->remark = $prospectItem->remark;
                 $client->groupId_client = $prospectItem->groupId_prospect;
@@ -371,6 +395,8 @@ class ProspectController extends Controller
                 $fc->tele_fournisseurClient = $prospectItem->tele_prospect;
                 $fc->ville_fournisseurClient = $prospectItem->ville_prospect;
                 $fc->nomSociete_fournisseurClient = $prospectItem->nomSociete_prospect;
+                $fc->GSM1_fournisseurClient = $prospectItem->GSM1_prospect;
+                $fc->GSM2_fournisseurClient = $prospectItem->GSM2_prospect;
                 $fc->user_id = $prospectItem->user_id;
                 $fc->remark = $prospectItem->remark;
                 $fc->groupId_fournisseurClient = $prospectItem->groupId_prospect;
