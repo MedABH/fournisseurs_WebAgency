@@ -8,6 +8,9 @@ use App\Models\Fournisseur;
 use App\Models\Categorie;
 use App\Models\SousCategorie;
 use App\Models\SousCategorieUser;
+use App\Models\Prospect;
+use App\Models\Client;
+use App\Models\FournisseurClient;
 
 class ChartController extends Controller
 {
@@ -15,6 +18,9 @@ class ChartController extends Controller
         $sumUsers = User::count();
         $sumSuppliers = Fournisseur::count();
         $sumCategories = Categorie::count();
+        $sumTiers = Prospect::count();
+        $sumClients = Client::count();
+        $sumFournClients = FournisseurClient::count();
 
         $categories = Categorie::withCount('sousCategories')->get();
         $categoryNames = $categories->pluck('nom_categorie');
@@ -36,6 +42,9 @@ class ChartController extends Controller
                     'subcategoryCounts',
                     'suppliersNumberByCategory',
                     'lastUsers',
+                    'sumTiers',
+                    'sumClients',
+                    'sumFournClients',
                  ));
 
     }
