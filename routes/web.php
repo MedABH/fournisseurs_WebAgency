@@ -19,6 +19,7 @@ use App\Models\FournisseurClient;
 use App\Models\Prospect;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,6 +116,7 @@ Route::get('/updateAuth', [ProfileAuthController::class, 'showUpdateForm'])->nam
 Route::post('/updateAuth', [ProfileAuthController::class, 'updateUser'])->name('update.user.auth')->middleware('auth');
 /*Route::post('/changePassword', [ProfileAuthController::class, 'changePassword'])->name('change.password')->middleware('auth');*/
 Route::post('/update-security', [ProfileAuthController::class, 'updateSecurity'])->name('updateSecurity')->middleware('auth');
+
 
 // Pagination
 Route::get('/users/pagination', [UserController::class, 'index'])->name('users.pagination');

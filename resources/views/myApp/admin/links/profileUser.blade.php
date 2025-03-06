@@ -6,7 +6,6 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var modalType = document.getElementById('modals').getAttribute('data-error');
-
             if (modalType === 'updatePassword') {
                 var updateModal = new bootstrap.Modal(document.getElementById('editPassword'));
                 updateModal.show();
@@ -16,13 +15,13 @@
 @endsection
 @section('info-edit-user')
     <div id="modals" style="display: none" data-error="{{ session('modalType') }}"></div>
-
-    <form action="{{ route('update.user.auth') }}" method="POST" class="row g-3 needs-validation form-profile" novalidate>
-        @csrf
+    <div class="row g-3 needs-validation form-profile">
         <div class="container-xl">
             <h1 class="app-page-title" style="">Mon Compte</h1>
             <div class="row gy-4">
-                <div class="col-12 col-lg-6">
+                <form id="profileForm" action="{{ route('update.user.auth') }}" class="col-12 col-lg-6" method="POST"
+                    novalidate>
+                    @csrf
                     <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
                         <div class="app-card-header p-3 border-bottom-0">
                             <div class="row align-items-center gx-3">
@@ -34,7 +33,6 @@
                                                 d="M10 5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6 5c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
                                         </svg>
                                     </div><!--//icon-holder-->
-
                                 </div><!--//col-->
                                 <div class="col-auto">
                                     <h4 class="app-card-title">Profil</h4>
@@ -64,11 +62,11 @@
                                         <input type="tel" id="newContact" name="newContact" class="item-data"
                                             value="{{ old('newContact', $user->contact) }}"
                                             style="border: none; background: transparent; width: 100%; 
-          font-size: inherit; color: #5d677c; outline: none;">
+          font-size: inherit; color: #5d677c; outline: none;"
+                                            required>
                                         @error('newContact')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror
-
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -92,9 +90,11 @@
                                         <div class="item-label"><strong>Rôle</strong></div>
                                         <select id="newRole" name="newRole" class="item-data"
                                             style="border: none; background: transparent; width: 100%; 
-                             font-size: inherit; color: #5d677c; outline: none;">
+                             font-size: inherit; color: #5d677c; outline: none;"
+                                            required>
                                             <option value="super-admin"
-                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>Super
+                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
+                                                Super
                                                 Admin</option>
                                             <option value="admin"
                                                 {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>Admin
@@ -116,14 +116,10 @@
                                 Profil</button>
                         </div><!--//app-card-footer-->
                     </div><!--//app-card-->
-                </div><!--//col-->
-
-
-
-
-
-
-                <div class="col-12 col-lg-6">
+                </form>
+                <form action="{{ route('updateSecurity') }}" method="POST" class="col-12 col-lg-6" id="securityForm"
+                    novalidate>
+                    @csrf
                     <div class="app-card app-card-account shadow-sm d-flex flex-column align-items-start">
                         <div class="app-card-header p-3 border-bottom-0">
                             <div class="row align-items-center gx-3">
@@ -137,7 +133,6 @@
                                                 d="M10.854 6.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
                                         </svg>
                                     </div><!--//icon-holder-->
-
                                 </div><!--//col-->
                                 <div class="col-auto">
                                     <h4 class="app-card-title">Sécurité</h4>
@@ -145,7 +140,6 @@
                             </div><!--//row-->
                         </div><!--//app-card-header-->
                         <div class="app-card-body px-4 w-100">
-
                             <div class="item border-bottom py-3">
                                 <div class="justify-content-between align-items-center">
                                     <div class="">
@@ -155,7 +149,6 @@
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;"
                                             data-email="{{ old('newEmail', $user->email) }}">
-
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
@@ -167,36 +160,26 @@
                                             readonly
                                             style="border: none; background: transparent; width: 100%; 
                                         font-size: inherit; color: #5d677c; outline: none;">
-
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
                         </div><!--//app-card-body-->
-
                         <div class="app-card-footer p-4 mt-auto ">
                             <!-- Update the button to trigger the modal -->
-                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre à
+                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre
+                                à
                                 jour Sécurité</a>
                         </div><!--//app-card-footer-->
-
-
-
-
                         <!-- Overlay noir transparent -->
                         <div id="overlay"
                             style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); z-index: 9998;">
                         </div>
-
-
-
-
                         <div class="" id="securityModal"
                             style="display: none; position: fixed; top: 50%; left: 50%; 
                            transform: translate(-50%, -50%); background: white; 
                            padding: 20px; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); 
                            border-radius: 8px; z-index: 9999; width: 400px;">
                             <h3 style="color: black; padding-bottom: 2rem;">Modifier la Sécurité</h3>
-
                             <!-- Affichage des erreurs globales -->
                             @if ($errors->any())
                                 <div style="color: red; font-size: 14px; margin-bottom: 10px;">
@@ -207,7 +190,6 @@
                                     </ul>
                                 </div>
                             @endif
-
                             <div class="item border-bottom">
                                 <label>
                                     <div class="item-label"><strong>Email :</strong></div>
@@ -215,63 +197,61 @@
                                 <input type="email" id="newEmail" placeholder="Nouvel email" name="email"
                                     value="{{ old('email', $user->email) }}"
                                     style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;"
-                                    data-email="{{ old('email', $user->email) }}">
+                                    data-email="{{ old('email', $user->email) }}" required>
                                 <!-- Affichage des erreurs de l'email -->
                                 @if ($errors->has('email'))
-                                    <div style="color: red; font-size: 14px;">
+                                    <div class="error-message" style="color: red; font-size: 14px;">
                                         {{ $errors->first('email') }}
                                     </div>
                                 @endif
                             </div>
-
                             <div class="item border-bottom pt-4">
                                 <label>
                                     <div class="item-label"><strong>Ancien mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="oldPassword" placeholder="Ancien mot de passe"
                                     name="old_password"
-                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;"
+                                    required>
                                 <!-- Affichage des erreurs de l'ancien mot de passe -->
                                 @if ($errors->has('old_password'))
-                                    <div style="color: red; font-size: 14px;">
+                                    <div class="error-message" style="color: red; font-size: 14px;">
                                         {{ $errors->first('old_password') }}
                                     </div>
                                 @endif
                             </div>
-
                             <div class="item border-bottom pt-4">
                                 <label>
                                     <div class="item-label"><strong>Nouveau mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="newPassword" placeholder="Nouveau mot de passe"
                                     name="new_password"
-                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;"
+                                    required>
                                 <!-- Affichage des erreurs du nouveau mot de passe -->
                                 @if ($errors->has('new_password'))
-                                    <div style="color: red; font-size: 14px;">
+                                    <div class="error-message" style="color: red; font-size: 14px;">
                                         {{ $errors->first('new_password') }}
                                     </div>
                                 @endif
                             </div>
-
                             <div class="item border-bottom pt-4">
                                 <label>
                                     <div class="item-label"><strong>Confirmer mot de passe :</strong></div>
                                 </label>
                                 <input type="password" id="confirmPassword" placeholder="Confirmer le mot de passe"
                                     name="new_password_confirmation"
-                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;">
+                                    style="width: 100%; padding: 8px; margin-bottom: 10px; outline: none; border: none;"
+                                    required>
                                 <!-- Affichage des erreurs de confirmation de mot de passe -->
                                 @if ($errors->has('new_password_confirmation'))
-                                    <div style="color: red; font-size: 14px;">
+                                    <div class="error-message" style="color: red; font-size: 14px;">
                                         {{ $errors->first('new_password_confirmation') }}
                                     </div>
                                 @endif
                             </div>
-
                             <div class="pt-5">
-                                <button type="button"
-                                onclick="saveSecurityChanges()"
+                                <button type="submit" id="saveButton"
                                     style="background: green; color: white; padding: 8px 12px; border: none; cursor: pointer; border-radius: 8px;">
                                     Enregistrer
                                 </button>
@@ -281,16 +261,23 @@
                                 </button>
                             </div>
                         </div>
-
                         <!-- Hidden field to store the current password -->
-                        <input type="text" id="currentPassword" value="••••••••" readonly style="display: none;">
-
-
-
+                        <input type="text" id="currentPassword" value="{{ old('password', $user->password) }}"
+                            readonly style="display: none;">
                     </div><!--//app-card-->
-                </div><!--//col-->
+                </form>
             </div><!--//row-->
         </div>
-    </form>
+    </div>
     <script defer src="{{ asset('assets/js/updateSecurite.js') }}"></script>
+    <script>
+        document.getElementById('newContact').addEventListener('input', function(event) {
+            // Allow only digits
+            event.target.value = event.target.value.replace(/[^0-9]/g, '');
+        });
+        document.getElementById('newName').addEventListener('input', function(event) {
+            // Allow only letters and spaces, no numbers
+            event.target.value = event.target.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+    </script>
 @endsection

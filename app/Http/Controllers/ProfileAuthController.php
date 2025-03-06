@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 class ProfileAuthController extends Controller
 {
@@ -78,80 +80,52 @@ class ProfileAuthController extends Controller
         return redirect()->back();
     }
 
-    /*public function changePassword(Request $request)
-    {
-        $rules = [
-            'password' => 'required|string|min:9',
-            'newPassword' => 'required|string|min:9|confirmed',
-            'newPassword_confirmation' => 'required|string|min:9',
-        ];
-
-        $messages = [
-            'password.required' => "L'ancien mot de passe est obligatoire!",
-            'password.min' => "L'ancien mot de passe doit contenir au moins 9 caractères!",
-            'newPassword.required' => "Le nouveau mot de passe est obligatoire!",
-            'newPassword.min' => "Le nouveau mot de passe doit contenir au moins 9 caractères!",
-            'newPassword.confirmed' => "La confirmation du nouveau mot de passe ne correspond pas!",
-            'newPassword_confirmation.required' => "La confirmation du nouveau mot de passe est obligatoire!",
-            'newPassword_confirmation.min' => "Le nouveau mot de passe doit contenir au moins 9 caractères!",
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withInput()
-                ->with('modalType', 'updatePassword')
-                ->withErrors($validator, 'updatePassword');
-        }
-
-        if (!Hash::check($request->password, auth()->user()->password)) {
-            return redirect()->back()
-                ->withInput()
-                ->with('modalType', 'updatePassword')
-                ->withErrors(['password' => "L'ancien mot de passe est incorrect !"], 'updatePassword');
-        }
-
-        $user = auth()->user();
-        $user->password = Hash::make($request->newPassword);
-        $user->save();
-
-        alert()->success('Succès', "Le mot de passe a été mis à jour avec succès.");
-
-        return redirect()->back();
-    }*/
 
     public function updateSecurity(Request $request)
-    {
-        // Validation des données
-        $validatedData = $request->validate([
-            'email' => 'nullable|email|unique:users,email',
-            'old_password' => 'required',
-            'new_password' => 'nullable|min:8|confirmed',
-        ]);
+{
+    // Validation des données
+    $validated = $request->validate([
+        'email' => 'nullable|email|unique:users,email,' . auth()->id(),
+        'old_password' => 'nullable',
+        'new_password' => 'nullable|confirmed|min:8',
+    ]);
 
-        // Vérification de l'ancien mot de passe
-        $user = Auth::user();
+    // Vérifiez si l'ancien mot de passe est correct
+    $user = auth()->user();
 
-        // Vérifier l'ancien mot de passe
-        if (!Hash::check($request->old_password, $user->password)) {
-            return redirect()->back()->withErrors(['old_password' => 'L\'ancien mot de passe est incorrect.']);
-        }
-
-        // Mettre à jour l'email si nécessaire
-        if ($request->filled('email')) {
-            $user->email = $request->email;
-        }
-
-        // Mettre à jour le mot de passe si nécessaire
-        if ($request->filled('new_password')) {
-            $user->password = Hash::make($request->new_password);
-        }
-
-        // Sauvegarder les modifications
-        $user->save();
-
-        // Retourner une réponse de succès
-        return redirect()->back()->with('success', 'Les informations ont été mises à jour avec succès.');
+    // Si l'ancien mot de passe est fourni, vérifier sa validité
+    if ($request->old_password && !Hash::check($request->old_password, $user->password)) {
+        // Return back with errors and keep the modal open
+        return back()->withErrors(['old_password' => 'L\'ancien mot de passe est incorrect.'])
+                     ->withInput(); // Preserve form inputs
     }
+
+    try {
+        // Mise à jour de l'email et du mot de passe uniquement si ils sont fournis
+        $userData = [];
+
+        // Si un nouvel email est fourni, on le met à jour
+        if ($request->has('email') && $request->email) {
+            $userData['email'] = $request->email;
+        }
+
+        // Si un nouveau mot de passe est fourni, on le met à jour
+        if ($request->has('new_password') && $request->new_password) {
+            $userData['password'] = Hash::make($request->new_password); // Hachage du mot de passe
+        }
+
+        // Si des informations ont été modifiées, on les met à jour dans la base de données
+        if (!empty($userData)) {
+            $user->update($userData);
+            return back()->with('success', 'Les informations ont été mises à jour avec succès.');
+        } else {
+            return back()->withErrors(['update' => 'Aucune modification n\'a été effectuée.']);
+        }
+    } catch (\Exception $e) {
+        // Si une erreur se produit lors de la mise à jour
+        Log::error('Erreur lors de la mise à jour de la sécurité : ' . $e->getMessage());
+        return back()->withErrors(['update' => 'Une erreur est survenue lors de la mise à jour des informations.']);
+    }
+}
+
 }

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/portal.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/templatemo-style.css')}}" />
     <script src="{{ asset('assets/js/app.js') }}"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--
     <script src="assets/plugins/fontawesome/js/all.min.js"></script>
     <script src="assets/plugins/popper.min.js"></script>
