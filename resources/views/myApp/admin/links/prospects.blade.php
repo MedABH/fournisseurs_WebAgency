@@ -1206,83 +1206,86 @@
     });
 </script>
 
-
-
-
-
-
 @endsection
 @section('content2')
-    <div class="modal fade" id="QueryProspectDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="modal fade" id="QueryProspectDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="show-info-prospect show-society">
+                    <label class="label-detail-prospect">Nom de la société</label>
+                    <h6 class="info-prospect" id="showSocietyProspect">
+                    </h6>
                 </div>
-                <div class="modal-body">
-                    <div class="show-info-prospect show-society">
-                        <label class="label-detail-prospect">Nom de la société</label>
-                        <h6 class="info-prospect" id="showSocietyProspect">
-                        </h6>
-                    </div>
-
-
-                    <div class="show-info-prospect show-name">
-                        <label class="label-detail-prospect">Personne à contacter</label>
-                        <h6 class="info-prospect" id="showNameProspect"></h6>
-                    </div>
-                    <div class="show-info-prospect show-contact">
-                        <label class="label-detail-prospect">Numero de telephone</label>
-                        <h6 class="info-prospect" id="showContactProspect"></h6>
-                    </div>
-                    <div class="show-info-prospect show-email">
-                        <label class="label-detail-prospect">Email</label>
-                        <h6 class="info-prospect" id="showEmailProspect">
-                        </h6>
-                    </div>
-
-
-
-                    <div class="show-info-prospect show-ville">
-                        <label class="label-detail-prospect">Ville</label>
-                        <h6 class="info-prospect" id="showVilleProspect">
-                        </h6>
-                    </div>
-                    <div class="show-info-prospect show-category" style="margin-top:10px">
-                        <label class="label-detail-prospect">Les catégories</label>
-                        <select class="form-select form-select-sm info-prospect showCategoryProspect"
-                            aria-label=".form-select-sm example" style="width: 200px; height: 30px"
-                            id="categoriesQuery-1">
-                            <option value="" selected>Voir la(les) catégories</option>
-
-                        </select>
-                    </div>
-
-                    <div class="show-info-prospect show-product" style="margin-bottom: 40px; margin-top:10px">
-                        <label class="form-label label-detail-prospect">Sous-Catégorie</label>
-                        <select class="form-select form-select-sm info-prospect showProductProspect"
-                            aria-label=".form-select-sm example" id="productsQuery-1" style="width: 200px; height: 30px">
-
-                        </select>
-                    </div>
-                    <div class="show-info-prospect show-user">
-                        <label class="label-detail-prospect">Contacté Par</label>
-                        <h6 class="info-prospect" id="showUserProspect">
-                        </h6>
-                    </div>
-                    <div class="show-info-prospect show-remark">
-                        <label class="label-detail-prospect">Remarque</label>
-                        <p class="info-prospect" id="showRemarkProspect" style="font-size: 12px">
-                        </p>
-                    </div>
-
-
+                <div class="show-info-prospect show-society">
+                    <label class="label-detail-prospect">GSM1 de la société</label>
+                    <h6 class="info-prospect" id="showGSM1Prospect">
+                    </h6>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <div class="show-info-prospect show-society">
+                    <label class="label-detail-prospect">GSM2 de la société</label>
+                    <h6 class="info-prospect" id="showGSM2Prospect">
+                    </h6>
                 </div>
+                <div class="show-info-prospect show-name">
+                    <label class="label-detail-prospect">Personne à contacter</label>
+                    <h6 class="info-prospect" id="showNameProspect"></h6>
+                </div>
+                <div class="show-info-prospect show-contact">
+                    <label class="label-detail-prospect">Numero De Telephone</label>
+                    <h6 class="info-prospect" id="showContactProspect"></h6>
+                </div>
+                <div class="show-info-prospect show-email">
+                    <label class="label-detail-prospect">Email</label>
+                    <h6 class="info-prospect" id="showEmailProspect">
+                    </h6>
+                </div>
+
+
+                <div class="show-info-prospect show-ville">
+                    <label class="label-detail-prospect">Ville</label>
+                    <h6 class="info-prospect" id="showVilleProspect">
+                    </h6>
+                </div>
+                <div class="show-info-prospect show-category" style="margin-top:10px">
+                    <label class="label-detail-prospect">Les catégories</label>
+                    <select class="form-select form-select-sm info-prospect showCategoryProspect"
+                        aria-label=".form-select-sm example" style="width: 200px; height: 30px"
+                        id="categoriesQuery-1">
+                        <option value="" selected>Voir la(les) catégories</option>
+
+                    </select>
+                </div>
+
+                <div class="show-info-prospect show-product" style="margin-bottom: 40px; margin-top:10px">
+                    <label class="form-label label-detail-prospect">Sous-Catégorie</label>
+                    <select class="form-select form-select-sm info-prospect showProductProspect"
+                        aria-label=".form-select-sm example" id="productsQuery-1"
+                        style="width: 200px; height: 30px">
+
+                    </select>
+                </div>
+                <div class="show-info-prospect show-user">
+                    <label class="label-detail-prospect">Contacté Par</label>
+                    <h6 class="info-prospect" id="showUserProspect">
+                    </h6>
+                </div>
+                <div class="show-info-prospect show-remark">
+                    <label class="label-detail-prospect">Remarque</label>
+                    <p class="info-prospect" id="showRemarkProspect" style="font-size: 12px">
+                    </p>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
+</div>
 @endsection

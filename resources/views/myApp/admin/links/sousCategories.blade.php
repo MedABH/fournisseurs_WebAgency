@@ -69,54 +69,63 @@
 
         </div>
         
-<form action="/addSousCategory" method="POST">
-    @csrf
-    <div class="modal fade" id="ModalAddProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3 form-group">
-                        <label class="form-label"><strong class="det">Nom de la
-                                sous-catégorie</strong></label>
-                        <input type="text" class="form-control" id="nom_produit" placeholder="Entrer La sous-catégorie"
-                            value="{{ old('nom_produit') }}" required>
-                        @error('nom_produit', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                        <label class="form-label"><strong class="det">Description</strong></label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                            placeholder="Entrer une description" name="texte">{{ old('texte') }}</textarea>
-                        @error('texte', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
-                        <label class="form-label"><strong class="det">Catégorie
-                                :</strong></label>
+        <form action="/addSousCategory" method="POST">
+            @csrf
+            <div class="modal fade" id="ModalAddProduct" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ajouter un produit</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-label"><strong class="det">Nom de la sous-catégorie</strong></label>
+                                <input type="text" class="form-control" name="nom_produit"
+                                    placeholder="Entrer la sous-catégorie" value="{{ old('nom_produit') }}" />
+                                @error('nom_produit', 'default')
+                                    <span class="text-danger">{{ $message }}</span> <br>
+                                @enderror
 
-                        <select class="form-select" style="color: #5d6778;">
-                            <option>Voir les produits associés</option>
-                            @foreach ($categories as $categorie)
-                            <option value="{{ $categorie->id }}" {{ old('categorie_id')==$categorie->id ? 'selected' :
-                                '' }}>
-                                {{ $categorie->nom_categorie }}</option>
-                            @endforeach
-                        </select>
-                        @error('categorie_id', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                        @enderror
 
+                                <div class="mb-3">
+                                    <label class="form-label"><strong class="det">Description</strong></label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Entrer une description"
+                                        name="texte">{{ old('texte') }}</textarea>
+                                    @error('texte', 'default')
+                                        <span class="text-danger">{{ $message }}</span> <br>
+                                    @enderror
+                                </div>
+
+
+                                <label class="form-label"><strong class="det">
+                                    Catégorie :</strong></label>
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                                    name="categorie_id" style="height: 39px">
+                                    <option value="">Selectionner la catégorie</option>
+                                    @foreach ($categories as $categorie)
+                                        <option value="{{ $categorie->id }}"
+                                            {{ old('categorie_id') == $categorie->id ? 'selected' : '' }}>
+                                            {{ $categorie->nom_categorie }}</option>
+                                    @endforeach
+                                </select>
+                                @error('categorie_id', 'default')
+                                    <span class="text-danger">{{ $message }}</span> <br>
+                                @enderror
+
+
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Ajouter">
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Ajouter</button>
-
                 </div>
             </div>
-        </div>
-    </div>
 
+        </form>
         <!---->
 
 
@@ -279,7 +288,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label class="form-label">Nom de la sous-catégorie</label>
+                                    <label class="form-label"><strong class="det">Nom de sous-catégorie</strong></label>
                                     <input type="text" class="form-control" name="newNom_produit"
                                         id="updateProductName" placeholder="Entrer la sous-catégorie"
                                         value="{{ old('newNom_produit') }}" />
@@ -288,7 +297,7 @@
                                     @endif
 
                                     <div class="mb-3">
-                                        <label class="form-label">Description</label>
+                                        <label class="form-label"><strong class="det">Description</strong></label>
                                         <textarea class="form-control" id="updateProductText" placeholder="Entrer une description" name="newTexte">{{ old('newTexte', htmlspecialchars($sousCategorie->texte)) }} </textarea>
                                         @if ($errors->has('newTexte'))
                                             <span class="text-danger">{{ $errors->first('newTexte') }}</span>
@@ -296,10 +305,9 @@
                                     </div>
 
 
-                                    <label
-                                        style="margin-left: 5px; font-size:40px; font-weight:bold; color:rgb(122, 118, 118)">Catégorie</label>
+                                    <label><strong class="det">Catégorie</strong></label>
                                     <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                        name="newCategorie_id" id="updateProductCategoryId" style="height: 39px">
+                                        name="newCategorie_id" id="updateProductCategoryId" style="color: #797878;">
                                         <option value="">Selectionner la catégorie</option>
                                         @foreach ($categories as $categorie)
                                             <option value="{{ $categorie->id }}"
@@ -320,7 +328,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" class="btn btn-outline-primary border-btn me-5" data-bs-dismiss="modal" value="Ajouter">
+                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Modifier">
                             </div>
                         </form>
                     </div>
