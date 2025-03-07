@@ -136,7 +136,7 @@ class ClientController extends Controller
                 return redirect()->back();        }
     public function index (Request $request) {
 
-        $perPage = $request->get('per_page',10);
+        $perPage = $request->get('per_page',5);
         $clients = Client::with('categories','categorieClients.categorie','utilisateur')->paginate($perPage);
 
         $categories = Categorie::with('sousCategories')->get();

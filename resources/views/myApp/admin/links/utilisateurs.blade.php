@@ -77,7 +77,7 @@
                                             <input type="text" class="form-control" name="name" placeholder="Entrer le nom..."
                                                 value="{{ old('name') }}">
                                             @error('name', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -86,7 +86,7 @@
                                             <input type="email" class="form-control" name="email" placeholder="Entrer l'email..."
                                                 value="{{ old('email') }}">
                                             @error('email', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -96,7 +96,7 @@
                                             <input type="password" class="form-control" name="password"
                                                 placeholder="Entrer le mot de passe...">
                                             @error('password', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -105,7 +105,7 @@
                                             <input type="password" class="form-control" name="password_confirmation"
                                                 placeholder="Confirmer votre mot de passe...">
                                             @error('password_confirmation', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -115,7 +115,7 @@
                                                 value="{{ old('adresse') }}">
                     
                                             @error('adresse', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -124,7 +124,7 @@
                                             <input type="tel" class="form-control" required name="contact" placeholder="Entrer le contact..."
                                                 value="{{ old('contact') }}">
                                             @error('contact', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span> 
                                             @enderror
                                         </div>
                     
@@ -139,7 +139,7 @@
                                                 </option>
                                             </select>
                                             @error('role', 'default')
-                                            <span class="text-danger">{{ $message }}</span> <br>
+                                            <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                     

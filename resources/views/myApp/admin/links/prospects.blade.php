@@ -106,13 +106,13 @@
                         <input type="tel" class="form-control" name="GSM1_prospect" required
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_prospect') }}" />
                         @error('GSM1_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span>  
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM2_prospect" required
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_prospect') }}" />
                         @error('GSM2_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span>  
                         @enderror
 
 
@@ -120,20 +120,20 @@
                         <input type="text" class="form-control" name="nom_prospect"
                             placeholder="Entrer le prospect..." value="{{ old('nom_prospect') }}" />
                         @error('nom_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
                         <input type="tel" class="form-control" name="tele_prospect" required
                             placeholder="Entrer le contact..." value="{{ old('tele_prospect') }}" />
                         @error('tele_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
                         <label class="form-label"><strong class="det">Email</strong></label>
                         <input type="email" class="form-control" name="email_prospect" placeholder="Entrer l'émail..."
                             value="{{ old('email_prospect') }}" />
                         @error('email_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
 
@@ -141,7 +141,7 @@
                         <input type="text" class="form-control" name="ville_prospect"
                             placeholder="Entrer la ville..." value="{{ old('ville_prospect') }}" />
                         @error('ville_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
@@ -155,7 +155,7 @@
                             @endforeach
                         </select>
                         @error('categorie_id', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
                     </div>
@@ -934,7 +934,7 @@
 
                             categories.forEach(category => {
                                 categoriesList =
-                                    `${category.nom_categorie}<br>`;
+                                    `${category.nom_categorie}`;
                             });
 
 

@@ -84,7 +84,7 @@
                                 <input type="text" class="form-control" name="nom_categorie"
                                     placeholder="Entrer la catégorie" value="{{ old('nom_categorie') }}" />
                                 @error('nom_categorie', 'default')
-                                    <span class="text-danger">{{ $message }}</span> <br>
+                                    <span class="text-danger">{{ $message }}</span> 
                                 @enderror
 
                             </div>

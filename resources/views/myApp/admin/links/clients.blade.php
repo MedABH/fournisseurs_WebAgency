@@ -106,13 +106,13 @@
                         <input type="tel" class="form-control" name="GSM1_client" required placeholder="Entrer le GSM1..."
                             value="{{ old('GSM1_client') }}" />
                         @error('GSM1_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM2_client" required placeholder="Entrer le GSM2..."
                             value="{{ old('GSM2_client') }}" />
                         @error('GSM2_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
 
@@ -120,20 +120,20 @@
                         <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
                             value="{{ old('nom_client') }}" />
                         @error('nom_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
                         <input type="tel" class="form-control" name="tele_client" required placeholder="Entrer le contact..."
                             value="{{ old('tele_client') }}" />
                         @error('tele_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">Email</strong></label>
                         <input type="email" class="form-control" name="email_client" placeholder="Entrer l'émail..."
                             value="{{ old('email_client') }}" />
                         @error('email_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
 
@@ -141,7 +141,7 @@
                         <input type="text" class="form-control" name="ville_client" placeholder="Entrer la ville..."
                             value="{{ old('ville_client') }}" />
                         @error('ville_client', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
@@ -155,7 +155,7 @@
                             @endforeach
                         </select>
                         @error('categorie_id', 'default')
-                            <span class="text-danger">{{ $message }}</span> <br>
+                            <span class="text-danger">{{ $message }}</span> 
                         @enderror
 
                     </div>
@@ -231,11 +231,15 @@
                                         <div class="d-flex align-items-center gap-2" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
                                         <button type="button"
                                             class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#update_client" data-id="{{ $client->id }}"
+                                            data-bs-target="#update_client" 
+                                            data-id="{{ $client->id }}"
                                             data-society="{{ $client->nomSociete_client }}"
-                                            data-GSM1="{{ $client->GSM1_client }}" data-GSM2="{{ $client->GSM2_client }}"
-                                            data-name="{{ $client->nom_client }}" data-tele="{{ $client->tele_client }}"
-                                            data-email="{{ $client->email_client }}" data-ville="{{ $client->ville_client }}"
+                                            data-GSM1="{{ $client->GSM1_client }}" 
+                                            data-GSM2="{{ $client->GSM2_client }}"
+                                            data-name="{{ $client->nom_client }}" 
+                                            data-tele="{{ $client->tele_client }}"
+                                            data-email="{{ $client->email_client }}" 
+                                            data-ville="{{ $client->ville_client }}"
                                             data-category="{{ $client->categories->first()?->id ?? '' }}">Modifier</button>
         
         
@@ -248,14 +252,16 @@
                                             data-bs-toggle="modal" data-bs-target="#ModalClientDetails-{{ $client->id }}"
                                             data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
                                             data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
-                                            data-name="{{ $client->nom_client }}" data-email="{{ $client->email_client }}"
-                                            data-tele="{{ $client->tele_client }}" data-ville="{{ $client->ville_client }}"
+                                            data-name="{{ $client->nom_client }}" 
+                                            data-email="{{ $client->email_client }}"
+                                            data-tele="{{ $client->tele_client }}" 
+                                            data-ville="{{ $client->ville_client }}"
                                             data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
                                             data-remark="{{ $client->remark }}"
                                             data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">Details</button>
         
-                                        <form action="{{ route('client.destroy', $client->id) }}" method="POST"
-                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;" id="delete-form-{{ $client->id }}">
+                                        <form action="{{ route('client.destroy', $client->id) }}" method="POST" id="delete-form-{{ $client->id }}"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;" >
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn btn-outline-danger border-btn me-4"
@@ -304,11 +310,15 @@
                                     @elseif (auth()->user()->role == 'admin')
                                     <td>
                                         <button type="button" class="btn btn-outline-primary border-btn me-4"
-                                            data-bs-toggle="modal" data-bs-target="#update_client" data-id="{{ $client->id }}"
+                                            data-bs-toggle="modal" data-bs-target="#update_client" 
+                                            data-id="{{ $client->id }}"
                                             data-society="{{ $client->nomSociete_client }}"
-                                            data-GSM1="{{ $client->GSM1_client }}" data-GSM2="{{ $client->GSM2_client }}"
-                                            data-name="{{ $client->nom_client }}" data-tele="{{ $client->tele_client }}"
-                                            data-email="{{ $client->email_client }}" data-ville="{{ $client->ville_client }}"
+                                            data-GSM1="{{ $client->GSM1_client }}" 
+                                            data-GSM2="{{ $client->GSM2_client }}"
+                                            data-name="{{ $client->nom_client }}" 
+                                            data-tele="{{ $client->tele_client }}"
+                                            data-email="{{ $client->email_client }}" 
+                                            data-ville="{{ $client->ville_client }}"
                                             data-category="{{ $client->categories->first()?->id ?? '' }}">Modifier
                                         </button>
         
@@ -667,7 +677,7 @@
         </div>
     @endif
     <div class="d-flex justify-content-between align-items-center">
-        @if ($clients->total() >= 10)
+        @if ($clients->total() >= 5)
             <form id="pagination-form" action="{{ route('clients.pagination') }}" method="GET"
                 class="d-inline-flex">
                 @csrf
@@ -889,7 +899,7 @@
 
                                 categories.forEach(category => {
                                     categoriesList =
-                                        `${category.nom_categorie }<br>`;
+                                        `${category.nom_categorie }`;
                                 });
 
 
@@ -1236,3 +1246,91 @@
         });
     </script>
 @endsection
+@section('content2')
+        <div class="modal fade" id="QueryClientsDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="show-info-client show-society">
+                            <label class="label-detail-client">Nom de la société</label>
+                            <h6 class="info-client" id="showSocietyClient">
+                            </h6>
+                        </div>
+                        <div class="show-info-client show-society">
+                            <label class="label-detail-client">GSM1 de la société</label>
+                            <h6 class="info-client" id="showGSM1Client">
+                            </h6>
+                        </div>
+                        <div class="show-info-client show-society">
+                            <label class="label-detail-client">GSM2 de la société</label>
+                            <h6 class="info-client" id="showGSM2Client">
+                            </h6>
+                        </div>
+                        <div class="show-info-client show-name">
+                            <label class="label-detail-client">Personne à contacter</label>
+                            <h6 class="info-client" id="showNameClient"></h6>
+                        </div>
+                        <div class="show-info-client show-contact">
+                            <label class="label-detail-client">Contact du GSM</label>
+                            <h6 class="info-client" id="showContactClient"></h6>
+                        </div>
+                        <div class="show-info-client show-email">
+                            <label class="label-detail-client">Email</label>
+                            <h6 class="info-client" id="showEmailClient">
+                            </h6>
+                        </div>
+
+                        <div class="show-info-client show-adress">
+                            <label class="label-detail-client">Adresse</label>
+                            <h6 class="info-client" id="showAdressClient">
+                            </h6>
+                        </div>
+
+                        <div class="show-info-client show-ville">
+                            <label class="label-detail-client">Ville</label>
+                            <h6 class="info-client" id="showVilleClient">
+                            </h6>
+                        </div>
+                        <div class="show-info-client show-category" style="margin-top:10px">
+                            <label class="label-detail-client">Les catégories</label>
+                            <select class="form-select form-select-sm info-client showCategoryClient"
+                                aria-label=".form-select-sm example" style="width: 200px; height: 30px"
+                                id="categoriesQuery-1">
+                                <option value="" selected>Voir la(les) catégories</option>
+
+                            </select>
+                        </div>
+
+                        <div class="show-info-client show-product" style="margin-bottom: 40px; margin-top:10px">
+                            <label class="form-label label-detail-client">Sous-Catégorie</label>
+                            <select class="form-select form-select-sm info-client showProductClient"
+                                aria-label=".form-select-sm example" id="productsQuery-1"
+                                style="width: 200px; height: 30px">
+
+                            </select>
+                        </div>
+                        <div class="show-info-client show-user">
+                            <label class="label-detail-client">Contacté Par</label>
+                            <h6 class="info-client" id="showUserClient">
+                            </h6>
+                        </div>
+                        <div class="show-info-client show-remark">
+                            <label class="label-detail-client">Remarque</label>
+                            <p class="info-client" id="showRemarkClient" style="font-size: 12px">
+                            </p>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endsection
+
