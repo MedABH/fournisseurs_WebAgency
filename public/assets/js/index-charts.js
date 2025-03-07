@@ -193,7 +193,7 @@ function updateCharts(timeRange, chartType) {
 
         newLineData1 = [500, 700, 650, 800, 900, 750, 850];  // Current Week
         newLineData2 = [400, 550, 600, 650, 700, 750, 800];  // Previous Week
-        
+
         newBarData = [23, 45, 76, 75, 62, 37, 83];
     } else if (timeRange == "2") { // Aujourd'hui
         newLineLabels = ['Hour 1', 'Hour 2', 'Hour 3', 'Hour 4', 'Hour 5', 'Hour 6', 'Hour 7'];
@@ -201,7 +201,7 @@ function updateCharts(timeRange, chartType) {
 
         newLineData1 = [200, 250, 300, 350, 400, 450, 500];
         newLineData2 = [150, 180, 220, 250, 300, 330, 400];
-        
+
         newBarData = [10, 15, 20, 18, 22, 25, 30];
     } else if (timeRange == "3") { // Ce mois-ci
         newLineLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'];
@@ -209,7 +209,7 @@ function updateCharts(timeRange, chartType) {
 
         newLineData1 = [1500, 1600, 1700, 1800, 1900, 2000, 2100];
         newLineData2 = [1400, 1550, 1650, 1750, 1850, 1950, 2050];
-        
+
         newBarData = [80, 90, 100, 110, 120, 130, 140];
     } else if (timeRange == "4") { // Cette année
         newLineLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
@@ -217,7 +217,7 @@ function updateCharts(timeRange, chartType) {
 
         newLineData1 = [20000, 22000, 24000, 2600, 28000, 30000, 32000];
         newLineData2 = [18000, 19000, 21000, 23000, 25000, 2700, 29000];
-        
+
         newBarData = [600, 700, 800, 900, 1000, 1100, 1200];
     }
 
@@ -240,7 +240,7 @@ function updateCharts(timeRange, chartType) {
         }
     }
 
-    
+
     // Update Line Chart dataset labels (key) based on timeRange
     if (chartType === 'line' && window.myLine) {
         if (timeRange == "1") {
@@ -263,16 +263,16 @@ function updateCharts(timeRange, chartType) {
     if (chartType === 'line' && window.myBar) {
         if (timeRange == "1") {
             window.myBar.data.datasets[0].label = 'Parties Prenantes';
-            
+
         } else if (timeRange == "2") {
             window.myBar.data.datasets[0].label = 'Parties Prenantes';
-            
+
         } else if (timeRange == "3") {
             window.myBar.data.datasets[0].label = 'Parties Prenantes';
-            
+
         } else if (timeRange == "4") {
             window.myBar.data.datasets[0].label = 'Parties Prenantes';
-            
+
         }
 
         window.myBar.update();
