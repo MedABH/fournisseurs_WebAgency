@@ -102,64 +102,6 @@ var lineChartConfig = {
     }
 };
 
-// Chart.js Bar Chart Example 
-
-var barChartConfig = {
-    type: 'bar',
-    data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Orders',
-            backgroundColor: window.chartColors.green,
-            borderColor: window.chartColors.green,
-            borderWidth: 1,
-            maxBarThickness: 16,
-            data: [23, 45, 76, 75, 62, 37, 83]
-        }]
-    },
-    options: {
-        responsive: true,
-        aspectRatio: 1.5,
-        legend: {
-            position: 'bottom',
-            align: 'end',
-        },
-        title: {
-            display: true,
-            text: 'Nombre de personnes ajoutées'
-        },
-        tooltips: {
-            mode: 'index',
-            intersect: false,
-            titleMarginBottom: 10,
-            bodySpacing: 10,
-            xPadding: 16,
-            yPadding: 16,
-            borderColor: window.chartColors.border,
-            borderWidth: 1,
-            backgroundColor: '#fff',
-            bodyFontColor: window.chartColors.text,
-            titleFontColor: window.chartColors.text,
-        },
-        scales: {
-            xAxes: [{
-                display: true,
-                gridLines: {
-                    drawBorder: false,
-                    color: window.chartColors.border,
-                },
-            }],
-            yAxes: [{
-                display: true,
-                gridLines: {
-                    drawBorder: false,
-                    color: window.chartColors.border,
-                },
-            }]
-        }
-    }
-};
-
 // Generate charts on load
 window.addEventListener('load', function () {
     // Initialize Line Chart
@@ -279,15 +221,112 @@ function updateCharts(timeRange, chartType) {
     }
 }
 
-
-
-
 // Event Listener for line-chart-select dropdown
 document.querySelector('.line-chart-select').addEventListener("change", function () {
     var timeRange = this.value;
     console.log("Line Chart - Selected Time Range:", timeRange);
     updateCharts(timeRange, 'line'); // Only update the line chart
 });
+
+// Chart.js Bar Chart Example 
+
+
+
+
+fetch('/data-for-charts-by-date')
+    .then(response => response.json())
+    .then(data => {
+        const labels = Object.keys(data);  // Dates as labels
+        const counts = Object.values(data); // Corresponding counts for each day
+
+        // Calculate the min and max values for the Y-axis
+        const minValue = Math.min(...counts);
+        const maxValue = Math.max(...counts);
+
+        // Ensure Y-axis starts from 0 and adjust the max value with a buffer
+        const adjustedMaxValue = maxValue + 1;  // Add 1 to give some space at the top
+        const stepSize = adjustedMaxValue > 10 ? 1 : 0.5;  // Step size adjustment
+
+        var barChartConfig = {
+            type: 'bar',
+            data: {
+                labels: labels,  // Dates as labels
+                datasets: [{
+                    label: 'Parties Prenantes',
+                    data: counts,  // Corresponding counts for each day
+                    backgroundColor: window.chartColors.green,
+                    borderColor: window.chartColors.green,
+                    borderWidth: 1,
+                    maxBarThickness: 16
+                }]
+            },
+            options: {
+                responsive: true,
+                aspectRatio: 1.5,
+                legend: {
+                    position: 'bottom',
+                    align: 'end',
+                },
+                title: {
+                    display: true,
+                    text: 'Nombre de Parties Prenantes ajoutées'
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                    titleMarginBottom: 10,
+                    bodySpacing: 10,
+                    xPadding: 16,
+                    yPadding: 16,
+                    borderColor: window.chartColors.border,
+                    borderWidth: 1,
+                    backgroundColor: '#fff',
+                    bodyFontColor: window.chartColors.text,
+                    titleFontColor: window.chartColors.text,
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        grid: {
+                            drawBorder: false,
+                            color: window.chartColors.border,
+                        },
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            drawBorder: false,
+                            color: window.chartColors.border,
+                        },
+                        ticks: {
+                            beginAtZero: true,  // Force Y-axis to start at zero
+                            min: 0,  // Ensure minimum value is 0
+                            max: adjustedMaxValue, // Dynamically adjusted max value
+                            stepSize: stepSize, // Adjust step size dynamically
+                            callback: function(value) {
+                                return Number.isInteger(value) ? value : '';  // Show only whole numbers
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Initialize the chart with the config
+        const myChart = new Chart(
+            document.getElementById('canvas-barchart'),
+            barChartConfig
+        );
+    });
+
+
+
+
+
+
+
+
+
 
 // Event Listener for bar-chart-select dropdown
 document.querySelector('.bar-chart-select').addEventListener("change", function () {

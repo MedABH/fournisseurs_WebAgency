@@ -42,6 +42,7 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout')->middl
 
 // Routes protégées par le middleware 'auth' et 'checkAdmins_Users'
 Route::get('/dashboardSection', [ChartController::class, 'index'])->name('dashboardSection')->middleware('checkAdmins_Users', 'auth');
+Route::get('/data-for-charts-by-date', [ChartController::class, 'getDataForChartsByDate']);
 
 // Routes réservées aux Super Admins
 Route::get('/usersSection', [UserController::class, 'index'])

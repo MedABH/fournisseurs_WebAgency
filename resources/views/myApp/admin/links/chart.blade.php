@@ -14,11 +14,15 @@
                          <h4 class="stats-type mb-1">Les Tiers</h4>
                          <div class="stats-figure">{{ $sumTiers }}</div>
                          <div class="stats-meta text-success">
-                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up"
-                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                 <path fill-rule="evenodd"
-                                     d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
-                             </svg> +1
+                            @if ($tiersChange > 0)
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+                            </svg> +{{ $tiersChange }}
+                        @elseif ($tiersChange < 0)
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+                            </svg> {{ $tiersChange }}
+                        @endif
                          </div>
                      </div><!--//app-card-body-->
                      <a class="app-card-link-mask" href="PartiesPrenantesSection"></a>
@@ -267,35 +271,6 @@
      </div>
  @endsection
  @section('script')
-     <script>
-         const categoryNames = @json($categoryNames);
-         const subcategoryCounts = @json($subcategoryCounts);
-         const cctx = document.getElementById('myChart');
-         new Chart(cctx, {
-             type: 'bar',
-             data: {
-                 labels: categoryNames,
-                 datasets: [{
-                     label: '# Le nombre des produits par catégorie',
-                     data: subcategoryCounts,
-                     borderWidth: 1,
-                     backgroundColor: ["#48ABF7", "#6861CE"],
-                 }]
-             },
-             options: {
-                 responsive: true,
-                 maintainAspectRatio: false,
-                 scales: {
-                     y: {
-                         beginAtZero: true,
-                         ticks: {
-                             stepSize: 1
-                         }
-                     }
-                 }
-             }
-         });
-     </script>
 
      <script>
          document.querySelectorAll('button[data-bs-toggle="modal"]').forEach(button => {
