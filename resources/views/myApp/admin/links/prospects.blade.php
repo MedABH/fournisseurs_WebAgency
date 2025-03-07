@@ -34,11 +34,7 @@
 
                             </a>
                         @elseif (auth()->user()->role == 'admin')
-                            <a href="{{ route('prospects.pdf') }}" class="btn btn-primary" style="margin-left:996px">
-                                <i class="fas fa-file-pdf"></i>
-                            </a>
-
-                            <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
+                            <a class="btn app-btn-secondary" href="{{ route('prospects.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -326,7 +322,8 @@
 
                                         <!-- admin role -->
                                     @elseif (auth()->user()->role == 'admin')
-                                        <td>
+                                    <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
                                             <button type="button" class="btn btn-outline-primary border-btn me-4"
                                                 data-bs-toggle="modal" data-bs-target="#update_prospect"
                                                 data-id="{{ $prospect->id }}"
@@ -398,12 +395,13 @@
                                                     @endforeach
                                                 </select>
                                             </form>
-
+                                        </div>
                                         </td>
 
                                         <!-- utilisateur role -->
                                     @elseif (auth()->user()->role == 'utilisateur')
-                                        <td>
+                                    <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
 
                                             <button type="button" class="btn btn-outline-success border-btn me-4"
                                                 data-bs-toggle="modal"
@@ -440,6 +438,7 @@
                                                     @endforeach
                                                 </select>
                                             </form>
+                                        </div>
                                         </td>
                                     @endif
 

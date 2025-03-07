@@ -23,7 +23,7 @@
 
                     <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
-                            <a class="btn app-btn-secondary" href="{{ route('prospects.pdf') }}">
+                            <a class="btn app-btn-secondary" href="{{ route('fournisseurClients.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -34,11 +34,7 @@
 
                             </a>
                         @elseif (auth()->user()->role == 'admin')
-                            <a href="{{ route('prospects.pdf') }}" class="btn btn-primary" style="margin-left:996px">
-                                <i class="fas fa-file-pdf"></i>
-                            </a>
-
-                            <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
+                            <a class="btn app-btn-secondary" href="{{ route('fournisseurClients.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
@@ -337,23 +333,7 @@
                                                     Modifier
                                                 </a>
 
-                                                <form class="user-form" action="{{ route('user.select.fc', $fc->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <select class="form-select userSelect"
-                                                        aria-label="Default select example"
-                                                        data-fc-id="{{ $fc->id }}" style="margin-right:100px"
-                                                        name="user_id">
-                                                        <option value="">Contacté Par</option>
-                                                        @foreach ($utilisateurs as $user)
-                                                            <option value="{{ $user->id }}"
-                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                {{ $user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
+                                              
 
                                                 <button type="button" class="btn btn-outline-success border-btn me-4"
                                                     data-bs-toggle="modal" data-bs-target="#remark-{{ $fc->id }}">
@@ -376,6 +356,24 @@
 
                                                     Details
                                                 </button>
+
+                                                <form class="user-form" action="{{ route('user.select.fc', $fc->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select class="form-select userSelect"
+                                                        aria-label="Default select example"
+                                                        data-fc-id="{{ $fc->id }}" style="margin-right:100px"
+                                                        name="user_id">
+                                                        <option value="">Contacté Par</option>
+                                                        @foreach ($utilisateurs as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
 
                                                 <form class="fc-form"
                                                     action="{{ route('fournisseurClient.select', $fc->id) }}"
@@ -398,23 +396,7 @@
                                         <td class="button-container">
                                             <div class="d-flex align-items-center gap-2"
                                                 style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                <form class="user-form" action="{{ route('user.select.fc', $fc->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <select class="form-select userSelect"
-                                                        aria-label="Default select example"
-                                                        data-fc-id="{{ $fc->id }}" style="margin-right:100px"
-                                                        name="user_id">
-                                                        <option value="">Contacté Par</option>
-                                                        @foreach ($utilisateurs as $user)
-                                                            <option value="{{ $user->id }}"
-                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                {{ $user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
+                                                
 
                                                 <button type="button" class="btn btn-outline-success border-btn me-4"
                                                     data-bs-toggle="modal" data-bs-target="#remark-{{ $fc->id }}">
@@ -438,6 +420,23 @@
 
                                                     Details
                                                 </button>
+                                                <form class="user-form" action="{{ route('user.select.fc', $fc->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select class="form-select userSelect"
+                                                        aria-label="Default select example"
+                                                        data-fc-id="{{ $fc->id }}" style="margin-right:100px"
+                                                        name="user_id">
+                                                        <option value="">Contacté Par</option>
+                                                        @foreach ($utilisateurs as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
                                             </div>
                                         </td>
                                     @endif
