@@ -20,10 +20,6 @@
 
                             </a>
                         @elseif (auth()->user()->role == 'admin')
-                            <a href="{{ route('sousCategories.pdf') }}" class="btn btn-primary" style="margin-left:996px">
-                                <i class="fas fa-file-pdf"></i>
-                            </a>
-
                             <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
