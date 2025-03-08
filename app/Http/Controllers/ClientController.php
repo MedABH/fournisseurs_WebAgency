@@ -12,22 +12,24 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Models\Setting;
 
 
 
 class ClientController extends Controller
 {
 
-    public function store (Request $request) {
+    public function store(Request $request)
+    {
 
         $rules = [
-            'nom_client' => ['nullable','max:50','string'],
-            'GSM1_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,GSM1_client'],
-            'GSM2_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,GSM2_client'],
-            'email_client' => ['nullable','email','string','max:266','unique:clients,email_client'],
-            'tele_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:clients,tele_client'],
-            'nomSociete_client' => ['nullable','max:200','unique:clients,nomSociete_client'],
-            'categorie_id' => ['required','integer','exists:categories,id'],
+            'nom_client' => ['nullable', 'max:50', 'string'],
+            'GSM1_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,GSM1_client'],
+            'GSM2_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,GSM2_client'],
+            'email_client' => ['nullable', 'email', 'string', 'max:266', 'unique:clients,email_client'],
+            'tele_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,tele_client'],
+            'nomSociete_client' => ['nullable', 'max:200', 'unique:clients,nomSociete_client'],
+            'categorie_id' => ['required', 'integer', 'exists:categories,id'],
         ];
 
         $messages = [
@@ -44,28 +46,28 @@ class ClientController extends Controller
             // 'tele_client.required' => 'Le contact est obligatoire!',
             'tele_client.regex' => 'Le numéro de téléphone doit être valide!',
             'tele_client.unique' => 'Le contact doit être unique!',
-            
-           
-           
+
+
+
             'nomSociete_client.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
             'categorie_id.exists' => 'Cette catégorie n\'existe pas!',
         ];
 
-        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             // dd($validator);
             return redirect()->back()
-                   ->withInput()
-                   ->with('modalType','default')
-                   ->withErrors($validator);
+                ->withInput()
+                ->with('modalType', 'default')
+                ->withErrors($validator);
         }
 
         $client = new Client();
         $client->nom_client = $request->nom_client ?? '';
-        $client->GSM1_client = $request->GSM1_client ?? '' ;
+        $client->GSM1_client = $request->GSM1_client ?? '';
         $client->GSM2_client = $request->GSM2_client ?? '';
         $client->ville_client = $request->ville_client;
         $client->tele_client = $request->tele_client ?? '';
@@ -77,67 +79,78 @@ class ClientController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clients()->attach($client->id);
 
-        alert()->success('succès', $client->nom_client." ".'a été enregistrée avec succès.');
+        // Track the added client
+        $setting = Setting::where('key', 'clientsTracking')->first();
+        if ($setting) {
+            $setting->increment('addedToday');
+        }
+
+        alert()->success('succès', $client->nom_client . " " . 'a été enregistrée avec succès.');
         return redirect()->to(url()->previous());
     }
 
     public function updateUserClient(Request $request, $id)
-        {
+    {
 
-            $request->validate([
-                'user_id' => 'nullable|exists:users,id',
-            ]);
-
-
-            $client = Client::findOrFail($id);
-
-            $clients = Client::where('groupId_client', $client->groupId_client)->get();
-
-            foreach ($clients as $c) {
-                $c->user_id = $request->user_id ?? $c->user_id;
-                $c->save();
-            }
+        $request->validate([
+            'user_id' => 'nullable|exists:users,id',
+        ]);
 
 
-            return redirect()->back();        }
+        $client = Client::findOrFail($id);
 
-            public function updateRemarkClient(Request $request, $id)
-            {
-                $validator = Validator::make($request->all(), [
-                    'remark' => ['nullable','string',function ($attribute, $value, $fail) {
-                        $wordCount = str_word_count($value);
-                        if ($wordCount > 100) {
-                            $fail('La description ne doit pas dépasser 100 mots.');
-                        }
-                    }]
+        $clients = Client::where('groupId_client', $client->groupId_client)->get();
 
-                ]
-            
-                ,[
-                    "remark.string" => "La remarque doit etre de type chaine de caractere" 
-                ]);
+        foreach ($clients as $c) {
+            $c->user_id = $request->user_id ?? $c->user_id;
+            $c->save();
+        }
 
-                if ($validator->fails()) {
-                    return redirect()->back()
-                    ->withInput()
-                    ->with('modalType', 'remark')
-                    ->withErrors($validator);
-                }
 
-                $client = Client::findOrFail($id);
+        return redirect()->back();
+    }
 
-                $clients = Client::where('groupId_client', $client->groupId_client)->get();
+    public function updateRemarkClient(Request $request, $id)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'remark' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                    $wordCount = str_word_count($value);
+                    if ($wordCount > 100) {
+                        $fail('La description ne doit pas dépasser 100 mots.');
+                    }
+                }]
 
-                foreach ($clients as $c) {
-                    $c->remark = $request->remark ;
-                    $c->save();
-                }
+            ],
+            [
+                "remark.string" => "La remarque doit etre de type chaine de caractere"
+            ]
+        );
 
-                return redirect()->back();        }
-    public function index (Request $request) {
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('modalType', 'remark')
+                ->withErrors($validator);
+        }
 
-        $perPage = $request->get('per_page',5);
-        $clients = Client::with('categories','categorieClients.categorie','utilisateur')->paginate($perPage);
+        $client = Client::findOrFail($id);
+
+        $clients = Client::where('groupId_client', $client->groupId_client)->get();
+
+        foreach ($clients as $c) {
+            $c->remark = $request->remark;
+            $c->save();
+        }
+
+        return redirect()->back();
+    }
+    public function index(Request $request)
+    {
+
+        $perPage = $request->get('per_page', 5);
+        $clients = Client::with('categories', 'categorieClients.categorie', 'utilisateur')->paginate($perPage);
 
         $categories = Categorie::with('sousCategories')->get();
 
@@ -146,68 +159,82 @@ class ClientController extends Controller
             $client->allCategories = $client->allCategories();
         }
 
-        $select = ['Fournisseur','Tiers','Client et Fournisseur'];
+        $select = ['Fournisseur', 'Tiers', 'Client et Fournisseur'];
 
-        return view('myApp.admin.links.clients',compact('categories','clients','select','perPage'));
+        return view('myApp.admin.links.clients', compact('categories', 'clients', 'select', 'perPage'));
     }
 
     public function clientsPdf()
     {
 
-            $clients = Client::with('categorieClients.categorie')->get();
+        $clients = Client::with('categorieClients.categorie')->get();
 
-            $options = new Options();
-            $options->set('defaultFont', 'Courier');
-            $dompdf = new Dompdf($options);
+        $options = new Options();
+        $options->set('defaultFont', 'Courier');
+        $dompdf = new Dompdf($options);
 
-            $html = view('myApp/admin/pdf/clients', compact('clients'))->render();
+        $html = view('myApp/admin/pdf/clients', compact('clients'))->render();
 
-            $dompdf->loadHtml($html);
+        $dompdf->loadHtml($html);
 
-            $dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4', 'portrait');
 
-            $dompdf->render();
+        $dompdf->render();
 
-            return response($dompdf->output(), 200)
-                ->header('Content-Type', 'application/pdf')
-                ->header('Content-Disposition', 'attachment; filename="clients-list.pdf"');
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="clients-list.pdf"');
     }
 
 
 
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $client = Client::find($id);
-        $client->delete();
+        if ($client) {
+            $client->delete();
+
+            // Track the deleted client
+            $setting = Setting::where('key', 'clientsTracking')->first();
+            if ($setting) {
+                $setting->increment('deletedToday');
+            }
+        }
+
         return redirect()->to(url()->previous());
     }
 
-    public function search(Request $request){
-        $select = ['Fournisseur','Tiers','Client et Fournisseur'];
+
+
+    public function search(Request $request)
+    {
+        $select = ['Fournisseur', 'Tiers', 'Client et Fournisseur'];
         $search = $request->input('search');
-        $client = Client::with(['categories.sousCategories','utilisateur'])
-        ->where('nom_client','LIKE',"%{$search}%")
-        ->orWhere('nomSociete_client','LIKE',"%{$search}%")
-        ->get();
+        $client = Client::with(['categories.sousCategories', 'utilisateur'])
+            ->where('nom_client', 'LIKE', "%{$search}%")
+            ->orWhere('nomSociete_client', 'LIKE', "%{$search}%")
+            ->get();
         return response()->json([
             'clients' => $client,
             'selectOptions' => $select
         ]);
     }
 
-    public function update (Request $request) {
+    public function update(Request $request)
+    {
 
         $client = Client::find((int)$request->id);
 
         $rules = [
-            'newNom_client' => ['nullable','max:50','string'],
-            'newGSM1_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newGSM2_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newEmail_client' => ['nullable','email:rfc,dns','string','max:266'],
-            'newTele_client' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newVille_client' => ['required','max:60','string'],
-            'newNomSociete_client' => ['nullable','max:200'],
-            'newCategorie_id' => ['required','integer','exists:categories,id'],
+            'newNom_client' => ['nullable', 'max:50', 'string'],
+            'newGSM1_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newGSM2_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newEmail_client' => ['nullable', 'email:rfc,dns', 'string', 'max:266'],
+            'newTele_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newVille_client' => ['required', 'max:60', 'string'],
+            'newNomSociete_client' => ['nullable', 'max:200'],
+            'newCategorie_id' => ['required', 'integer', 'exists:categories,id'],
         ];
 
         $messages = [
@@ -226,36 +253,35 @@ class ClientController extends Controller
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
         ];
 
-        $validator = Validator::make($request->all(),$rules,$messages);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()
-                   ->withInput()
-                   ->with('modalType','update')
-                   ->withErrors($validator);
+                ->withInput()
+                ->with('modalType', 'update')
+                ->withErrors($validator);
         }
 
         $nomSociety = $request->newNomSociete_client ?? '';
         $GSM1 = $request->newGSM1_client ?? '';
         $GSM2 = $request->newGSM2_client ?? '';
-        $email =$request->newEmail_client?? '';
+        $email = $request->newEmail_client ?? '';
         $name = $request->newNom_client ?? '';
         $tele = $request->newTele_client ?? '';
         $newCategorieId = $request->newCategorie_id;
-        $existingClient = Client::
-        where('nom_client', $name)
-        ->where('email_client', $email)
-        ->where('tele_client', $tele)
-        ->where('GSM1_client', $GSM1)
-        ->where('GSM2_client', $GSM2)
-        ->where('ville_client', $request->newVille_client)
-        ->where('nomSociete_client', $nomSociety)
-        
-        
-        ->whereHas('categories', function ($query) use ($newCategorieId) {
-            $query->where('categories.id', $newCategorieId);
-        })
-        ->first();
+        $existingClient = Client::where('nom_client', $name)
+            ->where('email_client', $email)
+            ->where('tele_client', $tele)
+            ->where('GSM1_client', $GSM1)
+            ->where('GSM2_client', $GSM2)
+            ->where('ville_client', $request->newVille_client)
+            ->where('nomSociete_client', $nomSociety)
+
+
+            ->whereHas('categories', function ($query) use ($newCategorieId) {
+                $query->where('categories.id', $newCategorieId);
+            })
+            ->first();
 
         if ($existingClient) {
             alert()->error('Erreur', 'Une version avec les mêmes informations existe déjà. Veuillez modifier au moins un champ.');
@@ -281,30 +307,30 @@ class ClientController extends Controller
         $client->GSM2_client = $request->newGSM2_client ?? '';
         $client->ville_client = $request->newVille_client;
         $client->nomSociete_client = $request->newNomSociete_client ?? '';
-       
-        
+
+
 
         if ($client->save()) {
             alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
         }
 
         $clientsSimilaires = Client::where('groupId_client', $client->groupId_client)
-        ->where('id', '!=', $client->id)
-        ->get();
+            ->where('id', '!=', $client->id)
+            ->get();
 
-       foreach ($clientsSimilaires as $similarClient) {
-        $similarClient->nom_client = $request->newNom_client ?? '';
-        $similarClient->email_client = $request->newEmail_client ?? '';
-        $similarClient->tele_client = $request->newTele_client ?? '';
-        $similarClient->GSM1_client = $request->newGSM1_client ?? '';
-        $similarClient->GSM2_client = $request->newGSM2_client ?? '';
-        $similarClient->ville_client = $request->newVille_client;
-        $similarClient->nomSociete_client = $request->newNomSociete_client ?? '';
+        foreach ($clientsSimilaires as $similarClient) {
+            $similarClient->nom_client = $request->newNom_client ?? '';
+            $similarClient->email_client = $request->newEmail_client ?? '';
+            $similarClient->tele_client = $request->newTele_client ?? '';
+            $similarClient->GSM1_client = $request->newGSM1_client ?? '';
+            $similarClient->GSM2_client = $request->newGSM2_client ?? '';
+            $similarClient->ville_client = $request->newVille_client;
+            $similarClient->nomSociete_client = $request->newNomSociete_client ?? '';
 
-        if ($similarClient->save()) {
-            alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            if ($similarClient->save()) {
+                alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            }
         }
-    }
 
         return redirect()->back();
     }
@@ -312,36 +338,37 @@ class ClientController extends Controller
     private function hasOtherChanges($client, $request)
     {
 
-        return $client->nom_client !== ($request->newNom_client ?? '')||
-               $client->email_client !== ($request->newEmail_client ?? '')||
-               $client->tele_client !== ($request->newTele_client ?? '')||
-               $client->GSM1_client !== ($request->newGSM1_client ?? '') ||
-               $client->GSM2_client !== ($request->newGSM2_client ?? '')||
-               $client->ville_client !== $request->newVille_client||
-               $client->nomSociete_client !== ($request->newNomSociete_client ?? '');
+        return $client->nom_client !== ($request->newNom_client ?? '') ||
+            $client->email_client !== ($request->newEmail_client ?? '') ||
+            $client->tele_client !== ($request->newTele_client ?? '') ||
+            $client->GSM1_client !== ($request->newGSM1_client ?? '') ||
+            $client->GSM2_client !== ($request->newGSM2_client ?? '') ||
+            $client->ville_client !== $request->newVille_client ||
+            $client->nomSociete_client !== ($request->newNomSociete_client ?? '');
     }
 
-    public function client (Request $request, $id){
+    public function client(Request $request, $id)
+    {
 
         $selectedStatus = $request->input('status');
 
         $client = Client::find($id);
 
-        $clientsGroup = Client::where('groupId_client',$client->groupId_client)->get();
+        $clientsGroup = Client::where('groupId_client', $client->groupId_client)->get();
 
         if ($selectedStatus === 'Fournisseur') {
             foreach ($clientsGroup as $clientItem) {
                 $fournisseur = new Fournisseur();
                 $fournisseur->nom_fournisseur = $clientItem->nom_client;
-                $fournisseur->email_fournisseur= $clientItem->email_client;
-                $fournisseur->tele_fournisseur= $clientItem->tele_client;
-                $fournisseur->GSM1_fournisseur= $clientItem->GSM1_client;
-                $fournisseur->GSM2_fournisseur= $clientItem->GSM2_client;
-                $fournisseur->ville_fournisseur= $clientItem->ville_client;
-                $fournisseur->nomSociete_fournisseur= $clientItem->nomSociete_client;
-                $fournisseur->user_id= $clientItem->user_id;
-                $fournisseur->remark= $clientItem->remark;
-                $fournisseur->groupId_fournisseur= $clientItem->groupId_client;
+                $fournisseur->email_fournisseur = $clientItem->email_client;
+                $fournisseur->tele_fournisseur = $clientItem->tele_client;
+                $fournisseur->GSM1_fournisseur = $clientItem->GSM1_client;
+                $fournisseur->GSM2_fournisseur = $clientItem->GSM2_client;
+                $fournisseur->ville_fournisseur = $clientItem->ville_client;
+                $fournisseur->nomSociete_fournisseur = $clientItem->nomSociete_client;
+                $fournisseur->user_id = $clientItem->user_id;
+                $fournisseur->remark = $clientItem->remark;
+                $fournisseur->groupId_fournisseur = $clientItem->groupId_client;
 
                 $fournisseur->save();
 
@@ -358,15 +385,15 @@ class ClientController extends Controller
             foreach ($clientsGroup as $clientItem) {
                 $prospect = new Prospect();
                 $prospect->nom_prospect = $clientItem->nom_client;
-                $prospect->email_prospect= $clientItem->email_client;
-                $prospect->tele_prospect= $clientItem->tele_client;
-                $prospect->GSM1_prospect= $clientItem->GSM1_client;
-                $prospect->GSM2_prospect= $clientItem->GSM2_client;
-                $prospect->ville_prospect= $clientItem->ville_client;
-                $prospect->nomSociete_prospect= $clientItem->nomSociete_client;
-                $prospect->user_id= $clientItem->user_id;
-                $prospect->remark= $clientItem->remark;
-                $prospect->groupId_prospect= $clientItem->groupId_client;
+                $prospect->email_prospect = $clientItem->email_client;
+                $prospect->tele_prospect = $clientItem->tele_client;
+                $prospect->GSM1_prospect = $clientItem->GSM1_client;
+                $prospect->GSM2_prospect = $clientItem->GSM2_client;
+                $prospect->ville_prospect = $clientItem->ville_client;
+                $prospect->nomSociete_prospect = $clientItem->nomSociete_client;
+                $prospect->user_id = $clientItem->user_id;
+                $prospect->remark = $clientItem->remark;
+                $prospect->groupId_prospect = $clientItem->groupId_client;
 
                 $prospect->save();
 
@@ -378,21 +405,20 @@ class ClientController extends Controller
 
                 $clientItem->delete();
             }
-
-        } else if ($selectedStatus === 'Client et Fournisseur'){
+        } else if ($selectedStatus === 'Client et Fournisseur') {
 
             foreach ($clientsGroup as $clientItem) {
                 $fc = new FournisseurClient();
                 $fc->nom_fournisseurClient = $clientItem->nom_client;
-                $fc->email_fournisseurClient= $clientItem->email_client;
-                $fc->tele_fournisseurClient= $clientItem->tele_client;
-                $fc->GSM1_fournisseurClient= $clientItem->GSM1_client;
-                $fc->GSM2_fournisseurClient= $clientItem->GSM2_client;
-                $fc->ville_fournisseurClient= $clientItem->ville_client;
-                $fc->nomSociete_fournisseurClient= $clientItem->nomSociete_client;
-                $fc->user_id= $clientItem->user_id;
-                $fc->remark= $clientItem->remark;
-                $fc->groupId_fournisseurClient= $clientItem->groupId_client;
+                $fc->email_fournisseurClient = $clientItem->email_client;
+                $fc->tele_fournisseurClient = $clientItem->tele_client;
+                $fc->GSM1_fournisseurClient = $clientItem->GSM1_client;
+                $fc->GSM2_fournisseurClient = $clientItem->GSM2_client;
+                $fc->ville_fournisseurClient = $clientItem->ville_client;
+                $fc->nomSociete_fournisseurClient = $clientItem->nomSociete_client;
+                $fc->user_id = $clientItem->user_id;
+                $fc->remark = $clientItem->remark;
+                $fc->groupId_fournisseurClient = $clientItem->groupId_client;
                 $fc->save();
 
                 if ($clientItem->categories) {
@@ -406,6 +432,5 @@ class ClientController extends Controller
         }
 
         return redirect()->to(url()->previous());
-
     }
 }

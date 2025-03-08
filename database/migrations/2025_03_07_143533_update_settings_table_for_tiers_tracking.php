@@ -13,16 +13,16 @@ class UpdateSettingsTableForTiersTracking extends Migration
             // $table->integer('previousTiersCount')->default(0);
 
             // Only add the new columns
-            $table->integer('tiersAddedToday')->default(0)->after('previousTiersCount');
-            $table->integer('tiersDeletedToday')->default(0)->after('tiersAddedToday');
+            $table->integer('addedToday')->default(0)->after('previousTiersCount');
+            $table->integer('deletedToday')->default(0)->after('addedToday');
         });
     }
 
     public function down()
     {
         Schema::table('settings', function (Blueprint $table) {
-            $table->dropColumn('tiersAddedToday');
-            $table->dropColumn('tiersDeletedToday');
+            $table->dropColumn('addedToday');
+            $table->dropColumn('deletedToday');
         });
     }
 }

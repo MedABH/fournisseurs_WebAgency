@@ -14,20 +14,21 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Models\Setting;
 
 class FournisseurController extends Controller
 {
     public function store(Request $request)
     {
         $rules = [
-            'nom_fournisseur' => ['nullable','max:50','string'],
-            'email_fournisseur' => ['nullable','email:rfc,dns','string','max:266','unique:fournisseurs,email_fournisseur'],
-            'tele_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,tele_fournisseur'],
-            'ville_fournisseur' => ['required','max:60','string'],
-            'nomSociete_fournisseur' => ['nullable','max:200','unique:fournisseurs,nomSociete_fournisseur'],
-            'GSM1_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,GSM1_fournisseur'],
-            'GSM2_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/','unique:fournisseurs,GSM2_fournisseur'],
-            'categorie_id' => ['required','integer','exists:categories,id'],
+            'nom_fournisseur' => ['nullable', 'max:50', 'string'],
+            'email_fournisseur' => ['nullable', 'email:rfc,dns', 'string', 'max:266', 'unique:fournisseurs,email_fournisseur'],
+            'tele_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,tele_fournisseur'],
+            'ville_fournisseur' => ['required', 'max:60', 'string'],
+            'nomSociete_fournisseur' => ['nullable', 'max:200', 'unique:fournisseurs,nomSociete_fournisseur'],
+            'GSM1_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,GSM1_fournisseur'],
+            'GSM2_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,GSM2_fournisseur'],
+            'categorie_id' => ['required', 'integer', 'exists:categories,id'],
         ];
 
         $messages = [
@@ -76,121 +77,148 @@ class FournisseurController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->fournisseurs()->attach($fournisseur->id);
 
+        // Track the supplier addition
+        $setting = Setting::where('key', 'suppliersTracking')->first();
+        if ($setting) {
+            
+
+            // Increment the 'addedToday' count
+            $setting->increment('addedToday');
+        }
+
         alert()->success('Succès', $fournisseur->nom_fournisseur . " " . 'est enregistré avec succès.');
 
         return redirect()->to(url()->previous());
     }
-            public function index(Request $request){
-
-            $perPage = $request->get('per_page',10);
-            $fournisseurs = Fournisseur::with('categories', 'categorieFournisseur.categorie', 'utilisateur')->paginate($perPage);
-            $categories = Categorie::with('sousCategories')->get();
 
 
-            foreach ($fournisseurs as $fournisseur) {
-                $fournisseur->allCategories = $fournisseur->allCategories();
-            }
+    public function index(Request $request)
+    {
 
-            $select = ['Tiers','Client','Client et Fournisseur'];
+        $perPage = $request->get('per_page', 10);
+        $fournisseurs = Fournisseur::with('categories', 'categorieFournisseur.categorie', 'utilisateur')->paginate($perPage);
+        $categories = Categorie::with('sousCategories')->get();
 
-            $utilisateurs = User::where('role','utilisateur')->get();
 
-            return view('myApp.admin.links.fournisseurs',compact('fournisseurs','categories','select','perPage'));
-
+        foreach ($fournisseurs as $fournisseur) {
+            $fournisseur->allCategories = $fournisseur->allCategories();
         }
 
-        public function updateUserFournisseur(Request $request, $id)
-        {
+        $select = ['Tiers', 'Client', 'Client et Fournisseur'];
 
-            $request->validate([
-                'user_id' => 'nullable|exists:users,id',
-            ]);
+        $utilisateurs = User::where('role', 'utilisateur')->get();
 
+        return view('myApp.admin.links.fournisseurs', compact('fournisseurs', 'categories', 'select', 'perPage'));
+    }
 
-            $fournisseur = Fournisseur::findOrFail($id);
+    public function updateUserFournisseur(Request $request, $id)
+    {
 
-            $fournisseurs = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
-
-            foreach ($fournisseurs as $f) {
-                $f->user_id = $request->user_id ?? $f->user_id;
-                $f->save();
-            }
+        $request->validate([
+            'user_id' => 'nullable|exists:users,id',
+        ]);
 
 
-            return redirect()->back();        }
+        $fournisseur = Fournisseur::findOrFail($id);
 
-            public function updateRemarkFournisseur(Request $request, $id)
-            {
-                $validator = Validator::make($request->all(), [
-                    'remark' => ['nullable','string',function ($attribute, $value, $fail) {
-                        $wordCount = str_word_count($value);
-                        if ($wordCount > 100) {
-                            $fail('La description ne doit pas dépasser 100 mots.');
-                        }
-                    }]
+        $fournisseurs = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
 
-                ]
-            
-                ,[
-                    "remark.string" => "La remarque doit etre de type chaine de caractere" 
-                ]);
-
-                if ($validator->fails()) {
-                    return redirect()->back()
-                    ->withInput()
-                    ->with('modalType', 'remark')
-                    ->withErrors($validator);
-                }
-
-                $fournisseur = Fournisseur::findOrFail($id);
-
-                $fournisseurs = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
-
-                foreach ($fournisseurs as $f) {
-                    $f->remark = $request->remark ;
-                    $f->save();
-                }
-
-                return redirect()->back();        }
-
-        public function fournisseursPdf()
-        {
-
-                $fournisseurs = Fournisseur::with('categorieFournisseur.categorie')->get();
-
-                $options = new Options();
-                $options->set('defaultFont', 'Courier');
-                $dompdf = new Dompdf($options);
-
-
-                $html = view('myApp/admin/pdf/fournisseurs', compact('fournisseurs'))->render();
-
-
-                $dompdf->loadHtml($html);
-
-
-                $dompdf->setPaper('A4', 'portrait');
-
-                $dompdf->render();
-
-
-                return response($dompdf->output(), 200)
-                    ->header('Content-Type', 'application/pdf')
-                    ->header('Content-Disposition', 'attachment; filename="fournisseurs-list.pdf"');
+        foreach ($fournisseurs as $f) {
+            $f->user_id = $request->user_id ?? $f->user_id;
+            $f->save();
         }
 
 
+        return redirect()->back();
+    }
+
+    public function updateRemarkFournisseur(Request $request, $id)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'remark' => ['nullable', 'string', function ($attribute, $value, $fail) {
+                    $wordCount = str_word_count($value);
+                    if ($wordCount > 100) {
+                        $fail('La description ne doit pas dépasser 100 mots.');
+                    }
+                }]
+
+            ],
+            [
+                "remark.string" => "La remarque doit etre de type chaine de caractere"
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withInput()
+                ->with('modalType', 'remark')
+                ->withErrors($validator);
+        }
+
+        $fournisseur = Fournisseur::findOrFail($id);
+
+        $fournisseurs = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
+
+        foreach ($fournisseurs as $f) {
+            $f->remark = $request->remark;
+            $f->save();
+        }
+
+        return redirect()->back();
+    }
+
+    public function fournisseursPdf()
+    {
+
+        $fournisseurs = Fournisseur::with('categorieFournisseur.categorie')->get();
+
+        $options = new Options();
+        $options->set('defaultFont', 'Courier');
+        $dompdf = new Dompdf($options);
+
+
+        $html = view('myApp/admin/pdf/fournisseurs', compact('fournisseurs'))->render();
+
+
+        $dompdf->loadHtml($html);
+
+
+        $dompdf->setPaper('A4', 'portrait');
+
+        $dompdf->render();
+
+
+        return response($dompdf->output(), 200)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'attachment; filename="fournisseurs-list.pdf"');
+    }
 
 
 
 
 
 
-    public function destroy($id){
+
+
+    public function destroy($id)
+    {
         $fournisseur = Fournisseur::find($id);
         $fournisseur->delete();
+
+        // Track the supplier deletion
+        $setting = Setting::where('key', 'suppliersTracking')->first();
+        if ($setting) {
+            
+
+            // Increment the 'deletedToday' count
+            $setting->increment('deletedToday');
+        }
+
         return redirect()->to(url()->previous());
     }
+
 
     public function edit($id)
     {
@@ -204,14 +232,14 @@ class FournisseurController extends Controller
         $fournisseur = Fournisseur::find((int)$request->id);
 
         $rules = [
-            'newNom_fournisseur' => ['nullable','max:50','string'],
-            'newEmail_fournisseur' => ['nullable','email:rfc,dns','string','max:266'],
-            'newTele_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newVille_fournisseur' => ['required','max:60','string'],
-            'newNomSociete_fournisseur' => ['nullable','max:200','string'],
-            'newGSM1_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newGSM2_fournisseur' => ['nullable','regex:/^\+?[0-9]{9,15}$/'],
-            'newCategorie_id' => ['required','integer','exists:categories,id']
+            'newNom_fournisseur' => ['nullable', 'max:50', 'string'],
+            'newEmail_fournisseur' => ['nullable', 'email:rfc,dns', 'string', 'max:266'],
+            'newTele_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newVille_fournisseur' => ['required', 'max:60', 'string'],
+            'newNomSociete_fournisseur' => ['nullable', 'max:200', 'string'],
+            'newGSM1_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newGSM2_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newCategorie_id' => ['required', 'integer', 'exists:categories,id']
         ];
 
         $messages = [
@@ -235,15 +263,15 @@ class FournisseurController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-                   ->withInput()
-                   ->with('modalType', 'update')
-                   ->withErrors($validator)
-                   ->with('errors_displayed',true);
+                ->withInput()
+                ->with('modalType', 'update')
+                ->withErrors($validator)
+                ->with('errors_displayed', true);
         }
 
 
         $nomSociety = $request->newNomSociete_fournisseur ?? '';
-        $email =$request->newEmail_fournisseur?? '';
+        $email = $request->newEmail_fournisseur ?? '';
         $name = $request->newNom_fournisseur ?? '';
         $tele = $request->newTele_fournisseur ?? '';
         $GSM1 = $request->newGSM1_fournisseur ?? '';
@@ -252,81 +280,82 @@ class FournisseurController extends Controller
         $newCategorieId = $request->newCategorie_id;
 
         $existingFournisseur = Fournisseur::where('nom_fournisseur', $name)
-        ->where('email_fournisseur', $email)
-        ->where('tele_fournisseur', $tele)
-        ->where('ville_fournisseur', $request->newVille_fournisseur)
-        ->where('nomSociete_fournisseur', $nomSociety)
-        ->where('GSM1_fournisseur', $GSM1)
-        ->where('GSM2_fournisseur', $GSM2)
-        ->whereHas('categories', function ($query) use ($newCategorieId) {
-           $query->where('categories.id', $newCategorieId);
-        })
-        ->first();
+            ->where('email_fournisseur', $email)
+            ->where('tele_fournisseur', $tele)
+            ->where('ville_fournisseur', $request->newVille_fournisseur)
+            ->where('nomSociete_fournisseur', $nomSociety)
+            ->where('GSM1_fournisseur', $GSM1)
+            ->where('GSM2_fournisseur', $GSM2)
+            ->whereHas('categories', function ($query) use ($newCategorieId) {
+                $query->where('categories.id', $newCategorieId);
+            })
+            ->first();
 
 
         if ($existingFournisseur) {
-           alert()->error('Erreur', 'Une version avec les mêmes informations existe déjà. Veuillez modifier au moins un champ.');
-           return redirect()->back()->withInput();
+            alert()->error('Erreur', 'Une version avec les mêmes informations existe déjà. Veuillez modifier au moins un champ.');
+            return redirect()->back()->withInput();
         }
 
 
-    if ($newCategorieId && !$this->hasOtherChanges($fournisseur, $request)) {
-        $newFournisseur = $fournisseur->replicate();
-        $newFournisseur->groupId_fournisseur = $fournisseur->groupId_fournisseur;
-        $newFournisseur->version_fournisseur = $fournisseur->version_fournisseur + 1;
-        $newFournisseur->save();
+        if ($newCategorieId && !$this->hasOtherChanges($fournisseur, $request)) {
+            $newFournisseur = $fournisseur->replicate();
+            $newFournisseur->groupId_fournisseur = $fournisseur->groupId_fournisseur;
+            $newFournisseur->version_fournisseur = $fournisseur->version_fournisseur + 1;
+            $newFournisseur->save();
 
-        $newFournisseur->categories()->sync([$newCategorieId]);
+            $newFournisseur->categories()->sync([$newCategorieId]);
 
-        alert()->success('Succès', "La catégorie a été modifiée et une nouvelle version a été créée.");
+            alert()->success('Succès', "La catégorie a été modifiée et une nouvelle version a été créée.");
+            return redirect()->back();
+        }
+
+        $fournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
+        $fournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
+        $fournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
+        $fournisseur->ville_fournisseur = $request->newVille_fournisseur;
+        $fournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
+        $fournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
+        $fournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
+
+        if ($fournisseur->save()) {
+            alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+        }
+
+
+        $fournisseursSimilaires = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
+
+        foreach ($fournisseursSimilaires as $similarFournisseur) {
+            $similarFournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
+            $similarFournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
+            $similarFournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
+            $similarFournisseur->ville_fournisseur = $request->newVille_fournisseur;
+            $similarFournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
+            $similarFournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
+            $similarFournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
+            if ($similarFournisseur->save()) {
+                alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            }
+        }
+
+
+
         return redirect()->back();
     }
 
-    $fournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
-    $fournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
-    $fournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
-    $fournisseur->ville_fournisseur = $request->newVille_fournisseur;
-    $fournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
-    $fournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
-    $fournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
 
-    if ($fournisseur->save()) {
-        alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
-    }
-
-
-    $fournisseursSimilaires = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
-
-foreach ($fournisseursSimilaires as $similarFournisseur) {
-    $similarFournisseur->nom_fournisseur = $request->newNom_fournisseur ?? '';
-    $similarFournisseur->email_fournisseur = $request->newEmail_fournisseur ?? '';
-    $similarFournisseur->tele_fournisseur = $request->newTele_fournisseur ?? '';
-    $similarFournisseur->ville_fournisseur = $request->newVille_fournisseur;
-    $similarFournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
-    $similarFournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
-    $similarFournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
-    if ($similarFournisseur->save()) {
-        alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
-    }
-}
-
-
-
-    return redirect()->back();
-    }
-
-
-    public function search(Request $request){
-        $select = ['Tiers','Client','Client et Fournisseur'];
+    public function search(Request $request)
+    {
+        $select = ['Tiers', 'Client', 'Client et Fournisseur'];
         $search = $request->input('search');
-        $supplier = Fournisseur :: with(['categories.sousCategories','utilisateur'])
-        ->where('email_fournisseur','LIKE',"%{$search}%")
-        ->orWhere('nom_fournisseur','LIKE',"%{$search}%")
-        ->orWhere('nomSociete_fournisseur','LIKE',"%{$search}%")
-        
-       
-       
-        ->get();
+        $supplier = Fournisseur::with(['categories.sousCategories', 'utilisateur'])
+            ->where('email_fournisseur', 'LIKE', "%{$search}%")
+            ->orWhere('nom_fournisseur', 'LIKE', "%{$search}%")
+            ->orWhere('nomSociete_fournisseur', 'LIKE', "%{$search}%")
+
+
+
+            ->get();
 
         // foreach ($supplier as $supp) {
         //         $supp->category_id = $supp->categories->first()?->id ?? '';
@@ -339,104 +368,100 @@ foreach ($fournisseursSimilaires as $similarFournisseur) {
 
 
     private function hasOtherChanges($fournisseur, $request)
-{
-    return $fournisseur->nom_fournisseur !== ($request->newNom_fournisseur ?? '')||
-           $fournisseur->email_fournisseur !== ($request->newEmail_fournisseur ?? '') ||
-           $fournisseur->tele_fournisseur !== ($request->newTele_fournisseur ?? '')||
-           $fournisseur->ville_fournisseur !== $request->newVille_fournisseur||
-           $fournisseur->nomSociete_fournisseur !== ($request->newNomSociete_fournisseur ?? '')||
-           $fournisseur->GSM1_fournisseur !== ($request->newGSM1_fournisseur ?? '') ||
-           $fournisseur->GSM2_fournisseur !== ($request->newGSM2_fournisseur ?? '');
-}
-
-public function fournisseur(Request $request, $id)
-{
-    $selectedStatus = $request->input('status');
-
-    $fournisseur = Fournisseur::find($id);
-
-    $fournisseursGroup = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
-
-    if ($selectedStatus === 'Tiers') {
-        foreach ($fournisseursGroup as $fournisseurItem) {
-            $prospect = new Prospect();
-            $prospect->nom_prospect = $fournisseurItem->nom_fournisseur;
-            $prospect->email_prospect = $fournisseurItem->email_fournisseur;
-            $prospect->tele_prospect = $fournisseurItem->tele_fournisseur;
-            $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
-            $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
-            $prospect->GSM1_prospect = $fournisseurItem->GSM1_fournisseur;
-            $prospect->GSM2_prospect = $fournisseurItem->GSM2_fournisseur;
-            $prospect->user_id = $fournisseurItem->user_id;
-            $prospect->remark = $fournisseurItem->remark;
-            $prospect->groupId_prospect = $fournisseurItem->groupId_fournisseur;
-
-            $prospect->save();
-
-
-            if ($fournisseurItem->categories) {
-                foreach ($fournisseurItem->categories as $category) {
-                    $prospect->categories()->attach($category->id);
-                }
-            }
-
-
-            $fournisseurItem->delete();
-        }
-    } else if ($selectedStatus === 'Client') {
-
-        foreach ($fournisseursGroup as $fournisseurItem) {
-            $client = new Client();
-            $client->nom_client = $fournisseurItem->nom_fournisseur;
-            $client->email_client = $fournisseurItem->email_fournisseur;
-            $client->tele_client = $fournisseurItem->tele_fournisseur;
-            $client->ville_client = $fournisseurItem->ville_fournisseur;
-            $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
-            $client->GSM1_client = $fournisseurItem->GSM1_fournisseur;
-            $client->GSM2_client = $fournisseurItem->GSM2_fournisseur;
-            $client->user_id = $fournisseurItem->user_id;
-            $client->remark = $fournisseurItem->remark;
-            $client->groupId_client = $fournisseurItem->groupId_fournisseur;
-
-            $client->save();
-
-            if ($fournisseurItem->categories) {
-                foreach ($fournisseurItem->categories as $category) {
-                    $client->categories()->attach($category->id);
-                }
-            }
-
-            $fournisseurItem->delete();
-
-        }
-    } else if ($selectedStatus === 'Client et Fournisseur') {
-        foreach ($fournisseursGroup as $fournisseurItem) {
-            $fc = new FournisseurClient();
-            $fc->nom_fournisseurClient = $fournisseurItem->nom_fournisseur;
-            $fc->email_fournisseurClient = $fournisseurItem->email_fournisseur;
-            $fc->tele_fournisseurClient = $fournisseurItem->tele_fournisseur;
-            $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
-            $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
-            $fc->GSM1_fournisseurClient = $fournisseurItem->GSM1_fournisseur;
-            $fc->GSM2_fournisseurClient = $fournisseurItem->GSM2_fournisseur;
-            $fc->user_id = $fournisseurItem->user_id;
-            $fc->remark = $fournisseurItem->remark;
-            $fc->groupId_fournisseurClient = $fournisseurItem->groupId_fournisseur;
-
-            $fc->save();
-
-            if ($fournisseurItem->categories) {
-                foreach ($fournisseurItem->categories as $category) {
-                    $fc->categories()->attach($category->id);
-                }
-            }
-
-            $fournisseurItem->delete();
-
-        }
-
+    {
+        return $fournisseur->nom_fournisseur !== ($request->newNom_fournisseur ?? '') ||
+            $fournisseur->email_fournisseur !== ($request->newEmail_fournisseur ?? '') ||
+            $fournisseur->tele_fournisseur !== ($request->newTele_fournisseur ?? '') ||
+            $fournisseur->ville_fournisseur !== $request->newVille_fournisseur ||
+            $fournisseur->nomSociete_fournisseur !== ($request->newNomSociete_fournisseur ?? '') ||
+            $fournisseur->GSM1_fournisseur !== ($request->newGSM1_fournisseur ?? '') ||
+            $fournisseur->GSM2_fournisseur !== ($request->newGSM2_fournisseur ?? '');
     }
-    return redirect()->to(url()->previous());
-}
 
+    public function fournisseur(Request $request, $id)
+    {
+        $selectedStatus = $request->input('status');
+
+        $fournisseur = Fournisseur::find($id);
+
+        $fournisseursGroup = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
+
+        if ($selectedStatus === 'Tiers') {
+            foreach ($fournisseursGroup as $fournisseurItem) {
+                $prospect = new Prospect();
+                $prospect->nom_prospect = $fournisseurItem->nom_fournisseur;
+                $prospect->email_prospect = $fournisseurItem->email_fournisseur;
+                $prospect->tele_prospect = $fournisseurItem->tele_fournisseur;
+                $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
+                $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
+                $prospect->GSM1_prospect = $fournisseurItem->GSM1_fournisseur;
+                $prospect->GSM2_prospect = $fournisseurItem->GSM2_fournisseur;
+                $prospect->user_id = $fournisseurItem->user_id;
+                $prospect->remark = $fournisseurItem->remark;
+                $prospect->groupId_prospect = $fournisseurItem->groupId_fournisseur;
+
+                $prospect->save();
+
+
+                if ($fournisseurItem->categories) {
+                    foreach ($fournisseurItem->categories as $category) {
+                        $prospect->categories()->attach($category->id);
+                    }
+                }
+
+
+                $fournisseurItem->delete();
+            }
+        } else if ($selectedStatus === 'Client') {
+
+            foreach ($fournisseursGroup as $fournisseurItem) {
+                $client = new Client();
+                $client->nom_client = $fournisseurItem->nom_fournisseur;
+                $client->email_client = $fournisseurItem->email_fournisseur;
+                $client->tele_client = $fournisseurItem->tele_fournisseur;
+                $client->ville_client = $fournisseurItem->ville_fournisseur;
+                $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
+                $client->GSM1_client = $fournisseurItem->GSM1_fournisseur;
+                $client->GSM2_client = $fournisseurItem->GSM2_fournisseur;
+                $client->user_id = $fournisseurItem->user_id;
+                $client->remark = $fournisseurItem->remark;
+                $client->groupId_client = $fournisseurItem->groupId_fournisseur;
+
+                $client->save();
+
+                if ($fournisseurItem->categories) {
+                    foreach ($fournisseurItem->categories as $category) {
+                        $client->categories()->attach($category->id);
+                    }
+                }
+
+                $fournisseurItem->delete();
+            }
+        } else if ($selectedStatus === 'Client et Fournisseur') {
+            foreach ($fournisseursGroup as $fournisseurItem) {
+                $fc = new FournisseurClient();
+                $fc->nom_fournisseurClient = $fournisseurItem->nom_fournisseur;
+                $fc->email_fournisseurClient = $fournisseurItem->email_fournisseur;
+                $fc->tele_fournisseurClient = $fournisseurItem->tele_fournisseur;
+                $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
+                $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
+                $fc->GSM1_fournisseurClient = $fournisseurItem->GSM1_fournisseur;
+                $fc->GSM2_fournisseurClient = $fournisseurItem->GSM2_fournisseur;
+                $fc->user_id = $fournisseurItem->user_id;
+                $fc->remark = $fournisseurItem->remark;
+                $fc->groupId_fournisseurClient = $fournisseurItem->groupId_fournisseur;
+
+                $fc->save();
+
+                if ($fournisseurItem->categories) {
+                    foreach ($fournisseurItem->categories as $category) {
+                        $fc->categories()->attach($category->id);
+                    }
+                }
+
+                $fournisseurItem->delete();
+            }
+        }
+        return redirect()->to(url()->previous());
+    }
 }

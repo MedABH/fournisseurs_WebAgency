@@ -16,8 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            Setting::where('key', 'tiersAddedToday')->update(['value' => 0]);
-            Setting::where('key', 'tiersDeletedToday')->update(['value' => 0]);
+            Setting::where('key', 'addedToday')->update(['value' => 0]);
+            Setting::where('key', 'deletedToday')->update(['value' => 0]);
         })->dailyAt('00:00');
     }
 
