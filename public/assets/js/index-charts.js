@@ -303,7 +303,7 @@ fetch('/data-for-charts-by-date')
                             min: 0,  // Ensure minimum value is 0
                             max: adjustedMaxValue, // Dynamically adjusted max value
                             stepSize: stepSize, // Adjust step size dynamically
-                            callback: function(value) {
+                            callback: function (value) {
                                 return Number.isInteger(value) ? value : '';  // Show only whole numbers
                             }
                         }

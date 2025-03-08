@@ -331,5 +331,7 @@
 
      <!-- Charts JS -->
      <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
-     <script src="{{ asset('assets/js/index-charts.js') }}"></script>
+     <!-- <script src="{{ asset('assets/js/index-charts.js') }}"></script> -->
+     <script src="{{ asset('assets/js/chartsJS/Bar_Chart.js') }}"></script>
+     <script src="{{ asset('assets/js/chartsJS/Line_Chart.js') }}"></script>
  @endsection
