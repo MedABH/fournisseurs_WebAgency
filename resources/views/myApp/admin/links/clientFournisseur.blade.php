@@ -100,13 +100,13 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
-                        <input type="text" class="form-control" name="GSM1_fournisseurClient"
+                        <input type="tel" class="form-control" name="GSM1_fournisseurClient"
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_fournisseurClient') }}" />
                         @error('GSM1_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
-                        <input type="text" class="form-control" name="GSM2_fournisseurClient"
+                        <input type="tel" class="form-control" name="GSM2_fournisseurClient"
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_fournisseurClient') }}" />
                         @error('GSM2_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span>
@@ -118,7 +118,7 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
-                        <input type="text" class="form-control" name="tele_fournisseurClient"
+                        <input type="tel" class="form-control" name="tele_fournisseurClient"
                             placeholder="Entrer le contact..." value="{{ old('tele_fournisseurClient') }}" />
                         @error('tele_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span>
@@ -512,7 +512,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-contact">
-                                                    <label class="label-detail-fournisseurClient">Contact du GSM</label>
+                                                    <label class="label-detail-fournisseurClient">Numero De Telephone</label>
                                                     <h6 class="info-fournisseurClient showContactfc"
                                                         id="showContactDetail-{{ $fc->id }}">
                                                     </h6>
@@ -597,127 +597,126 @@
     </div>
     </div>
     @if (isset($fc))
-        <div class="modal fade" id="update_fournisseurClient" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="{{ route('fournisseurClient.update') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="id" id="updateFCId">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modifier le client & fournisseur</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+    <div class="modal fade" id="update_fournisseurClient" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('fournisseurClient.update') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="id" id="updateFCId">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modifier le client & fournisseur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <label class="form-label">Nom de la
+                                société</label>
+                            <input type="text" class="form-control" name="newNomSociete_fournisseurClient"
+                                placeholder="Entrer le nom de la société..." id="updateFCSociety"
+                                value="{{ old('newNomSociete_fournisseurClient', $fc->nomSociete_fournisseurClient) }}" />
+                            @if ($errors->has('newNomSociete_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newNomSociete_fournisseurClient') }}</span>
+                            @endif
+
                         </div>
-                        <div class="modal-body">
-                            <div>
-                                <label class="form-label">Nom de la
-                                    société</label>
-                                <input type="text" class="form-control" name="newNomSociete_fournisseurClient"
-                                    placeholder="Entrer le nom de la société..." id="updateFCSociety"
-                                    value="{{ old('newNomSociete_fournisseurClient', $fc->nomSociete_fournisseurClient) }}" />
-                                @if ($errors->has('newNomSociete_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newNomSociete_fournisseurClient') }}</span>
-                                @endif
+                        <div>
+                            <label class="form-label">GSM1 de la
+                                société</label>
+                            <input type="tel" class="form-control" name="newGSM1_fournisseurClient"
+                                placeholder="Entrer GSM1..." id="updateFCGSM1"
+                                value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" />
+                            @if ($errors->has('newGSM1_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newGSM1_fournisseurClient') }}</span>
+                            @endif
 
-                            </div>
-                            <div>
-                                <label class="form-label">GSM1 de la
-                                    société</label>
-                                <input type="text" class="form-control" name="newGSM1_fournisseurClient"
-                                    placeholder="Entrer GSM1..." id="updateFCGSM1"
-                                    value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" />
-                                @if ($errors->has('newGSM1_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newGSM1_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-                            <div>
-                                <label class="form-label">GSM2 de la
-                                    société</label>
-                                <input type="text" class="form-control" name="newGSM2_fournisseurClient"
-                                    placeholder="Entrer GSM2..." id="updateFCGSM2"
-                                    value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" />
-                                @if ($errors->has('newGSM2_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newGSM2_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-                            <div>
-                                <label class="form-label">Personne à contacter</label>
-                                <input id="updateFCName" type="text" class="form-control"
-                                    name="newNom_fournisseurClient" placeholder="Entrer le client & fournisseur..."
-                                    value="{{ old('newNom_fournisseurClient', $fc->nom_fournisseurClient) }}" />
-                                @if ($errors->has('newNom_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newNom_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-                            <div>
-                                <label class="form-label">Contact du GSM</label>
-                                <input id="updateFCContact" type="text" class="form-control"
-                                    name="newTele_fournisseurClient" placeholder="Entrer le contact..."
-                                    value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
-                                @if ($errors->has('newTele_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newTele_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-                            <div>
-                                <label class="form-label">Email</label>
-                                <input id="updateFCEmail" type="email" class="form-control"
-                                    name="newEmail_fournisseurClient" placeholder="Entrer l'émail..."
-                                    value="{{ old('newEmail_fournisseurClient', $fc->email_fournisseurClient) }}" />
-                                @if ($errors->has('newEmail_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newEmail_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-
-
-                            <div>
-                                <label class="form-label">Ville</label>
-                                <input id="updateFCVille" type="text" class="form-control"
-                                    name="newVille_fournisseurClient" placeholder="Entrer la ville..."
-                                    value="{{ old('newVille_fournisseurClient', $fc->ville_fournisseurClient) }}" />
-                                @if ($errors->has('newVille_fournisseurClient'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newVille_fournisseurClient') }}</span>
-                                @endif
-
-                            </div>
-
-                            <div>
-                                <label class="form-label">Catégorie</label>
-                                <select id="updateFCCategory" class="form-select form-select-sm"
-                                    aria-label=".form-select-sm example" name="newCategorie_id" style="height: 39px">
-                                    @foreach ($categories as $cat)
-                                        <option value="{{ $cat->id }}">
-
-                                            {{ $cat->nom_categorie }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('newCategorie_id'))
-                                    <span class="text-danger">
-                                        {{ $errors->first('newCategorie_id') }}</span>
-                                @endif
-                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-success" data-bs-dismiss="modal" value="Ajouter">
+                        <div>
+                            <label class="form-label">GSM2 de la
+                                société</label>
+                            <input type="tel" class="form-control" name="newGSM2_fournisseurClient"
+                                placeholder="Entrer GSM2..." id="updateFCGSM2"
+                                value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" />
+                            @if ($errors->has('newGSM2_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newGSM2_fournisseurClient') }}</span>
+                            @endif
+
                         </div>
-                    </form>
-                </div>
+                        <div>
+                            <label class="form-label">Personne à contacter</label>
+                            <input id="updateFCName" type="text" class="form-control"
+                                name="newNom_fournisseurClient" placeholder="Entrer le client & fournisseur..."
+                                value="{{ old('newNom_fournisseurClient', $fc->nom_fournisseurClient) }}" />
+                            @if ($errors->has('newNom_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newNom_fournisseurClient') }}</span>
+                            @endif
+
+                        </div>
+                        <div>
+                            <label class="form-label">Numero De Telephone</label>
+                            <input id="updateFCContact" type="tel" class="form-control"
+                                name="newTele_fournisseurClient" placeholder="Entrer le contact..."
+                                value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
+                            @if ($errors->has('newTele_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newTele_fournisseurClient') }}</span>
+                            @endif
+
+                        </div>
+                        <div>
+                            <label class="form-label">Email</label>
+                            <input id="updateFCEmail" type="email" class="form-control"
+                                name="newEmail_fournisseurClient" placeholder="Entrer l'émail..."
+                                value="{{ old('newEmail_fournisseurClient', $fc->email_fournisseurClient) }}" />
+                            @if ($errors->has('newEmail_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newEmail_fournisseurClient') }}</span>
+                            @endif
+
+                        </div>
+
+                        <div>
+                            <label class="form-label">Ville</label>
+                            <input id="updateFCVille" type="text" class="form-control"
+                                name="newVille_fournisseurClient" placeholder="Entrer la ville..."
+                                value="{{ old('newVille_fournisseurClient', $fc->ville_fournisseurClient) }}" />
+                            @if ($errors->has('newVille_fournisseurClient'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newVille_fournisseurClient') }}</span>
+                            @endif
+
+                        </div>
+
+                        <div>
+                            <label class="form-label">Catégorie</label>
+                            <select id="updateFCCategory" class="form-select form-select-sm"
+                                aria-label=".form-select-sm example" name="newCategorie_id" style="height: 39px">
+                                @foreach ($categories as $cat)
+                                    <option value="{{ $cat->id }}">
+
+                                        {{ $cat->nom_categorie }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('newCategorie_id'))
+                                <span class="text-danger">
+                                    {{ $errors->first('newCategorie_id') }}</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Modifier">
+                    </div>
+                </form>
             </div>
         </div>
-    @endif
+    </div>
+@endif
     <div class="d-flex justify-content-between align-items-center">
         @if ($fournisseurClients->total() >= 10)
             <form id="pagination-form" action="{{ route('fournisseurClients.pagination') }}" method="GET"
@@ -765,7 +764,6 @@
                 const fcName = button.getAttribute('data-name');
                 const fcEmail = button.getAttribute('data-email');
                 const fcContact = button.getAttribute('data-tele');
-                const fcAdress = button.getAttribute('data-adress');
                 const fcVille = button.getAttribute('data-ville');
                 const fcSociety = button.getAttribute('data-society');
                 const fcGSM1 = button.getAttribute('data-GSM1');
@@ -776,7 +774,6 @@
                 document.getElementById('updateFCName').value = fcName;
                 document.getElementById('updateFCEmail').value = fcEmail;
                 document.getElementById('updateFCContact').value = fcContact;
-                document.getElementById('updateFCAdress').value = fcAdress;
                 document.getElementById('updateFCVille').value = fcVille;
                 document.getElementById('updateFCSociety').value = fcSociety;
                 document.getElementById('updateFCGSM1').value = fcGSM1;
@@ -840,7 +837,6 @@
                 const fcName = this.getAttribute('data-name') || 'Non disponible'
                 const fcEmail = this.getAttribute('data-email') || 'Non disponible'
                 const fcContact = this.getAttribute('data-tele') || 'Non disponible'
-                const fcAdress = this.getAttribute('data-adress') || 'Non disponible'
                 const fcVille = this.getAttribute('data-ville')
                 const fcSociety = this.getAttribute('data-society-name')
                 const fcGSM1 = this.getAttribute('data-GSM1')
@@ -851,7 +847,6 @@
                 document.querySelector(`#showNameDetail-${fcId}`).innerText = fcName
                 document.querySelector(`#showEmailDetail-${fcId}`).innerText = fcEmail
                 document.querySelector(`#showContactDetail-${fcId}`).innerText = fcContact
-                document.querySelector(`#showAdressDetail-${fcId}`).innerText = fcAdress
                 document.querySelector(`#showVilleDetail-${fcId}`).innerText = fcVille
                 document.querySelector(`#showSocietyDetail-${fcId}`).innerText = fcSociety
                 document.querySelector(`#showGSM1Detail-${fcId}`).innerText = fcGSM1
@@ -1138,9 +1133,6 @@
                                                 'Non disponible';
                                             const fcContact = this.getAttribute(
                                                 'data-contact'); || 'Non disponible'
-                                            const fcAdress = this.getAttribute(
-                                                    'data-adress') ||
-                                                'Non disponible';
                                             const fcSociety = this.getAttribute(
                                                 'data-society') ||
                                             'Particulier'; // Par défaut "Particulier"
@@ -1173,8 +1165,6 @@
                                                 fcEmail);
                                             updateTextContent('#showContactfc',
                                                 fcContact);
-                                            updateTextContent('#showAdressfc',
-                                                fcAdress);
                                             updateTextContent('#showSocietyfc',
                                                 fcSociety);
                                             updateTextContent('#showGSM1fc',

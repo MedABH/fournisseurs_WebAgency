@@ -13,8 +13,8 @@ class UpdateSettingsTableForTiersTracking extends Migration
             // $table->integer('previousTiersCount')->default(0);
 
             // Only add the new columns
-            $table->integer('addedToday')->default(0)->after('previousTiersCount');
-            $table->integer('deletedToday')->default(0)->after('addedToday');
+            $table->integer('tiersAddedToday')->default(0)->after('previousTiersCount');
+            $table->integer('tiersDeletedToday')->default(0)->after('tiersAddedToday');
         });
     }
 

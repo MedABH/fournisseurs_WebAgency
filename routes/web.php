@@ -11,7 +11,9 @@ use App\Http\Controllers\FournisseurClientController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\ProfileAuthController;
 use App\Http\Controllers\ProspectController;
+use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
+
 use App\Models\Categorie;
 use App\Models\Client;
 use App\Models\Fournisseur;
@@ -150,7 +152,8 @@ Route::post('/contactClient/remark/{id}', [ClientController::class, 'updateRemar
 Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientController::class, 'updateRemarkFC'])->name('remark.fc');
 
 // Route pour l'historique
-Route::get('/historiqueJournauxSection', [HistoriqueController::class, 'showHistorique'])->name('historiqueJournauxSection');
+Route::get('/historique',[HistoriqueController::class,'showHistorique'])->name('historiqueSection');
+Route::get('/historiqueJournauxSection', [HistoriqueJournauxController::class, 'index'])->name('historiqueJournauxSection');
 
 Route::get('/PartiesPrenantesSection', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
 Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');
