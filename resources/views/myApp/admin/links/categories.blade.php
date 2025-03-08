@@ -161,16 +161,16 @@
                                                             data-name="{{ $categorie->nom_categorie }}">
                                                             Details
                                                         </button>
-                                                    
-                                                        @elseif (auth()->user()->role == 'utilisateur')
-                                                        
-                                                            <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
-                                                                data-name="{{ $categorie->nom_categorie }}">
-                                                                Details
-                                                            </button>
                                                 </td>
+                                                @elseif (auth()->user()->role == 'utilisateur')
+                                                        <td>
+                                                <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#ModalCategoryDetail-{{ $categorie->id }}"
+                                                    data-name="{{ $categorie->nom_categorie }}">
+                                                    Details
+                                                </button>
+                                            </td>
                                                 @endif
 
 

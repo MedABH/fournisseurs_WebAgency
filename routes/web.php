@@ -13,6 +13,7 @@ use App\Http\Controllers\ProfileAuthController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
+use App\Http\Controllers\OrderController;
 
 use App\Models\Categorie;
 use App\Models\Client;
@@ -157,3 +158,9 @@ Route::get('/historiqueJournauxSection', [HistoriqueJournauxController::class, '
 
 Route::get('/PartiesPrenantesSection', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
 Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');
+
+
+
+
+
+Route::get('/journaux', [OrderController::class, 'index'])->name('orders.index');

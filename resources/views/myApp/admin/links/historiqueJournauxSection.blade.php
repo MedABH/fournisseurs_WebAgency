@@ -34,10 +34,6 @@
 
                             </a>
                         @elseif (auth()->user()->role == 'admin')
-                            <a href="{{ route('clients.pdf') }}" class="btn btn-primary" style="margin-left:996px">
-                                <i class="fas fa-file-pdf"></i>
-                            </a>
-
                             <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -59,6 +55,6 @@
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link">Historique</a>
-        <a href="#" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
+        <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
     </nav>
 @endsection

@@ -441,13 +441,13 @@
 
                                        const row = document.createElement('tr');
                                        row.innerHTML = `
-                                        <td>${user.name}</td>
-                                        <td>${user.email}</td>
-                                        <td>${user.contact}</td>
-                                        <td>${user.adresse}</td>
-                                        <td>${user.role}</td>
-                                        <td>
-                                                       <a class="btn btn-primary" data-bs-toggle="modal"
+                                        <td class="cell">${user.name}</td>
+                                        <td class="cell">${user.email}</td>
+                                        <td class="cell">${user.contact}</td>
+                                        <td class="cell">${user.adresse}</td>
+                                        <td class="cell">${user.role}</td>
+                                        <td class="cell">
+                                                       <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                            data-bs-target="#updateUserModal"
                                                            data-id="${user.id}"
                                                            data-name="${user.name}"
@@ -458,9 +458,7 @@
                                                            >
                                                            Modifier
                                                        </a>
-                                        </td>
-
-                                        <td>
+                                        
 
 
                                         <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-${user.id}" method="POST"

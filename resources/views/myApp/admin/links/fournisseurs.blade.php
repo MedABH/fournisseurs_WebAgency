@@ -406,23 +406,7 @@
                                         <td class="button-container">
                                             <div class="d-flex align-items-center gap-2"
                                                 style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                <form class="user-form"
-                                                    action="{{ route('user.select', $fournisseur->id) }}" method="POST">
-                                                    @csrf
-                                                    @method('POST')
-                                                    <select class="form-select userSelect"
-                                                        aria-label="Default select example"
-                                                        data-fournisseur-id="{{ $fournisseur->id }}"
-                                                        style="margin-right:100px" name="user_id">
-                                                        <option value="">Contacté Par</option>
-                                                        @foreach ($utilisateurs as $user)
-                                                            <option value="{{ $user->id }}"
-                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                                {{ $user->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </form>
+
 
                                                 <button type="button" class="btn btn-outline-success border-btn me-4"
                                                     data-bs-toggle="modal"
@@ -447,6 +431,25 @@
 
                                                     Details
                                                 </button>
+
+                                                <form class="user-form"
+                                                    action="{{ route('user.select', $fournisseur->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select class="form-select userSelect"
+                                                        aria-label="Default select example"
+                                                        data-fournisseur-id="{{ $fournisseur->id }}"
+                                                        style="margin-right:100px" name="user_id">
+                                                        <option value="">Contacté Par</option>
+                                                        @foreach ($utilisateurs as $user)
+                                                            <option value="{{ $user->id }}"
+                                                                {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                                {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
                                             </div>
                                         </td>
                                     @endif
@@ -628,7 +631,7 @@
                                             <div class="form-group">
                                                 <div>
                                                     <label class="form-label"><strong class="det">Nom de la
-                                                        société</strong></label>
+                                                            société</strong></label>
                                                     <input type="text" class="form-control"
                                                         name="newNomSociete_fournisseur"
                                                         placeholder="Entrer le nom de la société..."
@@ -642,7 +645,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="form-label"><strong class="det">GSM1 de la
-                                                        société</strong></label>
+                                                            société</strong></label>
                                                     <input type="tel" class="form-control" name="newGSM1_fournisseur"
                                                         placeholder="Entrer GSM1..." id="updateSupplierGSM1"
                                                         value="{{ old('newGSM1_fournisseur', $fournisseur->GSM1_fournisseur) }}" />
@@ -654,7 +657,7 @@
                                                 </div>
                                                 <div>
                                                     <label class="form-label"><strong class="det">GSM2 de la
-                                                        société</strong></label>
+                                                            société</strong></label>
                                                     <input type="tel" class="form-control" name="newGSM2_fournisseur"
                                                         placeholder="Entrer GSM2..." id="updateSupplierGSM2"
                                                         value="{{ old('newGSM2_fournisseur', $fournisseur->GSM2_fournisseur) }}" />
@@ -665,7 +668,8 @@
 
                                                 </div>
                                                 <div>
-                                                    <label class="form-label"><strong class="det">Personne à contacter</strong></label>
+                                                    <label class="form-label"><strong class="det">Personne à
+                                                            contacter</strong></label>
                                                     <input id="updateSupplierName" type="text" class="form-control"
                                                         name="newNom_fournisseur" placeholder="Entrer le fournisseur..."
                                                         value="{{ old('newNom_fournisseur', $fournisseur->nom_fournisseur) }}" />
@@ -676,7 +680,8 @@
 
                                                 </div>
                                                 <div>
-                                                    <label class="form-label"><strong class="det">Numero De Telephone</strong></label>
+                                                    <label class="form-label"><strong class="det">Numero De
+                                                            Telephone</strong></label>
                                                     <input id="updateSupplierContact" type="tel" class="form-control"
                                                         name="newTele_fournisseur" placeholder="Entrer le contact..."
                                                         value="{{ old('newTele_fournisseur', $fournisseur->tele_fournisseur) }}" />
@@ -687,7 +692,8 @@
 
                                                 </div>
                                                 <div>
-                                                    <label class="form-label"><strong class="det">Email</strong></label>
+                                                    <label class="form-label"><strong
+                                                            class="det">Email</strong></label>
                                                     <input id="updateSupplierEmail" type="email" class="form-control"
                                                         name="newEmail_fournisseur" placeholder="Entrer l'émail..."
                                                         value="{{ old('newEmail_fournisseur', $fournisseur->email_fournisseur) }}" />
@@ -699,7 +705,8 @@
                                                 </div>
 
                                                 <div>
-                                                    <label class="form-label"><strong class="det">Ville</strong></label>
+                                                    <label class="form-label"><strong
+                                                            class="det">Ville</strong></label>
                                                     <input id="updateSupplierVille" type="text" class="form-control"
                                                         name="newVille_fournisseur" placeholder="Entrer la ville..."
                                                         value="{{ old('newVille_fournisseur', $fournisseur->ville_fournisseur) }}" />
@@ -709,9 +716,10 @@
                                                     @endif
 
                                                 </div>
-                                             
+
                                                 <div>
-                                                    <label class="form-label"><strong class="det">Catégorie</strong></label>
+                                                    <label class="form-label"><strong
+                                                            class="det">Catégorie</strong></label>
                                                     <select id="updateSupplierCategorie"
                                                         class="form-select form-select-sm"
                                                         aria-label=".form-select-sm example" name="newCategorie_id"
@@ -1005,156 +1013,156 @@
                                   
                                     ${role === "super-admin" ?
                                     `
-                                                                                   <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                    <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.ville_fournisseur}</td>
-                                                                                
-                                                                                    <td>${categoriesList}</td>
-                                                                                    <td>${supplier.utilisateur.name || 'Personne'}</td>
-                                                                                   
-                                                                            
-                                                                                        <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                                            data-bs-target="#updateSupplierModal"
-                                                                                            data-id="${supplier.id}"
-                                                                                            data-name="${supplier.nom_fournisseur}"
-                                                                                            data-email="${supplier.email_fournisseur}"
-                                                                                            data-tele="${supplier.tele_fournisseur}"
-                                                                                            data-ville="${supplier.ville_fournisseur}"
-                                                                                            data-society="${supplier.nomSociete_fournisseur}"
-                                                                                            data-GSM1="${supplier.GSM1_fournisseur }"
-                                                                                            data-GSM2="${supplier.GSM2_fournisseur }"
-                                                                                            data-category="${supplier.category_id}">Modifier
-                                                                                        </button>
-                                                                                       
-                                                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#QueryModalSupplierDetails"
-                                                                                            data-name="${supplier.nom_fournisseur}"
-                                                                                            data-email="${supplier.email_fournisseur}"
-                                                                                            data-contact="${supplier.tele_fournisseur}"
-                                                                                            data-ville="${supplier.ville_fournisseur}"
-                                                                                            data-remark="${supplier.remark}"
-                                                                                            data-user="${supplier.utilisateur.name}"
-                                                                                            data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                                            data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                                            data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                                            data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                                             >
-                                                                                            Détails
-                                                                                            </button>
-
-                                                                                                <form
-                                                                                                    action="/supplier/destroy/${supplier.id}"
-                                                                                                    method="POST" style="display: inline;"
-                                                                                                    id="delete-form-${supplier.id }">
-                                                                                                    @csrf
-                                                                                                    @method('DELETE')
-                                                                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                                                        onclick="confirmDelete(${supplier.id })">Supprimer</button>
-                                                                                                </form>
-                                                                                            
-                                                                                        <form class="supplier-form" action="/supplier/select/${supplier.id}" method="POST">
-                                                                                            @csrf
-                                                                                            <select class="form-select status-select" name="status">
-                                                                                                <option value="" selected>Selectionner la table</option>
-                                                                                                ${selectOptions.map(option => `
-                                                                                        <option value="${option}">${option}</option>
-                                                                                        `).join('')}
-                                                                                            </select>
-                                                                                        </form>
-                                                                                         </td>
-
-                                                                                         ` : ""}
-
-                                    ${role === "admin" ?
-                                    `
-                                                                                    <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                    <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                     <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                   <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.ville_fournisseur}</td>
-                                                                                
-                                                                                    <td>${categoriesList}</td>
-                                                                                    <td>${supplier.utilisateur.name || 'Personne'}</td>
-                                                                                   
-                                                                            
-                                                                                        <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                                            data-bs-target="#updateSupplierModal"
-                                                                                            data-id="${supplier.id}"
-                                                                                            data-name="${supplier.nom_fournisseur}"
-                                                                                            data-email="${supplier.email_fournisseur}"
-                                                                                            data-tele="${supplier.tele_fournisseur}"
-                                                                                            data-ville="${supplier.ville_fournisseur}"
-                                                                                            data-society="${supplier.nomSociete_fournisseur}"
-                                                                                            data-GSM1="${supplier.GSM1_fournisseur }"
-                                                                                            data-GSM2="${supplier.GSM2_fournisseur }"
-                                                                                            data-category="${supplier.category_id}">Modifier
-                                                                                        </button>
-                                                                                     
-                                                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#QueryModalSupplierDetails"
-                                                                                            data-name="${supplier.nom_fournisseur}"
-                                                                                            data-email="${supplier.email_fournisseur}"
-                                                                                            data-contact="${supplier.tele_fournisseur}"
-                                                                                            data-ville="${supplier.ville_fournisseur}"
-                                                                                            data-remark="${supplier.remark}"
-                                                                                            data-user="${supplier.utilisateur.name}"
-                                                                                            data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                                            data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                                            data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                                            data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                                             >
-                                                                                            Détails
-                                                                                            </button>
+                                                                                       <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.ville_fournisseur}</td>
                                                                                     
+                                                                                        <td>${categoriesList}</td>
+                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                       
+                                                                                
+                                                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                                                data-bs-target="#updateSupplierModal"
+                                                                                                data-id="${supplier.id}"
+                                                                                                data-name="${supplier.nom_fournisseur}"
+                                                                                                data-email="${supplier.email_fournisseur}"
+                                                                                                data-tele="${supplier.tele_fournisseur}"
+                                                                                                data-ville="${supplier.ville_fournisseur}"
+                                                                                                data-society="${supplier.nomSociete_fournisseur}"
+                                                                                                data-GSM1="${supplier.GSM1_fournisseur }"
+                                                                                                data-GSM2="${supplier.GSM2_fournisseur }"
+                                                                                                data-category="${supplier.category_id}">Modifier
+                                                                                            </button>
+                                                                                           
+                                                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#QueryModalSupplierDetails"
+                                                                                                data-name="${supplier.nom_fournisseur}"
+                                                                                                data-email="${supplier.email_fournisseur}"
+                                                                                                data-contact="${supplier.tele_fournisseur}"
+                                                                                                data-ville="${supplier.ville_fournisseur}"
+                                                                                                data-remark="${supplier.remark}"
+                                                                                                data-user="${supplier.utilisateur.name}"
+                                                                                                data-society-name="${supplier.nomSociete_fournisseur}"
+                                                                                                data-GSM1="${supplier.GSM1_fournisseur}"
+                                                                                                data-GSM2="${supplier.GSM2_fournisseur}"
+                                                                                                data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
+                                                                                                 >
+                                                                                                Détails
+                                                                                                </button>
+
+                                                                                                    <form
+                                                                                                        action="/supplier/destroy/${supplier.id}"
+                                                                                                        method="POST" style="display: inline;"
+                                                                                                        id="delete-form-${supplier.id }">
+                                                                                                        @csrf
+                                                                                                        @method('DELETE')
+                                                                                                        <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                                                                            onclick="confirmDelete(${supplier.id })">Supprimer</button>
+                                                                                                    </form>
+                                                                                                
                                                                                             <form class="supplier-form" action="/supplier/select/${supplier.id}" method="POST">
                                                                                                 @csrf
                                                                                                 <select class="form-select status-select" name="status">
                                                                                                     <option value="" selected>Selectionner la table</option>
                                                                                                     ${selectOptions.map(option => `
+                                                                                        <option value="${option}">${option}</option>
+                                                                                        `).join('')}
+                                                                                                </select>
+                                                                                            </form>
+                                                                                             </td>
+
+                                                                                             ` : ""}
+
+                                    ${role === "admin" ?
+                                    `
+                                                                                        <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                         <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                       <td>${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.ville_fournisseur}</td>
+                                                                                    
+                                                                                        <td>${categoriesList}</td>
+                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                       
+                                                                                
+                                                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                                                data-bs-target="#updateSupplierModal"
+                                                                                                data-id="${supplier.id}"
+                                                                                                data-name="${supplier.nom_fournisseur}"
+                                                                                                data-email="${supplier.email_fournisseur}"
+                                                                                                data-tele="${supplier.tele_fournisseur}"
+                                                                                                data-ville="${supplier.ville_fournisseur}"
+                                                                                                data-society="${supplier.nomSociete_fournisseur}"
+                                                                                                data-GSM1="${supplier.GSM1_fournisseur }"
+                                                                                                data-GSM2="${supplier.GSM2_fournisseur }"
+                                                                                                data-category="${supplier.category_id}">Modifier
+                                                                                            </button>
+                                                                                         
+                                                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#QueryModalSupplierDetails"
+                                                                                                data-name="${supplier.nom_fournisseur}"
+                                                                                                data-email="${supplier.email_fournisseur}"
+                                                                                                data-contact="${supplier.tele_fournisseur}"
+                                                                                                data-ville="${supplier.ville_fournisseur}"
+                                                                                                data-remark="${supplier.remark}"
+                                                                                                data-user="${supplier.utilisateur.name}"
+                                                                                                data-society-name="${supplier.nomSociete_fournisseur}"
+                                                                                                data-GSM1="${supplier.GSM1_fournisseur}"
+                                                                                                data-GSM2="${supplier.GSM2_fournisseur}"
+                                                                                                data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
+                                                                                                 >
+                                                                                                Détails
+                                                                                                </button>
+                                                                                        
+                                                                                                <form class="supplier-form" action="/supplier/select/${supplier.id}" method="POST">
+                                                                                                    @csrf
+                                                                                                    <select class="form-select status-select" name="status">
+                                                                                                        <option value="" selected>Selectionner la table</option>
+                                                                                                        ${selectOptions.map(option => `
                                                                                                 <option value="${option}">${option}</option>
                                                                                                 `).join('')}
-                                                                                                                                            </select>
-                                                                                            </form>
-                                                                                        </td>
-                                                                            ` : ""}${role === "utilisateur" ? ` 
-                                                                            <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                    <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                   <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                    <td>${supplier.ville_fournisseur}</td>
-                                                                                    <td>${categoriesList}</td>
-                                                                                    <td>${supplier.utilisateur.name || 'Personne'}</td>
-                                                                                   
-                                                                            <td>
-                                                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                                            data-bs-toggle="modal"
-                                                                                            data-bs-target="#QueryModalSupplierDetails"
-                                                                                            data-name="${supplier.nom_fournisseur}"
-                                                                                            data-email="${supplier.email_fournisseur}"
-                                                                                            data-contact="${supplier.tele_fournisseur}"
-                                                                                            data-ville="${supplier.ville_fournisseur}"
-                                                                                            data-remark="${supplier.remark}"
-                                                                                            data-user="${supplier.utilisateur.name}"
-                                                                                            data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                                            data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                                            data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                                            data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                                             >
-                                                                                            Détails
-                                                                                            </button>
-                                                                                        </td>
-                                                                            
-                                                                            `:""}
+                                                                                                                                                </select>
+                                                                                                </form>
+                                                                                            </td>
+                                                                                ` : ""}${role === "utilisateur" ? ` 
+                                                                                <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                       <td>${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td>${supplier.ville_fournisseur}</td>
+                                                                                        <td>${categoriesList}</td>
+                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                       
+                                                                                <td>
+                                                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                                                data-bs-toggle="modal"
+                                                                                                data-bs-target="#QueryModalSupplierDetails"
+                                                                                                data-name="${supplier.nom_fournisseur}"
+                                                                                                data-email="${supplier.email_fournisseur}"
+                                                                                                data-contact="${supplier.tele_fournisseur}"
+                                                                                                data-ville="${supplier.ville_fournisseur}"
+                                                                                                data-remark="${supplier.remark}"
+                                                                                                data-user="${supplier.utilisateur.name}"
+                                                                                                data-society-name="${supplier.nomSociete_fournisseur}"
+                                                                                                data-GSM1="${supplier.GSM1_fournisseur}"
+                                                                                                data-GSM2="${supplier.GSM2_fournisseur}"
+                                                                                                data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
+                                                                                                 >
+                                                                                                Détails
+                                                                                                </button>
+                                                                                            </td>
+                                                                                
+                                                                                `:""}
                                                                     `;
 
                                 tbody.appendChild(row);
@@ -1331,7 +1339,7 @@
                                                                     );
                                                                 if (
                                                                     productsSelect
-                                                                    ) {
+                                                                ) {
                                                                     productsSelect
                                                                         .innerHTML =
                                                                         productsHTML;
