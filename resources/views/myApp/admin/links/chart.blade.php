@@ -33,7 +33,7 @@
                      </div>
 
 
-                     <a class="app-card-link-mask" href="PartiesPrenantesSection"></a>
+                     <a class="app-card-link-mask" href="prospectsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
 
@@ -61,7 +61,7 @@
                          </div>
                      </div>
 
-                     <a class="app-card-link-mask" href="PartiesPrenantesSection"></a>
+                     <a class="app-card-link-mask" href="clientsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
              <div class="col-6 col-lg-3">
@@ -88,7 +88,7 @@
                          </div>
                      </div><!--//app-card-body-->
 
-                     <a class="app-card-link-mask" href="PartiesPrenantesSection"></a>
+                     <a class="app-card-link-mask" href="suppliersSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
              <div class="col-6 col-lg-3">
@@ -115,7 +115,7 @@
                          </div>
                      </div><!--//app-card-body-->
 
-                     <a class="app-card-link-mask" href="PartiesPrenantesSection.html"></a>
+                     <a class="app-card-link-mask" href="suppliersAndClientsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
          </div><!--//row-->
