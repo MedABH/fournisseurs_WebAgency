@@ -6,7 +6,7 @@
 </div>
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link active">Historique</a>
-        <a href="#" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
+        <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
     </nav>
 @endsection
 @section('content')
