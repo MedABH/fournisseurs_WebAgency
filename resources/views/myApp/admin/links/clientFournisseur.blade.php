@@ -197,17 +197,23 @@
                             @endphp
                             @foreach ($fournisseurClients as $fc)
                                 <tr>
-                                    <td class="cell">{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
                                     </td>
-                                    <td class="cell">{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}
                                     </td>
-                                    <td class="cell">{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}
                                     </td>
-                                    <td class="cell">{{ !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : 'Non disponible' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : 'Non disponible' }}
                                     </td>
-                                    <td class="cell">{{ !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : 'Non disponible' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : 'Non disponible' }}
                                     </td>
-                                    <td class="cell">{{ !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : 'Non disponible' }}
+                                    <td class="cell">
+                                        {{ !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : 'Non disponible' }}
                                     </td>
                                     <td class="cell">{{ $fc->ville_fournisseurClient }}</td>
                                     <td class="cell">
@@ -267,19 +273,19 @@
 
                                                     Details
                                                 </button>
-                                                
-                                                    <form action="{{ route('fournisseurClient.destroy', $fc->id) }}"
-                                                        method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                        id="delete-form-{{ $fc->id }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                            class="btn btn-outline-danger border-btn me-4"
-                                                            onclick="confirmDelete({{ $fc->id }})">
-                                                            Supprimer
-                                                        </button>
-                                                    </form>
-                                                
+
+                                                <form action="{{ route('fournisseurClient.destroy', $fc->id) }}"
+                                                    method="POST"
+                                                    style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                    id="delete-form-{{ $fc->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                        onclick="confirmDelete({{ $fc->id }})">
+                                                        Supprimer
+                                                    </button>
+                                                </form>
+
 
                                                 <form class="user-form" action="{{ route('user.select.fc', $fc->id) }}"
                                                     method="POST">
@@ -333,7 +339,7 @@
                                                     Modifier
                                                 </a>
 
-                                              
+
 
                                                 <button type="button" class="btn btn-outline-success border-btn me-4"
                                                     data-bs-toggle="modal" data-bs-target="#remark-{{ $fc->id }}">
@@ -396,7 +402,7 @@
                                         <td class="button-container">
                                             <div class="d-flex align-items-center gap-2"
                                                 style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                
+
 
                                                 <button type="button" class="btn btn-outline-success border-btn me-4"
                                                     data-bs-toggle="modal" data-bs-target="#remark-{{ $fc->id }}">
@@ -512,7 +518,8 @@
                                                     </h6>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-contact">
-                                                    <label class="label-detail-fournisseurClient">Numero De Telephone</label>
+                                                    <label class="label-detail-fournisseurClient">Numero De
+                                                        Telephone</label>
                                                     <h6 class="info-fournisseurClient showContactfc"
                                                         id="showContactDetail-{{ $fc->id }}">
                                                     </h6>
@@ -597,126 +604,126 @@
     </div>
     </div>
     @if (isset($fc))
-    <div class="modal fade" id="update_fournisseurClient" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="{{ route('fournisseurClient.update') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="id" id="updateFCId">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modifier le client & fournisseur</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <label class="form-label">Nom de la
-                                société</label>
-                            <input type="text" class="form-control" name="newNomSociete_fournisseurClient"
-                                placeholder="Entrer le nom de la société..." id="updateFCSociety"
-                                value="{{ old('newNomSociete_fournisseurClient', $fc->nomSociete_fournisseurClient) }}" />
-                            @if ($errors->has('newNomSociete_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newNomSociete_fournisseurClient') }}</span>
-                            @endif
-
+        <div class="modal fade" id="update_fournisseurClient" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="{{ route('fournisseurClient.update') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" id="updateFCId">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modifier le client & fournisseur</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
                         </div>
-                        <div>
-                            <label class="form-label">GSM1 de la
-                                société</label>
-                            <input type="tel" class="form-control" name="newGSM1_fournisseurClient"
-                                placeholder="Entrer GSM1..." id="updateFCGSM1"
-                                value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" />
-                            @if ($errors->has('newGSM1_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newGSM1_fournisseurClient') }}</span>
-                            @endif
+                        <div class="modal-body">
+                            <div>
+                                <label class="form-label">Nom de la
+                                    société</label>
+                                <input type="text" class="form-control" name="newNomSociete_fournisseurClient"
+                                    placeholder="Entrer le nom de la société..." id="updateFCSociety"
+                                    value="{{ old('newNomSociete_fournisseurClient', $fc->nomSociete_fournisseurClient) }}" />
+                                @if ($errors->has('newNomSociete_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newNomSociete_fournisseurClient') }}</span>
+                                @endif
 
+                            </div>
+                            <div>
+                                <label class="form-label">GSM1 de la
+                                    société</label>
+                                <input type="tel" class="form-control" name="newGSM1_fournisseurClient"
+                                    placeholder="Entrer GSM1..." id="updateFCGSM1"
+                                    value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" />
+                                @if ($errors->has('newGSM1_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newGSM1_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+                            <div>
+                                <label class="form-label">GSM2 de la
+                                    société</label>
+                                <input type="tel" class="form-control" name="newGSM2_fournisseurClient"
+                                    placeholder="Entrer GSM2..." id="updateFCGSM2"
+                                    value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" />
+                                @if ($errors->has('newGSM2_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newGSM2_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+                            <div>
+                                <label class="form-label">Personne à contacter</label>
+                                <input id="updateFCName" type="text" class="form-control"
+                                    name="newNom_fournisseurClient" placeholder="Entrer le client & fournisseur..."
+                                    value="{{ old('newNom_fournisseurClient', $fc->nom_fournisseurClient) }}" />
+                                @if ($errors->has('newNom_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newNom_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+                            <div>
+                                <label class="form-label">Numero De Telephone</label>
+                                <input id="updateFCContact" type="tel" class="form-control"
+                                    name="newTele_fournisseurClient" placeholder="Entrer le contact..."
+                                    value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
+                                @if ($errors->has('newTele_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newTele_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+                            <div>
+                                <label class="form-label">Email</label>
+                                <input id="updateFCEmail" type="email" class="form-control"
+                                    name="newEmail_fournisseurClient" placeholder="Entrer l'émail..."
+                                    value="{{ old('newEmail_fournisseurClient', $fc->email_fournisseurClient) }}" />
+                                @if ($errors->has('newEmail_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newEmail_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+
+                            <div>
+                                <label class="form-label">Ville</label>
+                                <input id="updateFCVille" type="text" class="form-control"
+                                    name="newVille_fournisseurClient" placeholder="Entrer la ville..."
+                                    value="{{ old('newVille_fournisseurClient', $fc->ville_fournisseurClient) }}" />
+                                @if ($errors->has('newVille_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newVille_fournisseurClient') }}</span>
+                                @endif
+
+                            </div>
+
+                            <div>
+                                <label class="form-label">Catégorie</label>
+                                <select id="updateFCCategory" class="form-select form-select-sm"
+                                    aria-label=".form-select-sm example" name="newCategorie_id" style="height: 39px">
+                                    @foreach ($categories as $cat)
+                                        <option value="{{ $cat->id }}">
+
+                                            {{ $cat->nom_categorie }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('newCategorie_id'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newCategorie_id') }}</span>
+                                @endif
+                            </div>
                         </div>
-                        <div>
-                            <label class="form-label">GSM2 de la
-                                société</label>
-                            <input type="tel" class="form-control" name="newGSM2_fournisseurClient"
-                                placeholder="Entrer GSM2..." id="updateFCGSM2"
-                                value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" />
-                            @if ($errors->has('newGSM2_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newGSM2_fournisseurClient') }}</span>
-                            @endif
-
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Modifier">
                         </div>
-                        <div>
-                            <label class="form-label">Personne à contacter</label>
-                            <input id="updateFCName" type="text" class="form-control"
-                                name="newNom_fournisseurClient" placeholder="Entrer le client & fournisseur..."
-                                value="{{ old('newNom_fournisseurClient', $fc->nom_fournisseurClient) }}" />
-                            @if ($errors->has('newNom_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newNom_fournisseurClient') }}</span>
-                            @endif
-
-                        </div>
-                        <div>
-                            <label class="form-label">Numero De Telephone</label>
-                            <input id="updateFCContact" type="tel" class="form-control"
-                                name="newTele_fournisseurClient" placeholder="Entrer le contact..."
-                                value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" />
-                            @if ($errors->has('newTele_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newTele_fournisseurClient') }}</span>
-                            @endif
-
-                        </div>
-                        <div>
-                            <label class="form-label">Email</label>
-                            <input id="updateFCEmail" type="email" class="form-control"
-                                name="newEmail_fournisseurClient" placeholder="Entrer l'émail..."
-                                value="{{ old('newEmail_fournisseurClient', $fc->email_fournisseurClient) }}" />
-                            @if ($errors->has('newEmail_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newEmail_fournisseurClient') }}</span>
-                            @endif
-
-                        </div>
-
-                        <div>
-                            <label class="form-label">Ville</label>
-                            <input id="updateFCVille" type="text" class="form-control"
-                                name="newVille_fournisseurClient" placeholder="Entrer la ville..."
-                                value="{{ old('newVille_fournisseurClient', $fc->ville_fournisseurClient) }}" />
-                            @if ($errors->has('newVille_fournisseurClient'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newVille_fournisseurClient') }}</span>
-                            @endif
-
-                        </div>
-
-                        <div>
-                            <label class="form-label">Catégorie</label>
-                            <select id="updateFCCategory" class="form-select form-select-sm"
-                                aria-label=".form-select-sm example" name="newCategorie_id" style="height: 39px">
-                                @foreach ($categories as $cat)
-                                    <option value="{{ $cat->id }}">
-
-                                        {{ $cat->nom_categorie }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if ($errors->has('newCategorie_id'))
-                                <span class="text-danger">
-                                    {{ $errors->first('newCategorie_id') }}</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Modifier">
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
     <div class="d-flex justify-content-between align-items-center">
         @if ($fournisseurClients->total() >= 10)
             <form id="pagination-form" action="{{ route('fournisseurClients.pagination') }}" method="GET"
@@ -947,165 +954,165 @@
                                
 
                             ${role === "super-admin" ? `
-                                        <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.ville_fournisseurClient}</td>
-                                            <td>${categoriesList}</td>
-                                             <td>${fc.utilisateur.name || 'Personne'}</td>
-                                        <td class="button-container">
-                                    <div class="d-flex align-items-center gap-2"
-                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                            <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                data-bs-target="#update_fournisseurClient"
-                                                data-id="${fc.id}"
-                                                data-name="${fc.nom_fournisseurClient}"
-                                                data-email="${fc.email_fournisseurClient}"
-                                                data-tele="${fc.tele_fournisseurClient}"
-                                                data-ville="${fc.ville_fournisseurClient}"
-                                                data-society="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                data-GSM2="${fc.GSM2_fournisseurClient }"
-                                                data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
-                                            </a>
-                                       
-                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#QueryFournisseurClientsDetails"
-                                                data-name="${fc.nom_fournisseurClient}"
-                                                data-email="${fc.email_fournisseurClient}"
-                                                data-contact="${fc.tele_fournisseurClient}"
-                                                data-ville="${fc.ville_fournisseurClient}"
-                                                data-remark="${fc.remark}"
-                                                data-user="${fc.utilisateur.name}"
-                                                data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                            >
-                                            Détails
-                                            </button>
-                                        
+                                                <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
+                                                <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.ville_fournisseurClient}</td>
+                                                <td class="cell">${categoriesList}</td>
+                                                <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
+                                            <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                    data-bs-target="#update_fournisseurClient"
+                                                    data-id="${fc.id}"
+                                                    data-name="${fc.nom_fournisseurClient}"
+                                                    data-email="${fc.email_fournisseurClient}"
+                                                    data-tele="${fc.tele_fournisseurClient}"
+                                                    data-ville="${fc.ville_fournisseurClient}"
+                                                    data-society="${fc.nomSociete_fournisseurClient}"
+                                                    data-GSM1=" ${fc.GSM1_fournisseurClient }"
+                                                    data-GSM2="${fc.GSM2_fournisseurClient }"
+                                                    data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
+                                                </a>
+                                           
+                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#QueryFournisseurClientsDetails"
+                                                    data-name="${fc.nom_fournisseurClient}"
+                                                    data-email="${fc.email_fournisseurClient}"
+                                                    data-contact="${fc.tele_fournisseurClient}"
+                                                    data-ville="${fc.ville_fournisseurClient}"
+                                                    data-remark="${fc.remark}"
+                                                    data-user="${fc.utilisateur.name}"
+                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                >
+                                                Détails
+                                                </button>
                                             
-                                                <form
-                                                    action="/fournisseurClient/destroy/${fc.id}"
-                                                    method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                    id="delete-form-${fc.id }">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                        onclick="confirmDelete(${fc.id })">Supprimer</button>
-                                                </form>
+                                                
+                                                    <form
+                                                        action="/fournisseurClient/destroy/${fc.id}"
+                                                        method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                        id="delete-form-${fc.id }">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                            onclick="confirmDelete(${fc.id })">Supprimer</button>
+                                                    </form>
+                                                
                                             
-                                        
-                                            <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
-                                            @csrf
-                                                <select class="form-select status-select" name="status">
-                                                    <option value="" selected>Selectionner la table</option>
-                                                            ${selectOptions.map(option => `
+                                                <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
+                                                @csrf
+                                                    <select class="form-select status-select" name="status">
+                                                        <option value="" selected>Selectionner la table</option>
+                                                                ${selectOptions.map(option => `
                                             <option value="${option}">${option}</option>
                                             `).join('')}
-                                                </select>
-                                            </form>
-                                            </div>
-                                        </td>
+                                                    </select>
+                                                </form>
+                                                </div>
+                                            </td>
 
-                                        ` : ''}
+                                            ` : ''}
 
                             ${role === "admin" ? `
-                                        <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
-                                              <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
-                                              <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.ville_fournisseurClient}</td>
-                                            <td>${categoriesList}</td>
-                                             <td>${fc.utilisateur.name || 'Personne'}</td>
-                                        <td class="button-container">
-                                    <div class="d-flex align-items-center gap-2"
-                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                            <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                data-bs-target="#update_fournisseurClient"
-                                                data-id="${fc.id}"
-                                                data-name="${fc.nom_fournisseurClient}"
-                                                data-email="${fc.email_fournisseurClient}"
-                                                data-tele="${fc.tele_fournisseurClient}"
-                                                data-ville="${fc.ville_fournisseurClient}"
-                                                data-society="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                data-GSM2="${fc.GSM2_fournisseurClient }"
-                                                data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
-                                            </a>
-                                       
-                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#QueryFournisseurClientsDetails"
-                                                data-name="${fc.nom_fournisseurClient}"
-                                                data-email="${fc.email_fournisseurClient}"
-                                                data-contact="${fc.tele_fournisseurClient}"
-                                                data-ville="${fc.ville_fournisseurClient}"
-                                                data-remark="${fc.remark}"
-                                                data-user="${fc.utilisateur.name}"
-                                                data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                            >
-                                            Détails
-                                            </button>
-                                       
-                                            <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
-                                            @csrf
-                                                <select class="form-select status-select" name="status">
-                                                    <option value="" selected>Selectionner la table</option>
-                                                            ${selectOptions.map(option => `
+                                            <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
+                                            <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
+                                            <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
+                                            <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
+                                            <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
+                                            <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
+                                            <td class="cell">${fc.ville_fournisseurClient}</td>
+                                            <td class="cell">${categoriesList}</td>
+                                            <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
+                                            <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                    data-bs-target="#update_fournisseurClient"
+                                                    data-id="${fc.id}"
+                                                    data-name="${fc.nom_fournisseurClient}"
+                                                    data-email="${fc.email_fournisseurClient}"
+                                                    data-tele="${fc.tele_fournisseurClient}"
+                                                    data-ville="${fc.ville_fournisseurClient}"
+                                                    data-society="${fc.nomSociete_fournisseurClient}"
+                                                    data-GSM1=" ${fc.GSM1_fournisseurClient }"
+                                                    data-GSM2="${fc.GSM2_fournisseurClient }"
+                                                    data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
+                                                </a>
+                                           
+                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#QueryFournisseurClientsDetails"
+                                                    data-name="${fc.nom_fournisseurClient}"
+                                                    data-email="${fc.email_fournisseurClient}"
+                                                    data-contact="${fc.tele_fournisseurClient}"
+                                                    data-ville="${fc.ville_fournisseurClient}"
+                                                    data-remark="${fc.remark}"
+                                                    data-user="${fc.utilisateur.name}"
+                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                >
+                                                Détails
+                                                </button>
+                                           
+                                                <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
+                                                @csrf
+                                                    <select class="form-select status-select" name="status">
+                                                        <option value="" selected>Selectionner la table</option>
+                                                                ${selectOptions.map(option => `
                                             <option value="${option}">${option}</option>
                                             `).join('')}
-                                                </select>
-                                            </form>
-                                            </div>
-                                        </td>
+                                                    </select>
+                                                </form>
+                                                </div>
+                                            </td>
 
 
 
-                                        `:''} ${role === "utilisateur" ? `
-                                         <td>${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td>${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
-                                                <td>${fc.nom_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.tele_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td>${fc.ville_fournisseurClient}</td>
-                                            <td>${categoriesList}</td>
-                                             <td>${fc.utilisateur.name || 'Personne'}</td>
+                                            `:''} ${role === "utilisateur" ? `
+                                                <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
+                                                <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
+                                                <td class="cell">${fc.ville_fournisseurClient}</td>
+                                                <td class="cell">${categoriesList}</td>
+                                                <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
 
-                                         <td class="button-container">
-                                    <div class="d-flex align-items-center gap-2"
-                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#QueryFournisseurClientsDetails"
-                                                data-name="${fc.nom_fournisseurClient}"
-                                                data-email="${fc.email_fournisseurClient}"
-                                                data-contact="${fc.tele_fournisseurClient}"
-                                                data-ville="${fc.ville_fournisseurClient}"
-                                                data-remark="${fc.remark}"
-                                                data-user="${fc.utilisateur.name}"
-                                                data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                            >
-                                            Détails
-                                            </button>
-                                            </div>
-                                        </td>
-                                        
-                                        ` : ""}
+                                             <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#QueryFournisseurClientsDetails"
+                                                    data-name="${fc.nom_fournisseurClient}"
+                                                    data-email="${fc.email_fournisseurClient}"
+                                                    data-contact="${fc.tele_fournisseurClient}"
+                                                    data-ville="${fc.ville_fournisseurClient}"
+                                                    data-remark="${fc.remark}"
+                                                    data-user="${fc.utilisateur.name}"
+                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                >
+                                                Détails
+                                                </button>
+                                                </div>
+                                            </td>
+                                            
+                                            ` : ""}
 
                         `
 
@@ -1113,12 +1120,12 @@
                                 document.querySelectorAll('.status-select').forEach(
                                     selectElement => {
                                         selectElement.addEventListener('change',
-                                    function() {
-                                            const form = this.closest('.fc-form');
-                                            if (form) {
-                                                form.submit();
-                                            }
-                                        });
+                                            function() {
+                                                const form = this.closest('.fc-form');
+                                                if (form) {
+                                                    form.submit();
+                                                }
+                                            });
                                     });
 
                                 // Gestion des détails des éléments
@@ -1134,14 +1141,14 @@
                                             const fcContact = this.getAttribute(
                                                 'data-contact'); || 'Non disponible'
                                             const fcSociety = this.getAttribute(
-                                                'data-society') ||
-                                            'Particulier'; // Par défaut "Particulier"
+                                                    'data-society') ||
+                                                'Particulier'; // Par défaut "Particulier"
                                             const fcGSM1 = this.getAttribute(
-                                                'data-GSM1') ||
-                                            'Non disponible'; // Par défaut "Non"
+                                                    'data-GSM1') ||
+                                                'Non disponible'; // Par défaut "Non"
                                             const fcGSM2 = this.getAttribute(
-                                                'data-GSM2') ||
-                                            'Non disponible'; // Par défaut "Non"
+                                                    'data-GSM2') ||
+                                                'Non disponible'; // Par défaut "Non"
                                             const fcVille = this.getAttribute(
                                                 'data-ville');
                                             const fcRemark = this.getAttribute(
@@ -1160,7 +1167,7 @@
                                             };
 
                                             updateTextContent('#showNamefc',
-                                            fcName);
+                                                fcName);
                                             updateTextContent('#showEmailfc',
                                                 fcEmail);
                                             updateTextContent('#showContactfc',
@@ -1168,15 +1175,15 @@
                                             updateTextContent('#showSocietyfc',
                                                 fcSociety);
                                             updateTextContent('#showGSM1fc',
-                                            fcGSM1);
+                                                fcGSM1);
                                             updateTextContent('#showGSM2fc',
-                                            fcGSM2);
+                                                fcGSM2);
                                             updateTextContent('#showVillefc',
                                                 fcVille);
                                             updateTextContent('#showRemarkfc',
                                                 fcRemark);
                                             updateTextContent('#showUserfc',
-                                            fcUser);
+                                                fcUser);
 
                                             // Gestion des catégories
                                             const categories = JSON.parse(
@@ -1216,19 +1223,19 @@
                                                                         category
                                                                         .id ==
                                                                         selectedCategoryId
-                                                                        );
+                                                                    );
 
                                                                 console.log(
                                                                     "Catégorie sélectionnée :",
                                                                     selectedCategory
-                                                                    );
+                                                                );
 
                                                                 let productsHTML =
                                                                     '<option value="" selected>Voir les produits</option>';
                                                                 if (selectedCategory &&
                                                                     selectedCategory
                                                                     .sous_categories
-                                                                    ) {
+                                                                ) {
                                                                     selectedCategory
                                                                         .sous_categories
                                                                         .forEach(
@@ -1240,7 +1247,7 @@
                                                                 } else {
                                                                     console.log(
                                                                         "Aucune sous-catégorie trouvée pour cette catégorie."
-                                                                        );
+                                                                    );
                                                                 }
 
                                                                 const
@@ -1248,27 +1255,28 @@
                                                                     document
                                                                     .querySelector(
                                                                         '#productsQuery-1'
-                                                                        );
+                                                                    );
                                                                 if (
-                                                                    productsSelect) {
+                                                                    productsSelect
+                                                                    ) {
                                                                     productsSelect
                                                                         .innerHTML =
                                                                         productsHTML;
                                                                 } else {
                                                                     console.log(
                                                                         "Le sélecteur de produits #productsQuery-1 n'existe pas."
-                                                                        );
+                                                                    );
                                                                 }
                                                             });
                                                 } else {
                                                     console.log(
                                                         "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
-                                                        );
+                                                    );
                                                 }
                                             } else {
                                                 console.log(
                                                     "Les données des catégories ne sont pas valides ou sont vides."
-                                                    );
+                                                );
                                             }
                                         });
                                     });

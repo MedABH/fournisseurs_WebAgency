@@ -962,15 +962,15 @@
                                     `
                                    
                                     ${role === "super-admin" ? `
-                                                                  <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.tele_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.ville_prospect}</td>
-                                                                <td>${categoriesList}</td>
-                                                                 <td>${prospect.utilisateur.name || 'Personne'}</td>
+                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.ville_prospect}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                         data-bs-target="#update_prospect"
@@ -1029,15 +1029,15 @@
 
                                     ${role === "admin" ? `
 
-                                                                 <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                               <td>${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.tele_prospect || 'Non disponible'}</td>
-                                                               <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.ville_prospect}</td>
-                                                                <td>${categoriesList}</td>
-                                                                 <td>${prospect.utilisateur.name || 'Personne'}</td>
+                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.ville_prospect}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                         data-bs-target="#update_prospect"
@@ -1080,15 +1080,15 @@
                                                                         </form>
                                                                 </td>
                                                                 ` : ''} ${role === "utilisateur" ? `
-                                                                 <td>${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td>${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                                 <td>${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.tele_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td>${prospect.ville_prospect}</td>
-                                                                <td>${categoriesList}</td>
-                                                                 <td>${prospect.utilisateur.name || 'Personne'}</td>
+                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
+                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
+                                                                <td class="cell">${prospect.ville_prospect}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
                                                                 <td>
                                                                     <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
                                                                         data-bs-toggle="modal"

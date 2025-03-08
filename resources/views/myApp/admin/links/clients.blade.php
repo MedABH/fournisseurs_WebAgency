@@ -943,15 +943,15 @@
 
 
                         ${role === "super-admin" ? `
-                                                          <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td>${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td>${client.nom_client || 'Non disponible'}</td>
-                                                            <td>${client.tele_client || 'Non disponible'}</td>
-                                                            <td>${client.email_client || 'Non disponible'}</td>
-                                                            <td>${client.ville_client}</td>
-                                                            <td>${categoriesList}</td>
-                                                             <td>${client.utilisateur.name || 'Personne'}</td>
+                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.ville_client}</td>
+                                                            <td class="cell">${categoriesList}</td>
+                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#update_client"
@@ -1009,15 +1009,15 @@
 
                                                         `:''}
                         ${role === "admin" ? `
-                                                       <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td>${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td>${client.nom_client || 'Non disponible'}</td>
-                                                            <td>${client.tele_client || 'Non disponible'}</td>
-                                                            <td>${client.email_client || 'Non disponible'}</td>
-                                                            <td>${client.ville_client}</td>
-                                                            <td>${categoriesList}</td>
-                                                             <td>${client.utilisateur.name || 'Personne'}</td>
+                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.ville_client}</td>
+                                                            <td class="cell">${categoriesList}</td>
+                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
                                                         <td>
                                                             <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#update_client"
@@ -1062,15 +1062,15 @@
 
 
                                                         `:''}${role === "utilisateur" ? `
-                                                        <td>${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td>${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td>${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td>${client.nom_client || 'Non disponible'}</td>
-                                                            <td>${client.tele_client || 'Non disponible'}</td>
-                                                             <td>${client.email_client || 'Non disponible'}</td>
-                                                            <td>${client.ville_client}</td>
-                                                            <td>${categoriesList}</td>
-                                                             <td>${client.utilisateur.name || 'Personne'}</td>
+                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                            <td class="cell">${client.ville_client}</td>
+                                                            <td class="cell">${categoriesList}</td>
+                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
 
                                                           <td>
                                                             <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"

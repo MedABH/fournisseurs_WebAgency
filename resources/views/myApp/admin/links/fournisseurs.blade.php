@@ -1013,18 +1013,16 @@
                                   
                                     ${role === "super-admin" ?
                                     `
-                                                                                       <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.ville_fournisseur}</td>
-                                                                                    
-                                                                                        <td>${categoriesList}</td>
-                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
-                                                                                       
-                                                                                
+                                                                                        <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.ville_fournisseur}</td>
+                                                                                        <td class="cell">${categoriesList}</td>
+                                                                                        <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                       <td>                                                                                
                                                                                             <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                                                 data-bs-target="#updateSupplierModal"
                                                                                                 data-id="${supplier.id}"
@@ -1080,18 +1078,17 @@
 
                                     ${role === "admin" ?
                                     `
-                                                                                        <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                         <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                       <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.ville_fournisseur}</td>
-                                                                                    
-                                                                                        <td>${categoriesList}</td>
-                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                        <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.ville_fournisseur}</td>
+                                                                                        <td class="cell">${categoriesList}</td>
+                                                                                        <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
                                                                                        
-                                                                                
+                                                                                        <td>
                                                                                             <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                                                 data-bs-target="#updateSupplierModal"
                                                                                                 data-id="${supplier.id}"
@@ -1133,17 +1130,17 @@
                                                                                                 </form>
                                                                                             </td>
                                                                                 ` : ""}${role === "utilisateur" ? ` 
-                                                                                <td>${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                                        <td>${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                                       <td>${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                                        <td>${supplier.ville_fournisseur}</td>
-                                                                                        <td>${categoriesList}</td>
-                                                                                        <td>${supplier.utilisateur.name || 'Personne'}</td>
+                                                                                        <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
+                                                                                        <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
+                                                                                        <td class="cell">${supplier.ville_fournisseur}</td>
+                                                                                        <td class="cell">${categoriesList}</td>
+                                                                                        <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
                                                                                        
-                                                                                <td>
+                                                                                            <td>
                                                                                                 <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
                                                                                                 data-bs-toggle="modal"
                                                                                                 data-bs-target="#QueryModalSupplierDetails"
