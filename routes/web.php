@@ -98,6 +98,10 @@ Route::delete('/deleteProduct/{id}', [SousCategorieController::class, 'destroy']
 
 // Recherche de différents éléments
 Route::get('/search-users', [UserController::class, 'search'])->name('search.users');
+Route::get('/search-prospects', [ProspectController::class, 'search'])->name('search.prospects');
+Route::get('/search-clients', [ClientController::class, 'search'])->name('search.clients');
+Route::get('/search-suppliers', [FournisseurController::class, 'search'])->name('search.suppliers');
+Route::get('/search-fournisseurClients', [FournisseurClientController::class, 'search'])->name('search.fournisseurClients');
 Route::get('/search-categories', [CategorieController::class, 'search'])->name('search.categories');
 Route::get('/search-products', [SousCategorieController::class, 'search'])->name('search.products');
 
