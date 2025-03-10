@@ -7,106 +7,112 @@ window.chartColors = {
     border: '#e7e9ed'
 };
 
-fetch('/data-for-charts-by-date')
-    .then(response => response.json())
-    .then(data => {
-        // Convertir les clés (dates) en objets Date et trier les dates dans l'ordre chronologique
-        const labels = Object.keys(data).map(date => {
-            // S'assurer que la clé est bien une date au format 'YYYY-MM-DD'
-            const parts = date.split('/');
-            // Date de type MM/DD/YYYY (ou similaire), selon votre format
-            return new Date(parts[2], parts[0] - 1, parts[1]); // mois est indexé à partir de 0
-        });
+let myChart = null;  // Declare chart variable outside of functions
 
-        // Trier les dates dans l'ordre croissant
-        labels.sort((a, b) => a - b);
+// Fetch chart data based on dropdown selection
+function updateChart(period) {
+    fetch(`/data-for-charts-by-date?period=${period}`)
+        .then(response => response.json())
+        .then(data => {
+            const labels = Object.keys(data);  // Labels will be time ranges like 00:00-01:59, 02:00-03:59
+            const counts = Object.values(data);  // Counts per 2-hour interval
 
-        // Convertir les dates triées en chaînes de caractères formatées pour les labels
-        const formattedLabels = labels.map(date => {
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            return `${month}/${day}/${year}`;  // Format MM/DD/YYYY
-        });
+            // Configure chart options dynamically based on period
+            let chartTitle = 'Nombre de Parties Prenantes ajoutées';
+            let stepSize = 1;
+            let maxValue = Math.max(...counts) + 1;
 
-        // Extraire les valeurs des comptages en fonction des dates triées
-        const counts = formattedLabels.map(date => data[date]);
+            if (period == 1) {
+                chartTitle = 'Nombre de Parties Prenantes ajoutées Cette semaine';
+            } else if (period == 2) {
+                chartTitle = 'Nombre de Parties Prenantes ajoutées Aujourd\'hui (2h interval)';
+            }
 
-        // Calculer les valeurs min et max
-        const minValue = Math.min(...counts);
-        const maxValue = Math.max(...counts);
-
-        // Ajuster la valeur maximale et la taille des pas
-        const adjustedMaxValue = maxValue + 1;
-        const stepSize = adjustedMaxValue > 10 ? 1 : 0.5;
-
-        var barChartConfig = {
-            type: 'bar',
-            data: {
-                labels: formattedLabels,  // Dates triées et formatées
-                datasets: [{
-                    label: 'Parties Prenantes',
-                    data: counts,
-                    backgroundColor: window.chartColors.green,
-                    borderColor: window.chartColors.green,
-                    borderWidth: 1,
-                    maxBarThickness: 16
-                }]
-            },
-            options: {
-                responsive: true,
-                aspectRatio: 1.5,
-                legend: {
-                    position: 'bottom',
-                    align: 'end',
+            const chartConfig = {
+                type: 'bar',
+                data: {
+                    labels: labels,  // Dynamic labels (time ranges for today or dates for the week)
+                    datasets: [{
+                        label: 'Parties Prenantes',
+                        data: counts,
+                        backgroundColor: window.chartColors.green,
+                        borderColor: window.chartColors.green,
+                        borderWidth: 1,
+                        maxBarThickness: 16
+                    }]
                 },
-                title: {
-                    display: true,
-                    text: 'Nombre de Parties Prenantes ajoutées'
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                    titleMarginBottom: 10,
-                    bodySpacing: 10,
-                    xPadding: 16,
-                    yPadding: 16,
-                    borderColor: window.chartColors.border,
-                    borderWidth: 1,
-                    backgroundColor: '#fff',
-                    bodyFontColor: window.chartColors.text,
-                    titleFontColor: window.chartColors.text,
-                },
-                scales: {
-                    x: {
-                        display: true,
-                        grid: {
-                            drawBorder: false,
-                            color: window.chartColors.border,
-                        },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1.5,
+                    legend: {
+                        position: 'bottom',
+                        align: 'end',
                     },
-                    y: {
+                    title: {
                         display: true,
-                        grid: {
-                            drawBorder: false,
-                            color: window.chartColors.border,
+                        text: chartTitle
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                        titleMarginBottom: 10,
+                        bodySpacing: 10,
+                        xPadding: 16,
+                        yPadding: 16,
+                        borderColor: window.chartColors.border,
+                        borderWidth: 1,
+                        backgroundColor: '#fff',
+                        bodyFontColor: window.chartColors.text,
+                        titleFontColor: window.chartColors.text,
+                    },
+                    scales: {
+                        x: {
+                            display: true,
+                            grid: {
+                                drawBorder: false,
+                                color: window.chartColors.border,
+                            },
                         },
-                        ticks: {
-                            beginAtZero: true,
-                            min: 0,
-                            max: adjustedMaxValue,
-                            stepSize: stepSize,
-                            callback: function (value) {
-                                return Number.isInteger(value) ? value : '';
+                        y: {
+                            display: true,
+                            grid: {
+                                drawBorder: false,
+                                color: window.chartColors.border,
+                            },
+                            ticks: {
+                                beginAtZero: true,
+                                min: 0,
+                                max: maxValue,
+                                stepSize: stepSize,
+                                callback: function (value) {
+                                    return Number.isInteger(value) ? value : '';
+                                }
                             }
                         }
                     }
                 }
-            }
-        };
+            };
 
-        const myChart = new Chart(
-            document.getElementById('canvas-barchart'),
-            barChartConfig
-        );
-    });
+            // If the chart already exists, update it instead of creating a new one
+            if (myChart) {
+                myChart.data = chartConfig.data;
+                myChart.options = chartConfig.options;
+                myChart.update();
+            } else {
+                // Create a new chart if it doesn't exist
+                myChart = new Chart(document.getElementById('canvas-barchart'), chartConfig);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching chart data:', error);
+        });
+}
+
+// Trigger updateChart when dropdown selection changes
+document.getElementById('barChartSelect').addEventListener('change', function() {
+    const selectedPeriod = this.value;
+    updateChart(selectedPeriod);
+});
+
+// Initial load with "Cette semaine" option selected
+updateChart(1);

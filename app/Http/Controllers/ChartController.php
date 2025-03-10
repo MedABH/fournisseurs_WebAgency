@@ -395,43 +395,65 @@ class ChartController extends Controller
 
 
 
-    public function getDataForChartsByDate()
-    {
-        // Fetch and group by date for each table
-        $clients = DB::table('clients')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('date')
-            ->get();
+    public function getDataForChartsByDate(Request $request)
+{
+    $period = $request->input('period');
+    $data = [];
 
-        $prospects = DB::table('prospects')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('date')
-            ->get();
-
-        $fournisseurs = DB::table('fournisseurs')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('date')
-            ->get();
-
-        $fournisseurClients = DB::table('fournisseur_clients')
-            ->select(DB::raw('DATE(created_at) as date'), DB::raw('COUNT(*) as count'))
-            ->groupBy('date')
-            ->get();
-
-        // Merge all results into one collection
-        $combinedData = collect();
-
-        foreach ([$clients, $prospects, $fournisseurs, $fournisseurClients] as $dataset) {
-            foreach ($dataset as $entry) {
-                $combinedData->push($entry);
-            }
+    if ($period == 1) {  // For "Cette semaine"
+        // Weekly data
+        $dates = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $dates[] = Carbon::now()->subDays($i)->format('m/d/Y');
         }
 
-        // Group by date and sum the counts
-        $groupedData = $combinedData->groupBy('date')->map(function ($entries) {
-            return $entries->sum('count');
-        });
+        foreach ($dates as $date) {
+            $count = DB::table('clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+            $count += DB::table('prospects')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+            $count += DB::table('fournisseurs')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+            $count += DB::table('fournisseur_clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+            $data[$date] = $count;
+        }
+    } elseif ($period == 2) {  // For "Aujourd'hui"
+        // Today's data in 2-hour intervals: 00:00-01:59, 02:00-03:59, etc.
+        $today = Carbon::now()->format('Y-m-d');
 
-        return response()->json($groupedData);
+        for ($hour = 0; $hour < 24; $hour += 2) {
+            $startTime = Carbon::parse($today)->addHours($hour)->format('H:i:s');
+            $endTime = Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i:s');  // Subtract 1 second to get 01:59 instead of 02:00
+
+            $count = DB::table('clients')
+                ->whereDate('created_at', $today)
+                ->whereTime('created_at', '>=', $startTime)
+                ->whereTime('created_at', '<=', $endTime)
+                ->count();
+
+            $count += DB::table('prospects')
+                ->whereDate('created_at', $today)
+                ->whereTime('created_at', '>=', $startTime)
+                ->whereTime('created_at', '<=', $endTime)
+                ->count();
+
+            $count += DB::table('fournisseurs')
+                ->whereDate('created_at', $today)
+                ->whereTime('created_at', '>=', $startTime)
+                ->whereTime('created_at', '<=', $endTime)
+                ->count();
+
+            $count += DB::table('fournisseur_clients')
+                ->whereDate('created_at', $today)
+                ->whereTime('created_at', '>=', $startTime)
+                ->whereTime('created_at', '<=', $endTime)
+                ->count();
+
+            // Format the label as "00:00-01:59", "02:00-03:59", etc.
+            $label = Carbon::parse($today)->addHours($hour)->format('H:i') . '-' . Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i');
+            $data[$label] = $count;
+        }
     }
+
+    return response()->json($data);
+}
+
+
 }
