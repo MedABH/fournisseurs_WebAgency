@@ -14,8 +14,8 @@ function updateChart(period) {
     fetch(`/data-for-charts-by-date?period=${period}`)
         .then(response => response.json())
         .then(data => {
-            const labels = Object.keys(data);  // Labels will be time ranges like 00:00-01:59, 02:00-03:59
-            const counts = Object.values(data);  // Counts per 2-hour interval
+            const labels = Object.keys(data);  // Labels will be time ranges or periods like "1-7", "8-14"
+            const counts = Object.values(data);  // Counts per period
 
             // Configure chart options dynamically based on period
             let chartTitle = 'Nombre de Parties Prenantes ajoutées';
@@ -23,15 +23,19 @@ function updateChart(period) {
             let maxValue = Math.max(...counts) + 1;
 
             if (period == 1) {
-                chartTitle = 'Nombre de Parties Prenantes ajoutées Cette semaine';
+                chartTitle = 'Nombre de Parties Prenantes ajoutées';
             } else if (period == 2) {
-                chartTitle = 'Nombre de Parties Prenantes ajoutées Aujourd\'hui (2h interval)';
+                chartTitle = 'Nombre de Parties Prenantes ajoutées';
+            } else if (period == 3) {  // For "Ce mois-ci"
+                chartTitle = 'Nombre de Parties Prenantes ajoutées';
+            } else if (period == 4) {  // For "Cette année" (This year)
+                chartTitle = 'Nombre de Parties Prenantes ajoutées';
             }
 
             const chartConfig = {
                 type: 'bar',
                 data: {
-                    labels: labels,  // Dynamic labels (time ranges for today or dates for the week)
+                    labels: labels,  // Dynamic labels (time ranges for today, dates for the week, or 7-day periods for the month, months for the year)
                     datasets: [{
                         label: 'Parties Prenantes',
                         data: counts,
