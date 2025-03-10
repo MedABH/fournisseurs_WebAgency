@@ -139,4 +139,11 @@ class CategorieController extends Controller
         return response()->json($category);
 
     }
+    public function getSousCategories($categorieId)
+{
+    $sousCategories = Categorie::find($categorieId)->sousCategories()->get();
+
+    return response()->json($sousCategories);
+}
+
 }

@@ -139,20 +139,38 @@
                         @error('ville_client', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
-                        <label class="form-label"><strong class="det">Catégorie</strong></label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                            name="categorie_id" style="color: #a6a6a6;">
-                            <option value="">Selectionner la catégorie</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}"
-                                    {{ old('categorie_id') == $category->id ? 'selected' : '' }}>
-                                    {{ $category->nom_categorie }}
+                        <label for="categorie" class="form-label"><strong class="det">Catégorie</strong></label>
+                        <select id="categorie" class="form-control" name="categorie_id">
+                            <option value="">Sélectionner la catégorie</option>
+                            @foreach ($categories as $categorie)
+                                <option value="{{ $categorie->id }}"
+                                    {{ request('categorie_id') == $categorie->id ? 'selected' : '' }}>
+                                    {{ $categorie->nom_categorie }}
                                 </option>
                             @endforeach
                         </select>
-                        @error('categorie_id', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+
+                        <!-- Label pour les sous-catégories, caché tant qu'une catégorie n'est pas sélectionnée -->
+                        <label for="sous-categorie" class="form-label" id="label-sous-categorie"
+                            {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                            <strong class="det">Sous-Catégorie</strong>
+                        </label>
+
+                        <!-- Sélecteur de sous-catégorie, caché tant qu'une catégorie n'est pas sélectionnée -->
+                        <select id="sous-categorie" class="form-control" name="sous_categorie_id"
+                            {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                            <option value="">Sélectionner une sous-catégorie</option>
+                            @if (request('categorie_id'))
+                                @foreach ($sousCategories as $sousCategorie)
+                                    <option value="{{ $sousCategorie->id }}"
+                                        {{ request('sous_categorie_id') == $sousCategorie->id ? 'selected' : '' }}>
+                                        {{ $sousCategorie->nom_produit }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
+
+
 
                     </div>
                     <div class="modal-footer">
@@ -321,119 +339,125 @@
                                         </div>
                                     </td>
                                 @elseif (auth()->user()->role == 'admin')
-                                <td class="button-container">
-                                    <div class="d-flex align-items-center gap-2"
-                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                        <a href="#" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#update_client" data-id="{{ $client->id }}"
-                                            data-society="{{ $client->nomSociete_client }}"
-                                            data-GSM1="{{ $client->GSM1_client }}"
-                                            data-GSM2="{{ $client->GSM2_client }}" data-name="{{ $client->nom_client }}"
-                                            data-tele="{{ $client->tele_client }}"
-                                            data-email="{{ $client->email_client }}"
-                                            data-ville="{{ $client->ville_client }}"
-                                            data-category="{{ $client->categories->first()?->id ?? '' }}">
-                                            Modifier
-                                        </a>
+                                    <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                            <a href="#" class="btn btn-outline-primary border-btn me-4"
+                                                data-bs-toggle="modal" data-bs-target="#update_client"
+                                                data-id="{{ $client->id }}"
+                                                data-society="{{ $client->nomSociete_client }}"
+                                                data-GSM1="{{ $client->GSM1_client }}"
+                                                data-GSM2="{{ $client->GSM2_client }}"
+                                                data-name="{{ $client->nom_client }}"
+                                                data-tele="{{ $client->tele_client }}"
+                                                data-email="{{ $client->email_client }}"
+                                                data-ville="{{ $client->ville_client }}"
+                                                data-category="{{ $client->categories->first()?->id ?? '' }}">
+                                                Modifier
+                                            </a>
 
 
-                                        <form class="user-form" action="{{ route('user.select.client', $client->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <select class="form-select userSelect" aria-label="Default select example"
-                                                data-client-id="{{ $client->id }}" style="margin-right:100px"
-                                                name="user_id">
-                                                <option value="">Contacté Par</option>
-                                                @foreach ($utilisateurs as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                        {{ $user->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </form>
+                                            <form class="user-form"
+                                                action="{{ route('user.select.client', $client->id) }}" method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select class="form-select userSelect" aria-label="Default select example"
+                                                    data-client-id="{{ $client->id }}" style="margin-right:100px"
+                                                    name="user_id">
+                                                    <option value="">Contacté Par</option>
+                                                    @foreach ($utilisateurs as $user)
+                                                        <option value="{{ $user->id }}"
+                                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
 
-                                        <button type="button" class="btn btn-outline-success border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#remark-{{ $client->id }}">
-                                            Remarque
-                                        </button>
+                                            <button type="button" class="btn btn-outline-success border-btn me-4"
+                                                data-bs-toggle="modal" data-bs-target="#remark-{{ $client->id }}">
+                                                Remarque
+                                            </button>
 
 
 
-                                        <button type="button" class="btn btn-outline-info detailButton border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#ModalClientDetails-{{ $client->id }}"
-                                            data-name="{{ $client->nom_client }}"
-                                            data-email="{{ $client->email_client }}"
-                                            data-tele="{{ $client->tele_client }}"
-                                            data-ville="{{ $client->ville_client }}"
-                                            data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
-                                            data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
-                                            data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
-                                            data-remark="{{ $client->remark }}"
-                                            data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
+                                            <button type="button"
+                                                class="btn btn-outline-info detailButton border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalClientDetails-{{ $client->id }}"
+                                                data-name="{{ $client->nom_client }}"
+                                                data-email="{{ $client->email_client }}"
+                                                data-tele="{{ $client->tele_client }}"
+                                                data-ville="{{ $client->ville_client }}"
+                                                data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
+                                                data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
+                                                data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                data-remark="{{ $client->remark }}"
+                                                data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
 
-                                            Details
-                                        </button>
+                                                Details
+                                            </button>
 
-                                        <form class="client-form" action="{{ route('client.select', $client->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <select name="status" id="" class="form-select status-select">
-                                                <option value="">Selectionner la table</option>
-                                                @foreach ($select as $item)
-                                                    <option value="{{ $item }}">{{ $item }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </form>
-                                    </div>
+                                            <form class="client-form" action="{{ route('client.select', $client->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select name="status" id="" class="form-select status-select">
+                                                    <option value="">Selectionner la table</option>
+                                                    @foreach ($select as $item)
+                                                        <option value="{{ $item }}">{{ $item }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        </div>
                                     </td>
                                 @elseif (auth()->user()->role == 'utilisateur')
-                                <td class="button-container">
-                                    <div class="d-flex align-items-center gap-2"
-                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                       
-
-                                        <button type="button" class="btn btn-outline-success border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#remark-{{ $client->id }}">
-                                            Remarque
-                                        </button>
+                                    <td class="button-container">
+                                        <div class="d-flex align-items-center gap-2"
+                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
 
 
+                                            <button type="button" class="btn btn-outline-success border-btn me-4"
+                                                data-bs-toggle="modal" data-bs-target="#remark-{{ $client->id }}">
+                                                Remarque
+                                            </button>
 
-                                        <button type="button" class="btn btn-outline-info detailButton border-btn me-4" data-bs-toggle="modal"
-                                            data-bs-target="#ModalClientDetails-{{ $client->id }}"
-                                            data-name="{{ $client->nom_client }}"
-                                            data-email="{{ $client->email_client }}"
-                                            data-tele="{{ $client->tele_client }}"
-                                            data-ville="{{ $client->ville_client }}"
-                                            data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
-                                            data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
-                                            data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
-                                            data-remark="{{ $client->remark }}"
-                                            data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
 
-                                            Details
-                                        </button>
-                                        <form class="user-form" action="{{ route('user.select.client', $client->id) }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('POST')
-                                            <select class="form-select userSelect" aria-label="Default select example"
-                                                data-client-id="{{ $client->id }}" style="margin-right:100px"
-                                                name="user_id">
-                                                <option value="">Contacté Par</option>
-                                                @foreach ($utilisateurs as $user)
-                                                    <option value="{{ $user->id }}"
-                                                        {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                                        {{ $user->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </form>
-                                    </div>
+
+                                            <button type="button"
+                                                class="btn btn-outline-info detailButton border-btn me-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ModalClientDetails-{{ $client->id }}"
+                                                data-name="{{ $client->nom_client }}"
+                                                data-email="{{ $client->email_client }}"
+                                                data-tele="{{ $client->tele_client }}"
+                                                data-ville="{{ $client->ville_client }}"
+                                                data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
+                                                data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
+                                                data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                data-remark="{{ $client->remark }}"
+                                                data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
+
+                                                Details
+                                            </button>
+                                            <form class="user-form"
+                                                action="{{ route('user.select.client', $client->id) }}" method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select class="form-select userSelect" aria-label="Default select example"
+                                                    data-client-id="{{ $client->id }}" style="margin-right:100px"
+                                                    name="user_id">
+                                                    <option value="">Contacté Par</option>
+                                                    @foreach ($utilisateurs as $user)
+                                                        <option value="{{ $user->id }}"
+                                                            {{ old('user_id') == $user->id ? 'selected' : '' }}>
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
+                                        </div>
                                     </td>
                                 @endif
                                 <form action="{{ route('remark.client', $client->id) }}" method="POST">
@@ -520,7 +544,7 @@
                                                 </h6>
                                             </div>
 
-                                        
+
                                             <div class="show-info-client show-ville">
                                                 <label class="label-detail-client">Ville</label>
                                                 <h6 class="info-client showVilleClient"
@@ -839,6 +863,79 @@
             )
         })
     </script>
+    <!-- <script>
+        document.getElementById('categorie').addEventListener('change', function() {
+            let categorieId = this.value;
+            let sousCategorieSelect = document.getElementById('sous-categorie');
+            let sousCategorieContainer = document.getElementById('sous-categorie-container');
+
+            if (categorieId) {
+                fetch(`/sous-categories/${categorieId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        sousCategorieSelect.innerHTML =
+                            '<option value="">Sélectionner une sous-catégorie</option>';
+
+                        data.forEach(sousCategorie => {
+                            let option = document.createElement('option');
+                            option.value = sousCategorie.id;
+                            option.textContent = sousCategorie.nom_sous_categorie;
+                            sousCategorieSelect.appendChild(option);
+                        });
+
+                        sousCategorieContainer.style.display = data.length > 0 ? 'block' : 'none';
+                    })
+                    .catch(error => console.error('Erreur:', error));
+            } else {
+                sousCategorieContainer.style.display = 'none';
+            }
+        });
+    </script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Quand une catégorie est sélectionnée
+            $('#categorie').change(function() {
+                var categorieId = $(this).val();
+
+                // Si une catégorie est sélectionnée
+                if (categorieId) {
+                    // Afficher le champ des sous-catégories et son label
+                    $('#label-sous-categorie').show();
+                    $('#sous-categorie').show();
+
+                    // Faire une requête AJAX pour récupérer les sous-catégories
+                    $.ajax({
+                        url: '/sous-categories/' + categorieId, // L'URL de ta route
+                        type: 'GET',
+                        success: function(response) {
+                            // Vider le select de sous-catégories
+                            $('#sous-categorie').empty();
+                            $('#sous-categorie').append(
+                                '<option value="">Sélectionner une sous-catégorie</option>');
+
+                            // Ajouter les sous-catégories au select
+                            $.each(response, function(index, sousCategorie) {
+                                $('#sous-categorie').append('<option value="' +
+                                    sousCategorie.id + '">' + sousCategorie
+                                    .nom_produit + '</option>');
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Si une erreur se produit
+                            console.log('Erreur AJAX:', error);
+                        }
+                    });
+                } else {
+                    // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                    $('#label-sous-categorie').hide();
+                    $('#sous-categorie').hide();
+                }
+            });
+        });
+    </script>
+
+
     <script>
         function confirmDelete(clientId) {
             Swal.fire({
@@ -943,155 +1040,155 @@
 
 
                         ${role === "super-admin" ? `
-                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.ville_client}</td>
-                                                            <td class="cell">${categoriesList}</td>
-                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                data-bs-target="#update_client"
-                                                                data-id="${client.id}"
-                                                                data-name="${client.nom_client}"
-                                                                data-email="${client.email_client}"
-                                                                data-tele="${client.tele_client}"
-                                                                data-ville="${client.ville_client}"
-                                                                data-society="${client.nomSociete_client}"
-                                                                data-GSM1=" ${client.GSM1_client }"
-                                                                data-GSM2="${client.GSM2_client }"
-                                                                data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                            </button>
-                                                        
-                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#QueryClientsDetails"
-                                                                data-name="${client.nom_client}"
-                                                                data-email="${client.email_client}"
-                                                                data-contact="${client.tele_client}"
-                                                                data-ville="${client.ville_client}"
-                                                                data-remark="${client.remark}"
-                                                                data-user="${client.utilisateur.name}"
-                                                                data-society-name="${client.nomSociete_client}"
-                                                                data-GSM1="${client.GSM1_client}"
-                                                                data-GSM2="${client.GSM2_client}"
-                                                                data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                            >
-                                                            Détails
-                                                            </button>
-                                                       
-                                                           
-                                                                <form
-                                                                    action="/client/destroy/${client.id}"
-                                                                    method="POST" style="display: inline;"
-                                                                    id="delete-form-${client.id }">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                        onclick="confirmDelete(${client.id })">Supprimer</button>
-                                                                </form>
+                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.ville_client}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                    data-bs-target="#update_client"
+                                                                    data-id="${client.id}"
+                                                                    data-name="${client.nom_client}"
+                                                                    data-email="${client.email_client}"
+                                                                    data-tele="${client.tele_client}"
+                                                                    data-ville="${client.ville_client}"
+                                                                    data-society="${client.nomSociete_client}"
+                                                                    data-GSM1=" ${client.GSM1_client }"
+                                                                    data-GSM2="${client.GSM2_client }"
+                                                                    data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
+                                                                </button>
                                                             
-                                                        
-                                                                        <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#QueryClientsDetails"
+                                                                    data-name="${client.nom_client}"
+                                                                    data-email="${client.email_client}"
+                                                                    data-contact="${client.tele_client}"
+                                                                    data-ville="${client.ville_client}"
+                                                                    data-remark="${client.remark}"
+                                                                    data-user="${client.utilisateur.name}"
+                                                                    data-society-name="${client.nomSociete_client}"
+                                                                    data-GSM1="${client.GSM1_client}"
+                                                                    data-GSM2="${client.GSM2_client}"
+                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                >
+                                                                Détails
+                                                                </button>
+                                                           
+                                                               
+                                                                    <form
+                                                                        action="/client/destroy/${client.id}"
+                                                                        method="POST" style="display: inline;"
+                                                                        id="delete-form-${client.id }">
                                                                         @csrf
-                                                                            <select class="form-select status-select" name="status">
-                                                                                <option value="" selected>Selectionner la table</option>
-                                                                                    ${selectOptions.map(option => `
+                                                                        @method('DELETE')
+                                                                        <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                                            onclick="confirmDelete(${client.id })">Supprimer</button>
+                                                                    </form>
+                                                                
+                                                            
+                                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                                            @csrf
+                                                                                <select class="form-select status-select" name="status">
+                                                                                    <option value="" selected>Selectionner la table</option>
+                                                                                        ${selectOptions.map(option => `
                                                                     <option value="${option}">${option}</option>
                                                                     `).join('')}
-                                                                            </select>
-                                                                        </form>
-                                                        </td>
+                                                                                </select>
+                                                                            </form>
+                                                            </td>
 
 
-                                                        `:''}
+                                                            `:''}
                         ${role === "admin" ? `
-                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.ville_client}</td>
-                                                            <td class="cell">${categoriesList}</td>
-                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                data-bs-target="#update_client"
-                                                                data-id="${client.id}"
-                                                                data-name="${client.nom_client}"
-                                                                data-email="${client.email_client}"
-                                                                data-tele="${client.tele_client}"
-                                                                data-ville="${client.ville_client}"
-                                                                data-society="${client.nomSociete_client}"
-                                                                data-GSM1=" ${client.GSM1_client }"
-                                                                data-GSM2="${client.GSM2_client }"
-                                                                data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                            </button>
-                                                        
-                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#QueryClientsDetails"
-                                                                data-name="${client.nom_client}"
-                                                                data-email="${client.email_client}"
-                                                                data-contact="${client.tele_client}"
-                                                                data-ville="${client.ville_client}"
-                                                                data-remark="${client.remark}"
-                                                                data-user="${client.utilisateur.name}"
-                                                                data-society-name="${client.nomSociete_client}"
-                                                                data-GSM1="${client.GSM1_client}"
-                                                                data-GSM2="${client.GSM2_client}"
-                                                                data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                            >
-                                                            Détails
-                                                            </button>
-                                                       
-                                                                        <form class="client-form" action="/client/select/${client.id}" method="POST">
-                                                                        @csrf
-                                                                            <select class="form-select status-select" name="status">
-                                                                                <option value="" selected>Selectionner la table</option>
-                                                                                    ${selectOptions.map(option => `
+                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.ville_client}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                    data-bs-target="#update_client"
+                                                                    data-id="${client.id}"
+                                                                    data-name="${client.nom_client}"
+                                                                    data-email="${client.email_client}"
+                                                                    data-tele="${client.tele_client}"
+                                                                    data-ville="${client.ville_client}"
+                                                                    data-society="${client.nomSociete_client}"
+                                                                    data-GSM1=" ${client.GSM1_client }"
+                                                                    data-GSM2="${client.GSM2_client }"
+                                                                    data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
+                                                                </button>
+                                                            
+                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#QueryClientsDetails"
+                                                                    data-name="${client.nom_client}"
+                                                                    data-email="${client.email_client}"
+                                                                    data-contact="${client.tele_client}"
+                                                                    data-ville="${client.ville_client}"
+                                                                    data-remark="${client.remark}"
+                                                                    data-user="${client.utilisateur.name}"
+                                                                    data-society-name="${client.nomSociete_client}"
+                                                                    data-GSM1="${client.GSM1_client}"
+                                                                    data-GSM2="${client.GSM2_client}"
+                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                >
+                                                                Détails
+                                                                </button>
+                                                           
+                                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                                            @csrf
+                                                                                <select class="form-select status-select" name="status">
+                                                                                    <option value="" selected>Selectionner la table</option>
+                                                                                        ${selectOptions.map(option => `
                                                     <option value="${option}">${option}</option>
                                                     `).join('')}
-                                                                            </select>
-                                                                        </form>
-                                                        </td>
+                                                                                </select>
+                                                                            </form>
+                                                            </td>
 
 
-                                                        `:''}${role === "utilisateur" ? `
-                                                            <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                            <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                            <td class="cell">${client.ville_client}</td>
-                                                            <td class="cell">${categoriesList}</td>
-                                                            <td class="cell">${client.utilisateur.name || 'Personne'}</td>
+                                                            `:''}${role === "utilisateur" ? `
+                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
+                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
+                                                                <td class="cell">${client.ville_client}</td>
+                                                                <td class="cell">${categoriesList}</td>
+                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
 
-                                                          <td>
-                                                            <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#QueryClientsDetails"
-                                                                data-name="${client.nom_client}"
-                                                                data-email="${client.email_client}"
-                                                                data-contact="${client.tele_client}"
-                                                                data-ville="${client.ville_client}"
-                                                                data-remark="${client.remark}"
-                                                                data-user="${client.utilisateur.name}"
-                                                                data-society-name="${client.nomSociete_client}"
-                                                                data-GSM1="${client.GSM1_client}"
-                                                                data-GSM2="${client.GSM2_client}"
-                                                                data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                            >
-                                                            Détails
-                                                            </button>
-                                                        </td>
-                                                        
-                                                        ` : ""}
+                                                              <td>
+                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#QueryClientsDetails"
+                                                                    data-name="${client.nom_client}"
+                                                                    data-email="${client.email_client}"
+                                                                    data-contact="${client.tele_client}"
+                                                                    data-ville="${client.ville_client}"
+                                                                    data-remark="${client.remark}"
+                                                                    data-user="${client.utilisateur.name}"
+                                                                    data-society-name="${client.nomSociete_client}"
+                                                                    data-GSM1="${client.GSM1_client}"
+                                                                    data-GSM2="${client.GSM2_client}"
+                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                >
+                                                                Détails
+                                                                </button>
+                                                            </td>
+                                                            
+                                                            ` : ""}
 
                     `
 
