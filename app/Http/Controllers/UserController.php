@@ -172,7 +172,7 @@ class UserController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $users = User::where('name', 'LIKE', "%{$search}%")
+        $users = User::where('name', 'LIKE', "%{$search}%")->orWhere('contact', 'LIKE', "%{$search}%")
             ->get();
         // dd($users->toArray());
         return response()->json($users);

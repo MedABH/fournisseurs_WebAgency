@@ -36,6 +36,8 @@
         <thead>
             <tr>
                 <th>Nom de la société</th>
+                <th>GSM1 De La Société</th>
+                <th>GSM2 De La Société</th>
                 <th>Personne à contacter</th>
                 <th>Téléphone</th>
                 <th>Email</th>
@@ -48,6 +50,8 @@
             @foreach ($fcs as $fc)
             <tr>
                 <td>{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
+                <td>{{ $fc->GSM1_fournisseurClient}}</td>
+                <td>{{ $fc->GSM2_fournisseurClient}}</td>
                 <td>{{ $fc->nom_fournisseurClient }}</td>
                 <td>{{ $fc->tele_fournisseurClient}}</td>
                 <td>{{ $fc->email_fournisseurClient}}</td>

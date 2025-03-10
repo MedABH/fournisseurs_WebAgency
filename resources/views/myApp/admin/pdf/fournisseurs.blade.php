@@ -36,6 +36,8 @@
         <thead>
             <tr>
                 <th>Nom de la société</th>
+                <th>GSM1 De La Société</th>
+                <th>GSM2 De La Société</th>
                 <th>Personne à contacter</th>
                 <th>Téléphone</th>
                 <th>Email</th>
@@ -48,6 +50,8 @@
             @foreach ($fournisseurs as $fournisseur)
             <tr>
                 <td>{{ !empty($fournisseur->nomSociete_fournisseur) ? $fournisseur->nomSociete_fournisseur : 'Particulier' }}
+                <td>{{ $fournisseur->GSM1_fournisseur }}</td>
+                <td>{{ $fournisseur->GSM2_fournisseur }}</td>
                 <td>{{ $fournisseur->nom_fournisseur }}</td>
                 <td>{{ $fournisseur->tele_fournisseur}}</td>
                 <td>{{ $fournisseur->email_fournisseur}}</td>
