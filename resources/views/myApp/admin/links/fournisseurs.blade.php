@@ -138,7 +138,7 @@
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                            name="categorie_id" style="height: 39px">
+                            name="categorie_id" id="categorie" style="height: 39px">
                             <option value="">Selectionner la catégorie</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -150,6 +150,25 @@
                         @error('categorie_id', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
+                         <!-- Label pour les sous-catégories, caché tant qu'une catégorie n'est pas sélectionnée -->
+                         <label for="sous-categorie" class="form-label" id="label-sous-categorie"
+                         {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                         <strong class="det">Sous-Catégorie</strong>
+                     </label>
+
+                     <!-- Sélecteur de sous-catégorie, caché tant qu'une catégorie n'est pas sélectionnée -->
+                     <select id="sous-categorie" class="form-control" name="sous_categorie_id"
+                         {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                         <option value="">Sélectionner une sous-catégorie</option>
+                         @if (request('categorie_id'))
+                             @foreach ($sousCategories as $sousCategorie)
+                                 <option value="{{ $sousCategorie->id }}"
+                                     {{ request('sous_categorie_id') == $sousCategorie->id ? 'selected' : '' }}>
+                                     {{ $sousCategorie->nom_produit }}
+                                 </option>
+                             @endforeach
+                         @endif
+                     </select>
 
                     </div>
                     <div class="modal-footer">
@@ -791,6 +810,50 @@
             });
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Quand une catégorie est sélectionnée
+        $('#categorie').change(function() {
+            var categorieId = $(this).val();
+
+            // Si une catégorie est sélectionnée
+            if (categorieId) {
+                // Afficher le champ des sous-catégories et son label
+                $('#label-sous-categorie').show();
+                $('#sous-categorie').show();
+
+                // Faire une requête AJAX pour récupérer les sous-catégories
+                $.ajax({
+                    url: '/sous-categories/' + categorieId, // L'URL de ta route
+                    type: 'GET',
+                    success: function(response) {
+                        // Vider le select de sous-catégories
+                        $('#sous-categorie').empty();
+                        $('#sous-categorie').append(
+                            '<option value="">Sélectionner une sous-catégorie</option>');
+
+                        // Ajouter les sous-catégories au select
+                        $.each(response, function(index, sousCategorie) {
+                            $('#sous-categorie').append('<option value="' +
+                                sousCategorie.id + '">' + sousCategorie
+                                .nom_produit + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Si une erreur se produit
+                        console.log('Erreur :', error);
+                    }
+                });
+            } else {
+                // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                $('#label-sous-categorie').hide();
+                $('#sous-categorie').hide();
+            }
+        });
+    });
+</script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
