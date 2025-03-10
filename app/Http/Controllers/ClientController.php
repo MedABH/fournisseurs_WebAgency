@@ -212,7 +212,7 @@ class ClientController extends Controller
         $select = ['Fournisseur', 'Tiers', 'Client et Fournisseur'];
         $search = $request->input('search');
         $client = Client::with(['categories.sousCategories', 'utilisateur'])
-            ->where('nom_client', 'LIKE', "%{$search}%")
+            ->where('tele_client', 'LIKE', "%{$search}%")
             ->orWhere('nomSociete_client', 'LIKE', "%{$search}%")
             ->get();
         return response()->json([

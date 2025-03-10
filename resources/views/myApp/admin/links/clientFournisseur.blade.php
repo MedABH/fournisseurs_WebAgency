@@ -8,7 +8,7 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.users') }}" method="GET"
+                        <form action="{{ route('search.fournisseurClients') }}" method="GET"
                             class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
                                 <input type="text" name="search" class="form-control search-orders"
@@ -138,7 +138,7 @@
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                            name="categorie_id" style="height: 39px">
+                            name="categorie_id" id="categorie" style="height: 39px">
                             <option value="">Selectionner la catégorie</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
@@ -150,7 +150,25 @@
                         @error('categorie_id', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        <!-- Label pour les sous-catégories, caché tant qu'une catégorie n'est pas sélectionnée -->
+                        <label for="sous-categorie" class="form-label" id="label-sous-categorie"
+                            {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                            <strong class="det">Sous-Catégorie</strong>
+                        </label>
 
+                        <!-- Sélecteur de sous-catégorie, caché tant qu'une catégorie n'est pas sélectionnée -->
+                        <select id="sous-categorie" class="form-control" name="sous_categorie_id"
+                            {{ request('categorie_id') ? '' : 'style=display:none;' }}>
+                            <option value="">Sélectionner une sous-catégorie</option>
+                            @if (request('categorie_id'))
+                                @foreach ($sousCategories as $sousCategorie)
+                                    <option value="{{ $sousCategorie->id }}"
+                                        {{ request('sous_categorie_id') == $sousCategorie->id ? 'selected' : '' }}>
+                                        {{ $sousCategorie->nom_produit }}
+                                    </option>
+                                @endforeach
+                            @endif
+                        </select>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" class="btn btn-success" value="Ajouter" data-bs-dismiss="modal">
@@ -760,6 +778,49 @@
             });
         });
     </script>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <script>
+         $(document).ready(function() {
+             // Quand une catégorie est sélectionnée
+             $('#categorie').change(function() {
+                 var categorieId = $(this).val();
+ 
+                 // Si une catégorie est sélectionnée
+                 if (categorieId) {
+                     // Afficher le champ des sous-catégories et son label
+                     $('#label-sous-categorie').show();
+                     $('#sous-categorie').show();
+ 
+                     // Faire une requête AJAX pour récupérer les sous-catégories
+                     $.ajax({
+                         url: '/sous-categories/' + categorieId, // L'URL de ta route
+                         type: 'GET',
+                         success: function(response) {
+                             // Vider le select de sous-catégories
+                             $('#sous-categorie').empty();
+                             $('#sous-categorie').append(
+                                 '<option value="">Sélectionner une sous-catégorie</option>');
+ 
+                             // Ajouter les sous-catégories au select
+                             $.each(response, function(index, sousCategorie) {
+                                 $('#sous-categorie').append('<option value="' +
+                                     sousCategorie.id + '">' + sousCategorie
+                                     .nom_produit + '</option>');
+                             });
+                         },
+                         error: function(xhr, status, error) {
+                             // Si une erreur se produit
+                             console.log('Erreur :', error);
+                         }
+                     });
+                 } else {
+                     // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                     $('#label-sous-categorie').hide();
+                     $('#sous-categorie').hide();
+                 }
+             });
+         });
+     </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -954,132 +1015,75 @@
                                
 
                             ${role === "super-admin" ? `
-                                                <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                                <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                                <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
-                                                <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
-                                                <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
-                                                <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                                <td class="cell">${fc.ville_fournisseurClient}</td>
-                                                <td class="cell">${categoriesList}</td>
-                                                <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
-                                            <td class="button-container">
-                                        <div class="d-flex align-items-center gap-2"
-                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                    data-bs-target="#update_fournisseurClient"
-                                                    data-id="${fc.id}"
-                                                    data-name="${fc.nom_fournisseurClient}"
-                                                    data-email="${fc.email_fournisseurClient}"
-                                                    data-tele="${fc.tele_fournisseurClient}"
-                                                    data-ville="${fc.ville_fournisseurClient}"
-                                                    data-society="${fc.nomSociete_fournisseurClient}"
-                                                    data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                    data-GSM2="${fc.GSM2_fournisseurClient }"
-                                                    data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
-                                                </a>
-                                           
-                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#QueryFournisseurClientsDetails"
-                                                    data-name="${fc.nom_fournisseurClient}"
-                                                    data-email="${fc.email_fournisseurClient}"
-                                                    data-contact="${fc.tele_fournisseurClient}"
-                                                    data-ville="${fc.ville_fournisseurClient}"
-                                                    data-remark="${fc.remark}"
-                                                    data-user="${fc.utilisateur.name}"
-                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                                >
-                                                Détails
-                                                </button>
-                                            
+                                                    <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
+                                                    <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.ville_fournisseurClient}</td>
+                                                    <td class="cell">${categoriesList}</td>
+                                                    <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
+                                                <td class="button-container">
+                                            <div class="d-flex align-items-center gap-2"
+                                                style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                    <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                        data-bs-target="#update_fournisseurClient"
+                                                        data-id="${fc.id}"
+                                                        data-name="${fc.nom_fournisseurClient}"
+                                                        data-email="${fc.email_fournisseurClient}"
+                                                        data-tele="${fc.tele_fournisseurClient}"
+                                                        data-ville="${fc.ville_fournisseurClient}"
+                                                        data-society="${fc.nomSociete_fournisseurClient}"
+                                                        data-GSM1=" ${fc.GSM1_fournisseurClient }"
+                                                        data-GSM2="${fc.GSM2_fournisseurClient }"
+                                                        data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
+                                                    </a>
+                                               
+                                                    <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#QueryFournisseurClientsDetails"
+                                                        data-name="${fc.nom_fournisseurClient}"
+                                                        data-email="${fc.email_fournisseurClient}"
+                                                        data-contact="${fc.tele_fournisseurClient}"
+                                                        data-ville="${fc.ville_fournisseurClient}"
+                                                        data-remark="${fc.remark}"
+                                                        data-user="${fc.utilisateur.name}"
+                                                        data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                        data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                        data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                        data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                    >
+                                                    Détails
+                                                    </button>
                                                 
-                                                    <form
-                                                        action="/fournisseurClient/destroy/${fc.id}"
-                                                        method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                        id="delete-form-${fc.id }">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                            onclick="confirmDelete(${fc.id })">Supprimer</button>
-                                                    </form>
+                                                    
+                                                        <form
+                                                            action="/fournisseurClient/destroy/${fc.id}"
+                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                            id="delete-form-${fc.id }">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                                onclick="confirmDelete(${fc.id })">Supprimer</button>
+                                                        </form>
+                                                    
                                                 
-                                            
-                                                <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
-                                                @csrf
-                                                    <select class="form-select status-select" name="status">
-                                                        <option value="" selected>Selectionner la table</option>
-                                                                ${selectOptions.map(option => `
+                                                    <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
+                                                    @csrf
+                                                        <select class="form-select status-select" name="status">
+                                                            <option value="" selected>Selectionner la table</option>
+                                                                    ${selectOptions.map(option => `
                                             <option value="${option}">${option}</option>
                                             `).join('')}
-                                                    </select>
-                                                </form>
-                                                </div>
-                                            </td>
+                                                        </select>
+                                                    </form>
+                                                    </div>
+                                                </td>
 
-                                            ` : ''}
+                                                ` : ''}
 
                             ${role === "admin" ? `
-                                            <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
-                                            <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
-                                            <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
-                                            <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
-                                            <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
-                                            <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
-                                            <td class="cell">${fc.ville_fournisseurClient}</td>
-                                            <td class="cell">${categoriesList}</td>
-                                            <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
-                                            <td class="button-container">
-                                        <div class="d-flex align-items-center gap-2"
-                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                    data-bs-target="#update_fournisseurClient"
-                                                    data-id="${fc.id}"
-                                                    data-name="${fc.nom_fournisseurClient}"
-                                                    data-email="${fc.email_fournisseurClient}"
-                                                    data-tele="${fc.tele_fournisseurClient}"
-                                                    data-ville="${fc.ville_fournisseurClient}"
-                                                    data-society="${fc.nomSociete_fournisseurClient}"
-                                                    data-GSM1=" ${fc.GSM1_fournisseurClient }"
-                                                    data-GSM2="${fc.GSM2_fournisseurClient }"
-                                                    data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
-                                                </a>
-                                           
-                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#QueryFournisseurClientsDetails"
-                                                    data-name="${fc.nom_fournisseurClient}"
-                                                    data-email="${fc.email_fournisseurClient}"
-                                                    data-contact="${fc.tele_fournisseurClient}"
-                                                    data-ville="${fc.ville_fournisseurClient}"
-                                                    data-remark="${fc.remark}"
-                                                    data-user="${fc.utilisateur.name}"
-                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                                >
-                                                Détails
-                                                </button>
-                                           
-                                                <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
-                                                @csrf
-                                                    <select class="form-select status-select" name="status">
-                                                        <option value="" selected>Selectionner la table</option>
-                                                                ${selectOptions.map(option => `
-                                            <option value="${option}">${option}</option>
-                                            `).join('')}
-                                                    </select>
-                                                </form>
-                                                </div>
-                                            </td>
-
-
-
-                                            `:''} ${role === "utilisateur" ? `
                                                 <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
                                                 <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
                                                 <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
@@ -1089,30 +1093,87 @@
                                                 <td class="cell">${fc.ville_fournisseurClient}</td>
                                                 <td class="cell">${categoriesList}</td>
                                                 <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
+                                                <td class="button-container">
+                                            <div class="d-flex align-items-center gap-2"
+                                                style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                    <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                        data-bs-target="#update_fournisseurClient"
+                                                        data-id="${fc.id}"
+                                                        data-name="${fc.nom_fournisseurClient}"
+                                                        data-email="${fc.email_fournisseurClient}"
+                                                        data-tele="${fc.tele_fournisseurClient}"
+                                                        data-ville="${fc.ville_fournisseurClient}"
+                                                        data-society="${fc.nomSociete_fournisseurClient}"
+                                                        data-GSM1=" ${fc.GSM1_fournisseurClient }"
+                                                        data-GSM2="${fc.GSM2_fournisseurClient }"
+                                                        data-category="${(fc.categories && fc.categories.length > 0) ? fc.categories[0].id : ''}">Modifier
+                                                    </a>
+                                               
+                                                    <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#QueryFournisseurClientsDetails"
+                                                        data-name="${fc.nom_fournisseurClient}"
+                                                        data-email="${fc.email_fournisseurClient}"
+                                                        data-contact="${fc.tele_fournisseurClient}"
+                                                        data-ville="${fc.ville_fournisseurClient}"
+                                                        data-remark="${fc.remark}"
+                                                        data-user="${fc.utilisateur.name}"
+                                                        data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                        data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                        data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                        data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                    >
+                                                    Détails
+                                                    </button>
+                                               
+                                                    <form class="fc-form" action="/fournisseurClient/select/${fc.id}" method="POST">
+                                                    @csrf
+                                                        <select class="form-select status-select" name="status">
+                                                            <option value="" selected>Selectionner la table</option>
+                                                                    ${selectOptions.map(option => `
+                                            <option value="${option}">${option}</option>
+                                            `).join('')}
+                                                        </select>
+                                                    </form>
+                                                    </div>
+                                                </td>
 
-                                             <td class="button-container">
-                                        <div class="d-flex align-items-center gap-2"
-                                            style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#QueryFournisseurClientsDetails"
-                                                    data-name="${fc.nom_fournisseurClient}"
-                                                    data-email="${fc.email_fournisseurClient}"
-                                                    data-contact="${fc.tele_fournisseurClient}"
-                                                    data-ville="${fc.ville_fournisseurClient}"
-                                                    data-remark="${fc.remark}"
-                                                    data-user="${fc.utilisateur.name}"
-                                                    data-society-name="${fc.nomSociete_fournisseurClient}"
-                                                    data-GSM1="${fc.GSM1_fournisseurClient}"
-                                                    data-GSM2="${fc.GSM2_fournisseurClient}"
-                                                    data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
-                                                >
-                                                Détails
-                                                </button>
-                                                </div>
-                                            </td>
-                                            
-                                            ` : ""}
+
+
+                                                `:''} ${role === "utilisateur" ? `
+                                                    <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
+                                                    <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.nom_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.tele_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.email_fournisseurClient || 'Non disponible'}</td>
+                                                    <td class="cell">${fc.ville_fournisseurClient}</td>
+                                                    <td class="cell">${categoriesList}</td>
+                                                    <td class="cell">${fc.utilisateur.name || 'Personne'}</td>
+
+                                                 <td class="button-container">
+                                            <div class="d-flex align-items-center gap-2"
+                                                style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                    <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#QueryFournisseurClientsDetails"
+                                                        data-name="${fc.nom_fournisseurClient}"
+                                                        data-email="${fc.email_fournisseurClient}"
+                                                        data-contact="${fc.tele_fournisseurClient}"
+                                                        data-ville="${fc.ville_fournisseurClient}"
+                                                        data-remark="${fc.remark}"
+                                                        data-user="${fc.utilisateur.name}"
+                                                        data-society-name="${fc.nomSociete_fournisseurClient}"
+                                                        data-GSM1="${fc.GSM1_fournisseurClient}"
+                                                        data-GSM2="${fc.GSM2_fournisseurClient}"
+                                                        data-categories="${encodeURIComponent(JSON.stringify(fc.categories))}"
+                                                    >
+                                                    Détails
+                                                    </button>
+                                                    </div>
+                                                </td>
+                                                
+                                                ` : ""}
 
                         `
 
@@ -1258,7 +1319,7 @@
                                                                     );
                                                                 if (
                                                                     productsSelect
-                                                                    ) {
+                                                                ) {
                                                                     productsSelect
                                                                         .innerHTML =
                                                                         productsHTML;
@@ -1322,7 +1383,7 @@
                         <h6 class="info-fournisseurClient" id="showNamefc"></h6>
                     </div>
                     <div class="show-info-fournisseurClient show-contact">
-                        <label class="label-detail-fournisseurClient">Contact du GSM</label>
+                        <label class="label-detail-fournisseurClient">Numero De Telephone</label>
                         <h6 class="info-fournisseurClient" id="showContactfc"></h6>
                     </div>
                     <div class="show-info-fournisseurClient show-email">
