@@ -841,10 +841,6 @@
                                 .nom_produit + '</option>');
                         });
                     },
-                    error: function(xhr, status, error) {
-                        // Si une erreur se produit
-                        console.log('Erreur :', error);
-                    }
                 });
             } else {
                 // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label

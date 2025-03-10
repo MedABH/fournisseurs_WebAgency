@@ -547,7 +547,7 @@
                                                     </h6>
                                                 </div>
                                                 <div class="show-info-prospect show-contact">
-                                                    <label class="label-detail-prospect">Contact du GSM</label>
+                                                    <label class="label-detail-prospect">Numero De Telephone</label>
                                                     <h6 class="info-prospect showContactProspect"
                                                         id="showContactDetail-{{ $prospect->id }}">
                                                     </h6>

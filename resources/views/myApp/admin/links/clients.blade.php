@@ -532,7 +532,7 @@
                                                 </h6>
                                             </div>
                                             <div class="show-info-client show-contact">
-                                                <label class="label-detail-client">Contact du GSM</label>
+                                                <label class="label-detail-client">Numero De Telephone</label>
                                                 <h6 class="info-client showContactClient"
                                                     id="showContactDetail-{{ $client->id }}">
                                                 </h6>

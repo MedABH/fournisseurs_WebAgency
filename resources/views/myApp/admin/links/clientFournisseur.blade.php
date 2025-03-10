@@ -1383,7 +1383,7 @@
                         <h6 class="info-fournisseurClient" id="showNamefc"></h6>
                     </div>
                     <div class="show-info-fournisseurClient show-contact">
-                        <label class="label-detail-fournisseurClient">Contact du GSM</label>
+                        <label class="label-detail-fournisseurClient">Numero De Telephone</label>
                         <h6 class="info-fournisseurClient" id="showContactfc"></h6>
                     </div>
                     <div class="show-info-fournisseurClient show-email">
