@@ -863,34 +863,7 @@
             )
         })
     </script>
-    <!-- <script>
-        document.getElementById('categorie').addEventListener('change', function() {
-            let categorieId = this.value;
-            let sousCategorieSelect = document.getElementById('sous-categorie');
-            let sousCategorieContainer = document.getElementById('sous-categorie-container');
-
-            if (categorieId) {
-                fetch(`/sous-categories/${categorieId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        sousCategorieSelect.innerHTML =
-                            '<option value="">Sélectionner une sous-catégorie</option>';
-
-                        data.forEach(sousCategorie => {
-                            let option = document.createElement('option');
-                            option.value = sousCategorie.id;
-                            option.textContent = sousCategorie.nom_sous_categorie;
-                            sousCategorieSelect.appendChild(option);
-                        });
-
-                        sousCategorieContainer.style.display = data.length > 0 ? 'block' : 'none';
-                    })
-                    .catch(error => console.error('Erreur:', error));
-            } else {
-                sousCategorieContainer.style.display = 'none';
-            }
-        });
-    </script>-->
+   
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
@@ -1358,11 +1331,7 @@
                                             }
                                         });
                                     });
-
-
-
-
-
+                                
                             });
                         })
                         .catch(error => {
