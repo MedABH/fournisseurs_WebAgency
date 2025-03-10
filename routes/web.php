@@ -164,3 +164,5 @@ Route::get('/classifications', [ClassificationsController::class, 'index'])->nam
 
 
 Route::get('/journaux', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/sous-categories/{categorieId}', [CategorieController::class, 'getSousCategories']);
+
