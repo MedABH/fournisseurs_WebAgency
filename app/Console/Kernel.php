@@ -4,9 +4,6 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Models\Prospect;
-use App\Models\Setting;
-
 
 class Kernel extends ConsoleKernel
 {
@@ -15,14 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-            Setting::where('key', 'addedToday')->update(['value' => 0]);
-            Setting::where('key', 'deletedToday')->update(['value' => 0]);
-        })->dailyAt('00:00');
+        // Schedule the custom command to reset addedToday and deletedToday daily at midnight
+        $schedule->command('app:reset-daily-value')->dailyAt('00:00');
     }
-
-
-
 
     /**
      * Register the commands for the application.
