@@ -1,9 +1,11 @@
 @extends('myApp.admin.adminLayout.adminPage')
 
 @section('parties-prenantes')
-<div class="card-header">
-    <h4 class="card-title">L'historique</h4>
-</div>
+<div class="row g-3 mb-4 align-items-center justify-content-between">
+    <div class="col-auto">
+        <h1 class="app-page-title mb-0">Historique</h1>
+    </div>
+</div><!--//row-->
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link active">Historique</a>
         <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>

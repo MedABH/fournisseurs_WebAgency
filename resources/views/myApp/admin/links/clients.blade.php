@@ -91,53 +91,59 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label class="form-label"><strong class="det">Nom de la société</strong></label>
+                        <label class="form-label"><strong class="det">Nom de la société</strong></label><br>
+                        @error('nomSociete_client', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                    @enderror
                         <input type="text" class="form-control" name="nomSociete_client"
                             placeholder="Entrer le nom de la société..." value="{{ old('nomSociete_client') }}" />
-                        @error('nomSociete_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                       
 
-                        <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
+                        <label class="form-label"><strong class="det">GSM1 de la société</strong></label><br>
+                        @error('GSM1_client', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                    @enderror
                         <input type="tel" class="form-control" name="GSM1_client" required
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_client') }}" />
-                        @error('GSM1_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
+                       
+                        <label class="form-label"><strong class="det">GSM2 de la société</strong></label><br>
+                        @error('GSM2_client', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                    @enderror
                         <input type="tel" class="form-control" name="GSM2_client" required
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_client') }}" />
-                        @error('GSM2_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                       
+
+
+                        <label class="form-label"><strong class="det">Personne à contacter</strong></label><br>
+                        @error('nom_client', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-
-
-                        <label class="form-label"><strong class="det">Personne à contacter</strong></label>
                         <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
                             value="{{ old('nom_client') }}" />
-                        @error('nom_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        
 
-                        <label class="form-label"><strong class="det">Numero de telephone</strong></label>
+                        <label class="form-label"><strong class="det">Numero de telephone</strong></label><br>
+                        @error('tele_client', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
                         <input type="tel" class="form-control" name="tele_client" required
                             placeholder="Entrer le contact..." value="{{ old('tele_client') }}" />
-                        @error('tele_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                        <label class="form-label"><strong class="det">Email</strong></label>
+                        
+                        <label class="form-label"><strong class="det">Email</strong></label><br>
+                        @error('email_client', 'default')
+                        <span class="text-danger">{{ $message }}</span> <br>
+                    @enderror
                         <input type="email" class="form-control" name="email_client" placeholder="Entrer l'émail..."
                             value="{{ old('email_client') }}" />
-                        @error('email_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        
 
 
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_client" placeholder="Entrer la ville..."
                             value="{{ old('ville_client') }}" />
                         @error('ville_client', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
                         <label for="categorie" class="form-label"><strong class="det">Catégorie</strong></label>
                         <select id="categorie" class="form-control" name="categorie_id">
@@ -633,7 +639,7 @@
                                     value="{{ old('newNomSociete_client', $client->nomSociete_client) }}" />
                                 @if ($errors->has('newNomSociete_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newNomSociete_client') }}</span>
+                                        {{ $errors->first('newNomSociete_client') }}</span> <br>
                                 @endif
 
                             </div>
@@ -644,7 +650,7 @@
                                     value="{{ old('newGSM1_client', $client->GSM1_client) }}" />
                                 @if ($errors->has('newGSM1_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newGSM1_client') }}</span>
+                                        {{ $errors->first('newGSM1_client') }}</span> <br>
                                 @endif
 
                             </div>
@@ -655,7 +661,7 @@
                                     value="{{ old('newGSM2_client', $client->GSM2_client) }}" />
                                 @if ($errors->has('newGSM2_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newGSM2_client') }}</span>
+                                        {{ $errors->first('newGSM2_client') }}</span> <br>
                                 @endif
 
                             </div>
@@ -666,7 +672,7 @@
                                     value="{{ old('newNom_client', $client->nom_client) }}" />
                                 @if ($errors->has('newNom_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newNom_client') }}</span>
+                                        {{ $errors->first('newNom_client') }}</span> <br>
                                 @endif
 
                             </div>
@@ -677,7 +683,7 @@
                                     value="{{ old('newTele_client', $client->tele_client) }}" />
                                 @if ($errors->has('newTele_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newTele_client') }}</span>
+                                        {{ $errors->first('newTele_client') }}</span> <br>
                                 @endif
 
                             </div>
@@ -688,7 +694,7 @@
                                     value="{{ old('newEmail_client', $client->email_client) }}" />
                                 @if ($errors->has('newEmail_client'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newEmail_client') }}</span>
+                                        {{ $errors->first('newEmail_client') }}</span> <br>
                                 @endif
 
                             </div>
