@@ -396,144 +396,297 @@ class ChartController extends Controller
 
 
     public function getDataForChartsByDate(Request $request)
-{
-    $period = $request->input('period');
-    $data = [];
+    {
+        $period = $request->input('period');
+        $data = [];
 
-    // Set the locale to French for month names
-    Carbon::setLocale('fr');
+        // Set the locale to French for month names
+        Carbon::setLocale('fr');
 
-    if ($period == 1) {  // For "Cette semaine"
-        // Weekly data
-        $dates = [];
-        for ($i = 6; $i >= 0; $i--) {
-            $dates[] = Carbon::now()->subDays($i)->format('m/d/Y');
-        }
-
-        foreach ($dates as $date) {
-            $count = DB::table('clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
-            $count += DB::table('prospects')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
-            $count += DB::table('fournisseurs')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
-            $count += DB::table('fournisseur_clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
-            $data[$date] = $count;
-        }
-    } elseif ($period == 2) {  // For "Aujourd'hui"
-        // Today's data in 2-hour intervals: 00:00-01:59, 02:00-03:59, etc.
-        $today = Carbon::now()->format('Y-m-d');
-
-        for ($hour = 0; $hour < 24; $hour += 2) {
-            $startTime = Carbon::parse($today)->addHours($hour)->format('H:i:s');
-            $endTime = Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i:s');  // Subtract 1 second to get 01:59 instead of 02:00
-
-            $count = DB::table('clients')
-                ->whereDate('created_at', $today)
-                ->whereTime('created_at', '>=', $startTime)
-                ->whereTime('created_at', '<=', $endTime)
-                ->count();
-
-            $count += DB::table('prospects')
-                ->whereDate('created_at', $today)
-                ->whereTime('created_at', '>=', $startTime)
-                ->whereTime('created_at', '<=', $endTime)
-                ->count();
-
-            $count += DB::table('fournisseurs')
-                ->whereDate('created_at', $today)
-                ->whereTime('created_at', '>=', $startTime)
-                ->whereTime('created_at', '<=', $endTime)
-                ->count();
-
-            $count += DB::table('fournisseur_clients')
-                ->whereDate('created_at', $today)
-                ->whereTime('created_at', '>=', $startTime)
-                ->whereTime('created_at', '<=', $endTime)
-                ->count();
-
-            // Format the label as "00:00-01:59", "02:00-03:59", etc.
-            $label = Carbon::parse($today)->addHours($hour)->format('H:i') . ' - ' . Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i');
-            $data[$label] = $count;
-        }
-    } elseif ($period == 3) {  // For "Ce mois-ci"
-        // Get the current month and break it into 7-day periods
-        $startDate = Carbon::now()->startOfMonth();
-        $endDate = Carbon::now()->endOfMonth();
-
-        // Initialize variables for grouping the data
-        $currentPeriodStart = $startDate;
-        $periodIndex = 1;
-
-        while ($currentPeriodStart <= $endDate) {
-            // Calculate the end of the current period (7 days later)
-            $currentPeriodEnd = $currentPeriodStart->copy()->addDays(6);
-            if ($currentPeriodEnd > $endDate) {
-                $currentPeriodEnd = $endDate;
+        if ($period == 1) {  // For "Cette semaine"
+            // Weekly data
+            $dates = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $dates[] = Carbon::now()->subDays($i)->format('m/d/Y');
             }
 
-            // Get the label for the period (e.g., "1-7", "8-14", etc.)
-            $periodLabel = $currentPeriodStart->format('d') . ' - ' . $currentPeriodEnd->format('d');
+            foreach ($dates as $date) {
+                $count = DB::table('clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+                $count += DB::table('prospects')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+                $count += DB::table('fournisseurs')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+                $count += DB::table('fournisseur_clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+                $data[$date] = $count;
+            }
+        } elseif ($period == 2) {  // For "Aujourd'hui"
+            // Today's data in 2-hour intervals: 00:00-01:59, 02:00-03:59, etc.
+            $today = Carbon::now()->format('Y-m-d');
 
-            // Count the "Parties Prenantes" for this period
-            $count = DB::table('clients')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('prospects')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('fournisseurs')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('fournisseur_clients')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
+            for ($hour = 0; $hour < 24; $hour += 2) {
+                $startTime = Carbon::parse($today)->addHours($hour)->format('H:i:s');
+                $endTime = Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i:s');  // Subtract 1 second to get 01:59 instead of 02:00
 
-            // Store the count for this period
-            $data[$periodLabel] = $count;
+                $count = DB::table('clients')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
 
-            // Move to the next 7-day period
-            $currentPeriodStart = $currentPeriodStart->addDays(7);
+                $count += DB::table('prospects')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
+
+                $count += DB::table('fournisseurs')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
+
+                $count += DB::table('fournisseur_clients')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
+
+                // Format the label as "00:00-01:59", "02:00-03:59", etc.
+                $label = Carbon::parse($today)->addHours($hour)->format('H:i') . ' - ' . Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i');
+                $data[$label] = $count;
+            }
+        } elseif ($period == 3) {  // For "Ce mois-ci"
+            // Get the current month and break it into 7-day periods
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+
+            // Initialize variables for grouping the data
+            $currentPeriodStart = $startDate;
+            $periodIndex = 1;
+
+            while ($currentPeriodStart <= $endDate) {
+                // Calculate the end of the current period (7 days later)
+                $currentPeriodEnd = $currentPeriodStart->copy()->addDays(6);
+                if ($currentPeriodEnd > $endDate) {
+                    $currentPeriodEnd = $endDate;
+                }
+
+                // Get the label for the period (e.g., "1-7", "8-14", etc.)
+                $periodLabel = $currentPeriodStart->format('d') . ' - ' . $currentPeriodEnd->format('d');
+
+                // Count the "Parties Prenantes" for this period
+                $count = DB::table('clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('prospects')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('fournisseurs')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('fournisseur_clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Store the count for this period
+                $data[$periodLabel] = $count;
+
+                // Move to the next 7-day period
+                $currentPeriodStart = $currentPeriodStart->addDays(7);
+            }
+        } elseif ($period == 4) {  // For "Cette année" (This year)
+            // Get the current year and break it into months
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+
+            // Initialize variables for grouping the data
+            $currentPeriodStart = $startDate;
+            $months = [
+                'Janvier',
+                'Février',
+                'Mars',
+                'Avril',
+                'Mai',
+                'Juin',
+                'Juillet',
+                'Août',
+                'Septembre',
+                'Octobre',
+                'Novembre',
+                'Décembre'
+            ];
+
+            foreach ($months as $index => $month) {
+                // Get the start and end dates for the current month
+                $currentPeriodEnd = $currentPeriodStart->copy()->endOfMonth();
+
+                // Get the label for the month
+                $monthLabel = $month;
+
+                // Count the "Parties Prenantes" for this period
+                $count = DB::table('clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('prospects')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('fournisseurs')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+                $count += DB::table('fournisseur_clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Store the count for this month
+                $data[$monthLabel] = $count;
+
+                // Move to the next month
+                $currentPeriodStart = $currentPeriodStart->addMonth();
+            }
         }
-    } elseif ($period == 4) {  // For "Cette année" (This year)
-        // Get the current year and break it into months
-        $startDate = Carbon::now()->startOfYear();
-        $endDate = Carbon::now()->endOfYear();
 
-        // Initialize variables for grouping the data
-        $currentPeriodStart = $startDate;
-        $months = [
-            'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 
-            'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'
-        ];
-
-        foreach ($months as $index => $month) {
-            // Get the start and end dates for the current month
-            $currentPeriodEnd = $currentPeriodStart->copy()->endOfMonth();
-
-            // Get the label for the month
-            $monthLabel = $month;
-
-            // Count the "Parties Prenantes" for this period
-            $count = DB::table('clients')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('prospects')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('fournisseurs')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-            $count += DB::table('fournisseur_clients')
-                ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
-                ->count();
-
-            // Store the count for this month
-            $data[$monthLabel] = $count;
-
-            // Move to the next month
-            $currentPeriodStart = $currentPeriodStart->addMonth();
-        }
+        return response()->json($data);
     }
 
-    return response()->json($data);
-}
+    public function getDataForLineChartByDate(Request $request)
+    {
+        $period = $request->input('period');
+        $data = [
+            'fournisseurs' => [],
+            'fournisseur_clients' => []
+        ];
 
+        // Set the locale to French for month names
+        Carbon::setLocale('fr');
+        Log::info('Period: ' . $period);
+        if ($period == 1) {  // For "Cette semaine" (weekly data)
+            $dates = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $dates[] = Carbon::now()->subDays($i)->format('m/d/Y');
+            }
+
+            foreach ($dates as $date) {
+                // Get the count of fournisseurs
+                $fournisseursCount = DB::table('fournisseurs')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+                // Get the count of fournisseur_clients
+                $fournisseurClientsCount = DB::table('fournisseur_clients')->whereDate('created_at', Carbon::createFromFormat('m/d/Y', $date))->count();
+
+                // Store data for both counts
+                $data['fournisseurs'][$date] = $fournisseursCount;
+                $data['fournisseur_clients'][$date] = $fournisseurClientsCount;
+            }
+        } elseif ($period == 2) {  // For "Aujourd'hui" (Today's data in 2-hour intervals)
+            $today = Carbon::now()->format('Y-m-d');
+
+            for ($hour = 0; $hour < 24; $hour += 2) {
+                $startTime = Carbon::parse($today)->addHours($hour)->format('H:i:s');
+                $endTime = Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i:s');  // Subtract 1 second to get 01:59 instead of 02:00
+
+                // Get the count of fournisseurs
+                $fournisseursCount = DB::table('fournisseurs')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
+
+                // Get the count of fournisseur_clients
+                $fournisseurClientsCount = DB::table('fournisseur_clients')
+                    ->whereDate('created_at', $today)
+                    ->whereTime('created_at', '>=', $startTime)
+                    ->whereTime('created_at', '<=', $endTime)
+                    ->count();
+
+                // Format the label as "00:00-01:59", "02:00-03:59", etc.
+                $label = Carbon::parse($today)->addHours($hour)->format('H:i') . ' - ' . Carbon::parse($today)->addHours($hour + 2)->subSecond()->format('H:i');
+
+                // Store data for both counts
+                $data['fournisseurs'][$label] = $fournisseursCount;
+                $data['fournisseur_clients'][$label] = $fournisseurClientsCount;
+            }
+        } elseif ($period == 3) {  // For "Ce mois-ci"
+            // Get the current month and break it into 7-day periods
+            $startDate = Carbon::now()->startOfMonth();
+            $endDate = Carbon::now()->endOfMonth();
+
+            // Initialize variables for grouping the data
+            $currentPeriodStart = $startDate;
+            $periodIndex = 1;
+
+            while ($currentPeriodStart <= $endDate) {
+                // Calculate the end of the current period (7 days later)
+                $currentPeriodEnd = $currentPeriodStart->copy()->addDays(6);
+                if ($currentPeriodEnd > $endDate) {
+                    $currentPeriodEnd = $endDate;
+                }
+
+                // Get the label for the period (e.g., "1-7", "8-14", etc.)
+                $periodLabel = $currentPeriodStart->format('d') . ' - ' . $currentPeriodEnd->format('d');
+
+                // Get the count of fournisseurs
+                $fournisseursCount = DB::table('fournisseurs')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Get the count of fournisseur_clients
+                $fournisseurClientsCount = DB::table('fournisseur_clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Store data for both counts
+                $data['fournisseurs'][$periodLabel] = $fournisseursCount;
+                $data['fournisseur_clients'][$periodLabel] = $fournisseurClientsCount;
+
+                // Move to the next 7-day period
+                $currentPeriodStart = $currentPeriodStart->addDays(7);
+            }
+        } elseif ($period == 4) {  // For "Cette année" (This year)
+            // Get the current year and break it into months
+            $startDate = Carbon::now()->startOfYear();
+            $endDate = Carbon::now()->endOfYear();
+
+            // Initialize variables for grouping the data
+            $currentPeriodStart = $startDate;
+            $months = [
+                'Janvier',
+                'Février',
+                'Mars',
+                'Avril',
+                'Mai',
+                'Juin',
+                'Juillet',
+                'Août',
+                'Septembre',
+                'Octobre',
+                'Novembre',
+                'Décembre'
+            ];
+
+            foreach ($months as $index => $month) {
+                // Get the start and end dates for the current month
+                $currentPeriodEnd = $currentPeriodStart->copy()->endOfMonth();
+
+                // Get the label for the month
+                $monthLabel = $month;
+
+                // Get the count of fournisseurs
+                $fournisseursCount = DB::table('fournisseurs')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Get the count of fournisseur_clients
+                $fournisseurClientsCount = DB::table('fournisseur_clients')
+                    ->whereBetween('created_at', [$currentPeriodStart, $currentPeriodEnd])
+                    ->count();
+
+                // Store data for both counts
+                $data['fournisseurs'][$monthLabel] = $fournisseursCount;
+                $data['fournisseur_clients'][$monthLabel] = $fournisseurClientsCount;
+
+                // Move to the next month
+                $currentPeriodStart = $currentPeriodStart->addMonth();
+            }
+        }
+
+        Log::info('Returned data: ', $data);
+
+        return response()->json($data);
+    }
 }
