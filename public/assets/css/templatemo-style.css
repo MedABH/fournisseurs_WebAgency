@@ -622,3 +622,62 @@ body {
 
 }
 
+
+
+/* Center the pagination container */
+.pagination2 {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    text-align: center;
+}
+
+/* Style for each pagination item */
+.pagination2 .page-item {
+    margin: 0 5px;
+}
+
+/* Style for pagination links */
+.pagination2 .page-link {
+    display: block;
+    padding: 8px 15px;
+    background-color: #f8f9fa;
+    color: #15a362;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Hover effect for links */
+.pagination2 .page-link:hover {
+    background-color: #15a362;
+    color: #fff;
+    border-color: #15a362;
+}
+
+/* Active page styling */
+.pagination2 .page-item.active .page-link {
+    background-color: #15a362;
+    color: white;
+    border-color: #15a362;
+}
+
+/* Disabled items styling */
+.pagination2 .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+    pointer-events: none;
+    border-color: #dee2e6;
+}
+
+/* Styling for pagination arrows */
+.pagination2 .page-link[aria-label="pagination.previous"] {
+    border-radius: 5px 0 0 5px;
+}
+
+.pagination2 .page-link[aria-label="pagination.next"] {
+    border-radius: 0 5px 5px 0;
+}
+

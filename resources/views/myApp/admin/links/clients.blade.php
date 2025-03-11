@@ -736,22 +736,8 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-between align-items-center">
-        @if ($clients->total() >= 5)
-            <form id="pagination-form" action="{{ route('clients.pagination') }}" method="GET"
-                class="d-inline-flex">
-                @csrf
-                <select name="per_page" id="perPage" class="form-select form-select-sm"
-                    onchange="document.getElementById('pagination-form').submit();">
-                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                    <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
-                    <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
-                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                    <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
-                </select>
-            </form>
-        @endif
+    <div>
+     
         <div>
             {{ $clients->links('vendor.pagination.bootstrap-4') }}
 
@@ -774,8 +760,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const updateProspectModal = document.getElementById('update_client');
-            updateProspectModal.addEventListener('show.bs.modal', event => {
+            const update_client = document.getElementById('update_client');
+            update_client.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget;
 
                 const clientId = button.getAttribute('data-id');
@@ -964,44 +950,49 @@
     </script>
 
 
-
-
     <script>
-      document.addEventListener("DOMContentLoaded", function() {
-    const searchInput = document.querySelector('input[name="search"]');
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.querySelector('input[name="search"]');
 
-    searchInput.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-        }
-    });
+            searchInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                }
+            });
 
-    searchInput.addEventListener('input', function() {
-        const searchQuery = searchInput.value;
+            searchInput.addEventListener('input', function() {
+                const searchQuery = searchInput.value;
 
-        if (searchQuery.length > 0) {
-            fetch(`/search-clients?search=${searchQuery}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data);
+                if (searchQuery.length > 0) {
+                    fetch(`/search-clients?search=${searchQuery}`)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
 
-                    const { clients, selectOptions } = data;
-                    const tbody = document.querySelector('tbody');
-                    tbody.innerHTML = ''; // Clear previous search results
+                            const {
+                                clients,
+                                selectOptions
+                            } = data;
 
-                    clients.forEach(client => {
-                        const categories = client.categories || [];
-                        let categoriesList = 'Non catégorisé'; // Default value
+                            const tbody = document.querySelector('tbody');
+                            tbody.innerHTML = '';
 
-                        // Collect all categories into a string
-                        if (categories.length > 0) {
-                            categoriesList = categories.map(category => category.nom_categorie).join(', ');
-                        }
+                            clients.forEach(client => {
+
+
+                                const categories = client.categories || [];
+
+                                let categoriesList = 'Non catégorisé';
+
+                                categories.forEach(category => {
+                                    categoriesList =
+                                        `${category.nom_categorie }`;
+                                });
 
 
 
@@ -1013,7 +1004,7 @@
                           
 
 
-                                            ${role === "super-admin" ? `
+                        ${role === "super-admin" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1079,7 +1070,7 @@
 
 
                                                             `:''}
-                                            ${role === "admin" ? `
+                        ${role === "admin" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1132,7 +1123,7 @@
                                                             </td>
 
 
-                                            `:''}${role === "utilisateur" ? `
+                                                            `:''}${role === "utilisateur" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1164,7 +1155,7 @@
                                                             
                                                             ` : ""}
 
-                                    `
+                    `
 
                                 tbody.appendChild(row);
                                 // Gestion du changement de statut pour les clients
@@ -1175,7 +1166,8 @@
                                                 const form = this.closest(
                                                     '.client-form');
                                                 if (form) {
-                                                    form.submit(); // Soumet le formulaire associé
+                                                    form
+                                                        .submit(); // Soumet le formulaire associé
                                                 }
                                             });
                                     });

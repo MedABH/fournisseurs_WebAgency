@@ -345,8 +345,8 @@ class ProspectController extends Controller
         $select = ['Fournisseur', 'Client', 'Client et Fournisseur'];
         $search = $request->input('search');
         $prospect = Prospect::with(['categories.sousCategories', 'utilisateur'])
-            ->where('nom_prospect', 'LIKE', "%{$search}%")
-            ->orWhere('nomSociete_prospect', 'LIKE', "%{$search}%")
+            ->where('nomSociete_prospect', 'LIKE', "%{$search}%")
+            ->orWhere('tele_prospect', 'LIKE', "%{$search}%")
             ->get();
         return response()->json([
             'prospects' => $prospect,

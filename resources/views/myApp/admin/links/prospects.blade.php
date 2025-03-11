@@ -746,22 +746,8 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-between align-items-center">
-        @if ($prospects->total() >= 10)
-            <form id="pagination-form" action="{{ route('prospects.pagination') }}" method="GET"
-                class="d-inline-flex">
-                @csrf
-                <select name="per_page" id="perPage" class="form-select form-select-sm"
-                    onchange="document.getElementById('pagination-form').submit();">
-                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                    <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
-                    <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
-                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                    <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
-                </select>
-            </form>
-        @endif
+    <div>
+      
         <div>
             {{ $prospects->links('vendor.pagination.bootstrap-4') }}
 
@@ -998,10 +984,7 @@
                         })
                         .then(data => {
                             console.log(data);
-                            const {
-                                prospects,
-                                selectOptions
-                            } = data;
+                            const { prospects, selectOptions } = data;
 
                             const tbody = document.querySelector('tbody');
                             tbody.innerHTML = '';
@@ -1034,7 +1017,9 @@
                                                                 <td class="cell">${prospect.ville_prospect}</td>
                                                                 <td class="cell">${categoriesList}</td>
                                                                 <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
-                                                                <td>
+                                                                 <td class="button-container">
+                                                                    <div class="d-flex align-items-center gap-2"
+                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
                                                                     <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                         data-bs-target="#update_prospect"
                                                                         data-id="${prospect.id}"
@@ -1068,7 +1053,7 @@
                                                                     
                                                                         <form
                                                                             action="/prospect/destroy/${prospect.id}"
-                                                                            method="POST" style="display: inline;"
+                                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
                                                                             id="delete-form-${prospect.id}">
                                                                             @csrf
                                                                             @method('DELETE')
@@ -1077,15 +1062,21 @@
                                                                         </form>
                                                                     
                                                                 
-                                                                        <form class="prospect-form" action="/prospect/select/${prospect.id}" method="POST">
-                                                                            @csrf
-                                                                            <select class="form-select status-select" name="status">
-                                                                                <option value="" selected>Selectionner la table</option>
-                                                                                ${selectOptions.map(option => `
-                                                                        <option value="${option}">${option}</option>
-                                                                        `).join('')}
-                                                                            </select>
+                                                                        <form class="prospect-form"
+                                                                                action="{{ route('prospect.select', $prospect->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('POST')
+                                                                                <select name="status" id=""
+                                                                                    class="form-select status-select">
+                                                                                    <option value="" selected>Selectionner la table</option>
+                                                                                    @foreach ($select as $item)
+                                                                                        <option value="{{ $item }}">{{ $item }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                         </form>
+                                                                        </div>
                                                                 </td>
 
                                                                 `: ''}
@@ -1101,7 +1092,9 @@
                                                                 <td class="cell">${prospect.ville_prospect}</td>
                                                                 <td class="cell">${categoriesList}</td>
                                                                 <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
-                                                                <td>
+                                                                <td class="button-container">
+                                                                    <div class="d-flex align-items-center gap-2"
+                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
                                                                     <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                         data-bs-target="#update_prospect"
                                                                         data-id="${prospect.id}"
@@ -1141,6 +1134,7 @@
                                                                     `).join('')}
                                                                                                     </select>
                                                                         </form>
+                                                                    </div>
                                                                 </td>
                                                                 ` : ''} ${role === "utilisateur" ? `
                                                                 <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
