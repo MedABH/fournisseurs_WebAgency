@@ -370,15 +370,15 @@ class ProspectController extends Controller
     public function prospect(Request $request, $id)
     {
         $selectedStatus = $request->input('status');
-
         $prospect = Prospect::find($id);
-
         $prospectsGroup = Prospect::where('groupId_prospect', $prospect->groupId_prospect)->get();
+
+        // Set the initial $tiersChange value
+        $tiersChange = 0;
 
         if ($selectedStatus === 'Fournisseur') {
 
             foreach ($prospectsGroup as $prospectItem) {
-
                 $fournisseur = new Fournisseur();
                 $fournisseur->nom_fournisseur = $prospectItem->nom_prospect;
                 $fournisseur->email_fournisseur = $prospectItem->email_prospect;
@@ -393,18 +393,35 @@ class ProspectController extends Controller
 
                 $fournisseur->save();
 
-
                 if ($prospectItem->categories) {
                     foreach ($prospectItem->categories as $category) {
                         $fournisseur->categories()->attach($category->id);
                     }
                 }
                 $prospectItem->delete();
+
+                // Increment the $tiersChange value (reflecting the number of moved prospects)
+                $tiersChange++;
             }
+
+            // Update the 'suppliersTracking' key with the new $tiersChange value
+            $setting = Setting::where('key', 'suppliersTracking')->first();
+
+            // If the setting does not exist, create it
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'suppliersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+
+            // Increment the value of 'addedToday' based on the tiersChange
+            $setting->increment('addedToday', $tiersChange);
         } else if ($selectedStatus === 'Client') {
 
             foreach ($prospectsGroup as $prospectItem) {
-
                 $client = new Client();
                 $client->nom_client = $prospectItem->nom_prospect;
                 $client->email_client = $prospectItem->email_prospect;
@@ -419,19 +436,35 @@ class ProspectController extends Controller
 
                 $client->save();
 
-
                 if ($prospectItem->categories) {
                     foreach ($prospectItem->categories as $category) {
                         $client->categories()->attach($category->id);
                     }
                 }
-
-
                 $prospectItem->delete();
-            }
-        } else if ($selectedStatus === 'Client et Fournisseur') {
-            foreach ($prospectsGroup as $prospectItem) {
 
+                // Increment the $tiersChange value
+                $tiersChange++;
+            }
+
+            // Update the 'clientsTracking' key with the new $tiersChange value
+            $setting = Setting::where('key', 'clientsTracking')->first();
+
+            // If the setting does not exist, create it
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'clientsTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+
+            // Increment the value of 'addedToday' based on the tiersChange
+            $setting->increment('addedToday', $tiersChange);
+        } else if ($selectedStatus === 'Client et Fournisseur') {
+
+            foreach ($prospectsGroup as $prospectItem) {
                 $fc = new FournisseurClient();
                 $fc->nom_fournisseurClient = $prospectItem->nom_prospect;
                 $fc->email_fournisseurClient = $prospectItem->email_prospect;
@@ -446,17 +479,40 @@ class ProspectController extends Controller
 
                 $fc->save();
 
-
                 if ($prospectItem->categories) {
                     foreach ($prospectItem->categories as $category) {
                         $fc->categories()->attach($category->id);
                     }
                 }
-
-
                 $prospectItem->delete();
+
+                // Increment the $tiersChange value
+                $tiersChange++;
             }
+
+            // Update the 'FournisseurClientTracking' key with the new $tiersChange value
+            $setting = Setting::where('key', 'FournisseurClientTracking')->first();
+
+            // If the setting does not exist, create it
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'FournisseurClientTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+
+            // Increment the value of 'addedToday' based on the tiersChange
+            $setting->increment('addedToday', $tiersChange);
         }
+
+        // Update the 'tiersTracking' key with the new $tiersChange value (if needed)
+        $setting = Setting::where('key', 'tiersTracking')->first();
+        if ($setting) {
+            $setting->increment('deletedToday', $tiersChange);
+        }
+
         return redirect()->to(url()->previous());
     }
 }

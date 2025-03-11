@@ -349,12 +349,12 @@ class ClientController extends Controller
 
     public function client(Request $request, $id)
     {
-
         $selectedStatus = $request->input('status');
-
         $client = Client::find($id);
-
         $clientsGroup = Client::where('groupId_client', $client->groupId_client)->get();
+
+        // Set initial $tiersChange value
+        $tiersChange = 0;
 
         if ($selectedStatus === 'Fournisseur') {
             foreach ($clientsGroup as $clientItem) {
@@ -369,7 +369,6 @@ class ClientController extends Controller
                 $fournisseur->user_id = $clientItem->user_id;
                 $fournisseur->remark = $clientItem->remark;
                 $fournisseur->groupId_fournisseur = $clientItem->groupId_client;
-
                 $fournisseur->save();
 
                 if ($clientItem->categories) {
@@ -379,9 +378,35 @@ class ClientController extends Controller
                 }
 
                 $clientItem->delete();
-            }
-        } else if ($selectedStatus === 'Tiers') {
 
+                // Increment tiersChange for Fournisseur
+                $tiersChange++;
+            }
+
+            // Update addedToday in settings for suppliersTracking
+            $setting = Setting::where('key', 'suppliersTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'suppliersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in clientsTracking
+            $clientTracking = Setting::where('key', 'clientsTracking')->first();
+            if (!$clientTracking) {
+                $clientTracking = Setting::create([
+                    'key' => 'clientsTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $clientTracking->increment('deletedToday', $tiersChange);
+        } else if ($selectedStatus === 'Tiers') {
             foreach ($clientsGroup as $clientItem) {
                 $prospect = new Prospect();
                 $prospect->nom_prospect = $clientItem->nom_client;
@@ -394,7 +419,6 @@ class ClientController extends Controller
                 $prospect->user_id = $clientItem->user_id;
                 $prospect->remark = $clientItem->remark;
                 $prospect->groupId_prospect = $clientItem->groupId_client;
-
                 $prospect->save();
 
                 if ($clientItem->categories) {
@@ -404,9 +428,35 @@ class ClientController extends Controller
                 }
 
                 $clientItem->delete();
-            }
-        } else if ($selectedStatus === 'Client et Fournisseur') {
 
+                // Increment tiersChange for Tiers (Prospect)
+                $tiersChange++;
+            }
+
+            // Update addedToday in settings for tiersTracking
+            $setting = Setting::where('key', 'tiersTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'tiersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in clientsTracking
+            $clientTracking = Setting::where('key', 'clientsTracking')->first();
+            if (!$clientTracking) {
+                $clientTracking = Setting::create([
+                    'key' => 'clientsTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $clientTracking->increment('deletedToday', $tiersChange);
+        } else if ($selectedStatus === 'Client et Fournisseur') {
             foreach ($clientsGroup as $clientItem) {
                 $fc = new FournisseurClient();
                 $fc->nom_fournisseurClient = $clientItem->nom_client;
@@ -428,7 +478,34 @@ class ClientController extends Controller
                 }
 
                 $clientItem->delete();
+
+                // Increment tiersChange for Client et Fournisseur
+                $tiersChange++;
             }
+
+            // Update addedToday in settings for FournisseurClientTracking
+            $setting = Setting::where('key', 'FournisseurClientTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'FournisseurClientTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in clientsTracking
+            $clientTracking = Setting::where('key', 'clientsTracking')->first();
+            if (!$clientTracking) {
+                $clientTracking = Setting::create([
+                    'key' => 'clientsTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $clientTracking->increment('deletedToday', $tiersChange);
         }
 
         return redirect()->to(url()->previous());

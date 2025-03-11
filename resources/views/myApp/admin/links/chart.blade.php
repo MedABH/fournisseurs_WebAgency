@@ -132,7 +132,7 @@
                              </div><!--//col-->
                              <div class="col-auto">
                                  <div class="card-header-action">
-                                     <a href="">Plus</a>
+                                     <a href="suppliersSection">Plus</a>
                                  </div><!--//card-header-actions-->
                              </div><!--//col-->
                          </div><!--//row-->
@@ -165,7 +165,7 @@
                              </div><!--//col-->
                              <div class="col-auto">
                                  <div class="card-header-action">
-                                     <a href="">Plus</a>
+                                     <a href="PartiesPrenantesSection">Plus</a>
                                  </div><!--//card-header-actions-->
                              </div><!--//col-->
                          </div><!--//row-->
@@ -204,7 +204,7 @@
                              </div><!--//col-->
                              <div class="col-auto">
                                  <div class="card-header-action">
-                                     <a href="PartiesPrenantesSection">Plus</a>
+                                     <a href="suppliersSection">Plus</a>
                                  </div><!--//card-header-actions-->
                              </div><!--//col-->
                          </div><!--//row-->

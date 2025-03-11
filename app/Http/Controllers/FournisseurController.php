@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Validator;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
+
 
 class FournisseurController extends Controller
 {
@@ -80,7 +82,7 @@ class FournisseurController extends Controller
         // Track the supplier addition
         $setting = Setting::where('key', 'suppliersTracking')->first();
         if ($setting) {
-            
+
 
             // Increment the 'addedToday' count
             $setting->increment('addedToday');
@@ -210,7 +212,7 @@ class FournisseurController extends Controller
         // Track the supplier deletion
         $setting = Setting::where('key', 'suppliersTracking')->first();
         if ($setting) {
-            
+
 
             // Increment the 'deletedToday' count
             $setting->increment('deletedToday');
@@ -381,10 +383,11 @@ class FournisseurController extends Controller
     public function fournisseur(Request $request, $id)
     {
         $selectedStatus = $request->input('status');
-
         $fournisseur = Fournisseur::find($id);
-
         $fournisseursGroup = Fournisseur::where('groupId_fournisseur', $fournisseur->groupId_fournisseur)->get();
+
+        // Set initial $tiersChange value
+        $tiersChange = 0;
 
         if ($selectedStatus === 'Tiers') {
             foreach ($fournisseursGroup as $fournisseurItem) {
@@ -392,16 +395,14 @@ class FournisseurController extends Controller
                 $prospect->nom_prospect = $fournisseurItem->nom_fournisseur;
                 $prospect->email_prospect = $fournisseurItem->email_fournisseur;
                 $prospect->tele_prospect = $fournisseurItem->tele_fournisseur;
-                $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
-                $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
                 $prospect->GSM1_prospect = $fournisseurItem->GSM1_fournisseur;
                 $prospect->GSM2_prospect = $fournisseurItem->GSM2_fournisseur;
+                $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
+                $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
                 $prospect->user_id = $fournisseurItem->user_id;
                 $prospect->remark = $fournisseurItem->remark;
                 $prospect->groupId_prospect = $fournisseurItem->groupId_fournisseur;
-
                 $prospect->save();
-
 
                 if ($fournisseurItem->categories) {
                     foreach ($fournisseurItem->categories as $category) {
@@ -409,24 +410,48 @@ class FournisseurController extends Controller
                     }
                 }
 
-
                 $fournisseurItem->delete();
-            }
-        } else if ($selectedStatus === 'Client') {
 
+                // Increment tiersChange for Tiers (Prospect)
+                $tiersChange++;
+            }
+
+            // Update addedToday in settings for tiersTracking
+            $setting = Setting::where('key', 'tiersTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'tiersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in settings for suppliersTracking
+            $suppliersTracking = Setting::where('key', 'suppliersTracking')->first();
+            if (!$suppliersTracking) {
+                $suppliersTracking = Setting::create([
+                    'key' => 'suppliersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $suppliersTracking->increment('deletedToday', $tiersChange);
+        } else if ($selectedStatus === 'Client') {
             foreach ($fournisseursGroup as $fournisseurItem) {
                 $client = new Client();
                 $client->nom_client = $fournisseurItem->nom_fournisseur;
                 $client->email_client = $fournisseurItem->email_fournisseur;
                 $client->tele_client = $fournisseurItem->tele_fournisseur;
-                $client->ville_client = $fournisseurItem->ville_fournisseur;
-                $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
                 $client->GSM1_client = $fournisseurItem->GSM1_fournisseur;
                 $client->GSM2_client = $fournisseurItem->GSM2_fournisseur;
+                $client->ville_client = $fournisseurItem->ville_fournisseur;
+                $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
                 $client->user_id = $fournisseurItem->user_id;
                 $client->remark = $fournisseurItem->remark;
                 $client->groupId_client = $fournisseurItem->groupId_fournisseur;
-
                 $client->save();
 
                 if ($fournisseurItem->categories) {
@@ -436,21 +461,47 @@ class FournisseurController extends Controller
                 }
 
                 $fournisseurItem->delete();
+
+                // Increment tiersChange for Client
+                $tiersChange++;
             }
+
+            // Update addedToday in settings for clientsTracking
+            $setting = Setting::where('key', 'clientsTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'clientsTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in suppliersTracking
+            $suppliersTracking = Setting::where('key', 'suppliersTracking')->first();
+            if (!$suppliersTracking) {
+                $suppliersTracking = Setting::create([
+                    'key' => 'suppliersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $suppliersTracking->increment('deletedToday', $tiersChange);
         } else if ($selectedStatus === 'Client et Fournisseur') {
             foreach ($fournisseursGroup as $fournisseurItem) {
                 $fc = new FournisseurClient();
                 $fc->nom_fournisseurClient = $fournisseurItem->nom_fournisseur;
                 $fc->email_fournisseurClient = $fournisseurItem->email_fournisseur;
                 $fc->tele_fournisseurClient = $fournisseurItem->tele_fournisseur;
-                $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
-                $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
                 $fc->GSM1_fournisseurClient = $fournisseurItem->GSM1_fournisseur;
                 $fc->GSM2_fournisseurClient = $fournisseurItem->GSM2_fournisseur;
+                $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
+                $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
                 $fc->user_id = $fournisseurItem->user_id;
                 $fc->remark = $fournisseurItem->remark;
                 $fc->groupId_fournisseurClient = $fournisseurItem->groupId_fournisseur;
-
                 $fc->save();
 
                 if ($fournisseurItem->categories) {
@@ -460,8 +511,36 @@ class FournisseurController extends Controller
                 }
 
                 $fournisseurItem->delete();
+
+                // Increment tiersChange for Client et Fournisseur
+                $tiersChange++;
             }
+
+            // Update addedToday in settings for fournisseurClientTracking
+            $setting = Setting::where('key', 'fournisseurClientTracking')->first();
+            if (!$setting) {
+                $setting = Setting::create([
+                    'key' => 'fournisseurClientTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $setting->increment('addedToday', $tiersChange);
+
+            // Update deletedToday in suppliersTracking
+            $suppliersTracking = Setting::where('key', 'suppliersTracking')->first();
+            if (!$suppliersTracking) {
+                $suppliersTracking = Setting::create([
+                    'key' => 'suppliersTracking',
+                    'value' => 0,
+                    'addedToday' => 0,
+                    'deletedToday' => 0,
+                ]);
+            }
+            $suppliersTracking->increment('deletedToday', $tiersChange);
         }
+
         return redirect()->to(url()->previous());
     }
 }

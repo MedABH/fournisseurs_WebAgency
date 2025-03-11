@@ -368,86 +368,120 @@ class FournisseurClientController extends Controller
     }
 
     public function fournisseurClient(Request $request, $id)
-    {
+{
+    $selectedStatus = $request->input('status');
+    $fc = FournisseurClient::find($id);
 
-        $selectedStatus = $request->input('status');
+    $fcsGroup = FournisseurClient::where('groupId_fournisseurClient', $fc->groupId_fournisseurClient)->get();
 
-        $fc = FournisseurClient::find($id);
+    // Initialize the number of records processed
+    $recordsProcessed = 0;
 
-        $fcsGroup = FournisseurClient::where('groupId_fournisseurClient', $fc->groupId_fournisseurClient)->get();
+    if ($selectedStatus === 'Fournisseur') {
+        foreach ($fcsGroup as $fcItem) {
+            $fournisseur = new Fournisseur();
+            $fournisseur->nom_fournisseur = $fcItem->nom_fournisseurClient;
+            $fournisseur->email_fournisseur = $fcItem->email_fournisseurClient;
+            $fournisseur->tele_fournisseur = $fcItem->tele_fournisseurClient;
+            $fournisseur->ville_fournisseur = $fcItem->ville_fournisseurClient;
+            $fournisseur->nomSociete_fournisseur = $fcItem->nomSociete_fournisseurClient;
+            $fournisseur->GSM1_fournisseur = $fcItem->GSM1_fournisseurClient;
+            $fournisseur->GSM2_fournisseur = $fcItem->GSM2_fournisseurClient;
+            $fournisseur->user_id = $fcItem->user_id;
+            $fournisseur->remark = $fcItem->remark;
+            $fournisseur->groupId_fournisseur = $fcItem->groupId_fournisseurClient;
+            $fournisseur->save();
 
-        if ($selectedStatus === 'Fournisseur') {
-            foreach ($fcsGroup as $fcItem) {
-                $fournisseur = new Fournisseur();
-                $fournisseur->nom_fournisseur = $fcItem->nom_fournisseurClient;
-                $fournisseur->email_fournisseur = $fcItem->email_fournisseurClient;
-                $fournisseur->tele_fournisseur = $fcItem->tele_fournisseurClient;
-                $fournisseur->ville_fournisseur = $fcItem->ville_fournisseurClient;
-                $fournisseur->nomSociete_fournisseur = $fcItem->nomSociete_fournisseurClient;
-                $fournisseur->GSM1_fournisseur = $fcItem->GSM1_fournisseurClient;
-                $fournisseur->GSM2_fournisseur = $fcItem->GSM2_fournisseurClient;
-                $fournisseur->user_id = $fcItem->user_id;
-                $fournisseur->remark = $fcItem->remark;
-                $fournisseur->groupId_fournisseur = $fcItem->groupId_fournisseurClient;
-
-                $fournisseur->save();
-
-                if ($fcItem->categories) {
-                    foreach ($fcItem->categories as $category) {
-                        $fournisseur->categories()->attach($category->id);
-                    }
+            if ($fcItem->categories) {
+                foreach ($fcItem->categories as $category) {
+                    $fournisseur->categories()->attach($category->id);
                 }
-                $fcItem->delete();
             }
-        } else if ($selectedStatus === 'Client') {
-            foreach ($fcsGroup as $fcItem) {
-                $client = new Client();
-                $client->nom_client = $fcItem->nom_fournisseurClient;
-                $client->email_client = $fcItem->email_fournisseurClient;
-                $client->tele_client = $fcItem->tele_fournisseurClient;
-                $client->ville_client = $fcItem->ville_fournisseurClient;
-                $client->GSM1_client = $fcItem->GSM1_fournisseurClient;
-                $client->GSM2_client = $fcItem->GSM2_fournisseurClient;
-                $client->nomSociete_client = $fcItem->nomSociete_fournisseurClient;
 
-
-                $client->user_id = $fcItem->user_id;
-                $client->remark = $fcItem->remark;
-                $client->groupId_client = $fcItem->groupId_fournisseurClient;
-
-                $client->save();
-
-                if ($fcItem->categories) {
-                    foreach ($fcItem->categories as $category) {
-                        $client->categories()->attach($category->id);
-                    }
-                }
-                $fcItem->delete();
-            }
-        } else if ($selectedStatus === 'Tiers') {
-            foreach ($fcsGroup as $fcItem) {
-                $prospect = new Prospect();
-                $prospect->nom_prospect = $fcItem->nom_fournisseurClient;
-                $prospect->email_prospect = $fcItem->email_fournisseurClient;
-                $prospect->tele_prospect = $fcItem->tele_fournisseurClient;
-                $prospect->ville_prospect = $fcItem->ville_fournisseurClient;
-                $prospect->nomSociete_prospect = $fcItem->nomSociete_fournisseurClient;
-                $prospect->GSM1_prospect = $fcItem->GSM1_fournisseurClient;
-                $prospect->GSM2_prospect = $fcItem->GSM2_fournisseurClient;
-                $prospect->user_id = $fcItem->user_id;
-                $prospect->remark = $fcItem->remark;
-                $prospect->groupId_prospect = $fcItem->groupId_fournisseurClient;
-
-                $prospect->save();
-
-                if ($fcItem->categories) {
-                    foreach ($fcItem->categories as $category) {
-                        $prospect->categories()->attach($category->id);
-                    }
-                }
-                $fcItem->delete();
-            }
+            $fcItem->delete();
+            $recordsProcessed++;
         }
-        return redirect()->to(url()->previous());
+
+        // Update the settings for suppliersTracking
+        $setting = Setting::where('key', 'suppliersTracking')->first();
+        if ($setting) {
+            $setting->addedToday += $recordsProcessed;
+            $setting->save();
+        }
+
+    } else if ($selectedStatus === 'Client') {
+        foreach ($fcsGroup as $fcItem) {
+            $client = new Client();
+            $client->nom_client = $fcItem->nom_fournisseurClient;
+            $client->email_client = $fcItem->email_fournisseurClient;
+            $client->tele_client = $fcItem->tele_fournisseurClient;
+            $client->ville_client = $fcItem->ville_fournisseurClient;
+            $client->GSM1_client = $fcItem->GSM1_fournisseurClient;
+            $client->GSM2_client = $fcItem->GSM2_fournisseurClient;
+            $client->nomSociete_client = $fcItem->nomSociete_fournisseurClient;
+            $client->user_id = $fcItem->user_id;
+            $client->remark = $fcItem->remark;
+            $client->groupId_client = $fcItem->groupId_fournisseurClient;
+            $client->save();
+
+            if ($fcItem->categories) {
+                foreach ($fcItem->categories as $category) {
+                    $client->categories()->attach($category->id);
+                }
+            }
+
+            $fcItem->delete();
+            $recordsProcessed++;
+        }
+
+        // Update the settings for clientsTracking
+        $setting = Setting::where('key', 'clientsTracking')->first();
+        if ($setting) {
+            $setting->addedToday += $recordsProcessed;
+            $setting->save();
+        }
+
+    } else if ($selectedStatus === 'Tiers') {
+        foreach ($fcsGroup as $fcItem) {
+            $prospect = new Prospect();
+            $prospect->nom_prospect = $fcItem->nom_fournisseurClient;
+            $prospect->email_prospect = $fcItem->email_fournisseurClient;
+            $prospect->tele_prospect = $fcItem->tele_fournisseurClient;
+            $prospect->ville_prospect = $fcItem->ville_fournisseurClient;
+            $prospect->nomSociete_prospect = $fcItem->nomSociete_fournisseurClient;
+            $prospect->GSM1_prospect = $fcItem->GSM1_fournisseurClient;
+            $prospect->GSM2_prospect = $fcItem->GSM2_fournisseurClient;
+            $prospect->user_id = $fcItem->user_id;
+            $prospect->remark = $fcItem->remark;
+            $prospect->groupId_prospect = $fcItem->groupId_fournisseurClient;
+            $prospect->save();
+
+            if ($fcItem->categories) {
+                foreach ($fcItem->categories as $category) {
+                    $prospect->categories()->attach($category->id);
+                }
+            }
+
+            $fcItem->delete();
+            $recordsProcessed++;
+        }
+
+        // Update the settings for tiersTracking
+        $setting = Setting::where('key', 'tiersTracking')->first();
+        if ($setting) {
+            $setting->addedToday += $recordsProcessed;
+            $setting->save();
+        }
     }
+
+    // Update the deletedToday field for FournisseurClientTracking key
+    $setting = Setting::where('key', 'FournisseurClientTracking')->first();
+    if ($setting) {
+        $setting->deletedToday += $recordsProcessed;
+        $setting->save();
+    }
+
+    return redirect()->to(url()->previous());
+}
+
 }
