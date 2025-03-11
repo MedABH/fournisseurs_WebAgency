@@ -964,49 +964,44 @@
     </script>
 
 
+
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector('input[name="search"]');
+      document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.querySelector('input[name="search"]');
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                }
-            });
+    searchInput.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
 
-            searchInput.addEventListener('input', function() {
-                const searchQuery = searchInput.value;
+    searchInput.addEventListener('input', function() {
+        const searchQuery = searchInput.value;
 
-                if (searchQuery.length > 0) {
-                    fetch(`/search-clients?search=${searchQuery}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
+        if (searchQuery.length > 0) {
+            fetch(`/search-clients?search=${searchQuery}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
 
-                            const {
-                                clients,
-                                selectOptions
-                            } = data;
+                    const { clients, selectOptions } = data;
+                    const tbody = document.querySelector('tbody');
+                    tbody.innerHTML = ''; // Clear previous search results
 
-                            const tbody = document.querySelector('tbody');
-                            tbody.innerHTML = '';
+                    clients.forEach(client => {
+                        const categories = client.categories || [];
+                        let categoriesList = 'Non catégorisé'; // Default value
 
-                            clients.forEach(client => {
-
-
-                                const categories = client.categories || [];
-
-                                let categoriesList = 'Non catégorisé';
-
-                                categories.forEach(category => {
-                                    categoriesList =
-                                        `${category.nom_categorie }`;
-                                });
+                        // Collect all categories into a string
+                        if (categories.length > 0) {
+                            categoriesList = categories.map(category => category.nom_categorie).join(', ');
+                        }
 
 
 
@@ -1018,7 +1013,7 @@
                           
 
 
-                        ${role === "super-admin" ? `
+                                            ${role === "super-admin" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1084,7 +1079,7 @@
 
 
                                                             `:''}
-                        ${role === "admin" ? `
+                                            ${role === "admin" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1137,7 +1132,7 @@
                                                             </td>
 
 
-                                                            `:''}${role === "utilisateur" ? `
+                                            `:''}${role === "utilisateur" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1169,7 +1164,7 @@
                                                             
                                                             ` : ""}
 
-                    `
+                                    `
 
                                 tbody.appendChild(row);
                                 // Gestion du changement de statut pour les clients
@@ -1180,8 +1175,7 @@
                                                 const form = this.closest(
                                                     '.client-form');
                                                 if (form) {
-                                                    form
-                                                        .submit(); // Soumet le formulaire associé
+                                                    form.submit(); // Soumet le formulaire associé
                                                 }
                                             });
                                     });

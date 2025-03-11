@@ -8,6 +8,19 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
+                        <form action="{{ route('search.categories') }}" method="GET"
+                            class="table-search-form row gx-1 align-items-center">
+                            <div class="col-auto">
+                                <input type="text" name="search" class="form-control search-orders"
+                                    placeholder="Search ... ">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn app-btn-secondary">Search</button>
+                            </div>
+                        </form>
+
+                    </div><!--//col-->
+                    <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
                             <a class="btn app-btn-secondary" href="{{ route('categories.pdf') }}">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
@@ -408,7 +421,7 @@
                                         const role = "{{ auth()->user()->role }}"
                                         row.innerHTML = `
 
-                                                <td>${category.nom_categorie}</td>
+                                                <td class="cell">${category.nom_categorie}</td>
                                                  ${role === "super-admin" ? `
                                                  <td>
                                                         <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
@@ -427,7 +440,7 @@
                                                         </button>
                                                         
                                                         <form action="/category/destroy/${category.id}"
-                                                            method="POST" style="display: inline;"
+                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
                                                             id="delete-form-${category.id}">
                                                             @csrf
                                                             @method('DELETE')

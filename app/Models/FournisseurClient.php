@@ -19,6 +19,8 @@ class FournisseurClient extends Model
         'tele_clientFournisseur',
         'ville_clientFournisseur',
         'nomSociete_clientFournisseur',
+        'GSM1_clientFournisseur',
+        'GSM2_clientFournisseur',
         'user_id',
         'remark'
     ];

@@ -21,6 +21,8 @@ class Prospect extends Model
         'tele_prospect',
         'ville_prospect',
         'nomSociete_prospect',
+        'GSM1_prospect',
+        'GSM2_prospect',
         'user_id',
         'remark'
     ];
