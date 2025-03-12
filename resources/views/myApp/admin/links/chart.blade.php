@@ -188,19 +188,19 @@
                      </div><!--//app-card-header-->
                      <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                             <table class="table table-borderless mb-0 text-center">
-                                 <thead class="text-center">
+                             <table class="table table-borderless mb-0">
+                                 <thead class="">
                                      <tr>
-                                         <th class="meta text-center" style="font-size: 1rem; color: #828d9f">Catégorie
+                                         <th class="meta" style="font-size: 1rem; color: #828d9f">Catégorie
                                          </th>
                                          <th class="meta stat-cell text-center" style="font-size: 1rem; color: #828d9f">
                                              Nombre de fournisseurs</th>
                                      </tr>
                                  </thead>
-                                 <tbody class="text-center">
+                                 <tbody class="">
                                      @foreach ($suppliersNumberByCategory as $categorie)
                                          <tr>
-                                             <td class="text-center"><strong>{{ $categorie->nom_categorie }}</strong></td>
+                                             <td class=""><strong>{{ $categorie->nom_categorie }}</strong></td>
                                              <td class="stat-cell text-center">
                                                  <strong>{{ $categorie->fournisseurs_count }}</strong></td>
                                          </tr>
@@ -227,21 +227,21 @@
                      </div><!--//app-card-header-->
                      <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                             <table class="table table-borderless mb-0 text-center">
-                                 <thead class="text-center">
-                                     <tr>
-                                         <th class="meta text-center" style="font-size: 1rem"><strong>Nom</strong></th>
-                                         <th class="meta stat-cell text-center" style="font-size: 1rem">
+                             <table class="table table-borderless mb-0" style="">
+                                 <thead class="" style="">
+                                     <tr style="">
+                                         <th class="meta" style="font-size: 1rem"><strong>Nom</strong></th>
+                                         <th class="meta stat-cell" style="font-size: 1rem; direction: ltr; text-align: left;">
                                              <strong>Role</strong></th>
-                                         <th class="meta stat-cel text-center" style="font-size: 1rem"><strong>Historique
+                                         <th class="meta stat-cell text-center" style="font-size: 1rem"><strong>Historique
                                                  de Connexion</strong></th>
                                      </tr>
                                  </thead>
-                                 <tbody class="text-center">
+                                 <tbody class="">
                                      @foreach ($historiques as $historique)
                                          <tr>
-                                             <td class="text-center"><strong>{{ $historique->user->name }}</strong></td>
-                                             <td class="stat-cell text-center">
+                                             <td class=""><strong>{{ $historique->user->name }}</strong></td>
+                                             <td class="stat-cell" style="direction: ltr; text-align: left;">
                                                  <strong>
                                                      @if ($historique->user->role === 'super-admin')
                                                          Super Admin

@@ -84,31 +84,33 @@
                                     </div><!--//col-->
                                 </div><!--//row-->
                             </div><!--//item-->
-                            <div class="item border-bottom py-3">
-                                <div class="justify-content-between align-items-center">
-                                    <div class="">
-                                        <div class="item-label"><strong>Rôle</strong></div>
-                                        <select id="newRole" name="newRole" class="item-data"
-                                            style="border: none; background: transparent; width: 100%; 
+                            @if ($user->role == 'super-admin')
+                                <div class="item border-bottom py-3">
+                                    <div class="justify-content-between align-items-center">
+                                        <div class="">
+                                            <div class="item-label"><strong>Rôle</strong></div>
+                                            <select id="newRole" name="newRole" class="item-data"
+                                                style="border: none; background: transparent; width: 100%; 
                              font-size: inherit; color: #5d677c; outline: none;"
-                                            required>
-                                            <option value="super-admin"
-                                                {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
-                                                Super
-                                                Admin</option>
-                                            <option value="admin"
-                                                {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>Admin
-                                            </option>
-                                            <option value="utilisateur"
-                                                {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
-                                                Utilisateur</option>
-                                        </select>
-                                        @error('newRole')
-                                            <div class="alert alert-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div><!--//col-->
-                                </div><!--//row-->
-                            </div><!--//item-->
+                                                required>
+                                                <option value="super-admin"
+                                                    {{ old('newRole', $user->role) == 'super-admin' ? 'selected' : '' }}>
+                                                    Super
+                                                    Admin</option>
+                                                <option value="admin"
+                                                    {{ old('newRole', $user->role) == 'admin' ? 'selected' : '' }}>Admin
+                                                </option>
+                                                <option value="utilisateur"
+                                                    {{ old('newRole', $user->role) == 'utilisateur' ? 'selected' : '' }}>
+                                                    Utilisateur</option>
+                                            </select>
+                                            @error('newRole')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div><!--//col-->
+                                    </div><!--//row-->
+                                </div><!--//item-->
+                            @endif
                         </div><!--//app-card-body-->
                         <div class="app-card-footer p-4 mt-auto">
                             <!--<a class="btn app-btn-secondary" href="#" onclick="updateProfile()">Mettre à jour Profil</a>-->
@@ -166,9 +168,10 @@
                         </div><!--//app-card-body-->
                         <div class="app-card-footer p-4 mt-auto ">
                             <!-- Update the button to trigger the modal -->
-                            <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre
-                                à
-                                jour Sécurité</a>
+                            @if ($user->role == 'super-admin')
+                                <a class="btn app-btn-secondary" href="javascript:void(0);" onclick="openModal()">Mettre
+                                    à jour Sécurité</a>
+                            @endif
                         </div><!--//app-card-footer-->
                         <!-- Overlay noir transparent -->
                         <div id="overlay"

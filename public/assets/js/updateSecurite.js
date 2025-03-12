@@ -50,3 +50,13 @@ function cancelSecurityChanges() {
     document.getElementById("newPassword").value = "";
     document.getElementById("confirmPassword").value = "";
 }
+
+// Validation avant la soumission du formulaire
+document.getElementById('saveButton').addEventListener('click', function (e) {
+    // Get input values
+    var email = document.getElementById('newEmail').value.trim();
+    var oldPassword = document.getElementById('oldPassword').value.trim();
+    var newPassword = document.getElementById('newPassword').value.trim();
+    var confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+});
