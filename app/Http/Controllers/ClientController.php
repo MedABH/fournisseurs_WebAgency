@@ -214,6 +214,7 @@ class ClientController extends Controller
         $client = Client::with(['categories.sousCategories', 'utilisateur'])
             ->where('tele_client', 'LIKE', "%{$search}%")
             ->orWhere('nomSociete_client', 'LIKE', "%{$search}%")
+            ->orWhere('nom_client', 'LIKE', "%{$search}%")
             ->get();
         return response()->json([
             'clients' => $client,

@@ -233,6 +233,7 @@ class FournisseurClientController extends Controller
         $fc = FournisseurClient::with(['categories.sousCategories', 'utilisateur'])
             ->where('nom_fournisseurClient', 'LIKE', "%{$search}%")
             ->orWhere('nomSociete_fournisseurClient', 'LIKE', "%{$search}%")
+            ->orWhere('nom_fournisseurClient', 'LIKE', "%{$search}%")
 
             ->get();
         return response()->json([

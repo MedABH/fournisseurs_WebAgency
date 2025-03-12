@@ -351,7 +351,7 @@ class FournisseurController extends Controller
         $select = ['Tiers', 'Client', 'Client et Fournisseur'];
         $search = $request->input('search');
         $supplier = Fournisseur::with(['categories.sousCategories', 'utilisateur'])
-            ->where('email_fournisseur', 'LIKE', "%{$search}%")
+            ->where('tele_fournisseur', 'LIKE', "%{$search}%")
             ->orWhere('nom_fournisseur', 'LIKE', "%{$search}%")
             ->orWhere('nomSociete_fournisseur', 'LIKE', "%{$search}%")
 
