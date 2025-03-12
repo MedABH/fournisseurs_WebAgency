@@ -26,7 +26,6 @@
                                      <path fill-rule="evenodd"
                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                                  </svg> {{ $tiersChange }}
-                             
                              @endif
                          </div>
                      </div>
@@ -54,7 +53,6 @@
                                      <path fill-rule="evenodd"
                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                                  </svg> {{ $clientsChange }}
-                             
                              @endif
                          </div>
                      </div>
@@ -80,7 +78,6 @@
                                      <path fill-rule="evenodd"
                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                                  </svg> {{ $suppliersChange }}
-                             
                              @endif
                          </div>
                      </div><!--//app-card-body-->
@@ -106,7 +103,6 @@
                                      <path fill-rule="evenodd"
                                          d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
                                  </svg> {{ $fournClientsChange }}
-                             
                              @endif
                          </div>
                      </div><!--//app-card-body-->
@@ -211,18 +207,18 @@
                      </div><!--//app-card-header-->
                      <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                             <table class="table table-borderless mb-0">
-                                 <thead>
+                             <table class="table table-borderless mb-0 text-center">
+                                 <thead class="text-center">
                                      <tr>
-                                         <th class="meta">Catégorie</th>
-                                         <th class="meta stat-cell">Nombre de fournisseurs</th>
+                                         <th class="meta text-center" style="font-size: 1rem">Catégorie</th>
+                                         <th class="meta stat-cell text-center" style="font-size: 1rem">Nombre de fournisseurs</th>
                                      </tr>
                                  </thead>
-                                 <tbody>
+                                 <tbody class="text-center">
                                      @foreach ($suppliersNumberByCategory as $categorie)
                                          <tr>
-                                             <td>{{ $categorie->nom_categorie }}</td>
-                                             <td class="stat-cell">{{ $categorie->fournisseurs_count }}</td>
+                                             <td class="text-center">{{ $categorie->nom_categorie }}</td>
+                                             <td class="stat-cell text-center">{{ $categorie->fournisseurs_count }}</td>
                                          </tr>
                                      @endforeach
                                  </tbody>
@@ -248,26 +244,27 @@
                      </div><!--//app-card-header-->
                      <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                             <table class="table table-borderless mb-0">
-                                 <thead>
-                                     <tr>
-                                         <th class="meta">Nom</th>
-                                         <th class="meta stat-cell">Role</th>
-                                         <th class="meta stat-cell">Historique de Connexion</th>
-                                     </tr>
-                                 </thead>
-                                 <tbody>
-                                     @foreach ($historiques as $historique)
-                                         <tr>
-                                             <td>{{ $historique->user->name }}</td>
-                                             <td class="stat-cell">{{ $historique->user->role }}</td>
-                                             <td class="stat-cell">
-                                                 {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
-                                             </td>
-                                         </tr>
-                                     @endforeach
-                                 </tbody>
-                             </table>
+                            <table class="table table-borderless mb-0 text-center">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th class="meta text-center" style="font-size: 1rem"><strong>Nom</strong></th>
+                                        <th class="meta stat-cell text-center" style="font-size: 1rem"><strong>Role</strong></th>
+                                        <th class="meta stat-cel text-center" style="font-size: 1rem"><strong>Historique de Connexion</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    @foreach ($historiques as $historique)
+                                        <tr>
+                                            <td class="text-center">{{ $historique->user->name }}</td>
+                                            <td class="stat-cell text-center">{{ $historique->user->role }}</td>
+                                            <td class="stat-cell text-center">
+                                                {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            
                          </div><!--//table-responsive-->
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
@@ -276,35 +273,6 @@
          </div>
      </div>
 
-     </div>
-
-     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <h1 class="modal-title" id="showName"></h1>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-
-                     <div class="show-info show-email">
-                         <label class="label">Email :</label>
-                         <h6 id="showEmail" class="info"></h6>
-                     </div>
-                     <div class="show-info show-contact">
-                         <label class="label">Contact :</label>
-                         <h6 id="showContact" class="info"></h6>
-                     </div>
-                     <div class="show-info show-adress">
-                         <label class="label">Adresse :</label>
-                         <h6 id="showAdress" class="info"></h6>
-                     </div>
-                 </div>
-                 <div class="modal-footer">
-                     <button type="button" id="btn-info" data-bs-dismiss="modal">Close</button>
-                 </div>
-             </div>
-         </div>
      </div>
  @endsection
  @section('script')
