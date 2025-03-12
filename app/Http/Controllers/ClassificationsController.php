@@ -9,4 +9,5 @@ class ClassificationsController extends Controller
     public function index(){
         return view('myApp.admin.links.classifications');
     }
+    
 }
