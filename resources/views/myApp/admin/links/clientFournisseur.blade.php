@@ -766,255 +766,259 @@
 
 @endsection
 @section('script')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const select = document.getElementById('pagination-select');
-            const form = document.getElementById('pagination-form');
-            const perPageInput = document.getElementById('per-page-input');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const select = document.getElementById('pagination-select');
+        const form = document.getElementById('pagination-form');
+        const perPageInput = document.getElementById('per-page-input');
 
-            select.addEventListener('change', function() {
-                perPageInput.value = this.value;
-                form.submit();
-            });
+        select.addEventListener('change', function () {
+            perPageInput.value = this.value;
+            form.submit();
         });
-    </script>
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-     <script>
-         $(document).ready(function() {
-             // Quand une catégorie est sélectionnée
-             $('#categorie').change(function() {
-                 var categorieId = $(this).val();
- 
-                 // Si une catégorie est sélectionnée
-                 if (categorieId) {
-                     // Afficher le champ des sous-catégories et son label
-                     $('#label-sous-categorie').show();
-                     $('#sous-categorie').show();
- 
-                     // Faire une requête AJAX pour récupérer les sous-catégories
-                     $.ajax({
-                         url: '/sous-categories/' + categorieId, // L'URL de ta route
-                         type: 'GET',
-                         success: function(response) {
-                             // Vider le select de sous-catégories
-                             $('#sous-categorie').empty();
-                             $('#sous-categorie').append(
-                                 '<option value="">Sélectionner une sous-catégorie</option>');
- 
-                             // Ajouter les sous-catégories au select
-                             $.each(response, function(index, sousCategorie) {
-                                 $('#sous-categorie').append('<option value="' +
-                                     sousCategorie.id + '">' + sousCategorie
-                                     .nom_produit + '</option>');
-                             });
-                         },
-                         error: function(xhr, status, error) {
-                             // Si une erreur se produit
-                             console.log('Erreur :', error);
-                         }
-                     });
-                 } else {
-                     // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
-                     $('#label-sous-categorie').hide();
-                     $('#sous-categorie').hide();
-                 }
-             });
-         });
-     </script>
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Quand une catégorie est sélectionnée
+        $('#categorie').change(function () {
+            var categorieId = $(this).val();
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const updateFCModal = document.getElementById('update_fournisseurClient');
-            updateFCModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget;
+            // Si une catégorie est sélectionnée
+            if (categorieId) {
+                // Afficher le champ des sous-catégories et son label
+                $('#label-sous-categorie').show();
+                $('#sous-categorie').show();
 
-                const fcId = button.getAttribute('data-id');
-                const fcName = button.getAttribute('data-name');
-                const fcEmail = button.getAttribute('data-email');
-                const fcContact = button.getAttribute('data-tele');
-                const fcVille = button.getAttribute('data-ville');
-                const fcSociety = button.getAttribute('data-society');
-                const fcGSM1 = button.getAttribute('data-GSM1');
-                const fcGSM2 = button.getAttribute('data-GSM2');
-                const fcCategory = button.getAttribute('data-category')
+                // Faire une requête AJAX pour récupérer les sous-catégories
+                $.ajax({
+                    url: '/sous-categories/' + categorieId, // L'URL de ta route
+                    type: 'GET',
+                    success: function (response) {
+                        // Vider le select de sous-catégories
+                        $('#sous-categorie').empty();
+                        $('#sous-categorie').append(
+                            '<option value="">Sélectionner une sous-catégorie</option>');
 
-                document.getElementById('updateFCId').value = fcId;
-                document.getElementById('updateFCName').value = fcName;
-                document.getElementById('updateFCEmail').value = fcEmail;
-                document.getElementById('updateFCContact').value = fcContact;
-                document.getElementById('updateFCVille').value = fcVille;
-                document.getElementById('updateFCSociety').value = fcSociety;
-                document.getElementById('updateFCGSM1').value = fcGSM1;
-                document.getElementById('updateFCGSM2').value = fcGSM2;
-                document.getElementById('updateFCCategory').value = fcCategory;
-
-            });
-        });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.status-select');
-            selects.forEach(select => {
-                select.addEventListener('change', function() {
-                    const form = this.closest('.fc-form');
-                    if (form) {
-                        form.submit();
+                        // Ajouter les sous-catégories au select
+                        $.each(response, function (index, sousCategorie) {
+                            $('#sous-categorie').append('<option value="' +
+                                sousCategorie.id + '">' + sousCategorie
+                                    .nom_produit + '</option>');
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        // Si une erreur se produit
+                        console.log('Erreur :', error);
                     }
                 });
-            });
+            } else {
+                // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                $('#label-sous-categorie').hide();
+                $('#sous-categorie').hide();
+            }
         });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.userSelect');
-            selects.forEach(select => {
-                select.addEventListener('change', function() {
-                    const form = this.closest(
-                        '.user-form');
-                    if (form) {
-                        form.submit();
-                    }
-                });
-            });
-        });
-    </script>
+    });
+</script>
 
-    <script>
-        function confirmDelete(clientFournisseurId) {
-            Swal.fire({
-                title: 'Supprimer le client&fournisseur !',
-                text: "êtes-vous sûr que vous voulez supprimer ce client&fournisseur ?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'Annuler',
-                confirmButtonText: 'Oui, Supprimer-le !'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + clientFournisseurId).submit();
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const updateFCModal = document.getElementById('update_fournisseurClient');
+        updateFCModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
+
+            const fcId = button.getAttribute('data-id');
+            const fcName = button.getAttribute('data-name');
+            const fcEmail = button.getAttribute('data-email');
+            const fcContact = button.getAttribute('data-tele');
+            const fcVille = button.getAttribute('data-ville');
+            const fcSociety = button.getAttribute('data-society');
+            const fcGSM1 = button.getAttribute('data-GSM1');
+            const fcGSM2 = button.getAttribute('data-GSM2');
+            const fcCategory = button.getAttribute('data-category')
+
+            document.getElementById('updateFCId').value = fcId;
+            document.getElementById('updateFCName').value = fcName;
+            document.getElementById('updateFCEmail').value = fcEmail;
+            document.getElementById('updateFCContact').value = fcContact;
+            document.getElementById('updateFCVille').value = fcVille;
+            document.getElementById('updateFCSociety').value = fcSociety;
+            document.getElementById('updateFCGSM1').value = fcGSM1;
+            document.getElementById('updateFCGSM2').value = fcGSM2;
+            document.getElementById('updateFCCategory').value = fcCategory;
+
+
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selects = document.querySelectorAll('.status-select');
+        selects.forEach(select => {
+            select.addEventListener('change', function () {
+                const form = this.closest('.fc-form');
+                if (form) {
+                    form.submit();
                 }
             });
-        }
-    </script>
-    <script>
-        document.querySelectorAll(`.detailButton`).forEach(button => {
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const selects = document.querySelectorAll('.userSelect'); // Sélectionne tous les selects
+        selects.forEach(select => {
+            select.addEventListener('change', function () {
+                const form = this.closest(
+                    '.user-form'); // Trouve le formulaire correspondant
+                if (form) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
 
-            button.addEventListener('click', function() {
-                const fcId = this.getAttribute('data-bs-target').split('-').pop();
-                const fcName = this.getAttribute('data-name') || 'Non disponible'
-                const fcEmail = this.getAttribute('data-email') || 'Non disponible'
-                const fcContact = this.getAttribute('data-tele') || 'Non disponible'
-                const fcVille = this.getAttribute('data-ville')
-                const fcSociety = this.getAttribute('data-society-name')
-                const fcGSM1 = this.getAttribute('data-GSM1')
-                const fcGSM2 = this.getAttribute('data-GSM2')
-                const fcRemark = this.getAttribute('data-remark')
-                const fcUser = this.getAttribute('data-user')
+<script>
+    function confirmDelete(fcId) {
+        Swal.fire({
+            title: 'Supprimer le client&fournisseur !',
+            text: "êtes-vous sûr que vous voulez supprimer ce client&fournisseur ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: 'Annuler',
+            confirmButtonText: 'Oui, Supprimer-le !'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + fcId).submit();
+            }
+        });
+    }
+</script>
 
-                document.querySelector(`#showNameDetail-${fcId}`).innerText = fcName
-                document.querySelector(`#showEmailDetail-${fcId}`).innerText = fcEmail
-                document.querySelector(`#showContactDetail-${fcId}`).innerText = fcContact
-                document.querySelector(`#showVilleDetail-${fcId}`).innerText = fcVille
-                document.querySelector(`#showSocietyDetail-${fcId}`).innerText = fcSociety
-                document.querySelector(`#showGSM1Detail-${fcId}`).innerText = fcGSM1
-                document.querySelector(`#showGSM2Detail-${fcId}`).innerText = fcGSM2
-                document.querySelector(`#showRemarkDetail-${fcId}`).innerText = fcRemark
-                document.querySelector(`#showUserDetail-${fcId}`).innerText = fcUser
-            })
+<script>
+    document.querySelectorAll(`.detailButton`).forEach(button => {
+
+        button.addEventListener('click', function () {
+            const fcId = this.getAttribute('data-bs-target').split('-').pop();
+            const fcName = this.getAttribute('data-name') || 'Non disponible'
+            const fcEmail = this.getAttribute('data-email') || 'Non disponible'
+            const fcContact = this.getAttribute('data-tele') || 'Non disponible'
+            const fcVille = this.getAttribute('data-ville')
+            const fcSociety = this.getAttribute('data-society-name')
+            const fcGSM1 = this.getAttribute('data-GSM1')
+            const fcGSM2 = this.getAttribute('data-GSM2')
+            const fcRemark = this.getAttribute('data-remark')
+            const fcUser = this.getAttribute('data-user')
+
+            document.querySelector(`#showNameDetail-${fcId}`).innerText = fcName
+            document.querySelector(`#showEmailDetail-${fcId}`).innerText = fcEmail
+            document.querySelector(`#showContactDetail-${fcId}`).innerText = fcContact
+            document.querySelector(`#showVilleDetail-${fcId}`).innerText = fcVille
+            document.querySelector(`#showSocietyDetail-${fcId}`).innerText = fcSociety
+            document.querySelector(`#showGSM1Detail-${fcId}`).innerText = fcGSM1
+            document.querySelector(`#showGSM2Detail-${fcId}`).innerText = fcGSM2
+            document.querySelector(`#showRemarkDetail-${fcId}`).innerText = fcRemark
+            document.querySelector(`#showUserDetail-${fcId}`).innerText = fcUser
+        })
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const categories = @json($categories);
+        // console.log(categories);
+
+        document.querySelectorAll('.showCategoryfc').forEach(selectCategory => {
+            const fcId = selectCategory.id.split('-').pop();
+            const products = document.getElementById(`products-${fcId}`);
+
+
+            if (products) {
+                selectCategory.addEventListener('change', function () {
+                    const selectedCategoryId = this.value;
+                    products.innerHTML = '';
+
+                    if (selectedCategoryId) {
+                        const selectedCategory = categories.find(category => {
+                            return category.id == selectedCategoryId;
+                        });
+
+                        if (selectedCategory && selectedCategory.sous_categories.length > 0) {
+                            selectedCategory.sous_categories.forEach(sous_category => {
+                                const option = document.createElement('option');
+                                option.value = sous_category.id;
+                                option.textContent = sous_category.nom_produit;
+                                option.selected = true;
+                                option.disabled = true;
+
+                                products.appendChild(option);
+                            });
+                        } else {
+                            const emptyOption = document.createElement('option');
+                            emptyOption.textContent = 'Aucun produit trouvé';
+                            emptyOption.disabled = true;
+                            products.appendChild(emptyOption);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector('input[name="search"]');
+
+        searchInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const categories = @json($categories);
+        searchInput.addEventListener('input', function () {
+            const searchQuery = searchInput.value;
 
-            document.querySelectorAll('.showCategoryfc').forEach(selectCategory => {
-                const fcId = selectCategory.id.split('-').pop();
-                const products = document.getElementById(`products-${fcId}`);
+            if (searchQuery.length > 0) {
+                fetch(`/search-fournisseurClients?search=${searchQuery}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log(data);
+                        const { fcs, selectOptions } = data;
 
-                if (products) {
-                    selectCategory.addEventListener('change', function() {
-                        const selectedCategoryId = this.value;
-                        products.innerHTML = '';
+                        const tbody = document.querySelector('tbody');
+                        tbody.innerHTML = '';
 
-                        if (selectedCategoryId) {
-                            const selectedCategory = categories.find(category => {
-                                return category.id == selectedCategoryId
+                        fcs.forEach(fc => {
+
+                            const categories = fc.categories || [];
+
+                            let categoriesList = 'Non catégorisé';
+
+                            categories.forEach(category => {
+                                categoriesList =
+                                    `${category.nom_categorie}`;
                             });
 
-                            if (selectedCategory && selectedCategory.sous_categories.length > 0) {
-                                selectedCategory.sous_categories.forEach(sous_category => {
-                                    const option = document.createElement('option');
-                                    option.value = sous_category.id;
-                                    option.textContent = sous_category.nom_produit;
-                                    option.selected = true;
-                                    option.disabled = true;
 
-                                    products.appendChild(option);
-                                })
-                            } else {
-                                const emptyOption = document.createElement('option');
-                                emptyOption.textContent = 'Aucun produit trouvé';
-                                emptyOption.disabled = true;
-                                products.appendChild(emptyOption);
-                            }
-                        }
-                    })
-                }
-            })
-        })
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector('input[name="search"]');
+                            const row = document.createElement('tr');
+                            const role = "{{ auth()->user()->role }}"
+                            row.innerHTML =
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                }
-            });
-
-            searchInput.addEventListener('input', function() {
-                const searchQuery = searchInput.value;
-
-                if (searchQuery.length > 0) {
-                    fetch(`/search-fournisseurClients?search=${searchQuery}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            const {
-                                fcs,
-                                selectOptions
-                            } = data;
-
-                            const tbody = document.querySelector('tbody');
-                            tbody.innerHTML = '';
-
-                            fcs.forEach(fc => {
-
-
-                                const categories = fc.categories || [];
-
-                                let categoriesList = 'Non catégorisé';
-
-                                categories.forEach(category => {
-                                    categoriesList =
-                                        `${category.nom_categorie }`;
-                                });
-
-
-
-                                const row = document.createElement('tr');
-                                const role = "{{ auth()->user()->role }}"
-                                row.innerHTML =
-                                    `
-                               
-
-                            ${role === "super-admin" ? `
+                                `
+                                   
+                                    ${role === "super-admin" ? `
                                                     <td class="cell">${fc.nomSociete_fournisseurClient || 'Particulier'}</td>
                                                     <td class="cell">${fc.GSM1_fournisseurClient || 'Non disponible'}</td>
                                                     <td class="cell">${fc.GSM2_fournisseurClient || 'Non disponible'}</td>
@@ -1175,184 +1179,213 @@
                                                 
                                                 ` : ""}
 
-                        `
+                                `
 
-                                tbody.appendChild(row);
-                                document.querySelectorAll('.status-select').forEach(
-                                    selectElement => {
-                                        selectElement.addEventListener('change',
-                                            function() {
-                                                const form = this.closest('.fc-form');
-                                                if (form) {
-                                                    form.submit();
-                                                }
+                            tbody.appendChild(row);
+
+                            const selectElement = row.querySelector('.status-select');
+                            if (selectElement) { // Vérifiez que l'élément existe
+                                selectElement.addEventListener('change', function () {
+                                    const form = this.closest('.fc-form');
+                                    if (form) {
+                                        form
+                                            .submit(); // Exécute la logique seulement si l'élément existe
+                                    }
+                                });
+                            }
+                            // Ajouter un événement de détail pour chaque bouton "Détails"
+                            const detailButtonsfc = document.querySelectorAll(
+                                '.detailButtonQuery');
+
+                            if (detailButtonsfc.length >
+                                0) { // Assurez-vous qu'il y a au moins un bouton
+                                detailButtonsfc.forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        // Récupération des données du fc
+                                        const fcName = this
+                                            .getAttribute('data-name') ||
+                                            'Non disponible';
+                                        const fcEmail = this
+                                            .getAttribute('data-email') ||
+                                            'Non disponible';
+                                        const fcContact = this
+                                            .getAttribute('data-contact') ||
+                                            'Non disponible';
+                                        const fcSociety = this
+                                            .getAttribute('data-society') ||
+                                            'Particulier';
+                                        const fcGSM1 = this
+                                            .getAttribute('data-GSM1') ||
+                                            'Non disponible';
+                                        const fcGSM2 = this
+                                            .getAttribute('data-GSM2') ||
+                                            'Non disponible';
+                                        const fcVille = this
+                                            .getAttribute('data-ville');
+                                        const fcRemark = this
+                                            .getAttribute('data-remark');
+                                        const fcUser = this
+                                            .getAttribute('data-user') ||
+                                            'Personne';
+
+                                        // Mise à jour des éléments HTML
+                                        const updateTextContent = (selector,
+                                            text) => {
+                                            const element = document
+                                                .querySelector(
+                                                    selector);
+                                            if (element) {
+                                                element.innerText =
+                                                    text; // Défaut : 'N/A' si la donnée est vide
+                                            }
+                                        };
+
+                                        updateTextContent(
+                                            '#showNamefc',
+                                            fcName);
+                                        updateTextContent(
+                                            '#showEmailfc',
+                                            fcEmail);
+                                        updateTextContent(
+                                            '#showContactfc',
+                                            fcContact);
+                                        updateTextContent(
+                                            '#showSocietyfc',
+                                            fcSociety);
+                                        updateTextContent(
+                                            '#showGSM1fc',
+                                            fcGSM1);
+                                        updateTextContent(
+                                            '#showGSM2fc',
+                                            fcGSM2);
+                                        updateTextContent(
+                                            '#showVillefc',
+                                            fcVille);
+                                        updateTextContent(
+                                            '#showRemarkfc',
+                                            fcRemark);
+                                        updateTextContent(
+                                            '#showUserfc',
+                                            fcUser);
+
+                                        // Gestion des catégories
+                                        const categories = JSON.parse(
+                                            decodeURIComponent(this
+                                                .getAttribute(
+                                                    'data-categories')));
+                                        console.log(
+                                            "Données des catégories :",
+                                            categories);
+
+                                        if (categories && Array.isArray(
+                                            categories)) {
+                                            let categoriesHTML =
+                                                '<option value="" selected>Selectionner la catégorie</option>';
+                                            categories.forEach(category => {
+                                                categoriesHTML +=
+                                                    `<option value="${category.id}">${category.nom_categorie}</option>`;
                                             });
-                                    });
 
-                                // Gestion des détails des éléments
-                                document.querySelectorAll('.detailButtonQuery').forEach(
-                                    button => {
-                                        button.addEventListener('click', function() {
-                                            // Récupération des données
-                                            const fcName = this.getAttribute(
-                                                'data-name'); || 'Non disponible'
-                                            const fcEmail = this.getAttribute(
-                                                    'data-email') ||
-                                                'Non disponible';
-                                            const fcContact = this.getAttribute(
-                                                'data-contact'); || 'Non disponible'
-                                            const fcSociety = this.getAttribute(
-                                                    'data-society') ||
-                                                'Particulier'; // Par défaut "Particulier"
-                                            const fcGSM1 = this.getAttribute(
-                                                    'data-GSM1') ||
-                                                'Non disponible'; // Par défaut "Non"
-                                            const fcGSM2 = this.getAttribute(
-                                                    'data-GSM2') ||
-                                                'Non disponible'; // Par défaut "Non"
-                                            const fcVille = this.getAttribute(
-                                                'data-ville');
-                                            const fcRemark = this.getAttribute(
-                                                'data-remark');
-                                            const fcUser = this.getAttribute(
-                                                'data-user');
+                                            const categoriesSelect =
+                                                document.querySelector(
+                                                    '#categoriesQuery-1');
+                                            if (categoriesSelect) {
+                                                categoriesSelect.innerHTML =
+                                                    categoriesHTML;
 
-                                            // Mise à jour des éléments HTML
-                                            const updateTextContent = (selector,
-                                                text) => {
-                                                const element = document
-                                                    .querySelector(selector);
-                                                if (element) {
-                                                    element.innerText = text;
-                                                }
-                                            };
-
-                                            updateTextContent('#showNamefc',
-                                                fcName);
-                                            updateTextContent('#showEmailfc',
-                                                fcEmail);
-                                            updateTextContent('#showContactfc',
-                                                fcContact);
-                                            updateTextContent('#showSocietyfc',
-                                                fcSociety);
-                                            updateTextContent('#showGSM1fc',
-                                                fcGSM1);
-                                            updateTextContent('#showGSM2fc',
-                                                fcGSM2);
-                                            updateTextContent('#showVillefc',
-                                                fcVille);
-                                            updateTextContent('#showRemarkfc',
-                                                fcRemark);
-                                            updateTextContent('#showUserfc',
-                                                fcUser);
-
-                                            // Gestion des catégories
-                                            const categories = JSON.parse(
-                                                decodeURIComponent(this
-                                                    .getAttribute(
-                                                        'data-categories')));
-                                            console.log("Données des catégories :",
-                                                categories);
-
-                                            if (categories && Array.isArray(
-                                                    categories)) {
-                                                let categoriesHTML =
-                                                    '<option value="" selected>Selectionner la catégorie</option>';
-                                                categories.forEach(category => {
-                                                    categoriesHTML +=
-                                                        `<option value="${category.id}">${category.nom_categorie}</option>`;
-                                                });
-
-                                                const categoriesSelect = document
-                                                    .querySelector(
-                                                        '#categoriesQuery-1');
-                                                if (categoriesSelect) {
-                                                    categoriesSelect.innerHTML =
-                                                        categoriesHTML;
-
-                                                    // Écouteur pour le changement de catégorie
-                                                    categoriesSelect
-                                                        .addEventListener('change',
-                                                            function() {
-                                                                const
-                                                                    selectedCategoryId =
+                                                // Écouteur pour le changement de catégorie
+                                                categoriesSelect
+                                                    .addEventListener(
+                                                        'change',
+                                                        function () {
+                                                            const
+                                                                selectedCategoryId =
                                                                     this.value;
-                                                                const
-                                                                    selectedCategory =
-                                                                    categories.find(
-                                                                        category =>
-                                                                        category
-                                                                        .id ==
-                                                                        selectedCategoryId
-                                                                    );
+                                                            const
+                                                                selectedCategory =
+                                                                    categories
+                                                                        .find(
+                                                                            category =>
+                                                                                category
+                                                                                    .id ==
+                                                                                selectedCategoryId
+                                                                        );
 
-                                                                console.log(
-                                                                    "Catégorie sélectionnée :",
-                                                                    selectedCategory
-                                                                );
+                                                            console.log(
+                                                                "Catégorie sélectionnée :",
+                                                                selectedCategory
+                                                            );
 
-                                                                let productsHTML =
-                                                                    '<option value="" selected>Voir les produits</option>';
-                                                                if (selectedCategory &&
-                                                                    selectedCategory
+                                                            let productsHTML =
+                                                                '<option value="" selected>Voir les sous catégories associées</option>';
+                                                            if (selectedCategory &&
+                                                                selectedCategory
                                                                     .sous_categories
-                                                                ) {
+                                                            ) {
+                                                                console.log(
+                                                                    "Sous-catégories de cette catégorie :",
                                                                     selectedCategory
                                                                         .sous_categories
-                                                                        .forEach(
-                                                                            product => {
-                                                                                productsHTML
-                                                                                    +=
-                                                                                    `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
-                                                                            });
-                                                                } else {
-                                                                    console.log(
-                                                                        "Aucune sous-catégorie trouvée pour cette catégorie."
-                                                                    );
-                                                                }
+                                                                );
+                                                                selectedCategory
+                                                                    .sous_categories
+                                                                    .forEach(
+                                                                        product => {
+                                                                            productsHTML
+                                                                                +=
+                                                                                `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
+                                                                        });
+                                                            } else {
+                                                                console.log(
+                                                                    "Aucune sous-catégorie trouvée pour cette catégorie."
+                                                                );
+                                                            }
 
-                                                                const
-                                                                    productsSelect =
+                                                            const
+                                                                productsSelect =
                                                                     document
-                                                                    .querySelector(
-                                                                        '#productsQuery-1'
-                                                                    );
-                                                                if (
-                                                                    productsSelect
-                                                                ) {
-                                                                    productsSelect
-                                                                        .innerHTML =
-                                                                        productsHTML;
-                                                                } else {
-                                                                    console.log(
-                                                                        "Le sélecteur de produits #productsQuery-1 n'existe pas."
-                                                                    );
-                                                                }
-                                                            });
-                                                } else {
-                                                    console.log(
-                                                        "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
-                                                    );
-                                                }
+                                                                        .querySelector(
+                                                                            '#productsQuery-1'
+                                                                        );
+                                                            if (
+                                                                productsSelect
+                                                            ) {
+                                                                productsSelect
+                                                                    .innerHTML =
+                                                                    productsHTML;
+                                                            } else {
+                                                                console.log(
+                                                                    "Le sélecteur de produits #productsQuery-1 n'existe pas."
+                                                                );
+                                                            }
+                                                        });
                                             } else {
                                                 console.log(
-                                                    "Les données des catégories ne sont pas valides ou sont vides."
+                                                    "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
                                                 );
                                             }
-                                        });
+                                        } else {
+                                            console.log(
+                                                "Les données des catégories ne sont pas valides ou sont vides."
+                                            );
+                                        }
                                     });
+                                });
+                            }
 
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching prospects:', error);
+
+
                         });
-                } else {
-                    location.reload();
-                }
-            });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching fcs:', error);
+                    });
+            } else {
+                location.reload();
+            }
         });
-    </script>
+    });
+</script>
 @endsection
 @section('content2')
     <div class="modal fade" id="QueryFournisseurClientsDetails" tabindex="-1" aria-labelledby="exampleModalLabel"
