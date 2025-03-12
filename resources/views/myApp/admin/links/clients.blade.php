@@ -757,11 +757,56 @@
             });
         });
     </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Quand une catégorie est sélectionnée
+        $('#categorie').change(function() {
+            var categorieId = $(this).val();
+
+            // Si une catégorie est sélectionnée
+            if (categorieId) {
+                // Afficher le champ des sous-catégories et son label
+                $('#label-sous-categorie').show();
+                $('#sous-categorie').show();
+
+                // Faire une requête AJAX pour récupérer les sous-catégories
+                $.ajax({
+                    url: '/sous-categories/' + categorieId, // L'URL de ta route
+                    type: 'GET',
+                    success: function(response) {
+                        // Vider le select de sous-catégories
+                        $('#sous-categorie').empty();
+                        $('#sous-categorie').append(
+                            '<option value="">Sélectionner une sous-catégorie</option>');
+
+                        // Ajouter les sous-catégories au select
+                        $.each(response, function(index, sousCategorie) {
+                            $('#sous-categorie').append('<option value="' +
+                                sousCategorie.id + '">' + sousCategorie
+                                .nom_produit + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        // Si une erreur se produit
+                        console.log('Erreur :', error);
+                    }
+                });
+            } else {
+                // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                $('#label-sous-categorie').hide();
+                $('#sous-categorie').hide();
+            }
+        });
+    });
+</script>
+ 
+ </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const update_client = document.getElementById('update_client');
-            update_client.addEventListener('show.bs.modal', event => {
+            const updateclient = document.getElementById('update_client');
+            updateclient.addEventListener('show.bs.modal', event => {
                 const button = event.relatedTarget;
 
                 const clientId = button.getAttribute('data-id');
@@ -774,132 +819,47 @@
                 const clientGSM2 = button.getAttribute('data-GSM2');
                 const clientCategory = button.getAttribute('data-category')
 
-                document.getElementById('updateClientId').value = clientId;
-                document.getElementById('updateClientName').value = clientName;
-                document.getElementById('updateClientEmail').value = clientEmail;
-                document.getElementById('updateClientContact').value = clientContact;
-                document.getElementById('updateClientVille').value = clientVille;
-                document.getElementById('updateClientSociety').value = clientSociety;
-                document.getElementById('updateClientGSM1').value = clientGSM1;
-                document.getElementById('updateClientGSM2').value = clientGSM2;
-                document.getElementById('updateClientCategory').value = clientCategory;
+                document.getElementById('updateclientId').value = clientId;
+                document.getElementById('updateclientName').value = clientName;
+                document.getElementById('updateclientEmail').value = clientEmail;
+                document.getElementById('updateclientContact').value = clientContact;
+                document.getElementById('updateclientVille').value = clientVille;
+                document.getElementById('updateclientSociety').value = clientSociety;
+                document.getElementById('updateclientGSM1').value = clientGSM1;
+                document.getElementById('updateclientGSM2').value = clientGSM2;
+                document.getElementById('updateclientCategory').value = clientCategory;
 
 
             });
         });
     </script>
     <script>
-        document.querySelectorAll(`.detailButton`).forEach(button => {
-
-            button.addEventListener('click', function() {
-                const clientId = this.getAttribute('data-bs-target').split('-').pop();
-                const clientName = this.getAttribute('data-name') || 'Non disponible'
-                const clientEmail = this.getAttribute('data-email') || 'Non disponible'
-                const clientContact = this.getAttribute('data-tele') || 'Non disponible'
-                const clientVille = this.getAttribute('data-ville')
-                const clientSociety = this.getAttribute('data-society-name')
-                const clientGSM1 = this.getAttribute('data-GSM1')
-                const clientGSM2 = this.getAttribute('data-GSM2')
-                const clientRemark = this.getAttribute('data-remark')
-                const clientUser = this.getAttribute('data-user')
-
-                document.querySelector(`#showNameDetail-${clientId}`).innerText = clientName
-                document.querySelector(`#showGSM1Detail-${clientId}`).innerText = clientGSM1
-                document.querySelector(`#showGSM2Detail-${clientId}`).innerText = clientGSM2
-                document.querySelector(`#showEmailDetail-${clientId}`).innerText = clientEmail
-                document.querySelector(`#showContactDetail-${clientId}`).innerText = clientContact
-                document.querySelector(`#showVilleDetail-${clientId}`).innerText = clientVille
-                document.querySelector(`#showSocietyDetail-${clientId}`).innerText = clientSociety
-                document.querySelector(`#showRemarkDetail-${clientId}`).innerText = clientRemark
-                document.querySelector(`#showUserDetail-${clientId}`).innerText = clientUser
-            })
-        });
-
         document.addEventListener('DOMContentLoaded', function() {
-            const categories = @json($categories);
-
-            document.querySelectorAll('.showCategoryClient').forEach(
-                selectCategory => {
-                    const clientId = selectCategory.id.split('-').pop();
-                    const products = document.getElementById(`products-${clientId}`);
-
-                    if (products) {
-                        selectCategory.addEventListener('change', function() {
-                            const selectedCategoryId = this.value;
-                            products.innerHTML = '';
-                            if (selectedCategoryId) {
-                                const selectedCategory = categories.find(category => {
-                                    return category.id == selectedCategoryId;
-                                });
-
-                                if (selectedCategory && selectedCategory.sous_categories.length > 0) {
-                                    selectedCategory.sous_categories.forEach(sous_category => {
-                                        const option = document.createElement('option');
-                                        option.value = sous_category.id;
-                                        option.textContent = sous_category.nom_produit;
-                                        option.selected = true;
-                                        option.disabled = true;
-
-                                        products.appendChild(option);
-                                    })
-                                } else {
-                                    const emptyOption = document.createElement('option');
-                                    emptyOption.textContent = 'Aucun produit trouvé';
-                                    emptyOption.disabled = true;
-                                    products.appendChild(emptyOption);
-                                }
-                            }
-                        })
+            const selects = document.querySelectorAll('.status-select');
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const form = this.closest('.client-form');
+                    if (form) {
+                        form.submit();
                     }
-                }
-            )
-        })
-    </script>
-   
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Quand une catégorie est sélectionnée
-            $('#categorie').change(function() {
-                var categorieId = $(this).val();
-
-                // Si une catégorie est sélectionnée
-                if (categorieId) {
-                    // Afficher le champ des sous-catégories et son label
-                    $('#label-sous-categorie').show();
-                    $('#sous-categorie').show();
-
-                    // Faire une requête AJAX pour récupérer les sous-catégories
-                    $.ajax({
-                        url: '/sous-categories/' + categorieId, // L'URL de ta route
-                        type: 'GET',
-                        success: function(response) {
-                            // Vider le select de sous-catégories
-                            $('#sous-categorie').empty();
-                            $('#sous-categorie').append(
-                                '<option value="">Sélectionner une sous-catégorie</option>');
-
-                            // Ajouter les sous-catégories au select
-                            $.each(response, function(index, sousCategorie) {
-                                $('#sous-categorie').append('<option value="' +
-                                    sousCategorie.id + '">' + sousCategorie
-                                    .nom_produit + '</option>');
-                            });
-                        },
-                        error: function(xhr, status, error) {
-                            // Si une erreur se produit
-                            console.log('Erreur AJAX:', error);
-                        }
-                    });
-                } else {
-                    // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
-                    $('#label-sous-categorie').hide();
-                    $('#sous-categorie').hide();
-                }
+                });
             });
         });
     </script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selects = document.querySelectorAll('.userSelect'); // Sélectionne tous les selects
+            selects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const form = this.closest(
+                        '.user-form'); // Trouve le formulaire correspondant
+                    if (form) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
         function confirmDelete(clientId) {
@@ -921,30 +881,71 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.status-select');
-            selects.forEach(select => {
-                select.addEventListener('change', function() {
-                    const form = this.closest('.client-form');
-                    if (form) {
-                        form.submit();
-                    }
-                });
-            });
-        });
-    </script>
+        document.querySelectorAll(`.detailButton`).forEach(button => {
 
-    <script>
+            button.addEventListener('click', function() {
+                const clientId = this.getAttribute('data-bs-target').split('-').pop();
+                const clientName = this.getAttribute('data-name') || 'Non disponible'
+                const clientEmail = this.getAttribute('data-email') || 'Non disponible'
+                const clientContact = this.getAttribute('data-tele') || 'Non disponible'
+                const clientVille = this.getAttribute('data-ville')
+                const clientSociety = this.getAttribute('data-society-name')
+                const clientGSM1 = this.getAttribute('data-GSM1')
+                const clientGSM2 = this.getAttribute('data-GSM2')
+                const clientRemark = this.getAttribute('data-remark')
+                const clientUser = this.getAttribute('data-user')
+
+                document.querySelector(`#showNameDetail-${clientId}`).innerText = clientName
+                document.querySelector(`#showEmailDetail-${clientId}`).innerText = clientEmail
+                document.querySelector(`#showContactDetail-${clientId}`).innerText = clientContact
+                document.querySelector(`#showVilleDetail-${clientId}`).innerText = clientVille
+                document.querySelector(`#showSocietyDetail-${clientId}`).innerText = clientSociety
+                document.querySelector(`#showGSM1Detail-${clientId}`).innerText = clientGSM1
+                document.querySelector(`#showGSM2Detail-${clientId}`).innerText = clientGSM2
+                document.querySelector(`#showRemarkDetail-${clientId}`).innerText = clientRemark
+                document.querySelector(`#showUserDetail-${clientId}`).innerText = clientUser
+            })
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
-            const selects = document.querySelectorAll('.userSelect');
-            selects.forEach(select => {
-                select.addEventListener('change', function() {
-                    const form = this.closest(
-                        '.user-form');
-                    if (form) {
-                        form.submit();
-                    }
-                });
+
+            const categories = @json($categories);
+            // console.log(categories);
+
+            document.querySelectorAll('.showCategoryclient').forEach(selectCategory => {
+                const clientId = selectCategory.id.split('-').pop();
+                const products = document.getElementById(`products-${clientId}`);
+
+
+                if (products) {
+                    selectCategory.addEventListener('change', function() {
+                        const selectedCategoryId = this.value;
+                        products.innerHTML = '';
+
+                        if (selectedCategoryId) {
+                            const selectedCategory = categories.find(category => {
+                                return category.id == selectedCategoryId;
+                            });
+
+                            if (selectedCategory && selectedCategory.sous_categories.length > 0) {
+                                selectedCategory.sous_categories.forEach(sous_category => {
+                                    const option = document.createElement('option');
+                                    option.value = sous_category.id;
+                                    option.textContent = sous_category.nom_produit;
+                                    option.selected = true;
+                                    option.disabled = true;
+
+                                    products.appendChild(option);
+                                });
+                            } else {
+                                const emptyOption = document.createElement('option');
+                                emptyOption.textContent = 'Aucun produit trouvé';
+                                emptyOption.disabled = true;
+                                products.appendChild(emptyOption);
+                            }
+                        }
+                    });
+                }
             });
         });
     </script>
@@ -973,17 +974,12 @@
                         })
                         .then(data => {
                             console.log(data);
-
-                            const {
-                                clients,
-                                selectOptions
-                            } = data;
+                            const { clients, selectOptions } = data;
 
                             const tbody = document.querySelector('tbody');
                             tbody.innerHTML = '';
 
                             clients.forEach(client => {
-
 
                                 const categories = client.categories || [];
 
@@ -991,9 +987,8 @@
 
                                 categories.forEach(category => {
                                     categoriesList =
-                                        `${category.nom_categorie }`;
+                                        `${category.nom_categorie}`;
                                 });
-
 
 
                                 const row = document.createElement('tr');
@@ -1001,10 +996,8 @@
                                 row.innerHTML =
 
                                     `
-                          
-
-
-                        ${role === "super-admin" ? `
+                                   
+                                    ${role === "super-admin" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1014,63 +1007,72 @@
                                                                 <td class="cell">${client.ville_client}</td>
                                                                 <td class="cell">${categoriesList}</td>
                                                                 <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                    data-bs-target="#update_client"
-                                                                    data-id="${client.id}"
-                                                                    data-name="${client.nom_client}"
-                                                                    data-email="${client.email_client}"
-                                                                    data-tele="${client.tele_client}"
-                                                                    data-ville="${client.ville_client}"
-                                                                    data-society="${client.nomSociete_client}"
-                                                                    data-GSM1=" ${client.GSM1_client }"
-                                                                    data-GSM2="${client.GSM2_client }"
-                                                                    data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                                </button>
-                                                            
-                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#QueryClientsDetails"
-                                                                    data-name="${client.nom_client}"
-                                                                    data-email="${client.email_client}"
-                                                                    data-contact="${client.tele_client}"
-                                                                    data-ville="${client.ville_client}"
-                                                                    data-remark="${client.remark}"
-                                                                    data-user="${client.utilisateur.name}"
-                                                                    data-society-name="${client.nomSociete_client}"
-                                                                    data-GSM1="${client.GSM1_client}"
-                                                                    data-GSM2="${client.GSM2_client}"
-                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                >
-                                                                Détails
-                                                                </button>
-                                                           
-                                                               
-                                                                    <form
-                                                                        action="/client/destroy/${client.id}"
-                                                                        method="POST" style="display: inline;"
-                                                                        id="delete-form-${client.id }">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                            onclick="confirmDelete(${client.id })">Supprimer</button>
-                                                                    </form>
+                                                                 <td class="button-container">
+                                                                    <div class="d-flex align-items-center gap-2"
+                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                        data-bs-target="#update_client"
+                                                                        data-id="${client.id}"
+                                                                        data-name="${client.nom_client}"
+                                                                        data-email="${client.email_client}"
+                                                                        data-tele="${client.tele_client}"
+                                                                        data-ville="${client.ville_client}"
+                                                                        data-society="${client.nomSociete_client}"
+                                                                        data-GSM1=" ${client.GSM1_client}"
+                                                                        data-GSM2="${client.GSM2_client}"
+                                                                        data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
+                                                                    </button>
                                                                 
-                                                            
-                                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
+                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#QueryclientDetails"
+                                                                        data-name="${client.nom_client}"
+                                                                        data-email="${client.email_client}"
+                                                                        data-contact="${client.tele_client}"
+                                                                        data-ville="${client.ville_client}"
+                                                                        data-society-name="${client.nomSociete_client}"
+                                                                        data-GSM1="${client.GSM1_client}"
+                                                                        data-GSM2="${client.GSM2_client}"
+                                                                        data-remark="${client.remark}"
+                                                                        data-user="${client.utilisateur.name}"
+                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                    >
+                                                                    Détails
+                                                                    </button>
+                                                                
+                                                                    
+                                                                        <form
+                                                                            action="/client/destroy/${client.id}"
+                                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
+                                                                            id="delete-form-${client.id}">
                                                                             @csrf
-                                                                                <select class="form-select status-select" name="status">
+                                                                            @method('DELETE')
+                                                                            <button type="button" class="btn btn-outline-danger border-btn me-4"
+                                                                                onclick="confirmDelete(${client.id})">Supprimer</button>
+                                                                        </form>
+                                                                    
+                                                                
+                                                                        <form class="client-form"
+                                                                                action="{{ route('client.select', $client->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('POST')
+                                                                                <select name="status" id=""
+                                                                                    class="form-select status-select">
                                                                                     <option value="" selected>Selectionner la table</option>
-                                                                                        ${selectOptions.map(option => `
-                                                                    <option value="${option}">${option}</option>
-                                                                    `).join('')}
+                                                                                    @foreach ($select as $item)
+                                                                                        <option value="{{ $item }}">{{ $item }}
+                                                                                        </option>
+                                                                                    @endforeach
                                                                                 </select>
-                                                                            </form>
-                                                            </td>
+                                                                        </form>
+                                                                        </div>
+                                                                </td>
 
+                                                                `: ''}
 
-                                                            `:''}
-                        ${role === "admin" ? `
+                                    ${role === "admin" ? `
+
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1080,50 +1082,56 @@
                                                                 <td class="cell">${client.ville_client}</td>
                                                                 <td class="cell">${categoriesList}</td>
                                                                 <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                    data-bs-target="#update_client"
-                                                                    data-id="${client.id}"
-                                                                    data-name="${client.nom_client}"
-                                                                    data-email="${client.email_client}"
-                                                                    data-tele="${client.tele_client}"
-                                                                    data-ville="${client.ville_client}"
-                                                                    data-society="${client.nomSociete_client}"
-                                                                    data-GSM1=" ${client.GSM1_client }"
-                                                                    data-GSM2="${client.GSM2_client }"
-                                                                    data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                                </button>
-                                                            
-                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#QueryClientsDetails"
-                                                                    data-name="${client.nom_client}"
-                                                                    data-email="${client.email_client}"
-                                                                    data-contact="${client.tele_client}"
-                                                                    data-ville="${client.ville_client}"
-                                                                    data-remark="${client.remark}"
-                                                                    data-user="${client.utilisateur.name}"
-                                                                    data-society-name="${client.nomSociete_client}"
-                                                                    data-GSM1="${client.GSM1_client}"
-                                                                    data-GSM2="${client.GSM2_client}"
-                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                >
-                                                                Détails
-                                                                </button>
-                                                           
-                                                                            <form class="client-form" action="/client/select/${client.id}" method="POST">
-                                                                            @csrf
-                                                                                <select class="form-select status-select" name="status">
+                                                                <td class="button-container">
+                                                                    <div class="d-flex align-items-center gap-2"
+                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
+                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                                        data-bs-target="#update_client"
+                                                                        data-id="${client.id}"
+                                                                        data-name="${client.nom_client}"
+                                                                        data-email="${client.email_client}"
+                                                                        data-tele="${client.tele_client}"
+                                                                        data-ville="${client.ville_client}"
+                                                                        data-society="${client.nomSociete_client}"
+                                                                        data-GSM1=" ${client.GSM1_client}"
+                                                                        data-GSM2="${client.GSM2_client}"
+                                                                        data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
+                                                                    </button>
+                                                                
+                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#QueryclientDetails"
+                                                                        data-name="${client.nom_client}"
+                                                                        data-email="${client.email_client}"
+                                                                        data-contact="${client.tele_client}"
+                                                                        data-ville="${client.ville_client}"
+                                                                        data-society-name="${client.nomSociete_client}"
+                                                                        data-GSM1="${client.GSM1_client}"
+                                                                        data-GSM2="${client.GSM2_client}"
+                                                                        data-remark="${client.remark}"
+                                                                        data-user="${client.utilisateur.name}"
+                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                    >
+                                                                    Détails
+                                                                    </button>
+                                                                
+                                                                         <form class="client-form"
+                                                                                action="{{ route('client.select', $client->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('POST')
+                                                                                <select name="status" id=""
+                                                                                    class="form-select status-select">
                                                                                     <option value="" selected>Selectionner la table</option>
-                                                                                        ${selectOptions.map(option => `
-                                                    <option value="${option}">${option}</option>
-                                                    `).join('')}
+                                                                                    @foreach ($select as $item)
+                                                                                        <option value="{{ $item }}">{{ $item }}
+                                                                                        </option>
+                                                                                    @endforeach
                                                                                 </select>
-                                                                            </form>
-                                                            </td>
-
-
-                                                            `:''}${role === "utilisateur" ? `
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                                ` : ''} ${role === "utilisateur" ? `
                                                                 <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
                                                                 <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
                                                                 <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
@@ -1133,99 +1141,115 @@
                                                                 <td class="cell">${client.ville_client}</td>
                                                                 <td class="cell">${categoriesList}</td>
                                                                 <td class="cell">${client.utilisateur.name || 'Personne'}</td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#QueryclientDetails"
+                                                                        data-name="${client.nom_client}"
+                                                                        data-email="${client.email_client}"
+                                                                        data-contact="${client.tele_client}"
+                                                                        data-ville="${client.ville_client}"
+                                                                        data-society-name="${client.nomSociete_client}"
+                                                                        data-GSM1="${client.GSM1_client}"
+                                                                        data-GSM2="${client.GSM2_client}"
+                                                                        data-remark="${client.remark}"
+                                                                        data-user="${client.utilisateur.name}"
+                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
+                                                                    >
+                                                                    Détails
+                                                                    </button>
+                                                                </td>
+                                                                
+                                                                
+                                                                ` : ""}
 
-                                                              <td>
-                                                                <button type="button" class="btn btn-outline-info detailButtonQuery border-btn me-4"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#QueryClientsDetails"
-                                                                    data-name="${client.nom_client}"
-                                                                    data-email="${client.email_client}"
-                                                                    data-contact="${client.tele_client}"
-                                                                    data-ville="${client.ville_client}"
-                                                                    data-remark="${client.remark}"
-                                                                    data-user="${client.utilisateur.name}"
-                                                                    data-society-name="${client.nomSociete_client}"
-                                                                    data-GSM1="${client.GSM1_client}"
-                                                                    data-GSM2="${client.GSM2_client}"
-                                                                    data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                >
-                                                                Détails
-                                                                </button>
-                                                            </td>
-                                                            
-                                                            ` : ""}
-
-                    `
+                                `
 
                                 tbody.appendChild(row);
-                                // Gestion du changement de statut pour les clients
-                                document.querySelectorAll('.status-select').forEach(
-                                    selectElement => {
-                                        selectElement.addEventListener('change',
-                                            function() {
-                                                const form = this.closest(
-                                                    '.client-form');
-                                                if (form) {
-                                                    form
-                                                        .submit(); // Soumet le formulaire associé
-                                                }
-                                            });
-                                    });
 
-                                // Gestion des détails des clients
-                                document.querySelectorAll('.detailButtonQuery').forEach(
-                                    button => {
+                                const selectElement = row.querySelector('.status-select');
+                                if (selectElement) { // Vérifiez que l'élément existe
+                                    selectElement.addEventListener('change', function() {
+                                        const form = this.closest('.client-form');
+                                        if (form) {
+                                            form
+                                                .submit(); // Exécute la logique seulement si l'élément existe
+                                        }
+                                    });
+                                }
+                                // Ajouter un événement de détail pour chaque bouton "Détails"
+                                const detailButtonsclient = document.querySelectorAll(
+                                    '.detailButtonQuery');
+
+                                if (detailButtonsclient.length >
+                                    0) { // Assurez-vous qu'il y a au moins un bouton
+                                    detailButtonsclient.forEach(button => {
                                         button.addEventListener('click', function() {
                                             // Récupération des données du client
-                                            const clientName = this.getAttribute(
-                                                'data-name'); || 'Non disponible'
-                                            const clientEmail = this.getAttribute(
-                                                    'data-email') ||
+                                            const clientName = this
+                                                .getAttribute('data-name') ||
                                                 'Non disponible';
-                                            const clientContact = this.getAttribute(
-                                                'data-contact'); ||
-                                            'Non disponible';
-                                            const clientSociety = this.getAttribute(
-                                                'data-society') || 'Particulier';
-                                            const clientGSM1 = this.getAttribute(
-                                                'data-GSM1') || 'Non disponible';
-                                            const clientGSM2 = this.getAttribute(
-                                                'data-GSM2') || 'Non disponible';
-                                            const clientVille = this.getAttribute(
-                                                'data-ville');
-                                            const clientRemark = this.getAttribute(
-                                                'data-remark');
-                                            const clientUser = this.getAttribute(
-                                                'data-user') || 'Personne';
+                                            const clientEmail = this
+                                                .getAttribute('data-email') ||
+                                                'Non disponible';
+                                            const clientContact = this
+                                                .getAttribute('data-contact') ||
+                                                'Non disponible';
+                                            const clientSociety = this
+                                                .getAttribute('data-society') ||
+                                                'Particulier';
+                                            const clientGSM1 = this
+                                                .getAttribute('data-GSM1') ||
+                                                'Non disponible';
+                                            const clientGSM2 = this
+                                                .getAttribute('data-GSM2') ||
+                                                'Non disponible';
+                                            const clientVille = this
+                                                .getAttribute('data-ville');
+                                            const clientRemark = this
+                                                .getAttribute('data-remark');
+                                            const clientUser = this
+                                                .getAttribute('data-user') ||
+                                                'Personne';
 
                                             // Mise à jour des éléments HTML
                                             const updateTextContent = (selector,
                                                 text) => {
                                                 const element = document
-                                                    .querySelector(selector);
+                                                    .querySelector(
+                                                        selector);
                                                 if (element) {
                                                     element.innerText =
-                                                        text; // Affiche 'N/A' si le texte est vide
+                                                        text; // Défaut : 'N/A' si la donnée est vide
                                                 }
                                             };
 
-                                            updateTextContent('#showNameClient',
+                                            updateTextContent(
+                                                '#showNameclient',
                                                 clientName);
-                                            updateTextContent('#showEmailClient',
+                                            updateTextContent(
+                                                '#showEmailclient',
                                                 clientEmail);
-                                            updateTextContent('#showContactClient',
+                                            updateTextContent(
+                                                '#showContactclient',
                                                 clientContact);
-                                            updateTextContent('#showSocietyClient',
+                                            updateTextContent(
+                                                '#showSocietyclient',
                                                 clientSociety);
-                                            updateTextContent('#showGSM1Client',
+                                            updateTextContent(
+                                                '#showGSM1client',
                                                 clientGSM1);
-                                            updateTextContent('#showGSM2Client',
+                                            updateTextContent(
+                                                '#showGSM2client',
                                                 clientGSM2);
-                                            updateTextContent('#showVilleClient',
+                                            updateTextContent(
+                                                '#showVilleclient',
                                                 clientVille);
-                                            updateTextContent('#showRemarkClient',
+                                            updateTextContent(
+                                                '#showRemarkclient',
                                                 clientRemark);
-                                            updateTextContent('#showUserClient',
+                                            updateTextContent(
+                                                '#showUserclient',
                                                 clientUser);
 
                                             // Gestion des catégories
@@ -1233,7 +1257,8 @@
                                                 decodeURIComponent(this
                                                     .getAttribute(
                                                         'data-categories')));
-                                            console.log("Données des catégories :",
+                                            console.log(
+                                                "Données des catégories :",
                                                 categories);
 
                                             if (categories && Array.isArray(
@@ -1245,8 +1270,8 @@
                                                         `<option value="${category.id}">${category.nom_categorie}</option>`;
                                                 });
 
-                                                const categoriesSelect = document
-                                                    .querySelector(
+                                                const categoriesSelect =
+                                                    document.querySelector(
                                                         '#categoriesQuery-1');
                                                 if (categoriesSelect) {
                                                     categoriesSelect.innerHTML =
@@ -1254,14 +1279,16 @@
 
                                                     // Écouteur pour le changement de catégorie
                                                     categoriesSelect
-                                                        .addEventListener('change',
+                                                        .addEventListener(
+                                                            'change',
                                                             function() {
                                                                 const
                                                                     selectedCategoryId =
                                                                     this.value;
                                                                 const
                                                                     selectedCategory =
-                                                                    categories.find(
+                                                                    categories
+                                                                    .find(
                                                                         category =>
                                                                         category
                                                                         .id ==
@@ -1274,11 +1301,16 @@
                                                                 );
 
                                                                 let productsHTML =
-                                                                    '<option value="" selected>Voir les produits</option>';
+                                                                    '<option value="" selected>Voir les sous catégories associées</option>';
                                                                 if (selectedCategory &&
                                                                     selectedCategory
                                                                     .sous_categories
                                                                 ) {
+                                                                    console.log(
+                                                                        "Sous-catégories de cette catégorie :",
+                                                                        selectedCategory
+                                                                        .sous_categories
+                                                                    );
                                                                     selectedCategory
                                                                         .sous_categories
                                                                         .forEach(
@@ -1301,7 +1333,7 @@
                                                                     );
                                                                 if (
                                                                     productsSelect
-                                                                ) {
+                                                                    ) {
                                                                     productsSelect
                                                                         .innerHTML =
                                                                         productsHTML;
@@ -1323,11 +1355,14 @@
                                             }
                                         });
                                     });
-                                
+                                }
+
+
+
                             });
                         })
                         .catch(error => {
-                            console.error('Error fetching Clients:', error);
+                            console.error('Error fetching clients:', error);
                         });
                 } else {
                     location.reload();

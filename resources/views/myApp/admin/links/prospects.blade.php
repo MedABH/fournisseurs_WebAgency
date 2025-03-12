@@ -1125,14 +1125,19 @@
                                                                     Détails
                                                                     </button>
                                                                 
-                                                                        <form class="prospect-form" action="/prospect/select/${prospect.id}" method="POST">
-                                                                            @csrf
-                                                                            <select class="form-select status-select" name="status">
-                                                                                <option value="" selected>Selectionner la table</option>
-                                                                                ${selectOptions.map(option => `
-                                                                        <option value="${option}">${option}</option>
-                                                                    `).join('')}
-                                                                                                    </select>
+                                                                         <form class="prospect-form"
+                                                                                action="{{ route('prospect.select', $prospect->id) }}"
+                                                                                method="POST">
+                                                                                @csrf
+                                                                                @method('POST')
+                                                                                <select name="status" id=""
+                                                                                    class="form-select status-select">
+                                                                                    <option value="" selected>Selectionner la table</option>
+                                                                                    @foreach ($select as $item)
+                                                                                        <option value="{{ $item }}">{{ $item }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
                                                                         </form>
                                                                     </div>
                                                                 </td>
