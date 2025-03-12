@@ -743,21 +743,7 @@
         </div>
     @endif
     <div class="d-flex justify-content-between align-items-center">
-        @if ($fournisseurClients->total() >= 10)
-            <form id="pagination-form" action="{{ route('fournisseurClients.pagination') }}" method="GET"
-                class="d-inline-flex">
-                @csrf
-                <select name="per_page" id="perPage" class="form-select form-select-sm"
-                    onchange="document.getElementById('pagination-form').submit();">
-                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                    <option value="20" {{ request('per_page') == 20 ? 'selected' : '' }}>20</option>
-                    <option value="30" {{ request('per_page') == 30 ? 'selected' : '' }}>30</option>
-                    <option value="40" {{ request('per_page') == 40 ? 'selected' : '' }}>40</option>
-                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                    <option value="60" {{ request('per_page') == 60 ? 'selected' : '' }}>60</option>
-                </select>
-            </form>
-        @endif
+      
         <div>
             {{ $fournisseurClients->links('vendor.pagination.bootstrap-4') }}
 
