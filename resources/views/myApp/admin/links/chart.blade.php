@@ -3,7 +3,6 @@
      Dashboard
  @endsection
 
-
  @section('content')
      <div class="page-inner">
          <h1 class="app-page-title">Aperçu</h1>
