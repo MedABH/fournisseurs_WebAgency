@@ -209,15 +209,18 @@
                              <table class="table table-borderless mb-0 text-center">
                                  <thead class="text-center">
                                      <tr>
-                                         <th class="meta text-center" style="font-size: 1rem">Catégorie</th>
-                                         <th class="meta stat-cell text-center" style="font-size: 1rem">Nombre de fournisseurs</th>
+                                         <th class="meta text-center" style="font-size: 1rem; color: #828d9f">Catégorie
+                                         </th>
+                                         <th class="meta stat-cell text-center" style="font-size: 1rem; color: #828d9f">
+                                             Nombre de fournisseurs</th>
                                      </tr>
                                  </thead>
                                  <tbody class="text-center">
                                      @foreach ($suppliersNumberByCategory as $categorie)
                                          <tr>
-                                             <td class="text-center">{{ $categorie->nom_categorie }}</td>
-                                             <td class="stat-cell text-center">{{ $categorie->fournisseurs_count }}</td>
+                                             <td class="text-center"><strong>{{ $categorie->nom_categorie }}</strong></td>
+                                             <td class="stat-cell text-center">
+                                                 <strong>{{ $categorie->fournisseurs_count }}</strong></td>
                                          </tr>
                                      @endforeach
                                  </tbody>
@@ -243,27 +246,42 @@
                      </div><!--//app-card-header-->
                      <div class="app-card-body p-3 p-lg-4">
                          <div class="table-responsive">
-                            <table class="table table-borderless mb-0 text-center">
-                                <thead class="text-center">
-                                    <tr>
-                                        <th class="meta text-center" style="font-size: 1rem"><strong>Nom</strong></th>
-                                        <th class="meta stat-cell text-center" style="font-size: 1rem"><strong>Role</strong></th>
-                                        <th class="meta stat-cel text-center" style="font-size: 1rem"><strong>Historique de Connexion</strong></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="text-center">
-                                    @foreach ($historiques as $historique)
-                                        <tr>
-                                            <td class="text-center">{{ $historique->user->name }}</td>
-                                            <td class="stat-cell text-center">{{ $historique->user->role }}</td>
-                                            <td class="stat-cell text-center">
-                                                {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            
+                             <table class="table table-borderless mb-0 text-center">
+                                 <thead class="text-center">
+                                     <tr>
+                                         <th class="meta text-center" style="font-size: 1rem"><strong>Nom</strong></th>
+                                         <th class="meta stat-cell text-center" style="font-size: 1rem">
+                                             <strong>Role</strong></th>
+                                         <th class="meta stat-cel text-center" style="font-size: 1rem"><strong>Historique
+                                                 de Connexion</strong></th>
+                                     </tr>
+                                 </thead>
+                                 <tbody class="text-center">
+                                     @foreach ($historiques as $historique)
+                                         <tr>
+                                             <td class="text-center"><strong>{{ $historique->user->name }}</strong></td>
+                                             <td class="stat-cell text-center">
+                                                 <strong>
+                                                     @if ($historique->user->role === 'super-admin')
+                                                         Super Admin
+                                                     @elseif ($historique->user->role === 'admin')
+                                                         Administrateur
+                                                     @elseif ($historique->user->role === 'utilisateur')
+                                                         Utilisateur
+                                                     @else
+                                                         {{ $historique->user->role }}
+                                                     @endif
+                                                 </strong>
+                                             </td>
+
+                                             <td class="stat-cell text-center"><strong>
+                                                     {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
+                                                 </strong></td>
+                                         </tr>
+                                     @endforeach
+                                 </tbody>
+                             </table>
+
                          </div><!--//table-responsive-->
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->

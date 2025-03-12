@@ -18,7 +18,6 @@
                                 <button type="submit" class="btn app-btn-secondary">Search</button>
                             </div>
                         </form>
-
                     </div><!--//col-->
 
                     <div class="col-auto">
@@ -31,7 +30,6 @@
                                     <path fill-rule="evenodd"
                                         d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                                 </svg>
-
                             </a>
                         @elseif (auth()->user()->role == 'admin')
                             <a class="btn app-btn-secondary" href="{{ route('clients.pdf') }}">
@@ -42,7 +40,6 @@
                                     <path fill-rule="evenodd"
                                         d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
                                 </svg>
-
                             </a>
                         @endif
                     </div>
@@ -97,48 +94,36 @@
                     @enderror
                         <input type="text" class="form-control" name="nomSociete_client"
                             placeholder="Entrer le nom de la société..." value="{{ old('nomSociete_client') }}" />
-                       
-
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label><br>
                         @error('GSM1_client', 'default')
                         <span class="text-danger">{{ $message }}</span> <br>
                     @enderror
                         <input type="tel" class="form-control" name="GSM1_client" required
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_client') }}" />
-                       
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label><br>
                         @error('GSM2_client', 'default')
                         <span class="text-danger">{{ $message }}</span> <br>
                     @enderror
                         <input type="tel" class="form-control" name="GSM2_client" required
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_client') }}" />
-                       
-
-
                         <label class="form-label"><strong class="det">Personne à contacter</strong></label><br>
                         @error('nom_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
                         <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
                             value="{{ old('nom_client') }}" />
-                        
-
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label><br>
                         @error('tele_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
                         <input type="tel" class="form-control" name="tele_client" required
                             placeholder="Entrer le contact..." value="{{ old('tele_client') }}" />
-                        
                         <label class="form-label"><strong class="det">Email</strong></label><br>
                         @error('email_client', 'default')
                         <span class="text-danger">{{ $message }}</span> <br>
                     @enderror
                         <input type="email" class="form-control" name="email_client" placeholder="Entrer l'émail..."
                             value="{{ old('email_client') }}" />
-                        
-
-
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_client" placeholder="Entrer la ville..."
                             value="{{ old('ville_client') }}" />
