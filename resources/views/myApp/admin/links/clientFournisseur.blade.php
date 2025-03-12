@@ -468,17 +468,16 @@
                                         @csrf
                                         <div class="modal fade" id="remark-{{ $fc->id }}" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
+                                            <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-
+                                                        <h5 class="modal-title" id="exampleModalLabel">REMARQUE</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
 
                                                         <div class="form-group">
-                                                            <label for="remarque">Remarque</label>
                                                             <textarea name="remark" id="remarque" class="form-control" rows="4">{{ old('remark', $fc->remark) }}</textarea>
                                                             @error('remark')
                                                                 <div class="alert alert-danger">
@@ -503,72 +502,74 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
+                                                <h5>Details du fournisseur-client
+                                                </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="show-info-fournisseurClient show-society">
-                                                    <label class="label-detail-fournisseurClient">Nom de la
-                                                        société</label>
-                                                    <h6 class="info-fournisseurClient showSocietyfc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Nom de la
+                                                        société</strong></label>
+                                                    <p class="info-fournisseurClient showSocietyfc"
                                                         id="showSocietyDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-GSM1">
-                                                    <label class="label-detail-fournisseurClient">GSM1 de la
-                                                        société</label>
-                                                    <h6 class="info-fournisseurClient showGSM1fc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">GSM1 de la
+                                                        société</strong></label>
+                                                    <P class="info-fournisseurClient showGSM1fc"
                                                         id="showGSM1Detail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-GSM2">
-                                                    <label class="label-detail-fournisseurClient">GSM2 de la
-                                                        société</label>
-                                                    <h6 class="info-fournisseurClient showGSM2fc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">GSM2 de la
+                                                        société</strong></label>
+                                                    <P class="info-fournisseurClient showGSM2fc"
                                                         id="showGSM2Detail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-name">
-                                                    <label class="label-detail-fournisseurClient">Personne à
-                                                        contacter</label>
-                                                    <h6 class="info-fournisseurClient showNamefc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Personne à
+                                                        contacter</strong></label>
+                                                    <P class="info-fournisseurClient showNamefc"
                                                         id="showNameDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-contact">
-                                                    <label class="label-detail-fournisseurClient">Numero De
-                                                        Telephone</label>
-                                                    <h6 class="info-fournisseurClient showContactfc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Numero De
+                                                        Telephone</strong></label>
+                                                    <P class="info-fournisseurClient showContactfc"
                                                         id="showContactDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-email">
-                                                    <label class="label-detail-fournisseurClient">Email</label>
-                                                    <h6 class="info-fournisseurClient showEmailfc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Email</strong></label>
+                                                    <P class="info-fournisseurClient showEmailfc"
                                                         id="showEmailDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
 
 
                                                 <div class="show-info-fournisseurClient show-ville">
-                                                    <label class="label-detail-fournisseurClient">Ville</label>
-                                                    <h6 class="info-fournisseurClient showVillefc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Ville</strong></label>
+                                                    <P class="info-fournisseurClient showVillefc"
                                                         id="showVilleDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
 
                                                 <div class="show-info-fournisseurClient show-category"
                                                     style="margin-top:10px">
-                                                    <label class="label-detail-fournisseurClient">Les
-                                                        catégories</label>
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Les
+                                                        catégories</strong></label>
                                                     <select
                                                         class="form-select form-select-sm info-fournisseurClient showCategoryfc"
                                                         aria-label=".form-select-sm example"
                                                         style="width: 200px; height: 30px"
                                                         id="categories-{{ $fc->id }}">
-                                                        <option value="" selected>Voir
+                                                        <option value="" selected><strong class="det">Voir
                                                             la(les)
-                                                            catégories</option>
+                                                            catégories</strong></option>
                                                         @foreach ($fc->allCategories as $categorie)
                                                             <option value="{{ $categorie->id }}">
                                                                 {{ $categorie->nom_categorie }}
@@ -579,7 +580,7 @@
                                                 <div class="show-info-fournisseurClient show-product"
                                                     style="margin-bottom: 40px; margin-top:10px">
                                                     <label
-                                                        class="form-label label-detail-fournisseurClient">Sous-Catégorie</label>
+                                                        class="form-label label-detail-fournisseurClient"><strong class="det">Sous-Catégorie</strong></label>
                                                     <select
                                                         class="form-select form-select-sm info-fournisseurClient showProductfc"
                                                         aria-label=".form-select-sm example"
@@ -591,14 +592,14 @@
                                                     </select>
                                                 </div>
                                                 <div class="show-info-fournisseurClient show-user">
-                                                    <label class="label-detail-fournisseurClient">Contacté Par</label>
-                                                    <h6 class="info-fournisseurClient showUserfc"
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Contacté Par</strong></label>
+                                                    <P class="info-fournisseurClient showUserfc"
                                                         id="showUserDetail-{{ $fc->id }}">
-                                                    </h6>
+                                                    </P>
                                                 </div>
 
                                                 <div class="show-info-fournisseurClient show-remark">
-                                                    <label class="label-detail-fournisseurClient">Remarque</label>
+                                                    <label class="label-detail-fournisseurClient"><strong class="det">Remarque</strong></label>
                                                     <p class="info-fournisseurClient showRemarkfc"
                                                         id="showRemarkDetail-{{ $fc->id }}"
                                                         style="font-size: 12px">
@@ -606,10 +607,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Fermer</button>
-                                            </div>
+                                           
                                         </div>
                                     </div>
                                 </div>

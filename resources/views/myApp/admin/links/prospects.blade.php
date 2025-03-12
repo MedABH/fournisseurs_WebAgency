@@ -515,61 +515,62 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
+                                                <h5>Details du tier</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="show-info-prospect show-society">
-                                                    <label class="label-detail-prospect">Nom de la
-                                                        société</label>
-                                                    <h6 class="info-prospect showSocietyProspect"
+                                                    <label class="label-detail-prospect"><strong class="det"> Nom de la
+                                                        société</strong></label>
+                                                    <p class="info-prospect showSocietyProspect"
                                                         id="showSocietyDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-GSM1">
-                                                    <label class="label-detail-prospect">GSM1 de la
-                                                        société</label>
-                                                    <h6 class="info-prospect showGSM1Prospect"
+                                                    <label class="label-detail-prospect"><strong class="det">GSM1 de la
+                                                        société</strong></label>
+                                                    <p class="info-prospect showGSM1Prospect"
                                                         id="showGSM1Detail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-GSM2">
-                                                    <label class="label-detail-prospect">GSM2 de la
-                                                        société</label>
-                                                    <h6 class="info-prospect showGSM2Prospect"
+                                                    <label class="label-detail-prospect"><strong class="det">GSM2 de la
+                                                        société</strong></label>
+                                                    <p class="info-prospect showGSM2Prospect"
                                                         id="showGSM2Detail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-name">
-                                                    <label class="label-detail-prospect">Personne à
-                                                        contacter</label>
-                                                    <h6 class="info-prospect showNameProspect"
+                                                    <label class="label-detail-prospect"><strong class="det">Personne à
+                                                        contacter</strong></label>
+                                                    <p class="info-prospect showNameProspect"
                                                         id="showNameDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-contact">
-                                                    <label class="label-detail-prospect">Numero De Telephone</label>
-                                                    <h6 class="info-prospect showContactProspect"
+                                                    <label class="label-detail-prospect"><strong class="det">Numero De Telephone</strong></label>
+                                                    <p class="info-prospect showContactProspect"
                                                         id="showContactDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-email">
-                                                    <label class="label-detail-prospect">Email</label>
-                                                    <h6 class="info-prospect showEmailProspect"
+                                                    <label class="label-detail-prospect"><strong class="det">Email</strong></label>
+                                                    <p class="info-prospect showEmailProspect"
                                                         id="showEmailDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
 
                                                 <div class="show-info-prospect show-ville">
-                                                    <label class="label-detail-prospect">Ville</label>
-                                                    <h6 class="info-prospect showVilleProspect"
+                                                    <label class="label-detail-prospect"><strong class="det">Ville</strong></label>
+                                                    <p class="info-prospect showVilleProspect"
                                                         id="showVilleDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
 
                                                 <div class="show-info-prospect show-category" style="margin-top:10px">
-                                                    <label class="label-detail-prospect">Les
-                                                        catégories</label>
+                                                    <label class="label-detail-prospect"><strong class="det">Les
+                                                        catégories</strong></label>
                                                     <select
                                                         class="form-select form-select-sm info-prospect showCategoryProspect"
                                                         aria-label=".form-select-sm example"
@@ -587,7 +588,7 @@
                                                 </div>
                                                 <div class="show-info-prospect show-product"
                                                     style="margin-bottom: 40px; margin-top:10px">
-                                                    <label class="form-label label-detail-prospect">Sous-Catégorie</label>
+                                                    <label class="form-label label-detail-prospect"><strong class="det">Sous-Catégorie</strong></label>
                                                     <select
                                                         class="form-select form-select-sm info-prospect showProductProspect"
                                                         aria-label=".form-select-sm example"
@@ -599,23 +600,19 @@
                                                     </select>
                                                 </div>
                                                 <div class="show-info-prospect show-user">
-                                                    <label class="label-detail-prospect">Contacté Par</label>
-                                                    <h6 class="info-prospect showUserProspect"
+                                                    <label class="label-detail-prospect"><strong class="det">Contacté Par</strong></label>
+                                                    <p class="info-prospect showUserProspect"
                                                         id="showUserDetail-{{ $prospect->id }}">
-                                                    </h6>
+                                                    </p>
                                                 </div>
                                                 <div class="show-info-prospect show-remark">
-                                                    <label class="label-detail-prospect">Remarque</label>
+                                                    <label class="label-detail-prospect"><strong class="det">Remarque</strong></label>
                                                     <p class="info-prospect showRemarkProspect"
                                                         id="showRemarkDetail-{{ $prospect->id }}"
                                                         style="font-size:12px">
                                                     </p>
                                                 </div>
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Fermer</button>
                                             </div>
                                         </div>
                                     </div>
