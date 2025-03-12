@@ -556,7 +556,6 @@ class ChartController extends Controller
 
         // Set the locale to French for month names
         Carbon::setLocale('fr');
-        Log::info('Period: ' . $period);
         if ($period == 1) {  // For "Cette semaine" (weekly data)
             $dates = [];
             for ($i = 6; $i >= 0; $i--) {
@@ -684,8 +683,6 @@ class ChartController extends Controller
                 $currentPeriodStart = $currentPeriodStart->addMonth();
             }
         }
-
-        Log::info('Returned data: ', $data);
 
         return response()->json($data);
     }

@@ -2,7 +2,6 @@
  @section('title')
      Dashboard
  @endsection
-
  @section('content')
      <div class="page-inner">
          <h1 class="app-page-title">Aperçu</h1>
@@ -28,12 +27,9 @@
                              @endif
                          </div>
                      </div>
-
-
                      <a class="app-card-link-mask" href="prospectsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
-
              <div class="col-6 col-lg-3">
                  <div class="app-card app-card-stat shadow-sm h-100">
                      <div class="app-card-body p-3 p-lg-4">
@@ -55,7 +51,6 @@
                              @endif
                          </div>
                      </div>
-
                      <a class="app-card-link-mask" href="clientsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
@@ -80,7 +75,6 @@
                              @endif
                          </div>
                      </div><!--//app-card-body-->
-
                      <a class="app-card-link-mask" href="suppliersSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
@@ -105,17 +99,11 @@
                              @endif
                          </div>
                      </div><!--//app-card-body-->
-
                      <a class="app-card-link-mask" href="suppliersAndClientsSection"></a>
                  </div><!--//app-card-->
              </div><!--//col-->
          </div><!--//row-->
-
-
-
          <!-- lfoog mgad f style -->
-
-
          <div class="row g-4 mb-4">
              <!-- Graphique Linéaire -->
              <div class="col-12 col-lg-6">
@@ -149,7 +137,6 @@
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
              </div><!--//col-->
-
              <!-- Graphique à Barres -->
              <div class="col-12 col-lg-6">
                  <div class="app-card app-card-chart h-100 shadow-sm">
@@ -183,12 +170,7 @@
                  </div><!--//app-card-->
              </div><!--//col-->
          </div><!--//row-->
-
-
-
-
          <!-- les tableaus lte7t -->
-
          <div class="row g-4 mb-4">
              <div class="col-12 col-lg-6">
                  <div class="app-card app-card-progress-list h-100 shadow-sm">
@@ -229,7 +211,6 @@
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
              </div><!--//col-->
-
              <div class="col-12 col-lg-6">
                  <div class="app-card app-card-stats-table h-100 shadow-sm">
                      <div class="app-card-header p-3">
@@ -273,7 +254,6 @@
                                                      @endif
                                                  </strong>
                                              </td>
-
                                              <td class="stat-cell text-center"><strong>
                                                      {{ \Carbon\Carbon::parse($historique->login_at)->timezone('Africa/Casablanca')->format('d/m/Y H:i') }}
                                                  </strong></td>
@@ -281,15 +261,12 @@
                                      @endforeach
                                  </tbody>
                              </table>
-
                          </div><!--//table-responsive-->
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
              </div><!--//col-->
-
          </div>
      </div>
-
      </div>
  @endsection
  @section('script')
@@ -300,16 +277,13 @@
                  const userEmail = this.getAttribute('data-user-email');
                  const userContact = this.getAttribute('data-user-contact');
                  const userAdress = this.getAttribute('data-user-adresse');
-
                  document.querySelector('#showName').innerText = userName;
                  document.querySelector('#showEmail').innerText = userEmail;
                  document.querySelector('#showContact').innerText = userContact;
                  document.querySelector('#showAdress').innerText = userAdress;
-
              });
          });
      </script>
-
      <!-- Charts JS -->
      <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
      <!-- <script src="{{ asset('assets/js/index-charts.js') }}"></script> -->

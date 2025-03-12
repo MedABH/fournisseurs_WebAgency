@@ -123,7 +123,6 @@ class ProfileAuthController extends Controller
         }
     } catch (\Exception $e) {
         // Si une erreur se produit lors de la mise à jour
-        Log::error('Erreur lors de la mise à jour de la sécurité : ' . $e->getMessage());
         return back()->withErrors(['update' => 'Une erreur est survenue lors de la mise à jour des informations.']);
     }
 }
