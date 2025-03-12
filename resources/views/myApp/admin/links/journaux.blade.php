@@ -3,7 +3,7 @@
 @section('parties-prenantes')
 <div class="row g-3 mb-4 align-items-center justify-content-between">
     <div class="col-auto">
-        <h1 class="app-page-title mb-0">Journaux</h1>
+        <h1 class="app-page-title mb-0" style="color: #404242">JOURNAUX</h1>
     </div>
 </div><!--//row-->
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
