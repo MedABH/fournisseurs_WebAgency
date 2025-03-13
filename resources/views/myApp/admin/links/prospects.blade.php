@@ -512,7 +512,7 @@
 
                                 <div class="modal fade" id="ModalProspectDetails-{{ $prospect->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5>Details du tier</h5>
@@ -520,98 +520,58 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="show-info-prospect show-society">
-                                                    <label class="label-detail-prospect"><strong class="det"> Nom de la
-                                                        société</strong></label>
-                                                    <p class="info-prospect showSocietyProspect"
-                                                        id="showSocietyDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-GSM1">
-                                                    <label class="label-detail-prospect"><strong class="det">GSM1 de la
-                                                        société</strong></label>
-                                                    <p class="info-prospect showGSM1Prospect"
-                                                        id="showGSM1Detail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-GSM2">
-                                                    <label class="label-detail-prospect"><strong class="det">GSM2 de la
-                                                        société</strong></label>
-                                                    <p class="info-prospect showGSM2Prospect"
-                                                        id="showGSM2Detail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-name">
-                                                    <label class="label-detail-prospect"><strong class="det">Personne à
-                                                        contacter</strong></label>
-                                                    <p class="info-prospect showNameProspect"
-                                                        id="showNameDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-contact">
-                                                    <label class="label-detail-prospect"><strong class="det">Numero De Telephone</strong></label>
-                                                    <p class="info-prospect showContactProspect"
-                                                        id="showContactDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-email">
-                                                    <label class="label-detail-prospect"><strong class="det">Email</strong></label>
-                                                    <p class="info-prospect showEmailProspect"
-                                                        id="showEmailDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
+                                                <div class="row">
 
-                                                <div class="show-info-prospect show-ville">
-                                                    <label class="label-detail-prospect"><strong class="det">Ville</strong></label>
-                                                    <p class="info-prospect showVilleProspect"
-                                                        id="showVilleDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-
-                                                <div class="show-info-prospect show-category" style="margin-top:10px">
-                                                    <label class="label-detail-prospect"><strong class="det">Les
-                                                        catégories</strong></label>
-                                                    <select
-                                                        class="form-select form-select-sm info-prospect showCategoryProspect"
-                                                        aria-label=".form-select-sm example"
-                                                        style="width: 200px; height: 30px"
-                                                        id="categories-{{ $prospect->id }}">
-                                                        <option value="" selected>Voir
-                                                            la(les)
-                                                            catégories</option>
-                                                        @foreach ($prospect->allCategories as $categorie)
-                                                            <option value="{{ $categorie->id }}">
-                                                                {{ $categorie->nom_categorie }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="show-info-prospect show-product"
-                                                    style="margin-bottom: 40px; margin-top:10px">
-                                                    <label class="form-label label-detail-prospect"><strong class="det">Sous-Catégorie</strong></label>
-                                                    <select
-                                                        class="form-select form-select-sm info-prospect showProductProspect"
-                                                        aria-label=".form-select-sm example"
-                                                        id="products-{{ $prospect->id }}"
-                                                        style="width: 200px; height: 30px">
-                                                        <option value="" selected>Voir les
-                                                            produits associés</option>
-
-                                                    </select>
-                                                </div>
-                                                <div class="show-info-prospect show-user">
-                                                    <label class="label-detail-prospect"><strong class="det">Contacté Par</strong></label>
-                                                    <p class="info-prospect showUserProspect"
-                                                        id="showUserDetail-{{ $prospect->id }}">
-                                                    </p>
-                                                </div>
-                                                <div class="show-info-prospect show-remark">
-                                                    <label class="label-detail-prospect"><strong class="det">Remarque</strong></label>
-                                                    <p class="info-prospect showRemarkProspect"
-                                                        id="showRemarkDetail-{{ $prospect->id }}"
-                                                        style="font-size:12px">
-                                                    </p>
-                                                </div>
+                                                    <div class="col-6 det" style="font-size: 20px">Nom de la socité</div>
+                                                    <div class="col-6 showSocietyProspect"><span style="font-size: 20px" id="showSocietyDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">GSM1 de la société</strong></div>
+                                                    <div class="col-6 showGSM1Prospect"><span style="font-size: 20px" id="showGSM1Detail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">GSM2 de la société</strong></div>
+                                                    <div class="col-6 showGSM2Prospect"><span style="font-size: 20px" id="showGSM2Detail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Personne à contacter</strong></div>
+                                                    <div class="col-6 showNameProspect"><span style="font-size: 20px" id="showNameDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Numero De Telephone</strong></div>
+                                                    <div class="col-6 showContactProspect"><span style="font-size: 20px" id="showContactDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Email</strong></div>
+                                                    <div class="col-6 showEmailProspect"><span style="font-size: 20px" id="showEmailDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Ville</strong></div>
+                                                    <div class="col-6 showVilleProspect"><span style="font-size: 20px" id="showVilleDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                            
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Les catégories</strong></div>
+                                                    <div class="col-6">
+                                                        <select class="form-select form-select-sm col-6 info-prospect showCategoryProspect"
+                                                            aria-label=".form-select-sm example" id="categories-{{ $prospect->id }}" style="color: #5d6778">
+                                                            <option class="col-6" value="" selected>Voir la(les) catégories</option>
+                                                            @foreach ($prospect->allCategories as $categorie)
+                                                                <option value="{{ $categorie->id }}">
+                                                                    {{ $categorie->nom_categorie }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Sous-Catégorie</strong></div>
+                                                    <div class="col-6">
+                                                        <select class="form-select form-select-sm col-6 info-prospect showProductProspect"
+                                                            aria-label=".form-select-sm example" id="products-{{ $prospect->id }}" style="color: #5d6778; font-size: 15px"><strong>
+                                                            <option class="col-6" value="" selected>Voir les produits associé</option></strong>
+                                                        </select>
+                                                    </div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Contacté Par</strong></div>
+                                                    <div class="col-6 showUserProspect"><span style="font-size: 20px" id="showUserDetail-{{ $prospect->id }}"></span></div>
+                                            
+                                                    <div class="col-6 det" style="font-size: 20px">Remarque</strong></div>
+                                                    <div class="col-6 showRemarkProspect"><span style="font-size: 20px" id="showRemarkDetail-{{ $prospect->id }}"></span></div>
+                                            </div>
 
                                             </div>
                                         </div>

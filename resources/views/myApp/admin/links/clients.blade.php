@@ -481,12 +481,10 @@
                                         </div>
                                     </div>
                                 </form>
-
-
                             </tr>
                             <div class="modal fade" id="ModalClientDetails-{{ $client->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5>Details du client
@@ -495,97 +493,58 @@
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="show-info-client show-society">
-                                                <label class="label-detail-client"><strong class="det">Nom de la
-                                                    société</strong></label>
-                                                <p class="info-client showSocietyClient"
-                                                    id="showSocietyDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-GSM1">
-                                                <label class="label-detail-client"><strong class="det">GSM1 de la
-                                                    société</strong></label>
-                                                <p class="info-client showGSM1Client"
-                                                    id="showGSM1Detail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-GSM2">
-                                                <label class="label-detail-client"><strong class="det">GSM2 de la
-                                                    société</strong></label>
-                                                <p class="info-client showGSM2Client"
-                                                    id="showGSM2Detail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-name">
-                                                <label class="label-detail-client"><strong class="det">Personne à
-                                                    contacter</strong></label>
-                                                <p class="info-client showNameClient"
-                                                    id="showNameDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-contact">
-                                                <label class="label-detail-client"><strong class="det">Numero De Telephone</strong></label>
-                                                <p class="info-client showContactClient"
-                                                    id="showContactDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-email">
-                                                <label class="label-detail-client"><strong class="det">Email</strong></label>
-                                                <p class="info-client showEmailClient"
-                                                    id="showEmailDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
+                                            <div class="row">
+
+                                                <div class="col-6 det" style="font-size: 20px">Nom de la socité</div>
+                                                <div class="col-5 showSocietyClient"><span style="font-size: 20px" id="showSocietyDetail-{{ $client->id }}"></span></div>
+
+                                                <div class="col-6 det" style="font-size: 20px">GSM1 de la société</strong></div>
+                                                <div class="col-5 showGSM1Client"><span style="font-size: 20px" id="showGSM1Detail-{{ $client->id }}"></span></div>
+
+                                                <div class="col-6 det" style="font-size: 20px">GSM2 de la société</strong></div>
+                                                <div class="col-5 showGSM2Client"><span style="font-size: 20px" id="showGSM2Detail-{{ $client->id }}"></span></div>
+
+                                                <div class="col-6 det" style="font-size: 20px">Personne à contacter</strong></div>
+                                                <div class="col-5 showNameClient"><span style="font-size: 20px" id="showNameDetail-{{ $client->id }}"></span></div>
+                                        
+                                                <div class="col-6 det" style="font-size: 20px">Numero De Telephone</strong></div>
+                                                <div class="col-5 showContactClient"><span style="font-size: 20px" id="showContactDetail-{{ $client->id }}"></span></div>
+
+                                                <div class="col-6 det" style="font-size: 20px">Email</strong></div>
+                                                <div class="col-5 showEmailClient"><span style="font-size: 20px" id="showEmailDetail-{{ $client->id }}"></span></div>
+                    
+                                                <div class="col-6 det" style="font-size: 20px">Ville</strong></div>
+                                                <div class="col-5 showVilleClient"><span style="font-size: 20px" id="showVilleDetail-{{ $client->id }}"></span></div>
 
 
-                                            <div class="show-info-client show-ville">
-                                                <label class="label-detail-client"><strong class="det">Ville</strong></label>
-                                                <p class="info-client showVilleClient"
-                                                    id="showVilleDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
 
-                                            <div class="show-info-client show-category" style="margin-top:10px">
-                                                <label class="label-detail-client"><strong class="det">Les
-                                                    catégories</strong></label>
-                                                <select class="form-select form-select-sm info-client showCategoryClient"
-                                                    aria-label=".form-select-sm example"
-                                                    style="width: 200px; height: 30px"
-                                                    id="categories-{{ $client->id }}">
-                                                    <option value="" selected>Voir
-                                                        la(les)
-                                                        catégories</option>
-                                                    @foreach ($client->allCategories as $categorie)
-                                                        <option value="{{ $categorie->id }}">
-                                                            {{ $categorie->nom_categorie }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="show-info-client show-product"
-                                                style="margin-bottom: 40px; margin-top:10px">
-                                                <label class="form-label label-detail-client"><strong class="det">Sous-Catégorie</strong></label>
-                                                <select class="form-select form-select-sm info-client showProductClient"
-                                                    aria-label=".form-select-sm example"
-                                                    id="products-{{ $client->id }}"
-                                                    style="width: 200px; height: 30px">
-                                                    <option value="" selected>Voir les
-                                                        produits associés</option>
+                                                <div class="col-6 det" style="font-size: 20px">Les catégories</strong></div>
+                                                <div class="col-6">
+                                                    <select class="form-select form-select-sm col-6 info-client showCategoryClient"
+                                                        aria-label=".form-select-sm example" id="categories-{{ $client->id }}" style="color: #5d6778">
+                                                        <option class="col-6" value="" selected>Voir la(les) catégories</option>
+                                                        @foreach ($client->allCategories as $categorie)
+                                                            <option value="{{ $categorie->id }}">
+                                                                {{ $categorie->nom_categorie }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
 
-                                                </select>
-                                            </div>
-                                            <div class="show-info-client show-user">
-                                                <label class="label-detail-client"><strong class="det">Contacté Par</strong></label>
-                                                <p class="info-client showUserClient"
-                                                    id="showUserDetail-{{ $client->id }}">
-                                                </p>
-                                            </div>
-                                            <div class="show-info-client show-remark">
-                                                <label class="label-detail-client"><strong class="det">Remarque</strong></label>
-                                                <p class="info-client showRemarkClient"
-                                                    id="showRemarkDetail-{{ $client->id }}" style="font-size: 12px">
-                                                </p>
-                                            </div>
+                                                <div class="col-6 det" style="font-size: 20px">Sous-Catégorie</strong></div>
+                                                <div class="col-6">
+                                                    <select class="form-select form-select-sm col-6 info-client showProductClient"
+                                                        aria-label=".form-select-sm example" id="products-{{ $client->id }}" style="color: #5d6778; font-size: 15px"><strong>
+                                                        <option class="col-6" value="" selected>Voir les produits associé</option></strong>
+                                                    </select>
+                                                </div>
 
+                                                <div class="col-6 det" style="font-size: 20px">Contacté Par</strong></div>
+                                                <div class="col-5 showUserClient"><span style="font-size: 20px" id="showUserDetail-{{ $client->id }}"></span></div>
+                                        
+                                                <div class="col-6 det" style="font-size: 20px">Remarque</strong></div>
+                                                <div class="col-5 showRemarkClient"><span style="font-size: 20px" id="showRemarkDetail-{{ $client->id }}"></span></div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
