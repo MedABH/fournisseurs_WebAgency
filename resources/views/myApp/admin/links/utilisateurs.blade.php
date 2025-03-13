@@ -308,23 +308,7 @@
                                                             </div>
                                                         </div>
                                                     </tr>
-                                                   <!-- <div class="modal fade" id="detailsUserModal" tabindex="-1" aria-labelledby="detailsUserModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="detailsUserModalLabel">Détails de l'utilisateur</h5>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <p><strong class="det">Nom :</strong> <span id="detailsUserName"></span></p>
-                                                                    <p><strong class="det">Email :</strong> <span id="detailsUserEmail"></span></p>
-                                                                    <p><strong class="det">Contact :</strong> <span id="detailsUserContact"></span></p>
-                                                                    <p><strong class="det">Adresse :</strong> <span id="detailsUserAdresse"></span></p>
-                                                                    <p><strong class="det">Rôle :</strong> <span id="detailsUserRole"></span></p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>-->
+                                               
 
                                                     <div class="modal fade" id="detailsUserModal" tabindex="-1" aria-labelledby="detailsUserModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered">
@@ -335,20 +319,20 @@
                                                                 </div>
                                                                 <div class="modal-body px-md-5">
                                                                     <div class="row">
-                                                                        <div class="col-4"><strong class="det">Nom :</strong></strong></div>
-                                                                        <div class="col-6"><strong><span id="detailsUserName"></span></strong></div>
+                                                                        <div class="col-6 det" style="font-size: 20px"> Nom :  </div>
+                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserName"></span> </div>
                                                     
-                                                                        <div class="col-4"><strong class="det">Email :</strong></div>
-                                                                        <div class="col-6"><strong><span id="detailsUserEmail"></strong></span></div>
+                                                                        <div class="col-6 det" style="font-size: 20px"> Email : </div>
+                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserEmail"> </span></div>
                                                     
-                                                                        <div class="col-4"><strong class="det">Contact :</strong></div>
-                                                                        <div class="col-6"><strong><span id="detailsUserContact"></span></strong></div>
+                                                                        <div class="col-6 det" style="font-size: 20px"> Contact : </div>
+                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserContact"></span> </div>
                                                     
-                                                                        <div class="col-4"><strong class="det">Adresse :</strong></div>
-                                                                        <div class="col-6"><strong><span id="detailsUserAdresse"></span></strong></div>
+                                                                        <div class="col-6 det" style="font-size: 20px"> Adresse : </div>
+                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserAdresse"></span> </div>
                                                     
-                                                                        <div class="col-4"><strong class="det">Rôle :</strong></div>
-                                                                        <div class="col-6"><strong><span id="detailsUserRole"></span></strong></div>
+                                                                        <div class="col-6 det" style="font-size: 20px"> Rôle : </div>
+                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserRole"></span> </div>
                                                                     </div>
                                                                 </div>
                                                             </div>

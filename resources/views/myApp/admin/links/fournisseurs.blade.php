@@ -507,7 +507,7 @@
 
                                     <div class="modal fade" id="ModalSupplierDetails-{{ $fournisseur->id }}"
                                         tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5>Details du fournisseur
@@ -516,112 +516,58 @@
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <div class="show-info-fournisseur show-society">
-                                                        <label class="label-detail-fournisseur"><strong class="det">Nom
-                                                                de la
-                                                                société</strong></label>
-                                                        <p class="info-fournisseur showSocietyfournisseur"
-                                                            id="showSocietyDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
+                                                    <div class="row">
 
-                                                    <div class="show-info-fournisseur show-GSM1">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">GSM1 de la
-                                                                société</strong></label>
-                                                        <p class="info-fournisseur showGSM1fournisseur"
-                                                            id="showGSM1Detail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-GSM2">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">GSM2 de la
-                                                                société</strong></label>
-                                                        <p class="info-fournisseur showGSM2fournisseur"
-                                                            id="showGSM2Detail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="show-info-fournisseur show-name">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Personne à
-                                                                contacter</strong></label>
-                                                        <p class="info-fournisseur showNamefournisseur"
-                                                            id="showNameDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-contact">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Numero de telephone</strong></label>
-                                                        <p class="info-fournisseur showContactfournisseur"
-                                                            id="showContactDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-email">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Email</strong></label>
-                                                        <p class="info-fournisseur showEmailfournisseur"
-                                                            id="showEmailDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-
-
-                                                    <div class="show-info-fournisseur show-ville">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Ville</strong></label>
-                                                        <p class="info-fournisseur showVillefournisseur"
-                                                            id="showVilleDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="show-info-fournisseur show-category"
-                                                        style="margin-top:10px">
-                                                        <label class="label-detail-fournisseur"><strong class="det">Les
-                                                                catégories</strong></label>
-                                                        <select
-                                                            class="form-select form-select-sm info-fournisseur showCategoryfournisseur"
-                                                            aria-label=".form-select-sm example"
-                                                            style="width: 200px; height: 30px"
-                                                            id="categories-{{ $fournisseur->id }}">
-                                                            <option value="" selected>Voir
-                                                                la(les)
-                                                                catégories</option>
-                                                            @foreach ($fournisseur->allCategories as $categorie)
-                                                                <option value="{{ $categorie->id }}">
-                                                                    {{ $categorie->nom_categorie }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-product"
-                                                        style="margin-bottom: 40px; margin-top:10px">
-                                                        <label class="form-label label-detail-fournisseur"><strong
-                                                                class="det">Sous-Catégorie</strong></label>
-                                                        <select
-                                                            class="form-select form-select-sm info-fournisseur showProductfournisseur"
-                                                            aria-label=".form-select-sm example"
-                                                            id="products-{{ $fournisseur->id }}"
-                                                            style="width: 200px; height: 30px">
-                                                            <option value="" selected>Voir les
-                                                                produits associés</option>
-
-                                                        </select>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-user">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Contacté Par</strong></label>
-                                                        <p class="info-fournisseur showUserfournisseur"
-                                                            id="showUserDetail-{{ $fournisseur->id }}">
-                                                        </p>
-                                                    </div>
-                                                    <div class="show-info-fournisseur show-remark">
-                                                        <label class="label-detail-fournisseur"><strong
-                                                                class="det">Remarque</strong></label>
-                                                        <p class="info-fournisseur showRemarkfournisseur"
-                                                            id="showRemarkDetail-{{ $fournisseur->id }}"
-                                                            style="font-size: 12px">
-                                                        </p>
-                                                    </div>
+                                                        <div class="col-6 det" style="font-size: 20px">Nom de la socité</div>
+                                                        <div class="col-6 showSocietyfournisseur"><span style="font-size: 20px" id="showSocietyDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">GSM1 de la société</strong></div>
+                                                        <div class="col-6 showGSM1fournisseur"><span style="font-size: 20px" id="showGSM1Detail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">GSM2 de la société</strong></div>
+                                                        <div class="col-6 showGSM2fournisseur"><span style="font-size: 20px" id="showGSM2Detail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Personne à contacter</strong></div>
+                                                        <div class="col-6 showNamefournisseur"><span style="font-size: 20px" id="showNameDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Numero De Telephone</strong></div>
+                                                        <div class="col-6 showContactfournisseur"><span style="font-size: 20px" id="showContactDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Email</strong></div>
+                                                        <div class="col-6 showEmailfournisseur"><span style="font-size: 20px" id="showEmailDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Ville</strong></div>
+                                                        <div class="col-6 showVillefournisseur"><span style="font-size: 20px" id="showVilleDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Les catégories</strong></div>
+                                                        <div class="col-6">
+                                                            <select class="form-select form-select-sm col-6 info-fournisseur showCategoryfournisseur"
+                                                                aria-label=".form-select-sm example" id="categories-{{ $fournisseur->id }}" style="color: #5d6778">
+                                                                <option class="col-6" value="" selected>Voir la(les) catégories</option>
+                                                                @foreach ($fournisseur->allCategories as $categorie)
+                                                                    <option value="{{ $categorie->id }}">
+                                                                        {{ $categorie->nom_categorie }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Sous-Catégorie</strong></div>
+                                                        <div class="col-6">
+                                                            <select class="form-select form-select-sm col-6 info-fournisseur showProductfournisseur"
+                                                                aria-label=".form-select-sm example" id="products-{{ $fournisseur->id }}" style="color: #5d6778; font-size: 15px"><strong>
+                                                                <option class="col-6" value="" selected>Voir les produits associé</option></strong>
+                                                            </select>
+                                                        </div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Contacté Par</strong></div>
+                                                        <div class="col-6 showUserfournisseur"><span style="font-size: 20px" id="showUserDetail-{{ $fournisseur->id }}"></span></div>
+                                                
+                                                        <div class="col-6 det" style="font-size: 20px">Remarque</strong></div>
+                                                        <div class="col-6 showRemarkfournisseur"><span style="font-size: 20px" id="showRemarkDetail-{{ $fournisseur->id }}"></span></div>
+                                                </div>
 
                                                 </div>
                                             </div>
