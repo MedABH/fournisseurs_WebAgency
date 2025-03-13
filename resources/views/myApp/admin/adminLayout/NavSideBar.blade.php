@@ -41,8 +41,8 @@
         <div class="app-header-inner">
             <div class="container-fluid py-2">
                 <div class="app-header-content">
-                    <div class="row justify-content-between align-items-center">
-                        <div class="col-auto" id="col-left">
+                    <div class="row">
+                        <div class="col-6" id="col-left">
                             <!-- Hamburger button to toggle sidebar -->
                             <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -53,7 +53,7 @@
                                 </svg>
                             </a>
                         </div><!--//col-->
-                        <div class="app-utilities col-auto">
+                        <div class="app-utilities col-6" id="col-right">
                             <div class="app-utility-item app-user-dropdown dropdown">
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
                                     href="#" role="button" aria-expanded="false"><img src="assets/img/logo.png"

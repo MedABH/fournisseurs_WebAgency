@@ -469,6 +469,21 @@ body[data-background-color=bg1] {
     height: 60px;
 }
 
+/* Header */
+.app-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 56px;
+    background: #fff;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
+    border-bottom: 1px solid #e7e9ed;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 1.3rem;
+}
+
 /* Sidebar */
 .app-sidepanel {
     position: fixed;
@@ -530,21 +545,6 @@ body[data-background-color=bg1] {
     border-radius: .5rem;
 }
 
-/* Header */
-.app-header {
-    position: fixed;
-    top: 0;
-    /* Account for the width of the sidebar */
-    width: 100%;
-    /* Adjust width */
-    height: 56px;
-    background: #fff;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
-    border-bottom: 1px solid #e7e9ed;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
 
 /* Content */
 .content-wrapper {
@@ -625,6 +625,16 @@ body[data-background-color=bg1] {
     border-radius: 0 5px 5px 0;
 }
 
+@media (max-width: 767px) {
+    .app-header {
+        width: auto; /* Allow it to adjust to screen width */
+        height: auto; /* Adjust height as necessary */
+        display: block; /* Adjust layout as necessary */
+        align-items: unset; /* Remove alignment */
+        padding-right: 0;
+    }
+}
+
 @media screen and (max-width: 767px) {
 
     .templatemo-site-header {
@@ -634,12 +644,6 @@ body[data-background-color=bg1] {
 
 /* For mobile screens (reset the sidebar margin) */
 @media (max-width: 768px) {
-
-    /* Adjust the header when the sidebar is hidden */
-    .app-header {
-        left: 0; /* No sidebar space */
-        width: 100%; /* Full width */
-    }
 
     /* Adjust the content wrapper when sidebar is hidden */
     .content-wrapper {
@@ -744,34 +748,32 @@ body[data-background-color=bg1] {
 }
 
 @media screen and (max-width: 768px) {
-    /* Create a flex container for the header items */
-    .app-header {
+
+    /* Left side (Hamburger button) */
+    #col-left {
         display: flex;
-        justify-content: space-between; /* Distribute space between elements */
-        align-items: center; /* Vertically center the items */
-        padding: 10px;
+        justify-content: flex-start; /* Align to the left */
+        align-items: center;
+        z-index: 1000;
     }
 
-    #col-left {
-        position: relative;
-        left: 0; /* Reset any left margin */
-        z-index: 1000; /* Ensure it's above other elements */
+    /* Right side (User profile) */
+    #col-right {
+        display: flex;
+        justify-content: flex-end; /* Align to the right */
+        align-items: center;
+        z-index: 1000;
     }
 
     .sidepanel-toggler {
         display: block;
-        position: relative; /* Keep it in the normal flow */
+        position: relative; /* Keep it in normal flow */
     }
 
     .app-utilities {
         display: flex;
-        justify-content: flex-end; /* Keep the user profile on the right */
+        justify-content: flex-end;
         align-items: center;
-    }
-
-    /* Ensure the hamburger icon itself is displayed properly */
-    .sidepanel-toggler {
-        display: block; /* Make sure the icon is visible */
     }
 }
 
