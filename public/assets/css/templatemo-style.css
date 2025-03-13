@@ -239,26 +239,6 @@ footer {
     /* Show menu when sidebar is open */
 }
 
-/* Backdrop for Sidebar */
-.sidepanel-drop {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    /* Semi-transparent black */
-    z-index: 999;
-    /* Ensure it's above other content */
-}
-
-.sidepanel-drop.active {
-    display: block;
-    /* Show backdrop when sidebar is open */
-}
-
 /* Search Form */
 .templatemo-search-form {
     font-size: 1.1em;
@@ -328,25 +308,7 @@ footer {
     /* Show menu content */
 }
 
-/* Backdrop styles */
-.sidepanel-drop {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    /* Black transparent background */
-    z-index: 999;
-    /* Ensure the backdrop is above all content */
-}
 
-/* Show backdrop when sidebar is visible */
-.sidepanel-drop.active {
-    display: block;
-}
 
 /* Custom Styles */
 .center-div {
@@ -649,7 +611,7 @@ body[data-background-color=bg1] {
         display: flex;
         justify-content: flex-start; /* Align to the left */
         align-items: center;
-        z-index: 1000;
+        z-index: 9999999999;
     }
 
     /* Right side (User profile) */
@@ -714,19 +676,20 @@ body[data-background-color=bg1] {
     }
 
     .sidepanel-drop {
-        display: none;
+        display: none; /* Hidden by default */
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 999;
+        background: rgba(0, 0, 0, 0.5); /* Transparent black overlay */
+        z-index: 999; /* Ensure it's behind the sidebar but above the rest of the content */
     }
-
+    
     .sidepanel-drop.active {
-        display: block;
+        display: block; /* Show the overlay when the sidebar is open */
     }
+    
 
     .templatemo-site-header,
     .templatemo-search-form {
@@ -789,7 +752,7 @@ body[data-background-color=bg1] {
         display: flex;
         justify-content: flex-start; /* Align to the left */
         align-items: center;
-        z-index: 1000;
+        z-index: 999999999;
     }
 
     /* Right side (User profile) */

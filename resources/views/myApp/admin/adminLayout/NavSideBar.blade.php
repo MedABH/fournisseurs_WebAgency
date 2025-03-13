@@ -137,6 +137,7 @@
         </div><!--//sidebar-->
 
     </header><!--//app-header-->
+    
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>

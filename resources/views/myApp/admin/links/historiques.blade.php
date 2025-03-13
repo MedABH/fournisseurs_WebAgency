@@ -8,10 +8,10 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.users') }}" method="GET" class="table-search-form row gx-1 align-items-center">
+                        <form action="{{ route('historique') }}" method="GET" class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search"
-                                    class="form-control search-orders" placeholder="Search ... ">
+                                <input type="text" name="search" class="form-control search-orders" placeholder="Search ..." value="{{ request('search') }}">
+
                             </div>
                             <div class="col-auto">
                                 <button type="submit" class="btn app-btn-secondary">Search</button>
@@ -21,7 +21,7 @@
                     </div><!--//col-->
 
                     <div class="col-auto">
-                        <a class="btn app-btn-secondary" href="{{ route('users.pdf') }}">
+                        <a class="btn app-btn-secondary" href="#">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -76,4 +76,19 @@
 
             </div>
         </div>
+@endsection
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let searchInput = document.querySelector("input[name='search']");
+        let searchForm = document.querySelector(".table-search-form");
+
+        searchInput.addEventListener("input", function () {
+            if (searchInput.value.trim() === "") {
+                window.location.href = "{{ route('historique') }}"; // Refresh the page
+            }
+        });
+    });
+</script>
+
 @endsection
