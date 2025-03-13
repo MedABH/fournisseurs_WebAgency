@@ -30,7 +30,6 @@
         });
     </script>
 
-    
 </head>
 
 <body>
@@ -43,7 +42,7 @@
             <div class="container-fluid py-2">
                 <div class="app-header-content">
                     <div class="row justify-content-between align-items-center">
-                        <div class="col-auto">
+                        <div class="col-auto" id="col-left">
                             <!-- Hamburger button to toggle sidebar -->
                             <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -57,15 +56,15 @@
                         <div class="app-utilities col-auto">
                             <div class="app-utility-item app-user-dropdown dropdown">
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"
-                                    href="#" role="button" aria-expanded="false"><img
-                                        src="assets/img/logo.png" alt="user profile"></a>
+                                    href="#" role="button" aria-expanded="false"><img src="assets/img/logo.png"
+                                        alt="user profile"></a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                     <li><a class="dropdown-item" href="{{ route('update.user.auth.form') }}">Compte</a>
                                     </li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
-                                    <li><a class="dropdown-item" href="{{route('logout')}}"
+                                    <li><a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Se
                                             déconnecter</a></li>
                                 </ul>
@@ -91,37 +90,43 @@
                         <!-- Menu items (inside the sidebar) -->
                         <nav class="templatemo-left-nav">
                             <ul>
-                                <li><a href="{{ route('dashboardSection') }}" class="{{ request()->routeIs('dashboardSection') ? 'active' : '' }}"><i
+                                <li><a href="{{ route('dashboardSection') }}"
+                                        class="{{ request()->routeIs('dashboardSection') ? 'active' : '' }}"><i
                                             class="fa fa-chart-bar fa-fw"></i>
                                         Tableau de bord</a>
                                 </li>
-                                <li><a href="{{ route('usersSection') }}" class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i class="fa fa-users fa-fw"></i> Les
+                                <li><a href="{{ route('usersSection') }}"
+                                        class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i
+                                            class="fa fa-users fa-fw"></i> Les
                                         utilisateurs</a>
                                 </li>
 
 
                                 <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
 
-                               
-                                        <li><a href="{{ route('partiesPrenantesSection') }}" class="{{ request()->routeIs('partiesPrenantesSection') ? 'active' : '' }}"><i class="fas fa-users-cog"></i> Parties
-                                            Prenantes</a></li>
-
+                                <li><a href="{{ route('partiesPrenantesSection') }}"
+                                        class="{{ request()->routeIs('partiesPrenantesSection') ? 'active' : '' }}"><i
+                                            class="fas fa-users-cog"></i> Parties
+                                        Prenantes</a></li>
 
                                 <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
 
-                                <li><a href="{{ route('classificationsSection') }}" class="{{ request()->routeIs('classificationsSection') ? 'active' : '' }}"><i class="fas fa-list"></i> Les
+                                <li><a href="{{ route('classificationsSection') }}"
+                                        class="{{ request()->routeIs('classificationsSection') ? 'active' : '' }}"><i
+                                            class="fas fa-list"></i> Les
                                         classifications</a></li>
 
 
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
 
-                                <li><a href="{{ route('historiqueJournauxSection') }}" class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i class="fas fa-history"></i> Historique
+                                <li><a href="{{ route('historiqueJournauxSection') }}"
+                                        class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i
+                                            class="fas fa-history"></i> Historique
                                         et Journaux</a></li>
-
 
                                 <!-- make this page in the first link with conditions ( deja fait ) -->
 
-                                <li><a href="{{route('logout')}}"
+                                <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                             class="fas fa-sign-out-alt"></i> Se déconnecter</a></li>
                             </ul>
@@ -130,9 +135,9 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </div><!--//sidebar-->
-    
+
     </header><!--//app-header-->
-    
+
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
