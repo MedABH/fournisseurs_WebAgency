@@ -192,6 +192,14 @@
                                                                 data-bs-target="#updateUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                                                                 data-email="{{ $user->email }}" data-contact="{{ $user->contact }}" data-adresse="{{ $user->adresse }}"
                                                                 data-role="{{ $user->role }}">Modifier</button>
+
+                                                                <button type="button" class="btn btn-outline-info border-btn me-4"
+                                                                        data-bs-toggle="modal" data-bs-target="#detailsUserModal"
+                                                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                                                        data-email="{{ $user->email }}" data-contact="{{ $user->contact }}"
+                                                                        data-adresse="{{ $user->adresse }}" data-role="{{ $user->role }}">
+                                                                        Détails
+                                                                </button>
                                                                 
                                                                 <form action="{{ route('user.destroy', $user->id) }}" id="delete-form-{{ $user->id }}" method="POST"
                                                                     style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
@@ -300,6 +308,54 @@
                                                             </div>
                                                         </div>
                                                     </tr>
+                                                   <!-- <div class="modal fade" id="detailsUserModal" tabindex="-1" aria-labelledby="detailsUserModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="detailsUserModalLabel">Détails de l'utilisateur</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p><strong class="det">Nom :</strong> <span id="detailsUserName"></span></p>
+                                                                    <p><strong class="det">Email :</strong> <span id="detailsUserEmail"></span></p>
+                                                                    <p><strong class="det">Contact :</strong> <span id="detailsUserContact"></span></p>
+                                                                    <p><strong class="det">Adresse :</strong> <span id="detailsUserAdresse"></span></p>
+                                                                    <p><strong class="det">Rôle :</strong> <span id="detailsUserRole"></span></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>-->
+
+                                                    <div class="modal fade" id="detailsUserModal" tabindex="-1" aria-labelledby="detailsUserModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="detailsUserModalLabel">Détails de l'utilisateur</h5>
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body px-md-5">
+                                                                    <div class="row">
+                                                                        <div class="col-4"><strong class="det">Nom :</strong></strong></div>
+                                                                        <div class="col-6"><strong><span id="detailsUserName"></span></strong></div>
+                                                    
+                                                                        <div class="col-4"><strong class="det">Email :</strong></div>
+                                                                        <div class="col-6"><strong><span id="detailsUserEmail"></strong></span></div>
+                                                    
+                                                                        <div class="col-4"><strong class="det">Contact :</strong></div>
+                                                                        <div class="col-6"><strong><span id="detailsUserContact"></span></strong></div>
+                                                    
+                                                                        <div class="col-4"><strong class="det">Adresse :</strong></div>
+                                                                        <div class="col-6"><strong><span id="detailsUserAdresse"></span></strong></div>
+                                                    
+                                                                        <div class="col-4"><strong class="det">Rôle :</strong></div>
+                                                                        <div class="col-6"><strong><span id="detailsUserRole"></span></strong></div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -337,6 +393,36 @@
                    });
                });
            </script>
+           <script>
+            document.getElementById("toggleDetailsPassword").addEventListener("click", function () {
+                let passwordInput = document.getElementById("detailsUserPassword");
+                let icon = this.querySelector("i");
+        
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    icon.classList.replace("fa-eye", "fa-eye-slash");
+                } else {
+                    passwordInput.type = "password";
+                    icon.classList.replace("fa-eye-slash", "fa-eye");
+                }
+            });
+        </script>
+        
+           <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var detailsModal = document.getElementById('detailsUserModal');
+        
+                detailsModal.addEventListener('show.bs.modal', function (event) {
+                    var button = event.relatedTarget;
+                    document.getElementById('detailsUserName').innerText = button.getAttribute('data-name');
+                    document.getElementById('detailsUserEmail').innerText = button.getAttribute('data-email');
+                    document.getElementById('detailsUserContact').innerText = button.getAttribute('data-contact');
+                    document.getElementById('detailsUserAdresse').innerText = button.getAttribute('data-adresse');
+                    document.getElementById('detailsUserRole').innerText = button.getAttribute('data-role');
+                });
+            });
+        </script>
+        
 
            <script>
                document.addEventListener("DOMContentLoaded", function() {
@@ -444,6 +530,13 @@
                                                            >
                                                            Modifier
                                                        </a>
+                                                       <button type="button" class="btn btn-outline-info border-btn me-4"
+                                                                        data-bs-toggle="modal" data-bs-target="#detailsUserModal"
+                                                                        data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                                                        data-email="{{ $user->email }}" data-contact="{{ $user->contact }}"
+                                                                        data-adresse="{{ $user->adresse }}" data-role="{{ $user->role }}">
+                                                                        Détails
+                                                                </button>
                                         
 
 
