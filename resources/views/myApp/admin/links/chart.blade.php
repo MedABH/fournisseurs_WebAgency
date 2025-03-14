@@ -172,46 +172,54 @@
          </div><!--//row-->
          <!-- les tableaus lte7t -->
          <div class="row g-4 mb-4">
-            <div class="col-12 col-md-12 col-lg-6">
-                 <div class="app-card app-card-progress-list h-100 shadow-sm">
-                     <div class="app-card-header p-3">
-                         <div class="row justify-content-between align-items-center">
-                             <div class="col-auto">
-                                 <h4 class="app-card-title">Nombre de fournisseurs par catégorie</h4>
-                             </div><!--//col-->
-                             <div class="col-auto">
-                                 <div class="card-header-action">
-                                     <a href="suppliersSection">Plus</a>
-                                 </div><!--//card-header-actions-->
-                             </div><!--//col-->
-                         </div><!--//row-->
-                     </div><!--//app-card-header-->
-                     <div class="app-card-body p-3 p-lg-4">
-                         <div class="table-responsive">
-                             <table class="table table-borderless mb-0">
-                                 <thead class="">
+             @if (Auth::user()->role !== 'utilisateur')
+                 <div class="col-12 col-md-12 col-lg-6">
+             @endif
+             @if (Auth::user()->role === 'utilisateur')
+                 <div class=""
+                     style="padding-right: calc(var(--bs-gutter-x)*.5);
+                 padding-left: calc(var(--bs-gutter-x)*.5);">
+             @endif
+             <div class="app-card app-card-progress-list h-100 shadow-sm">
+                 <div class="app-card-header p-3">
+                     <div class="row justify-content-between align-items-center">
+                         <div class="col-auto">
+                             <h4 class="app-card-title">Nombre de fournisseurs par catégorie</h4>
+                         </div><!--//col-->
+                         <div class="col-auto">
+                             <div class="card-header-action">
+                                 <a href="suppliersSection">Plus</a>
+                             </div><!--//card-header-actions-->
+                         </div><!--//col-->
+                     </div><!--//row-->
+                 </div><!--//app-card-header-->
+                 <div class="app-card-body p-3 p-lg-4">
+                     <div class="table-responsive">
+                         <table class="table table-borderless mb-0">
+                             <thead class="">
+                                 <tr>
+                                     <th class="meta" style="font-size: 1rem; color: #828d9f">Catégorie
+                                     </th>
+                                     <th class="meta stat-cell text-center" style="font-size: 1rem; color: #828d9f">
+                                         Nombre de fournisseurs</th>
+                                 </tr>
+                             </thead>
+                             <tbody class="">
+                                 @foreach ($suppliersNumberByCategory as $categorie)
                                      <tr>
-                                         <th class="meta" style="font-size: 1rem; color: #828d9f">Catégorie
-                                         </th>
-                                         <th class="meta stat-cell text-center" style="font-size: 1rem; color: #828d9f">
-                                             Nombre de fournisseurs</th>
+                                         <td class=""><strong>{{ $categorie->nom_categorie }}</strong></td>
+                                         <td class="stat-cell text-center">
+                                             <strong>{{ $categorie->fournisseurs_count }}</strong>
+                                         </td>
                                      </tr>
-                                 </thead>
-                                 <tbody class="">
-                                     @foreach ($suppliersNumberByCategory as $categorie)
-                                         <tr>
-                                             <td class=""><strong>{{ $categorie->nom_categorie }}</strong></td>
-                                             <td class="stat-cell text-center">
-                                                 <strong>{{ $categorie->fournisseurs_count }}</strong>
-                                             </td>
-                                         </tr>
-                                     @endforeach
-                                 </tbody>
-                             </table>
-                         </div><!--//table-responsive-->
-                     </div><!--//app-card-body-->
-                 </div><!--//app-card-->
-             </div><!--//col-->
+                                 @endforeach
+                             </tbody>
+                         </table>
+                     </div><!--//table-responsive-->
+                 </div><!--//app-card-body-->
+             </div><!--//app-card-->
+         </div><!--//col-->
+         @if (Auth::user()->role !== 'utilisateur')
              <div class="col-12 col-md-12 col-lg-6">
                  <div class="app-card app-card-stats-table h-100 shadow-sm">
                      <div class="app-card-header p-3">
@@ -236,14 +244,17 @@
                                              style="font-size: 1rem; direction: ltr; text-align: left;">
                                              <strong>Role</strong>
                                          </th>
-                                         <th class="meta stat-cell text-center" style="font-size: 1rem"><strong>Historique
-                                                 de Connexion</strong></th>
+                                         <th class="meta stat-cell text-center" style="font-size: 1rem">
+                                             <strong>Historique
+                                                 de Connexion</strong>
+                                         </th>
                                      </tr>
                                  </thead>
                                  <tbody class="">
                                      @foreach ($historiques as $historique)
                                          <tr>
-                                             <td class=""><strong>{{ $historique->user->name }}</strong></td>
+                                             <td class=""><strong>{{ $historique->user->name }}</strong>
+                                             </td>
                                              <td class="stat-cell" style="direction: ltr; text-align: left;">
                                                  <strong>
                                                      @if ($historique->user->role === 'super-admin')
@@ -268,7 +279,8 @@
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
              </div><!--//col-->
-         </div>
+         @endif
+     </div>
      </div>
      </div>
  @endsection
