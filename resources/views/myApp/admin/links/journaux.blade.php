@@ -17,28 +17,30 @@
         <div class="app-card app-card-orders-table mb-5">
             <div class="app-card-body">
                 <div class="table-responsive">
+                   
                     <table class="table mb-0 text-center">
                         <thead>
                             <tr>
                                 <th class="cell">Nom</th>
                                 <th class="cell">Role</th>
-                                <th class="cell">Extension</th>
+                                <th class="cell">Type</th>
                                 <th class="cell">Action</th>
                                 <th class="cell">Date</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($orders as $order)
-                            <tr>
-                                <td class="cell">{{ $order->nom }}</td>
-                                <td class="cell">{{ $order->role }}</td>
-                                <td class="cell">{{ $order->extension }}</td>
-                                <td class="cell">{{ $order->action }}</td>
-                                <td class="cell">{{ $order->created_at->format('Y/m/d') }}</td>
-                            </tr>
+                            @foreach ($logs as $log)
+                                <tr>
+                                    <td class="cell">{{ $log->user ? $log->user->name : 'Système' }}</td>
+                                    <td class="cell">{{ $log->role ? $log->user->role : 'role inconnu' }}</td>
+                                    <td class="cell">{{ $log->type }}</td>
+                                    <td class="cell">{{ $log->description }}</td>
+                                    <td class="cell">{{ $log->created_at->format('d/m/Y H:i') }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

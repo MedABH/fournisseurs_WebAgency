@@ -73,6 +73,7 @@ class FournisseurClientController extends Controller
         $fournisseurClient->groupId_fournisseurClient = Str::uuid();
         $fournisseurClient->save();
 
+        ActivityLogController::logActivity("Ajout", "Fournisseur-Client",  " A ajouter " . $fournisseurClient->nom_fournisseurClient );
         // Attach to the category
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clientFournisseurs()->attach($fournisseurClient->id);
@@ -222,6 +223,8 @@ class FournisseurClientController extends Controller
             $setting->increment('deletedToday');
         }
 
+        ActivityLogController::logActivity("Suppression", "Fournisseur-Client",  " A supprimé  " . $fournisseurClient->nom_fournisseurClient );
+
         return redirect()->to(url()->previous());
     }
 
@@ -352,6 +355,9 @@ class FournisseurClientController extends Controller
                 alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
             }
         }
+
+
+        ActivityLogController::logActivity("Modification", "Fournisseur-Client",  " A modifié " . $fc->nom_fournisseurClient );
 
         return redirect()->back();
     }

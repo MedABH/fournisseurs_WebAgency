@@ -78,6 +78,8 @@ class ProspectController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->prospects()->attach($prospect->id);
 
+        ActivityLogController::logActivity("Ajout", "Tiers",  " A ajouté" . $prospect->nom_prospect );
+
         // Update the 'addedToday' in the settings table
         $setting = Setting::where('key', 'tiersTracking')->first();
 
@@ -224,6 +226,7 @@ class ProspectController extends Controller
             $setting->increment('deletedToday');
         }
 
+        ActivityLogController::logActivity("Suppression", "Tiers",  " A supprimé  " . $prospect->nom_prospect );
         return redirect()->to(url()->previous());
     }
 
@@ -337,6 +340,7 @@ class ProspectController extends Controller
             };
         }
 
+        ActivityLogController::logActivity("Modification", "Tiers",  " A modifié  " . $prospect->nom_prospect );
         return redirect()->back();
     }
 

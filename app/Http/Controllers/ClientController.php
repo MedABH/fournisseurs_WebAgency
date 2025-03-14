@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\ActivityLogController;
 use App\Models\Fournisseur;
 use App\Models\FournisseurClient;
 use App\Models\Prospect;
@@ -79,6 +79,7 @@ class ClientController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clients()->attach($client->id);
 
+        ActivityLogController::logActivity("Ajout", "Client","A ajouté " . $client->nom_client);
         // Track the added client
         $setting = Setting::where('key', 'clientsTracking')->first();
         if ($setting) {
@@ -201,7 +202,7 @@ class ClientController extends Controller
                 $setting->increment('deletedToday');
             }
         }
-
+        ActivityLogController::logActivity("Suppression", "Client","A supprimé " . $client->nom_client);
         return redirect()->to(url()->previous());
     }
 
@@ -332,6 +333,7 @@ class ClientController extends Controller
                 alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
             }
         }
+        ActivityLogController::logActivity("Modification", "Client", "A modifié " . $client->nom_client);
 
         return redirect()->back();
     }

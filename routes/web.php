@@ -7,6 +7,7 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\ClassificationsController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\FournisseurClientController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\ProfileAuthController;
@@ -170,3 +171,5 @@ Route::get('/classifications', [ClassificationsController::class, 'index'])->nam
 Route::get('/journaux', [OrderController::class, 'index'])->name('orders.index');
 Route::get('/sous-categories/{categorieId}', [CategorieController::class, 'getSousCategories']);
 
+
+Route::get('/journaux', [ActivityLogController::class, 'index'])->name('journaux.index');

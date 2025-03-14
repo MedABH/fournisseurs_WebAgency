@@ -79,6 +79,8 @@ class FournisseurController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->fournisseurs()->attach($fournisseur->id);
 
+        ActivityLogController::logActivity("Ajout", "Fournisseur", "A ajouté " . $fournisseur->nom_fournisseur);
+
         // Track the supplier addition
         $setting = Setting::where('key', 'suppliersTracking')->first();
         if ($setting) {
@@ -217,7 +219,7 @@ class FournisseurController extends Controller
             // Increment the 'deletedToday' count
             $setting->increment('deletedToday');
         }
-
+        ActivityLogController::logActivity("Suppression", "Fournisseur","A supprimé" . $fournisseur->nom_fournisseur);
         return redirect()->to(url()->previous());
     }
 
@@ -340,7 +342,7 @@ class FournisseurController extends Controller
             }
         }
 
-
+        ActivityLogController::logActivity("Modification", "Fournisseur", "A modifié " . $fournisseur->nom_fournisseur);
 
         return redirect()->back();
     }
