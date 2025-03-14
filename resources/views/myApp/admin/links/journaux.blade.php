@@ -32,7 +32,7 @@
                             @foreach ($logs as $log)
                                 <tr>
                                     <td class="cell">{{ $log->user ? $log->user->name : 'Système' }}</td>
-                                    <td class="cell">{{ $log->role ? $log->user->role : 'role inconnu' }}</td>
+                                    <td class="cell">{{ $log->user ? $log->user->role ?? 'Role inconnu' : 'Utilisateur inconnu' }}</td>
                                     <td class="cell">{{ $log->type }}</td>
                                     <td class="cell">{{ $log->description }}</td>
                                     <td class="cell">{{ $log->created_at->format('d/m/Y H:i') }}</td>
