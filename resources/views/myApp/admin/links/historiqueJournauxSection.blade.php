@@ -10,6 +10,8 @@
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link">Historique</a>
-        <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
+        @if(auth()->user()->role === 'super_admin') 
+            <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
+        @endif
     </nav>
 @endsection

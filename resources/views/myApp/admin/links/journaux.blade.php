@@ -23,7 +23,7 @@
                             <tr>
                                 <th class="cell">Nom</th>
                                 <th class="cell">Role</th>
-                                <th class="cell">Type</th>
+                                <th class="cell">Table</th>
                                 <th class="cell">Action</th>
                                 <th class="cell">Date</th>
                             </tr>
