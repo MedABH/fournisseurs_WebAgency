@@ -102,12 +102,14 @@
                                             class="fa fa-chart-bar fa-fw"></i>
                                         Tableau de bord</a>
                                 </li>
-                                <li><a href="{{ route('usersSection') }}"
-                                        class="{{ request()->routeIs('usersSection') ? 'active' : '' }}"><i
-                                            class="fa fa-users fa-fw"></i> Les
-                                        utilisateurs</a>
-                                </li>
-
+                                @if (Auth::user()->role === 'super-admin')
+                                    <li>
+                                        <a href="{{ route('usersSection') }}"
+                                            class="{{ request()->routeIs('usersSection') ? 'active' : '' }}">
+                                            <i class="fa fa-users fa-fw"></i> Les utilisateurs
+                                        </a>
+                                    </li>
+                                @endif
 
                                 <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
 
@@ -125,12 +127,12 @@
 
 
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
-
+                                @if (Auth::user()->role !== 'utilisateur')
                                 <li><a href="{{ route('historiqueJournauxSection') }}"
                                         class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i
                                             class="fas fa-history"></i> Historique
                                         et Journaux</a></li>
-
+                                @endif
                                 <!-- make this page in the first link with conditions ( deja fait ) -->
 
                                 <li><a href="{{ route('logout') }}"
