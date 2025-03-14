@@ -45,6 +45,7 @@ class CategorieController extends Controller
         }
     }
 
+    ActivityLogController::logActivity("Ajout", "Categorie", "A ajoute " . $categorie->nom_categorie);
 
     alert()->success('Succès', 'La catégorie'." ".$categorie->nom_categorie." ".'a été enregistrée avec succès.');
     return redirect()->to(url()->previous());
@@ -94,6 +95,7 @@ class CategorieController extends Controller
     public function destroy($id){
         $categorie=Categorie::find($id);
         $categorie->delete();
+        ActivityLogController::logActivity("Suppression", "Categorie", "A supprimé " . $categorie->nom_categorie);
         return redirect()->to(url()->previous());
     }
 
@@ -125,6 +127,9 @@ class CategorieController extends Controller
         $categorie->nom_categorie = $request->newNom_categorie;
         $categorie->update();
         alert()->success('Succès', $categorie->nom_categorie . " a été mis à jour avec succès");
+
+
+        ActivityLogController::logActivity("Modification", "Categorie", "A modifié " . $categorie->nom_categorie);
 
         return redirect()->to(url()->previous());
 
