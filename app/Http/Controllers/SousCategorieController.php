@@ -48,6 +48,8 @@ class SousCategorieController extends Controller
 
         alert()->success('Succès','Le produit'." ".$sousCategorie->nom_produit
         ." ".'a été enregistrée avec succès.');
+        
+        ActivityLogController::logActivity("Ajout", "SousCategorie", "A ajouter " . $sousCategorie->nom_produit);
         return redirect()->to(url()->previous());
 
     }
@@ -91,6 +93,8 @@ class SousCategorieController extends Controller
     public function destroy($id){
         $sousCategorie = SousCategorie::find($id);
         $sousCategorie->delete();
+        
+        ActivityLogController::logActivity("Suppression", "SousCategorie", "A supprimé " . $sousCategorie->nom_produit);
         return redirect()->to(url()->previous());
     }
 
@@ -140,6 +144,8 @@ class SousCategorieController extends Controller
         $sousCategorie->update();
 
         alert()->success('Succès', $sousCategorie->nom_produit . " a été mis à jour avec succès");
+        
+        ActivityLogController::logActivity("Modification", "SousCategorie", "A modifié " . $sousCategorie->nom_produit);
 
         return redirect()->to(url()->previous());
 
