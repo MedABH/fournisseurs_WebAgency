@@ -784,36 +784,36 @@
     });
 </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const updateSupplierModal = document.getElementById('updateSupplierModal');
-            updateSupplierModal.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget;
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const updateSupplierModal = document.getElementById('updateSupplierModal');
+        updateSupplierModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
 
-                const supplierId = button.getAttribute('data-id');
-                const supplierName = button.getAttribute('data-name');
-                const supplierEmail = button.getAttribute('data-email');
-                const supplierContact = button.getAttribute('data-tele');
-                const supplierVille = button.getAttribute('data-ville');
-                const supplierSociety = button.getAttribute('data-society');
-                const supplierGSM1 = button.getAttribute('data-GSM1');
-                const supplierGSM2 = button.getAttribute('data-GSM2');
-                const supplierCategory = button.getAttribute('data-category')
-
-                document.getElementById('updateSupplierlId').value = supplierId;
-                document.getElementById('updateSupplierlName').value = supplierName;
-                document.getElementById('updateSupplierlEmail').value = supplierEmail;
-                document.getElementById('updateSupplierlContact').value = supplierContact;
-                document.getElementById('updateSupplierlVille').value = supplierVille;
-                document.getElementById('updateSupplierlSociety').value = supplierSociety;
-                document.getElementById('updateSupplierlGSM1').value = supplierGSM1;
-                document.getElementById('updateSupplierlGSM2').value = supplierGSM2;
-                document.getElementById('updateSupplierlCategory').value = supplierCategory;
+            const supplierId = button.getAttribute('data-id');
+            const supplierName = button.getAttribute('data-name');
+            const supplierEmail = button.getAttribute('data-email');
+            const supplierContact = button.getAttribute('data-tele');
+            const supplierVille = button.getAttribute('data-ville');
+            const supplierSociety = button.getAttribute('data-society');
+            const supplierGSM1 = button.getAttribute('data-GSM1');
+            const supplierGSM2 = button.getAttribute('data-GSM2');
+            const supplierCategory = button.getAttribute('data-category');
 
 
-            });
+            document.getElementById('updateSupplierId').value = supplierId;
+            document.getElementById('updateSupplierName').value = supplierName;
+            document.getElementById('updateSupplierEmail').value = supplierEmail;
+            document.getElementById('updateSupplierContact').value = supplierContact;
+            document.getElementById('updateSupplierVille').value = supplierVille;
+            document.getElementById('updateSupplierSociety').value = supplierSociety;
+            document.getElementById('updateSupplierGSM1').value = supplierGSM1;
+            document.getElementById('updateSupplierGSM2').value = supplierGSM2;
+            document.getElementById('updateSupplierCategorie').value = supplierCategory;
+
         });
-    </script>
+    });
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const selects = document.querySelectorAll('.status-select');

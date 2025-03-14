@@ -744,36 +744,36 @@
  
  </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const updateclient = document.getElementById('update_client');
-            updateclient.addEventListener('show.bs.modal', event => {
-                const button = event.relatedTarget;
+ <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const updateProspectModal = document.getElementById('update_client');
+        updateProspectModal.addEventListener('show.bs.modal', event => {
+            const button = event.relatedTarget;
 
-                const clientId = button.getAttribute('data-id');
-                const clientName = button.getAttribute('data-name');
-                const clientEmail = button.getAttribute('data-email');
-                const clientContact = button.getAttribute('data-tele');
-                const clientVille = button.getAttribute('data-ville');
-                const clientSociety = button.getAttribute('data-society');
-                const clientGSM1 = button.getAttribute('data-GSM1');
-                const clientGSM2 = button.getAttribute('data-GSM2');
-                const clientCategory = button.getAttribute('data-category')
+            const clientId = button.getAttribute('data-id');
+            const clientName = button.getAttribute('data-name');
+            const clientEmail = button.getAttribute('data-email');
+            const clientContact = button.getAttribute('data-tele');
+            const clientVille = button.getAttribute('data-ville');
+            const clientSociety = button.getAttribute('data-society');
+            const clientGSM1 = button.getAttribute('data-GSM1');
+            const clientGSM2 = button.getAttribute('data-GSM2');
+            const clientCategory = button.getAttribute('data-category')
 
-                document.getElementById('updateclientId').value = clientId;
-                document.getElementById('updateclientName').value = clientName;
-                document.getElementById('updateclientEmail').value = clientEmail;
-                document.getElementById('updateclientContact').value = clientContact;
-                document.getElementById('updateclientVille').value = clientVille;
-                document.getElementById('updateclientSociety').value = clientSociety;
-                document.getElementById('updateclientGSM1').value = clientGSM1;
-                document.getElementById('updateclientGSM2').value = clientGSM2;
-                document.getElementById('updateclientCategory').value = clientCategory;
+            document.getElementById('updateClientId').value = clientId;
+            document.getElementById('updateClientName').value = clientName;
+            document.getElementById('updateClientEmail').value = clientEmail;
+            document.getElementById('updateClientContact').value = clientContact;
+            document.getElementById('updateClientVille').value = clientVille;
+            document.getElementById('updateClientSociety').value = clientSociety;
+            document.getElementById('updateClientGSM1').value = clientGSM1;
+            document.getElementById('updateClientGSM2').value = clientGSM2;
+            document.getElementById('updateClientCategory').value = clientCategory;
 
 
-            });
         });
-    </script>
+    });
+</script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const selects = document.querySelectorAll('.status-select');
