@@ -14326,7 +14326,7 @@
      }
  
      .sidepanel-visible .sidepanel-close {
-         display: inline-block
+         display: inline-block;
      }
  
      .sidepanel-visible /*.sidepanel-drop*/ {
