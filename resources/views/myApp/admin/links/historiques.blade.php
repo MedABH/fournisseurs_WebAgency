@@ -30,10 +30,13 @@
 @section('parties-prenantes')
 
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+        @if (auth()->user()->role == 'super-admin')
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link active">Historique</a>
-        @if(auth()->user()->role === 'super_admin') 
         <a href="/journaux" class="flex-sm-fill text-sm-center nav-link">Journaux</a>
-        @endif
+    @elseif (auth()->user()->role == 'admin')
+        <a href="/historique" class="flex-sm-fill text-sm-center nav-link active">Historique</a>
+    @endif
+        
     </nav>
 @endsection
 @section('content')

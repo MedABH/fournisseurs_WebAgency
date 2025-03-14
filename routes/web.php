@@ -14,7 +14,6 @@ use App\Http\Controllers\ProfileAuthController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
-use App\Http\Controllers\OrderController;
 
 use App\Models\Categorie;
 use App\Models\Client;
@@ -158,8 +157,8 @@ Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientControlle
 
 // Route pour l'historique
 Route::get('/historique',[HistoriqueController::class,'showHistorique'])->name('historiqueSection');
-Route::get('/historiqueJournauxSection', [HistoriqueJournauxController::class, 'index'])->name('historiqueJournauxSection');
-Route::get('/historique', [HistoriqueController::class, 'index'])->name('historique');
+Route::get('/historiqueJournauxSection', [HistoriqueJournauxController::class, 'index'])->name('historiqueJournauxSection')->middleware('checkAdmins');
+Route::get('/historique', [HistoriqueController::class, 'index'])->name('historique')->middleware('checkAdmins');
 
 Route::get('/PartiesPrenantesSection', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
 Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');
@@ -168,8 +167,8 @@ Route::get('/classifications', [ClassificationsController::class, 'index'])->nam
 
 
 
-Route::get('/journaux', [OrderController::class, 'index'])->name('orders.index');
+
 Route::get('/sous-categories/{categorieId}', [CategorieController::class, 'getSousCategories']);
 
 
-Route::get('/journaux', [ActivityLogController::class, 'index'])->name('journaux.index');
+Route::get('/journaux', [ActivityLogController::class, 'index'])->name('journaux.index')->middleware(['checkSuperAdmin']);

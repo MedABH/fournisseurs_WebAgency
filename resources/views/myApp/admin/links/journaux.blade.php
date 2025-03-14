@@ -7,8 +7,12 @@
     </div>
 </div><!--//row-->
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
+        @if (auth()->user()->role == 'super-admin')
+        <a href="/historique" class="flex-sm-fill text-sm-center nav-link ">Historique</a>
+        <a href="/journaux" class="flex-sm-fill text-sm-center nav-link active">Journaux</a>
+    @elseif (auth()->user()->role == 'admin')
         <a href="/historique" class="flex-sm-fill text-sm-center nav-link">Historique</a>
-        <a href="journaux" class="flex-sm-fill text-sm-center nav-link active">Journaux</a>
+    @endif
     </nav>
 @endsection
 @section('content')
@@ -23,7 +27,7 @@
                             <tr>
                                 <th class="cell">Nom</th>
                                 <th class="cell">Role</th>
-                                <th class="cell">Table</th>
+                                <th class="cell">Type</th>
                                 <th class="cell">Action</th>
                                 <th class="cell">Date</th>
                             </tr>
