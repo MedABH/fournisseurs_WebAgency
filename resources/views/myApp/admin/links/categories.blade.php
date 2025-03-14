@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Ajouter">
+                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Modifier">
                             </div>
                         </form>
                     </div>

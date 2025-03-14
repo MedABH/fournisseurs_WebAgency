@@ -100,8 +100,8 @@
 
                                 <div class="mb-3">
                                     <label class="form-label"><strong class="det">Description</strong></label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Entrer une description"
-                                        name="texte">{{ old('texte') }}</textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1"  placeholder="Entrer une description"
+                                        name="texte" style="height: 100px">{{ old('texte') }}</textarea>
                                     @error('texte', 'default')
                                         <span class="text-danger">{{ $message }}</span> <br>
                                     @enderror
@@ -305,7 +305,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label"><strong class="det">Description</strong></label>
-                                <textarea class="form-control" id="updateProductText" placeholder="Entrer une description" name="newTexte">{{ old('newTexte', htmlspecialchars($sousCategorie->texte)) }} </textarea>
+                                <textarea class="form-control" id="updateProductText" placeholder="Entrer une description" name="newTexte" style="height: 100px">{{ old('newTexte', htmlspecialchars($sousCategorie->texte)) }} </textarea>
                                 @if ($errors->has('newTexte'))
                                     <span class="text-danger">{{ $errors->first('newTexte') }}</span>
                                 @endif
