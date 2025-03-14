@@ -478,7 +478,7 @@
                                                     <div class="modal-body">
 
                                                         <div class="form-group">
-                                                            <textarea name="remark" id="remarque" class="form-control" rows="4">{{ old('remark', $fc->remark) }}</textarea>
+                                                            <textarea name="remark" id="remarque" class="form-control" style="height: 100px">{{ old('remark', $fc->remark) }}</textarea>
                                                             @error('remark')
                                                                 <div class="alert alert-danger">
                                                                     {{ $message }}</div>

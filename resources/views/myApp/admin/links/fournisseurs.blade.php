@@ -172,7 +172,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-primary" value="Ajouter" data-bs-dismiss="modal">
+                        <input type="submit" class="btn btn-success" value="Ajouter" data-bs-dismiss="modal">
                     </div>
                 </div>
             </div>
@@ -486,15 +486,14 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <textarea name="remark" id="remarque" class="form-control col-12" rows="6">{{ old('remark', $fournisseur->remark) }}</textarea>
+                                                            <textarea name="remark" id="remarque" class="form-control" style="height: 100px">{{ old('remark', $fournisseur->remark) }}</textarea>
                                                             @error('remark')
                                                                 <div class="alert alert-danger">{{ $message }}</div>
                                                             @enderror
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-success">Ajouter la
-                                                            remarque</button>
+                                                        <button type="submit" class="btn btn-success">Ajouter la remarque</button>
                                                     </div>
                                                 </div>
                                             </div>

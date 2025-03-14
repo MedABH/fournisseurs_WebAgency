@@ -492,7 +492,7 @@
 
                                                         <div class="form-group">
                                                             
-                                                            <textarea name="remark" id="remarque" class="form-control" rows="4">{{ old('remark', $prospect->remark) }}</textarea>
+                                                            <textarea name="remark" id="remarque" class="form-control" style="height: 100px">{{ old('remark', $prospect->remark) }}</textarea>
                                                             @error('remark')
                                                                 <div class="alert alert-danger">
                                                                     {{ $message }}</div>
@@ -501,7 +501,7 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Ajouter la
+                                                        <button type="submit" class="btn btn-success">Ajouter la
                                                             remarque</button>
                                                     </div>
                                                 </div>
