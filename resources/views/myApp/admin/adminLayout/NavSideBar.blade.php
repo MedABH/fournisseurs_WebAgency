@@ -52,6 +52,15 @@
                                         stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path>
                                 </svg>
                             </a>
+                            <!-- Close button for sidebar -->
+                            <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                    viewBox="0 0 30 30" role="img">
+                                    <title>Close</title>
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
+                                        stroke-width="2" d="M4 7l22 22M4 23l22-22"></path>
+                                </svg>
+                            </a>
                         </div><!--//col-->
                         <div class="app-utilities col-6" id="col-right">
                             <div class="app-utility-item app-user-dropdown dropdown">
@@ -77,8 +86,6 @@
         <!-- Sidebar -->
         <div id="app-sidepanel" class="app-sidepanel">
             <div class="sidepanel-inner d-flex flex-column">
-                <!-- Close button for sidebar -->
-                <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                 <div class="templatemo-flex-row">
                     <div class="templatemo-sidebar">
                         <header class="templatemo-site-header pt-3 pb-3">
@@ -137,7 +144,7 @@
         </div><!--//sidebar-->
 
     </header><!--//app-header-->
-    
+
 
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
