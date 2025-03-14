@@ -172,7 +172,7 @@
          </div><!--//row-->
          <!-- les tableaus lte7t -->
          <div class="row g-4 mb-4">
-             <div class="col-12 col-lg-6">
+            <div class="col-12 col-md-12 col-lg-6">
                  <div class="app-card app-card-progress-list h-100 shadow-sm">
                      <div class="app-card-header p-3">
                          <div class="row justify-content-between align-items-center">
@@ -202,7 +202,8 @@
                                          <tr>
                                              <td class=""><strong>{{ $categorie->nom_categorie }}</strong></td>
                                              <td class="stat-cell text-center">
-                                                 <strong>{{ $categorie->fournisseurs_count }}</strong></td>
+                                                 <strong>{{ $categorie->fournisseurs_count }}</strong>
+                                             </td>
                                          </tr>
                                      @endforeach
                                  </tbody>
@@ -211,7 +212,7 @@
                      </div><!--//app-card-body-->
                  </div><!--//app-card-->
              </div><!--//col-->
-             <div class="col-12 col-lg-6">
+             <div class="col-12 col-md-12 col-lg-6">
                  <div class="app-card app-card-stats-table h-100 shadow-sm">
                      <div class="app-card-header p-3">
                          <div class="row justify-content-between align-items-center">
@@ -231,8 +232,10 @@
                                  <thead class="" style="">
                                      <tr style="">
                                          <th class="meta" style="font-size: 1rem"><strong>Nom</strong></th>
-                                         <th class="meta stat-cell" style="font-size: 1rem; direction: ltr; text-align: left;">
-                                             <strong>Role</strong></th>
+                                         <th class="meta stat-cell"
+                                             style="font-size: 1rem; direction: ltr; text-align: left;">
+                                             <strong>Role</strong>
+                                         </th>
                                          <th class="meta stat-cell text-center" style="font-size: 1rem"><strong>Historique
                                                  de Connexion</strong></th>
                                      </tr>
