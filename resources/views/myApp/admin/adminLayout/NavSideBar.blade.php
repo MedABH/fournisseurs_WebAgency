@@ -6,7 +6,6 @@
     <title>Gestion des fournisseurs</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('assets/img/kaiadmin/favicon.ico') }}" type="image/x-icon" />
-
     <!-- Fonts and icons -->
     <script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -29,7 +28,6 @@
             },
         });
     </script>
-
 </head>
 
 <body>
@@ -110,31 +108,24 @@
                                         </a>
                                     </li>
                                 @endif
-
                                 <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
-
                                 <li><a href="{{ route('partiesPrenantesSection') }}"
                                         class="{{ request()->routeIs('partiesPrenantesSection') ? 'active' : '' }}"><i
                                             class="fas fa-users-cog"></i> Parties
                                         Prenantes</a></li>
-
                                 <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
-
                                 <li><a href="{{ route('classificationsSection') }}"
                                         class="{{ request()->routeIs('classificationsSection') ? 'active' : '' }}"><i
                                             class="fas fa-list"></i> Les
                                         classifications</a></li>
-
-
                                 <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
                                 @if (Auth::user()->role !== 'utilisateur')
-                                <li><a href="{{ route('historiqueJournauxSection') }}"
-                                        class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i
-                                            class="fas fa-history"></i> Historique
-                                        et Journaux</a></li>
+                                    <li><a href="{{ route('historiqueJournauxSection') }}"
+                                            class="{{ request()->routeIs('historiqueJournauxSection') ? 'active' : '' }}"><i
+                                                class="fas fa-history"></i> Historique
+                                            et Journaux</a></li>
                                 @endif
                                 <!-- make this page in the first link with conditions ( deja fait ) -->
-
                                 <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                             class="fas fa-sign-out-alt"></i> Se déconnecter</a></li>
@@ -144,15 +135,11 @@
                 </div><!--//sidepanel-inner-->
             </div><!--//app-sidepanel-->
         </div><!--//sidebar-->
-
     </header><!--//app-header-->
-
-
     <!--   Core JS Files   -->
     <script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-
     <!-- jQuery Scrollbar -->
     <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
     <!-- Kaiadmin JS -->
