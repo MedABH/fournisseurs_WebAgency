@@ -23,13 +23,18 @@ class Historique extends Model
         parent::boot();
 
         static::creating(function ($historique) {
-            $exists = self::where('user_id', $historique->user_id)
-                ->where('login_at', $historique->login_at)
-                ->exists();
-
-            if ($exists) {
-                return false; // Annule la création si un doublon existe
+            $lastLogin = self::where('user_id', $historique->user_id)
+                ->orderBy('login_at', 'desc')
+                ->first();
+        
+            if ($lastLogin) {
+                $timeDifference = $historique->login_at->diffInSeconds($lastLogin->login_at);
+        
+                if ($timeDifference < 2) {
+                    return false; // Prevent creation if the difference is less than 2 seconds
+                }
             }
         });
+        
     }
 }

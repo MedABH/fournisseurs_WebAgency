@@ -150,7 +150,7 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 
-        $perPage = $request->get('per_page', 5);
+        $perPage = $request->get('per_page', 10);
         $clients = Client::with('categories', 'categorieClients.categorie', 'utilisateur')->paginate($perPage);
 
         $categories = Categorie::with('sousCategories')->get();

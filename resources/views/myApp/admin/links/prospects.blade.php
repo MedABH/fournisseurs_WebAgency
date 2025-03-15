@@ -522,30 +522,30 @@
                                             <div class="modal-body">
                                                 <div class="row">
 
-                                                    <div class="col-6 det" style="font-size: 20px">Nom de la socité</div>
-                                                    <div class="col-6 showSocietyProspect"><span style="font-size: 20px" id="showSocietyDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Nom de la socité</div>
+                                                    <div class="col-6 showSocietyProspect"><span style="font-size: 18px" id="showSocietyDetail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">GSM1 de la société</strong></div>
-                                                    <div class="col-6 showGSM1Prospect"><span style="font-size: 20px" id="showGSM1Detail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">GSM1 de la société</strong></div>
+                                                    <div class="col-6 showGSM1Prospect"><span style="font-size: 18px" id="showGSM1Detail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">GSM2 de la société</strong></div>
-                                                    <div class="col-6 showGSM2Prospect"><span style="font-size: 20px" id="showGSM2Detail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">GSM2 de la société</strong></div>
+                                                    <div class="col-6 showGSM2Prospect"><span style="font-size: 18px" id="showGSM2Detail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Personne à contacter</strong></div>
-                                                    <div class="col-6 showNameProspect"><span style="font-size: 20px" id="showNameDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Personne à contacter</strong></div>
+                                                    <div class="col-6 showNameProspect"><span style="font-size: 18px" id="showNameDetail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Numero De Telephone</strong></div>
-                                                    <div class="col-6 showContactProspect"><span style="font-size: 20px" id="showContactDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Numero De Telephone</strong></div>
+                                                    <div class="col-6 showContactProspect"><span style="font-size: 18px" id="showContactDetail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Email</strong></div>
-                                                    <div class="col-6 showEmailProspect"><span style="font-size: 20px" id="showEmailDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Email</strong></div>
+                                                    <div class="col-6 showEmailProspect"><span style="font-size: 18px" id="showEmailDetail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Ville</strong></div>
-                                                    <div class="col-6 showVilleProspect"><span style="font-size: 20px" id="showVilleDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
+                                                    <div class="col-6 showVilleProspect"><span style="font-size: 18px" id="showVilleDetail-{{ $prospect->id }}"></span></div>
                                             
                                             
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Les catégories</strong></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Les catégories</strong></div>
                                                     <div class="col-6">
                                                         <select class="form-select form-select-sm col-6 info-prospect showCategoryProspect"
                                                             aria-label=".form-select-sm example" id="categories-{{ $prospect->id }}" style="color: #5d6778">
@@ -558,7 +558,7 @@
                                                         </select>
                                                     </div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Sous-Catégorie</strong></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Sous-Catégorie</strong></div>
                                                     <div class="col-6">
                                                         <select class="form-select form-select-sm col-6 info-prospect showProductProspect"
                                                             aria-label=".form-select-sm example" id="products-{{ $prospect->id }}" style="color: #5d6778; font-size: 15px"><strong>
@@ -566,11 +566,11 @@
                                                         </select>
                                                     </div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Contacté Par</strong></div>
-                                                    <div class="col-6 showUserProspect"><span style="font-size: 20px" id="showUserDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Contacté Par</strong></div>
+                                                    <div class="col-6 showUserProspect"><span style="font-size: 18px" id="showUserDetail-{{ $prospect->id }}"></span></div>
                                             
-                                                    <div class="col-6 det" style="font-size: 20px">Remarque</strong></div>
-                                                    <div class="col-6 showRemarkProspect"><span style="font-size: 20px" id="showRemarkDetail-{{ $prospect->id }}"></span></div>
+                                                    <div class="col-6 det" style="font-size: 18px">Remarque</strong></div>
+                                                    <div class="col-6 showRemarkProspect"><span style="font-size: 18px" id="showRemarkDetail-{{ $prospect->id }}"></span></div>
                                             </div>
 
                                             </div>

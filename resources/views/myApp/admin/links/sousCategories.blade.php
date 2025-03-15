@@ -243,28 +243,18 @@
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <div class="show-info-product ">
-                                                            <label class="label-detail-product"><strong
-                                                                    class="det">Produit</strong></label>
-                                                            <h6 class="info-product showProduct"
-                                                                id="showProduct-{{ $sousCategorie->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-product ">
-                                                            <label class="label-detail-product"><strong
-                                                                    class="det">Description</strong></label>
-                                                            <h6 class="info-text showTextProduct"
-                                                                id="showText-{{ $sousCategorie->id }}">
-                                                            </h6>
-                                                        </div>
-                                                        <div class="show-info-product ">
-                                                            <label class="label-detail-product"><strong
-                                                                    class="det">Catégorie</strong></label>
-                                                            <h6 class="info-product showCategoryProduct"
-                                                                id="showCategory-{{ $sousCategorie->id }}">
-                                                            </h6>
-                                                        </div>
+                                                        <div class="row">
 
+                                                            <div class="col-4 det" style="font-size: 20px">Produit</div>
+                                                            <div class="col-8 showProduct"><span style="font-size: 17px" id="showProduct-{{ $sousCategorie->id }}"></span></div>
+
+                                                            <div class="col-4 det" style="font-size: 20px">Description</div>
+                                                            <div class="col-8 showTextProduct"><span style="font-size: 17px" id="showText-{{ $sousCategorie->id }}"></span></div>
+
+                                                            <div class="col-4 det" style="font-size: 20px">Catégorie</div>
+                                                            <div class="col-8 showCategoryProduct"><span style="font-size: 17px" id="showCategory-{{ $sousCategorie->id }}"></span></div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

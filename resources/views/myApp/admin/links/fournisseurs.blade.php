@@ -517,30 +517,30 @@
                                                 <div class="modal-body">
                                                     <div class="row">
 
-                                                        <div class="col-6 det" style="font-size: 20px">Nom de la socité</div>
-                                                        <div class="col-6 showSocietyfournisseur"><span style="font-size: 20px" id="showSocietyDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Nom de la socité</div>
+                                                        <div class="col-6 showSocietyfournisseur"><span style="font-size: 18px" id="showSocietyDetail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">GSM1 de la société</strong></div>
-                                                        <div class="col-6 showGSM1fournisseur"><span style="font-size: 20px" id="showGSM1Detail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">GSM1 de la société</strong></div>
+                                                        <div class="col-6 showGSM1fournisseur"><span style="font-size: 18px" id="showGSM1Detail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">GSM2 de la société</strong></div>
-                                                        <div class="col-6 showGSM2fournisseur"><span style="font-size: 20px" id="showGSM2Detail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">GSM2 de la société</strong></div>
+                                                        <div class="col-6 showGSM2fournisseur"><span style="font-size: 18px" id="showGSM2Detail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Personne à contacter</strong></div>
-                                                        <div class="col-6 showNamefournisseur"><span style="font-size: 20px" id="showNameDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Personne à contacter</strong></div>
+                                                        <div class="col-6 showNamefournisseur"><span style="font-size: 18px" id="showNameDetail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Numero De Telephone</strong></div>
-                                                        <div class="col-6 showContactfournisseur"><span style="font-size: 20px" id="showContactDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Numero De Telephone</strong></div>
+                                                        <div class="col-6 showContactfournisseur"><span style="font-size: 18px" id="showContactDetail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Email</strong></div>
-                                                        <div class="col-6 showEmailfournisseur"><span style="font-size: 20px" id="showEmailDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Email</strong></div>
+                                                        <div class="col-6 showEmailfournisseur"><span style="font-size: 18px" id="showEmailDetail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Ville</strong></div>
-                                                        <div class="col-6 showVillefournisseur"><span style="font-size: 20px" id="showVilleDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
+                                                        <div class="col-6 showVillefournisseur"><span style="font-size: 18px" id="showVilleDetail-{{ $fournisseur->id }}"></span></div>
                                                 
                                                 
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Les catégories</strong></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Les catégories</strong></div>
                                                         <div class="col-6">
                                                             <select class="form-select form-select-sm col-6 info-fournisseur showCategoryfournisseur"
                                                                 aria-label=".form-select-sm example" id="categories-{{ $fournisseur->id }}" style="color: #5d6778">
@@ -553,7 +553,7 @@
                                                             </select>
                                                         </div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Sous-Catégorie</strong></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Sous-Catégorie</strong></div>
                                                         <div class="col-6">
                                                             <select class="form-select form-select-sm col-6 info-fournisseur showProductfournisseur"
                                                                 aria-label=".form-select-sm example" id="products-{{ $fournisseur->id }}" style="color: #5d6778; font-size: 15px"><strong>
@@ -561,11 +561,11 @@
                                                             </select>
                                                         </div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Contacté Par</strong></div>
-                                                        <div class="col-6 showUserfournisseur"><span style="font-size: 20px" id="showUserDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Contacté Par</strong></div>
+                                                        <div class="col-6 showUserfournisseur"><span style="font-size: 18px" id="showUserDetail-{{ $fournisseur->id }}"></span></div>
                                                 
-                                                        <div class="col-6 det" style="font-size: 20px">Remarque</strong></div>
-                                                        <div class="col-6 showRemarkfournisseur"><span style="font-size: 20px" id="showRemarkDetail-{{ $fournisseur->id }}"></span></div>
+                                                        <div class="col-6 det" style="font-size: 18px">Remarque</strong></div>
+                                                        <div class="col-6 showRemarkfournisseur"><span style="font-size: 18px" id="showRemarkDetail-{{ $fournisseur->id }}"></span></div>
                                                 </div>
 
                                                 </div>

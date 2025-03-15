@@ -319,20 +319,20 @@
                                                                 </div>
                                                                 <div class="modal-body px-md-5">
                                                                     <div class="row">
-                                                                        <div class="col-4 det" style="font-size: 20px"> Nom :  </div>
-                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserName"></span> </div>
+                                                                        <div class="col-4 det" style="font-size: 18px"> Nom :  </div>
+                                                                        <div class="col-6"> <span style="font-size: 18px" id="detailsUserName"></span> </div>
                                                     
-                                                                        <div class="col-4 det" style="font-size: 20px"> Email : </div>
-                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserEmail"> </span></div>
+                                                                        <div class="col-4 det" style="font-size: 18px"> Email : </div>
+                                                                        <div class="col-6"> <span style="font-size: 18px" id="detailsUserEmail"> </span></div>
                                                     
-                                                                        <div class="col-4 det" style="font-size: 20px"> Contact : </div>
-                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserContact"></span> </div>
+                                                                        <div class="col-4 det" style="font-size: 18px"> Contact : </div>
+                                                                        <div class="col-6"> <span style="font-size: 18px" id="detailsUserContact"></span> </div>
                                                     
-                                                                        <div class="col-4 det" style="font-size: 20px"> Adresse : </div>
-                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserAdresse"></span> </div>
+                                                                        <div class="col-4 det" style="font-size: 18px"> Adresse : </div>
+                                                                        <div class="col-6"> <span style="font-size: 18px" id="detailsUserAdresse"></span> </div>
                                                     
-                                                                        <div class="col-4 det" style="font-size: 20px"> Rôle : </div>
-                                                                        <div class="col-6"> <span style="font-size: 20px" id="detailsUserRole"></span> </div>
+                                                                        <div class="col-4 det" style="font-size: 18px"> Rôle : </div>
+                                                                        <div class="col-6"> <span style="font-size: 18px" id="detailsUserRole"></span> </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
