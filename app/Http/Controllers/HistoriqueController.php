@@ -29,8 +29,8 @@ class HistoriqueController extends Controller
                     ->orWhere('role', 'LIKE', "%{$search}%");
             });
         }
-
-        $historiques = $query->get();
+        $historiques = $query->orderBy('login_at', 'desc')->get();
+        
 
         return view('myApp.admin.links.historiques', compact('historiques'));
     }
