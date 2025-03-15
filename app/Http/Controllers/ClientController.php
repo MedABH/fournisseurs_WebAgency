@@ -79,7 +79,7 @@ class ClientController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clients()->attach($client->id);
 
-        ActivityLogController::logActivity("Ajout", "Client","A ajouté " . $client->nom_client);
+        ActivityLogController::logActivity("Ajout", "Client","L'utilisateur a ajouté " . $client->nom_client);
         // Track the added client
         $setting = Setting::where('key', 'clientsTracking')->first();
         if ($setting) {
