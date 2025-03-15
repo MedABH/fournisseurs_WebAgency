@@ -51,14 +51,14 @@
                                 </svg>
                             </a>
                             <!-- Close button for sidebar -->
-                            <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">
+                            <!-- <a href="#" id="sidepanel-close" class="sidepanel-toggler d-xl-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                     viewBox="0 0 30 30" role="img">
                                     <title>Close</title>
                                     <path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10"
                                         stroke-width="2" d="M4 7l22 22M4 23l22-22"></path>
                                 </svg>
-                            </a>
+                            </a>-->
                         </div><!--//col-->
                         <div class="app-utilities col-6" id="col-right">
                             <div class="app-utility-item app-user-dropdown dropdown">

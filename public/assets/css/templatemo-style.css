@@ -281,7 +281,7 @@ footer {
 
 /* When the sidebar is visible, expand it */
 #app-sidepanel.sidepanel-visible {
-    width: 16.5%;
+    width: 0;
     /* You can adjust this width as per your design */
 }
 
@@ -722,9 +722,18 @@ body[data-background-color=bg1] {
 
 /* For mobile screens: */
 @media (max-width: 1200px) {
+    
+    #app-sidepanel {
+        width: 0;
+        overflow: hidden;
+        transition: width 0.3s ease-in-out;
+        display: none; /* Ensure it's fully hidden on mobile */
+    }
+
     #app-sidepanel.sidepanel-visible {
         width: 75%;
-        /* Adjust the width for mobile */
+        /* Adjust this based on your needs */
+        display: block;
     }
 
     #app-sidepanel.sidepanel-hidden {
