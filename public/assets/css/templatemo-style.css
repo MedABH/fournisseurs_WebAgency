@@ -210,16 +210,6 @@ footer {
     margin-right: 15px;
 }
 
-/* Sidebar Content Visibility */
-#app-sidepanel {
-    width: 0;
-    overflow: hidden;
-    position: fixed;
-    height: 100vh;
-    transition: width 0.3s ease-in-out;
-    /* Smooth transition */
-}
-
 #app-sidepanel.sidepanel-visible {
     width: 75%;
     /* Sidebar width when opened */
@@ -282,11 +272,11 @@ footer {
 /* Initially hide the sidebar */
 #app-sidepanel {
     width: 0;
-    overflow: hidden;
     position: fixed;
     height: 100vh;
     transition: width 0.3s ease-in-out;
     /* Smooth transition */
+    z-index: 9999;
 }
 
 /* When the sidebar is visible, expand it */
@@ -655,11 +645,13 @@ body[data-background-color=bg1] {
         width: 0;
         overflow: hidden;
         transition: width 0.3s ease-in-out;
+        display: none; /* Ensure it's fully hidden on mobile */
     }
 
     #app-sidepanel.sidepanel-visible {
         width: 75%;
         /* Adjust this based on your needs */
+        display: block;
     }
 
     #app-sidepanel.active {
