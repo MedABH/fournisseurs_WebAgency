@@ -68,6 +68,10 @@
 
             </div>
         </div>
+        <div>
+            {{ $historiques->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
+
+        </div>
 @endsection
 @section('script')
 <script>

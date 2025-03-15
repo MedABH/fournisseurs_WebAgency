@@ -29,7 +29,7 @@ class HistoriqueController extends Controller
                     ->orWhere('role', 'LIKE', "%{$search}%");
             });
         }
-        $historiques = $query->orderBy('login_at', 'desc')->get();
+        $historiques = $query->orderBy('login_at', 'desc')->paginate(10);
         
 
         return view('myApp.admin.links.historiques', compact('historiques'));
