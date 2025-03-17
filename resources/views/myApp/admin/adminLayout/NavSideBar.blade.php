@@ -82,7 +82,7 @@
             </div><!--//container-fluid-->
         </div><!--//app-header-inner-->
         <!-- Sidebar -->
-        <div id="app-sidepanel" class="app-sidepanel">
+        <div id="app-sidepanel">
             <div class="sidepanel-inner d-flex flex-column">
                 <div class="templatemo-flex-row">
                     <div class="templatemo-sidebar">

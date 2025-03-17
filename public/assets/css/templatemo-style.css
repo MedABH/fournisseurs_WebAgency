@@ -210,23 +210,9 @@ footer {
     margin-right: 15px;
 }
 
-#app-sidepanel.sidepanel-visible {
-    width: 75%;
-    /* Sidebar width when opened */
-}
-
-#app-sidepanel.sidepanel-hidden {
-    width: 0;
-}
-
 .templatemo-left-nav {
     display: none;
     /* Hidden by default */
-}
-
-#app-sidepanel.sidepanel-visible .templatemo-left-nav {
-    display: block;
-    /* Show menu when sidebar is open */
 }
 
 /* Search Form */
@@ -273,8 +259,13 @@ footer {
 #app-sidepanel {
     width: 0;
     position: fixed;
+    min-height: 100vh;
     height: 100vh;
+    left: 0;
+    top: 0;
+    font-size: .875rem;
     transition: width 0.3s ease-in-out;
+    border-right: 1px solid #e7e9ed;
     /* Smooth transition */
     z-index: 9999;
 }
@@ -298,7 +289,18 @@ footer {
     /* Show menu content */
 }
 
-
+/* Sidebar admin blade */
+.app-sidepanel-admin {
+    position: fixed;
+    min-height: 100vh;
+    height: 100%;
+    left: 0;
+    top: 0;
+    font-size: .875rem;
+    border-right: 1px solid #e7e9ed;
+    z-index: 1000;
+    /* Ensure sidebar stays on top */
+}
 
 /* Custom Styles */
 .center-div {
@@ -434,19 +436,6 @@ body[data-background-color=bg1] {
     justify-content: flex-end;
     align-items: center;
     padding-right: 1.3rem;
-}
-
-/* Sidebar */
-.app-sidepanel {
-    position: fixed;
-    min-height: 100vh;
-    height: 100%;
-    left: 0;
-    top: 0;
-    font-size: .875rem;
-    border-right: 1px solid #e7e9ed;
-    z-index: 1000;
-    /* Ensure sidebar stays on top */
 }
 
 .app-sidepanel .panel-drop {

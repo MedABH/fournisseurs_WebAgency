@@ -20,7 +20,7 @@
 </head>
 <body>
   <div>
-    <div class="app-sidepanel">
+    <div class="app-sidepanel-admin">
     @include('myApp.admin.adminLayout.NavSideBar')
     </div>
 
