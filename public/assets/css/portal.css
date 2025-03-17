@@ -14155,13 +14155,7 @@ button.close:focus {
 }
 
 
-/* Sidebar on mobile: Update the background color */
-@media (max-width: 1200px) {
-    .app-sidepanel .sidepanel-inner {
-        background: #000;
-        /* Black background for mobile */
-    }
-}
+
 
 
 .app-branding {
@@ -14321,19 +14315,6 @@ button.close:focus {
 }
 
 @media(max-width: 1199.98px) {
-    .app-sidepanel {
-        transition: all .4s ease-in-out;
-        left: -400px
-    }
-}
-
-@media(max-width: 1199.98px)and (prefers-reduced-motion: reduce) {
-    .app-sidepanel {
-        transition: none
-    }
-}
-
-@media(max-width: 1199.98px) {
     .app-sidepanel.sidepanel-visible {
         display: block
     }
@@ -14357,6 +14338,8 @@ button.close:focus {
         background: rgba(0, 0, 0, .35)
     }
 }
+
+
 
 @media(min-width: 1200px) {
     .app-wrapper {

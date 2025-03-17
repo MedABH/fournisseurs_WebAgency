@@ -786,3 +786,24 @@ body[data-background-color=bg1] {
         margin-left: 75%; /* Sidebar takes up 75% on mobile */
     }
 }
+
+/* Sidebar on mobile: Update the background color */
+@media (max-width: 1200px) {
+    .app-sidepanel .sidepanel-inner {
+        background: #000;
+        /* Black background for mobile */
+    }
+}
+
+@media(max-width: 1199.98px)and (prefers-reduced-motion: reduce) {
+    .app-sidepanel {
+        transition: none
+    }
+}
+
+@media(max-width: 1199.98px) {
+    .app-sidepanel {
+        transition: all .4s ease-in-out;
+        left: -400px
+    }
+}
