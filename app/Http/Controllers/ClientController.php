@@ -108,7 +108,7 @@ class ClientController extends Controller
         }
 
         
-        ActivityLogController::logActivity("Contacte par", "Client","L'utilisateur a modifie qui contacté  " . $client->nom_client);
+        ActivityLogController::logActivity("Contacté par", "Client","L'utilisateur a modifié qui contacté  " . $client->nom_client);
 
 
         return redirect()->back();
@@ -148,7 +148,7 @@ class ClientController extends Controller
             $c->save();
         }
 
-        ActivityLogController::logActivity("Remarque", "Client","L'utilisateur a jouté une remarque a  " . $client->nom_client);
+        ActivityLogController::logActivity("Remarque", "Client","L'utilisateur a ajouté une remarque a  " . $client->nom_client);
         return redirect()->back();
     }
     public function index(Request $request)
@@ -221,10 +221,7 @@ class ClientController extends Controller
             ->orWhere('nomSociete_client', 'LIKE', "%{$search}%")
             ->orWhere('nom_client', 'LIKE', "%{$search}%")
             ->get();
-        return response()->json([
-            'clients' => $client,
-            'selectOptions' => $select
-        ]);
+       
     }
 
     public function update(Request $request)

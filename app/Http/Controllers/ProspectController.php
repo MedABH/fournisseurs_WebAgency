@@ -118,7 +118,7 @@ class ProspectController extends Controller
         }
 
 
-        ActivityLogController::logActivity("Contacte par", "Tiers","L'utilisateur a modifie qui contacté  " . $prospect->nom_prospect);
+        ActivityLogController::logActivity("Contacté par", "Tiers","L'utilisateur a modifié qui contacté  " . $prospect->nom_prospect);
         return redirect()->back();
     }
 
@@ -156,7 +156,7 @@ class ProspectController extends Controller
             $p->save();
         }
         
-        ActivityLogController::logActivity("Remarque", "Tiers","L'utilisateur a jouté une remarque a  " . $prospect->nom_prospect);
+        ActivityLogController::logActivity("Remarque", "Tiers","L'utilisateur a ajouté une remarque a  " . $prospect->nom_prospect);
 
         return redirect()->back();
     }
@@ -520,7 +520,7 @@ class ProspectController extends Controller
         if ($setting) {
             $setting->increment('deletedToday', $tiersChange);
         }
-        ActivityLogController::logActivity("Transfert", "Tiers","L'utilisateur a transferé " . $tiersChange . " Tiers à " . $selectedStatus);
+        ActivityLogController::logActivity("Transfert", "Tiers","L'utilisateur a transféré " . $tiersChange . " Tiers à " . $selectedStatus);
 
         return redirect()->to(url()->previous());
     }

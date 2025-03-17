@@ -1,5 +1,6 @@
 @extends('myApp.admin.adminLayout.adminPage')
 @section('search-bar')
+
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
             <h1 class="app-page-title mb-0" style="color: #404242">LES CLIENTS</h1>
@@ -8,14 +9,14 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.clients') }}" method="GET"
+                        <form action="#" method="GET"
                             class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders"
-                                    placeholder="Search ... ">
+                                <input type="text" id="searchInput" name="search" class="form-control search-orders"
+                                    placeholder="Search ... " onkeyup="searchClients()">
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn app-btn-secondary">Search</button>
+                                <button type="submit" id="searchButton" class="btn app-btn-secondary">Search</button>
                             </div>
                         </form>
                     </div><!--//col-->
@@ -175,7 +176,7 @@
     <div class="app-card app-card-orders-table mb-5">
         <div class="app-card-body">
             <div class="table-responsive">
-                <table id="basic-datatables" class="table app-table-hover mb-0 text-center">
+                <table id="client-table" class="table app-table-hover mb-0 text-center">
                     <thead>
                         <tr>
                             <th class="cell">Nom de la société</th>
@@ -893,423 +894,40 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector('input[name="search"]');
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
+
+      function searchClients() {
+    let input = document.getElementById('searchInput');
+    let filter = input.value.toLowerCase();
+    let table = document.getElementById('client-table');
+    let tr = table.getElementsByTagName('tr');
+
+    // Itérer à travers les lignes du tableau (commence à 1 pour ignorer l'entête)
+    for (let i = 1; i < tr.length; i++) {
+        let tds = tr[i].getElementsByTagName('td');
+        let matchFound = false;
+
+        // Vérifier chaque colonne pour la recherche
+        for (let j = 0; j < tds.length; j++) {
+            let td = tds[j];
+            if (td) {
+                if (td.textContent.toLowerCase().includes(filter)) {
+                    matchFound = true;
+                    break;
                 }
-            });
+            }
+        }
 
-            searchInput.addEventListener('input', function() {
-                const searchQuery = searchInput.value;
-
-                if (searchQuery.length > 0) {
-                    fetch(`/search-clients?search=${searchQuery}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            const { clients, selectOptions } = data;
-
-                            const tbody = document.querySelector('tbody');
-                            tbody.innerHTML = '';
-
-                            clients.forEach(client => {
-
-                                const categories = client.categories || [];
-
-                                let categoriesList = 'Non catégorisé';
-
-                                categories.forEach(category => {
-                                    categoriesList =
-                                        `${category.nom_categorie}`;
-                                });
+        // Afficher ou masquer la ligne en fonction de la correspondance
+        if (matchFound) {
+            tr[i].style.display = '';
+        } else {
+            tr[i].style.display = 'none';
+        }
+    }
+}
 
 
-                                const row = document.createElement('tr');
-                                const role = "{{ auth()->user()->role }}"
-                                row.innerHTML =
-
-                                    `
-                                   
-                                    ${role === "super-admin" ? `
-                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.ville_client}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                                 <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#update_client"
-                                                                        data-id="${client.id}"
-                                                                        data-name="${client.nom_client}"
-                                                                        data-email="${client.email_client}"
-                                                                        data-tele="${client.tele_client}"
-                                                                        data-ville="${client.ville_client}"
-                                                                        data-society="${client.nomSociete_client}"
-                                                                        data-GSM1=" ${client.GSM1_client}"
-                                                                        data-GSM2="${client.GSM2_client}"
-                                                                        data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryclientDetails"
-                                                                        data-name="${client.nom_client}"
-                                                                        data-email="${client.email_client}"
-                                                                        data-contact="${client.tele_client}"
-                                                                        data-ville="${client.ville_client}"
-                                                                        data-society-name="${client.nomSociete_client}"
-                                                                        data-GSM1="${client.GSM1_client}"
-                                                                        data-GSM2="${client.GSM2_client}"
-                                                                        data-remark="${client.remark}"
-                                                                        data-user="${client.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                    
-                                                                        <form
-                                                                            action="/client/destroy/${client.id}"
-                                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                                            id="delete-form-${client.id}">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                                onclick="confirmDelete(${client.id})">Supprimer</button>
-                                                                        </form>
-                                                                    
-                                                                
-                                                                        <form class="client-form"
-                                                                                action="{{ route('client.select', $client->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                        </div>
-                                                                </td>
-
-                                                                `: ''}
-
-                                    ${role === "admin" ? `
-
-                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.ville_client}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                                <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#update_client"
-                                                                        data-id="${client.id}"
-                                                                        data-name="${client.nom_client}"
-                                                                        data-email="${client.email_client}"
-                                                                        data-tele="${client.tele_client}"
-                                                                        data-ville="${client.ville_client}"
-                                                                        data-society="${client.nomSociete_client}"
-                                                                        data-GSM1=" ${client.GSM1_client}"
-                                                                        data-GSM2="${client.GSM2_client}"
-                                                                        data-category="${(client.categories && client.categories.length > 0) ? client.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryclientDetails"
-                                                                        data-name="${client.nom_client}"
-                                                                        data-email="${client.email_client}"
-                                                                        data-contact="${client.tele_client}"
-                                                                        data-ville="${client.ville_client}"
-                                                                        data-society-name="${client.nomSociete_client}"
-                                                                        data-GSM1="${client.GSM1_client}"
-                                                                        data-GSM2="${client.GSM2_client}"
-                                                                        data-remark="${client.remark}"
-                                                                        data-user="${client.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                         <form class="client-form"
-                                                                                action="{{ route('client.select', $client->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                    </div>
-                                                                </td>
-                                                                ` : ''} ${role === "utilisateur" ? `
-                                                                <td class="cell">${client.nomSociete_client || 'Particulier'}</td>
-                                                                <td class="cell">${client.GSM1_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.GSM2_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.nom_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.tele_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.email_client || 'Non disponible'}</td>
-                                                                <td class="cell">${client.ville_client}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${client.utilisateur.name || 'Personne'}</td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryclientDetails"
-                                                                        data-name="${client.nom_client}"
-                                                                        data-email="${client.email_client}"
-                                                                        data-contact="${client.tele_client}"
-                                                                        data-ville="${client.ville_client}"
-                                                                        data-society-name="${client.nomSociete_client}"
-                                                                        data-GSM1="${client.GSM1_client}"
-                                                                        data-GSM2="${client.GSM2_client}"
-                                                                        data-remark="${client.remark}"
-                                                                        data-user="${client.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(client.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                </td>
-                                                                
-                                                                
-                                                                ` : ""}
-
-                                `
-
-                                tbody.appendChild(row);
-
-                                const selectElement = row.querySelector('.status-select');
-                                if (selectElement) { // Vérifiez que l'élément existe
-                                    selectElement.addEventListener('change', function() {
-                                        const form = this.closest('.client-form');
-                                        if (form) {
-                                            form
-                                                .submit(); // Exécute la logique seulement si l'élément existe
-                                        }
-                                    });
-                                }
-                                // Ajouter un événement de détail pour chaque bouton "Détails"
-                                const detailButtonsclient = document.querySelectorAll(
-                                    '.detailButtonQuery');
-
-                                if (detailButtonsclient.length >
-                                    0) { // Assurez-vous qu'il y a au moins un bouton
-                                    detailButtonsclient.forEach(button => {
-                                        button.addEventListener('click', function() {
-                                            // Récupération des données du client
-                                            const clientName = this
-                                                .getAttribute('data-name') ||
-                                                'Non disponible';
-                                            const clientEmail = this
-                                                .getAttribute('data-email') ||
-                                                'Non disponible';
-                                            const clientContact = this
-                                                .getAttribute('data-contact') ||
-                                                'Non disponible';
-                                            const clientSociety = this
-                                                .getAttribute('data-society') ||
-                                                'Particulier';
-                                            const clientGSM1 = this
-                                                .getAttribute('data-GSM1') ||
-                                                'Non disponible';
-                                            const clientGSM2 = this
-                                                .getAttribute('data-GSM2') ||
-                                                'Non disponible';
-                                            const clientVille = this
-                                                .getAttribute('data-ville');
-                                            const clientRemark = this
-                                                .getAttribute('data-remark');
-                                            const clientUser = this
-                                                .getAttribute('data-user') ||
-                                                'Personne';
-
-                                            // Mise à jour des éléments HTML
-                                            const updateTextContent = (selector,
-                                                text) => {
-                                                const element = document
-                                                    .querySelector(
-                                                        selector);
-                                                if (element) {
-                                                    element.innerText =
-                                                        text; // Défaut : 'N/A' si la donnée est vide
-                                                }
-                                            };
-
-                                            updateTextContent(
-                                                '#showNameclient',
-                                                clientName);
-                                            updateTextContent(
-                                                '#showEmailclient',
-                                                clientEmail);
-                                            updateTextContent(
-                                                '#showContactclient',
-                                                clientContact);
-                                            updateTextContent(
-                                                '#showSocietyclient',
-                                                clientSociety);
-                                            updateTextContent(
-                                                '#showGSM1client',
-                                                clientGSM1);
-                                            updateTextContent(
-                                                '#showGSM2client',
-                                                clientGSM2);
-                                            updateTextContent(
-                                                '#showVilleclient',
-                                                clientVille);
-                                            updateTextContent(
-                                                '#showRemarkclient',
-                                                clientRemark);
-                                            updateTextContent(
-                                                '#showUserclient',
-                                                clientUser);
-
-                                            // Gestion des catégories
-                                            const categories = JSON.parse(
-                                                decodeURIComponent(this
-                                                    .getAttribute(
-                                                        'data-categories')));
-                                            console.log(
-                                                "Données des catégories :",
-                                                categories);
-
-                                            if (categories && Array.isArray(
-                                                    categories)) {
-                                                let categoriesHTML =
-                                                    '<option value="" selected>Selectionner la catégorie</option>';
-                                                categories.forEach(category => {
-                                                    categoriesHTML +=
-                                                        `<option value="${category.id}">${category.nom_categorie}</option>`;
-                                                });
-
-                                                const categoriesSelect =
-                                                    document.querySelector(
-                                                        '#categoriesQuery-1');
-                                                if (categoriesSelect) {
-                                                    categoriesSelect.innerHTML =
-                                                        categoriesHTML;
-
-                                                    // Écouteur pour le changement de catégorie
-                                                    categoriesSelect
-                                                        .addEventListener(
-                                                            'change',
-                                                            function() {
-                                                                const
-                                                                    selectedCategoryId =
-                                                                    this.value;
-                                                                const
-                                                                    selectedCategory =
-                                                                    categories
-                                                                    .find(
-                                                                        category =>
-                                                                        category
-                                                                        .id ==
-                                                                        selectedCategoryId
-                                                                    );
-
-                                                                console.log(
-                                                                    "Catégorie sélectionnée :",
-                                                                    selectedCategory
-                                                                );
-
-                                                                let productsHTML =
-                                                                    '<option value="" selected>Voir les sous catégories associées</option>';
-                                                                if (selectedCategory &&
-                                                                    selectedCategory
-                                                                    .sous_categories
-                                                                ) {
-                                                                    console.log(
-                                                                        "Sous-catégories de cette catégorie :",
-                                                                        selectedCategory
-                                                                        .sous_categories
-                                                                    );
-                                                                    selectedCategory
-                                                                        .sous_categories
-                                                                        .forEach(
-                                                                            product => {
-                                                                                productsHTML
-                                                                                    +=
-                                                                                    `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
-                                                                            });
-                                                                } else {
-                                                                    console.log(
-                                                                        "Aucune sous-catégorie trouvée pour cette catégorie."
-                                                                    );
-                                                                }
-
-                                                                const
-                                                                    productsSelect =
-                                                                    document
-                                                                    .querySelector(
-                                                                        '#productsQuery-1'
-                                                                    );
-                                                                if (
-                                                                    productsSelect
-                                                                    ) {
-                                                                    productsSelect
-                                                                        .innerHTML =
-                                                                        productsHTML;
-                                                                } else {
-                                                                    console.log(
-                                                                        "Le sélecteur de produits #productsQuery-1 n'existe pas."
-                                                                    );
-                                                                }
-                                                            });
-                                                } else {
-                                                    console.log(
-                                                        "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
-                                                    );
-                                                }
-                                            } else {
-                                                console.log(
-                                                    "Les données des catégories ne sont pas valides ou sont vides."
-                                                );
-                                            }
-                                        });
-                                    });
-                                }
-
-
-
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching clients:', error);
-                        });
-                } else {
-                    location.reload();
-                }
-            });
-        });
     </script>
 @endsection
 @section('content2')

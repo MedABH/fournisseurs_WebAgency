@@ -73,7 +73,7 @@ class FournisseurClientController extends Controller
         $fournisseurClient->groupId_fournisseurClient = Str::uuid();
         $fournisseurClient->save();
 
-        ActivityLogController::logActivity("Ajout", "Fournisseur-Client",  " A ajouter " . $fournisseurClient->nom_fournisseurClient );
+        ActivityLogController::logActivity("Ajout", "Fournisseur-Client",  " A ajouté " . $fournisseurClient->nom_fournisseurClient );
         // Attach to the category
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clientFournisseurs()->attach($fournisseurClient->id);
@@ -115,7 +115,7 @@ class FournisseurClientController extends Controller
             $fc->save();
         }
 
-        ActivityLogController::logActivity("Contacte par", "Fournisseur-Client","L'utilisateur a modifie qui contacté  " . $fc->nom_fournisseurClient);
+        ActivityLogController::logActivity("Contacté par", "Fournisseur-Client","L'utilisateur a modifié qui contacté  " . $fc->nom_fournisseurClient);
 
         return redirect()->back();
     }
@@ -154,7 +154,7 @@ class FournisseurClientController extends Controller
             $fc->save();
         }
 
-        ActivityLogController::logActivity("Remarque", "Fournisseur-Client","L'utilisateur a jouté une remarque a  " . $fc->nom_fournisseurClient);
+        ActivityLogController::logActivity("Remarque", "Fournisseur-Client","L'utilisateur a ajouté une remarque a  " . $fc->nom_fournisseurClient);
         return redirect()->back();
     }
     public function index(Request $request)
@@ -489,7 +489,7 @@ class FournisseurClientController extends Controller
         $setting->deletedToday += $recordsProcessed;
         $setting->save();
     }
-    ActivityLogController::logActivity("Transfert", "Fournisseur-Client","L'utilisateur a transferé " . $recordsProcessed . " fournisseurs-clients à " . $selectedStatus);
+    ActivityLogController::logActivity("Transfert", "Fournisseur-Client","L'utilisateur a transféré " . $recordsProcessed . " fournisseurs-clients à " . $selectedStatus);
 
     return redirect()->to(url()->previous());
 }

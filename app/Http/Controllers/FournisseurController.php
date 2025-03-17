@@ -132,7 +132,7 @@ class FournisseurController extends Controller
             $f->save();
         }
 
-        ActivityLogController::logActivity("Contacte par", "Fournisseur","L'utilisateur a modifie qui contacté  " . $fournisseur->nom_fournisseur);
+        ActivityLogController::logActivity("Contacté par", "Fournisseur","L'utilisateur a modifié qui contacté  " . $fournisseur->nom_fournisseur);
 
         return redirect()->back();
     }
@@ -171,7 +171,7 @@ class FournisseurController extends Controller
             $f->save();
         }
 
-        ActivityLogController::logActivity("Remarque", "Fournisseur","L'utilisateur a jouté une remarque a  " . $fournisseur->nom_fournisseur);
+        ActivityLogController::logActivity("Remarque", "Fournisseur","L'utilisateur a ajouté une remarque a  " . $fournisseur->nom_fournisseur);
         return redirect()->back();
     }
 
@@ -544,7 +544,7 @@ class FournisseurController extends Controller
             }
             $suppliersTracking->increment('deletedToday', $tiersChange);
         }
-        ActivityLogController::logActivity("Transfert", "Fournisseur","L'utilisateur a transferé " . $tiersChange . " fournisseurs à " . $selectedStatus);
+        ActivityLogController::logActivity("Transfert", "Fournisseur","L'utilisateur a transféré " . $tiersChange . " fournisseurs à " . $selectedStatus);
         return redirect()->to(url()->previous());
     }
 }
