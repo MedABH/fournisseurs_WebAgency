@@ -266,7 +266,6 @@ footer {
     font-size: .875rem;
     transition: width 0.3s ease-in-out;
     border-right: 1px solid #e7e9ed;
-    /* Smooth transition */
     z-index: 9999;
 }
 
