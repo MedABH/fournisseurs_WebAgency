@@ -45,7 +45,7 @@ class CategorieController extends Controller
         }
     }
 
-    ActivityLogController::logActivity("Ajout", "Categorie", "A ajoute " . $categorie->nom_categorie);
+    ActivityLogController::logActivity("Ajout", "Categorie", "A ajouté  " . $categorie->nom_categorie);
 
     alert()->success('Succès', 'La catégorie'." ".$categorie->nom_categorie." ".'a été enregistrée avec succès.');
     return redirect()->to(url()->previous());
