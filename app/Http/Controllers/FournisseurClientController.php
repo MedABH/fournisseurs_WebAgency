@@ -115,6 +115,7 @@ class FournisseurClientController extends Controller
             $fc->save();
         }
 
+        ActivityLogController::logActivity("Contacte par", "Fournisseur-Client","L'utilisateur a modifie qui contacté  " . $fc->nom_fournisseurClient);
 
         return redirect()->back();
     }
@@ -153,6 +154,7 @@ class FournisseurClientController extends Controller
             $fc->save();
         }
 
+        ActivityLogController::logActivity("Remarque", "Fournisseur-Client","L'utilisateur a jouté une remarque a  " . $fc->nom_fournisseurClient);
         return redirect()->back();
     }
     public function index(Request $request)
@@ -487,6 +489,7 @@ class FournisseurClientController extends Controller
         $setting->deletedToday += $recordsProcessed;
         $setting->save();
     }
+    ActivityLogController::logActivity("Transfert", "Fournisseur-Client","L'utilisateur a transferé " . $recordsProcessed . " fournisseurs-clients à " . $selectedStatus);
 
     return redirect()->to(url()->previous());
 }

@@ -107,6 +107,9 @@ class ClientController extends Controller
             $c->save();
         }
 
+        
+        ActivityLogController::logActivity("Contacte par", "Client","L'utilisateur a modifie qui contacté  " . $client->nom_client);
+
 
         return redirect()->back();
     }
@@ -145,6 +148,7 @@ class ClientController extends Controller
             $c->save();
         }
 
+        ActivityLogController::logActivity("Remarque", "Client","L'utilisateur a jouté une remarque a  " . $client->nom_client);
         return redirect()->back();
     }
     public function index(Request $request)
@@ -510,6 +514,7 @@ class ClientController extends Controller
             }
             $clientTracking->increment('deletedToday', $tiersChange);
         }
+        ActivityLogController::logActivity("Transfert", "Client","L'utilisateur a transferé " . $tiersChange . " Client à " . $selectedStatus);
 
         return redirect()->to(url()->previous());
     }
