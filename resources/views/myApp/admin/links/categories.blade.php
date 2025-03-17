@@ -197,23 +197,33 @@
                                                             </div>
                                                 
                                                             <div class="modal-body">
-                                                                <div class="mb-3 show-info-category show-category">
-                                                                    <strong class="det">Catégorie :</strong><span id="showCategory-{{ $categorie->id }}">
-                                                                        PLOMBERIE - DROGUERIE (GROS)</span>
-                                                                </div>
-                                                                <div class="d-flex align-items-center mb-3 show-info-category show-product">
-                                                                    <label class="form-label info-category showProductCategory"><strong class="det">Les
-                                                                            produits :</strong></label>
-                                                                    <select id="productSelect" class="form-select" style="color: #5d6778;">
-                                                                        <option>Voir les produits associés</option>
-                                                                        @foreach ($categorie->sousCategories as $product)
-                                                                        <option disabled>
-                                                                            {{ $product->nom_produit }}
-                                                                        </option>
-                                                                        @endforeach
-                                                                    </select>
+                                                                <div class="row">
+                                                                    <!-- Catégorie -->
+                                                                    <div class="col-4 det" style="font-size: 18px">Catégorie :</div>
+                                                                    <div class="col-6 show-category">
+                                                                        <span style="font-size: 18px" id="showCategory-{{ $categorie->id }}"></span>
+                                                                    </div>
+                                                            
+                                                                    <div class="col-4 det" style="font-size: 18px;">Les Produits :</div>
+                                                            
+                                                                    <div class="col-8">
+                                                                        @if ($categorie->sousCategories->isEmpty())
+                                                                            <div class="text-muted" style="font-size: 18px;">Aucun produit trouvé</div>
+                                                                        @else
+                                                                            @foreach ($categorie->sousCategories as $product)
+                                                                                <div class="info-category" style="font-size: 18px;">{{ $product->nom_produit }}</div>
+                                                                            @endforeach
+                                                                        @endif
+                                                                    </div>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <!-- Label Produit -->
+                                                                    
                                                                 </div>
                                                             </div>
+                                                            
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -304,11 +314,8 @@
 
                         <div class="show-info-category show-product-category">
                             <label class="label-detail-category">Les produits</label>
-                            <select class="form-select form-select-sm info-category" aria-label=".form-select-sm example"
-                                id="showProductsCategory" style="width: 200px; height: 30px">
-                                <option selected>Voir les produits associés</option>
-
-                            </select>
+                            <p class="info-category" id="showProductsCategory">
+                            </p>
                         </div>
 
 
