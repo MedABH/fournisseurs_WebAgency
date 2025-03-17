@@ -49,7 +49,7 @@ class SousCategorieController extends Controller
         alert()->success('Succès','Le produit'." ".$sousCategorie->nom_produit
         ." ".'a été enregistrée avec succès.');
         
-        ActivityLogController::logActivity("Ajout", "SousCategorie", "A ajouter " . $sousCategorie->nom_produit);
+        ActivityLogController::logActivity("Ajout", "SousCategorie", "A ajouté un produit " . $sousCategorie->nom_produit);
         return redirect()->to(url()->previous());
 
     }
