@@ -147,7 +147,7 @@
                              </div><!--//col-->
                              <div class="col-auto">
                                  <div class="card-header-action">
-                                     <a href="PartiesPrenantesSection">Plus</a>
+                                     <a href="prospectsSection">Plus</a>
                                  </div><!--//card-header-actions-->
                              </div><!--//col-->
                          </div><!--//row-->
@@ -188,7 +188,7 @@
                          </div><!--//col-->
                          <div class="col-auto">
                              <div class="card-header-action">
-                                 <a href="suppliersSection">Plus</a>
+                                 <a href="categoriesSection">Plus</a>
                              </div><!--//card-header-actions-->
                          </div><!--//col-->
                      </div><!--//row-->
@@ -229,7 +229,7 @@
                              </div><!--//col-->
                              <div class="col-auto">
                                  <div class="card-header-action">
-                                     <a href="historiqueJournauxSection">Plus</a>
+                                     <a href="historique">Plus</a>
                                  </div><!--//card-header-actions-->
                              </div><!--//col-->
                          </div><!--//row-->
