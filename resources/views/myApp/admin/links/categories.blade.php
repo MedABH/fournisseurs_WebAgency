@@ -222,13 +222,9 @@
                                                                     
                                                                 </div>
                                                             </div>
-                                                            
-                                                            
                                                         </div>
                                                     </div>
                                                 </div>
-
-
                                             </tr>
                                         @endforeach
                                     </tbody>
