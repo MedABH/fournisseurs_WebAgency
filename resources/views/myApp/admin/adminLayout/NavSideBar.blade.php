@@ -115,13 +115,13 @@
                                     Prenantes</a></li>
 
                                 <li><a href="{{ route('categoriesSection') }}"
-                                        class="{{ request()->routeIs('categoriesSection') ? 'active' : '' }}"><i
+                                        class="{{ request()->routeIs('categoriesSection' , 'productsSection') ? 'active' : '' }}"><i
                                             class="fas fa-list"></i> Les
                                         classifications</a></li>
 
                                 @if (Auth::user()->role !== 'utilisateur')
                                     <li><a href="{{ route('historique') }}"
-                                            class="{{ request()->routeIs('historique') ? 'active' : '' }}"><i
+                                            class="{{ request()->routeIs('historique' , 'journaux.index') ? 'active' : '' }}"><i
                                                 class="fas fa-history"></i> Historique
                                             et Journaux</a></li>
                                 @endif
