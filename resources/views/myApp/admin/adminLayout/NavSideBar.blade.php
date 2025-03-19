@@ -110,9 +110,9 @@
                                 @endif
 
                                 <li><a href="{{ route('prospectsSection') }}"
-                                        class="{{ request()->routeIs('prospectsSection') ? 'active' : '' }}"><i
-                                            class="fas fa-users-cog"></i> Parties
-                                        Prenantes</a></li>
+                                    class="{{ request()->routeIs('prospectsSection', 'clientsSection', 'suppliersAndClientsSection', 'suppliersSection') ? 'active' : '' }}"><i
+                                        class="fas fa-users-cog"></i> Parties
+                                    Prenantes</a></li>
 
                                 <li><a href="{{ route('categoriesSection') }}"
                                         class="{{ request()->routeIs('categoriesSection') ? 'active' : '' }}"><i
