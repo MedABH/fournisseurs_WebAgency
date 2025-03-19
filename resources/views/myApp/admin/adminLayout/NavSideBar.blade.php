@@ -108,24 +108,24 @@
                                         </a>
                                     </li>
                                 @endif
-                                <!-- delete some pages and there links from web.php and make new like PartiesPrenantesSection !!! {#{ route('PartiesPrenantesSection') }} -->
+
                                 <li><a href="{{ route('prospectsSection') }}"
                                         class="{{ request()->routeIs('prospectsSection') ? 'active' : '' }}"><i
                                             class="fas fa-users-cog"></i> Parties
                                         Prenantes</a></li>
-                                <!-- delete some pages and there link from web.php and make new like categoriesProductsSection !!! {#{ route('categoriesProductsSection') }} -->
+
                                 <li><a href="{{ route('categoriesSection') }}"
                                         class="{{ request()->routeIs('categoriesSection') ? 'active' : '' }}"><i
                                             class="fas fa-list"></i> Les
                                         classifications</a></li>
-                                <!-- make new file withe the same like of historique but need update to that link historiqueJournauxSection !!! {#{ route('historiqueJournauxSection') }} -->
+
                                 @if (Auth::user()->role !== 'utilisateur')
                                     <li><a href="{{ route('historique') }}"
                                             class="{{ request()->routeIs('historique') ? 'active' : '' }}"><i
                                                 class="fas fa-history"></i> Historique
                                             et Journaux</a></li>
                                 @endif
-                                <!-- make this page in the first link with conditions ( deja fait ) -->
+
                                 <li><a href="{{ route('logout') }}"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i
                                             class="fas fa-sign-out-alt"></i> Se déconnecter</a></li>
@@ -153,7 +153,6 @@
             var state = $("#notify_state option:selected").val();
             var style = $("#notify_style option:selected").val();
             var content = {};
-
             content.message =
                 'Turning standard Bootstrap alerts into "notify" like notifications';
             content.title = "Bootstrap notify";
