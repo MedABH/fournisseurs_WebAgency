@@ -30,7 +30,7 @@ function updateLineChart(period) {
             console.log('Received data:', data);
             console.log('Labels:', labels);
             console.log('Fournisseurs Counts:', fournisseursCounts);
-            console.log('Fournisseur Clients Counts:', fournisseurClientsCounts);
+            console.log('Fournisseurs Clients Counts:', fournisseurClientsCounts);
 
             if (fournisseursCounts.length === 0 || fournisseurClientsCounts.length === 0) {
                 console.warn('No data found for the specified period.');
@@ -38,7 +38,7 @@ function updateLineChart(period) {
             }
 
             // Proceed with chart creation
-            let chartTitle = 'Nombre de Fournisseurs et Fournisseur Clients ajoutés';
+            let chartTitle = 'Nombre de Fournisseurs et Fournisseurs Clients ajoutés';
             let stepSize = 1;
             let maxValue = Math.max(
                 Math.max(...fournisseursCounts),
@@ -60,7 +60,7 @@ function updateLineChart(period) {
                         pointBackgroundColor: window.chartColors.green,
                     },
                     {
-                        label: 'Fournisseur Clients',
+                        label: 'Fournisseurs Clients',
                         data: fournisseurClientsCounts,  // Counts for fournisseur_clients on Y-axis
                         backgroundColor: window.chartColors.blue,
                         borderColor: window.chartColors.blue,
