@@ -14,9 +14,6 @@
                                 <input type="text" id="searchInput" name="search" class="form-control search-orders"
                                     placeholder="Search ... " onkeyup="searchProspects()">
                             </div>
-                            <div class="col-auto">
-                                <button type="submit" id="searchButton" class="btn app-btn-secondary">Search</button>
-                            </div>
                         </form>
                     </div><!--//col-->
 

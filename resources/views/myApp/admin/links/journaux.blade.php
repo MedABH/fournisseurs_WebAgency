@@ -14,9 +14,6 @@
                             <input type="text" name="search" class="form-control search-orders" placeholder="Search ..." value="{{ request('search') }}">
 
                         </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn app-btn-secondary">Search</button>
-                        </div>
                     </form>
 
                 </div><!--//col-->
