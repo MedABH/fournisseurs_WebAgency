@@ -8,17 +8,16 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.suppliers') }}" method="GET"
+                        <form action="#" method="GET"
                             class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders"
-                                    placeholder="Search ... ">
+                                <input type="text" id="searchInput" name="search" class="form-control search-orders"
+                                    placeholder="Search ... " onkeyup="searchFournisseur()">
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn app-btn-secondary">Search</button>
+                                <button type="submit" id="searchButton" class="btn app-btn-secondary">Search</button>
                             </div>
                         </form>
-
                     </div><!--//col-->
 
                     <div class="col-auto">
@@ -185,7 +184,7 @@
         <div class="app-card app-card-orders-table mb-5">
             <div class="app-card-body">
                 <div class="table-responsive">
-                    <table id="basic-datatables" class="table app-table-hover mb-0 text-center">
+                    <table id="fournisseur-table" class="table app-table-hover mb-0 text-center">
                         <thead>
                             <tr>
                                 <th class="cell">Nom de la société</th>
@@ -931,425 +930,38 @@
     </script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector('input[name="search"]');
+<script>
+    function searchFournisseur() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById('fournisseur-table');
+        let tr = table.getElementsByTagName('tr');
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
+
+        for (let i = 1; i < tr.length; i++) {
+            let tds = tr[i].getElementsByTagName('td');
+            let matchFound = false;
+
+
+            for (let j = 0; j < tds.length; j++) {
+                let td = tds[j];
+                if (td) {
+                    if (td.textContent.toLowerCase().includes(filter)) {
+                        matchFound = true;
+                        break;
+                    }
                 }
-            });
-
-            searchInput.addEventListener('input', function() {
-                const searchQuery = searchInput.value;
-
-                if (searchQuery.length > 0) {
-                    fetch(`/search-suppliers?search=${searchQuery}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            const { suppliers, selectOptions } = data;
-
-                            const tbody = document.querySelector('tbody');
-                            tbody.innerHTML = '';
-
-                            suppliers.forEach(supplier => {
-
-                                const categories = supplier.categories || [];
-
-                                let categoriesList = 'Non catégorisé';
-
-                                categories.forEach(category => {
-                                    categoriesList =
-                                        `${category.nom_categorie}`;
-                                });
+            }
 
 
-                                const row = document.createElement('tr');
-                                const role = "{{ auth()->user()->role }}"
-                                row.innerHTML =
-
-                                    `
-                                   
-                                    ${role === "super-admin" ? `
-                                                                <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.ville_fournisseur}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
-                                                                 <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#updateSupplierModal"
-                                                                        data-id="${supplier.id}"
-                                                                        data-name="${supplier.nom_fournisseur}"
-                                                                        data-email="${supplier.email_fournisseur}"
-                                                                        data-tele="${supplier.tele_fournisseur}"
-                                                                        data-ville="${supplier.ville_fournisseur}"
-                                                                        data-society="${supplier.nomSociete_fournisseur}"
-                                                                        data-GSM1=" ${supplier.GSM1_fournisseur}"
-                                                                        data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                        data-category="${(supplier.categories && supplier.categories.length > 0) ? supplier.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryModalSupplierDetails"
-                                                                        data-name="${supplier.nom_fournisseur}"
-                                                                        data-email="${supplier.email_fournisseur}"
-                                                                        data-contact="${supplier.tele_fournisseur}"
-                                                                        data-ville="${supplier.ville_fournisseur}"
-                                                                        data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                        data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                        data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                        data-remark="${supplier.remark}"
-                                                                        data-user="${supplier.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                    
-                                                                        <form
-                                                                            action="/supplier/destroy/${supplier.id}"
-                                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                                            id="delete-form-${supplier.id}">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                                onclick="confirmDelete(${supplier.id})">Supprimer</button>
-                                                                        </form>
-                                                                    
-                                                                
-                                                                        <form class="supplier-form"
-                                                                                action="{{ route('supplier.select', $fournisseur->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                        </div>
-                                                                </td>
-
-                                                                `: ''}
-
-                                    ${role === "admin" ? `
-
-                                                                <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.ville_fournisseur}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
-                                                                <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#updateSupplierModal"
-                                                                        data-id="${supplier.id}"
-                                                                        data-name="${supplier.nom_fournisseur}"
-                                                                        data-email="${supplier.email_fournisseur}"
-                                                                        data-tele="${supplier.tele_fournisseur}"
-                                                                        data-ville="${supplier.ville_fournisseur}"
-                                                                        data-society="${supplier.nomSociete_fournisseur}"
-                                                                        data-GSM1=" ${supplier.GSM1_fournisseur}"
-                                                                        data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                        data-category="${(supplier.categories && supplier.categories.length > 0) ? supplier.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryModalSupplierDetails"
-                                                                        data-name="${supplier.nom_fournisseur}"
-                                                                        data-email="${supplier.email_fournisseur}"
-                                                                        data-contact="${supplier.tele_fournisseur}"
-                                                                        data-ville="${supplier.ville_fournisseur}"
-                                                                        data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                        data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                        data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                        data-remark="${supplier.remark}"
-                                                                        data-user="${supplier.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                         <form class="supplier-form"
-                                                                                action="{{ route('supplier.select', $fournisseur->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                    </div>
-                                                                </td>
-                                                                ` : ''} ${role === "utilisateur" ? `
-                                                                <td class="cell">${supplier.nomSociete_fournisseur || 'Particulier'}</td>
-                                                                <td class="cell">${supplier.GSM1_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.GSM2_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.nom_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.tele_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.email_fournisseur || 'Non disponible'}</td>
-                                                                <td class="cell">${supplier.ville_fournisseur}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${supplier.utilisateur.name || 'Personne'}</td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryModalSupplierDetails"
-                                                                        data-name="${supplier.nom_fournisseur}"
-                                                                        data-email="${supplier.email_fournisseur}"
-                                                                        data-contact="${supplier.tele_fournisseur}"
-                                                                        data-ville="${supplier.ville_fournisseur}"
-                                                                        data-society-name="${supplier.nomSociete_fournisseur}"
-                                                                        data-GSM1="${supplier.GSM1_fournisseur}"
-                                                                        data-GSM2="${supplier.GSM2_fournisseur}"
-                                                                        data-remark="${supplier.remark}"
-                                                                        data-user="${supplier.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(supplier.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                </td>
-                                                                
-                                                                
-                                                                ` : ""}
-
-                                `
-
-                                tbody.appendChild(row);
-
-                                const selectElement = row.querySelector('.status-select');
-                                if (selectElement) { // Vérifiez que l'élément existe
-                                    selectElement.addEventListener('change', function() {
-                                        const form = this.closest('.supplier-form');
-                                        if (form) {
-                                            form
-                                                .submit(); // Exécute la logique seulement si l'élément existe
-                                        }
-                                    });
-                                }
-                                // Ajouter un événement de détail pour chaque bouton "Détails"
-                                const detailButtonssupplier = document.querySelectorAll(
-                                    '.detailButtonQuery');
-
-                                if (detailButtonssupplier.length >
-                                    0) { // Assurez-vous qu'il y a au moins un bouton
-                                    detailButtonssupplier.forEach(button => {
-                                        button.addEventListener('click', function() {
-                                            // Récupération des données du supplier
-                                            const supplierName = this
-                                                .getAttribute('data-name') ||
-                                                'Non disponible';
-                                            const supplierEmail = this
-                                                .getAttribute('data-email') ||
-                                                'Non disponible';
-                                            const supplierContact = this
-                                                .getAttribute('data-contact') ||
-                                                'Non disponible';
-                                            const supplierSociety = this
-                                                .getAttribute('data-society') ||
-                                                'Particulier';
-                                            const supplierGSM1 = this
-                                                .getAttribute('data-GSM1') ||
-                                                'Non disponible';
-                                            const supplierGSM2 = this
-                                                .getAttribute('data-GSM2') ||
-                                                'Non disponible';
-                                            const supplierVille = this
-                                                .getAttribute('data-ville');
-                                            const supplierRemark = this
-                                                .getAttribute('data-remark');
-                                            const supplierUser = this
-                                                .getAttribute('data-user') ||
-                                                'Personne';
-
-                                            // Mise à jour des éléments HTML
-                                            const updateTextContent = (selector,
-                                                text) => {
-                                                const element = document
-                                                    .querySelector(
-                                                        selector);
-                                                if (element) {
-                                                    element.innerText =
-                                                        text; // Défaut : 'N/A' si la donnée est vide
-                                                }
-                                            };
-
-                                            updateTextContent(
-                                                '#showNamesupplier',
-                                                supplierName);
-                                            updateTextContent(
-                                                '#showEmailsupplier',
-                                                supplierEmail);
-                                            updateTextContent(
-                                                '#showContactsupplier',
-                                                supplierContact);
-                                            updateTextContent(
-                                                '#showSocietysupplier',
-                                                supplierSociety);
-                                            updateTextContent(
-                                                '#showGSM1supplier',
-                                                supplierGSM1);
-                                            updateTextContent(
-                                                '#showGSM2supplier',
-                                                supplierGSM2);
-                                            updateTextContent(
-                                                '#showVillesupplier',
-                                                supplierVille);
-                                            updateTextContent(
-                                                '#showRemarksupplier',
-                                                supplierRemark);
-                                            updateTextContent(
-                                                '#showUsersupplier',
-                                                supplierUser);
-
-                                            // Gestion des catégories
-                                            const categories = JSON.parse(
-                                                decodeURIComponent(this
-                                                    .getAttribute(
-                                                        'data-categories')));
-                                            console.log(
-                                                "Données des catégories :",
-                                                categories);
-
-                                            if (categories && Array.isArray(
-                                                    categories)) {
-                                                let categoriesHTML =
-                                                    '<option value="" selected>Selectionner la catégorie</option>';
-                                                categories.forEach(category => {
-                                                    categoriesHTML +=
-                                                        `<option value="${category.id}">${category.nom_categorie}</option>`;
-                                                });
-
-                                                const categoriesSelect =
-                                                    document.querySelector(
-                                                        '#categoriesQuery-1');
-                                                if (categoriesSelect) {
-                                                    categoriesSelect.innerHTML =
-                                                        categoriesHTML;
-
-                                                    // Écouteur pour le changement de catégorie
-                                                    categoriesSelect
-                                                        .addEventListener(
-                                                            'change',
-                                                            function() {
-                                                                const
-                                                                    selectedCategoryId =
-                                                                    this.value;
-                                                                const
-                                                                    selectedCategory =
-                                                                    categories
-                                                                    .find(
-                                                                        category =>
-                                                                        category
-                                                                        .id ==
-                                                                        selectedCategoryId
-                                                                    );
-
-                                                                console.log(
-                                                                    "Catégorie sélectionnée :",
-                                                                    selectedCategory
-                                                                );
-
-                                                                let productsHTML =
-                                                                    '<option value="" selected>Voir les sous catégories associées</option>';
-                                                                if (selectedCategory &&
-                                                                    selectedCategory
-                                                                    .sous_categories
-                                                                ) {
-                                                                    console.log(
-                                                                        "Sous-catégories de cette catégorie :",
-                                                                        selectedCategory
-                                                                        .sous_categories
-                                                                    );
-                                                                    selectedCategory
-                                                                        .sous_categories
-                                                                        .forEach(
-                                                                            product => {
-                                                                                productsHTML
-                                                                                    +=
-                                                                                    `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
-                                                                            });
-                                                                } else {
-                                                                    console.log(
-                                                                        "Aucune sous-catégorie trouvée pour cette catégorie."
-                                                                    );
-                                                                }
-
-                                                                const
-                                                                    productsSelect =
-                                                                    document
-                                                                    .querySelector(
-                                                                        '#productsQuery-1'
-                                                                    );
-                                                                if (
-                                                                    productsSelect
-                                                                    ) {
-                                                                    productsSelect
-                                                                        .innerHTML =
-                                                                        productsHTML;
-                                                                } else {
-                                                                    console.log(
-                                                                        "Le sélecteur de produits #productsQuery-1 n'existe pas."
-                                                                    );
-                                                                }
-                                                            });
-                                                } else {
-                                                    console.log(
-                                                        "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
-                                                    );
-                                                }
-                                            } else {
-                                                console.log(
-                                                    "Les données des catégories ne sont pas valides ou sont vides."
-                                                );
-                                            }
-                                        });
-                                    });
-                                }
-
-
-
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching suppliers:', error);
-                        });
-                } else {
-                    location.reload();
-                }
-            });
-        });
-    </script>
+            if (matchFound) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+</script>
 @endsection
 @section('content2')
     <div class="modal fade" id="QueryModalSupplierDetails" tabindex="-1" aria-labelledby="exampleModalLabel"

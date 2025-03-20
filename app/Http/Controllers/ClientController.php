@@ -46,9 +46,6 @@ class ClientController extends Controller
             // 'tele_client.required' => 'Le contact est obligatoire!',
             'tele_client.regex' => 'Le numéro de téléphone doit être valide!',
             'tele_client.unique' => 'Le contact doit être unique!',
-
-
-
             'nomSociete_client.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
