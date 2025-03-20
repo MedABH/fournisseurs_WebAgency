@@ -195,17 +195,11 @@
                                 <th class="cell">Catégorie</th>
                                 <th class="cell">Contacté Par</th>
                                 <th class="cell text-end">
-                                    @if (auth()->user()->role == 'super-admin')
                                         <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
                                             data-bs-target="#ModalAddSupplier">
                                             Ajouter
                                         </button>
-                                    @elseif (auth()->user()->role == 'admin')
-                                        <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#ModalAddSupplier">
-                                            Ajouter
-                                        </button>
-                                    @endif
+                                  
                                 </th>
                             </tr>
                         </thead>
@@ -466,6 +460,21 @@
                                                         @endforeach
                                                     </select>
                                                 </form>
+                                                <form class="supplier-form"
+                                                action="{{ route('supplier.select', $fournisseur->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('POST')
+                                                <select class="form-select status-select"
+                                                    aria-label="Default select example" name="status"
+                                                    id="">
+                                                    <option value="">Selectionner la table</option>
+                                                    @foreach ($select as $item)
+                                                        <option value="{{ $item }}">{{ $item }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </form>
                                             </div>
                                         </td>
                                     @endif

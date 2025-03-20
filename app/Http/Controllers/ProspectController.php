@@ -176,7 +176,7 @@ class ProspectController extends Controller
             $prospect->allCategories = $prospect->allCategories();
         }
 
-        $select = ['Fournisseur', 'Client', 'Client et Fournisseur'];
+        $select = ['Fournisseur', 'Client', 'Fournisseur Client'];
 
         return view('myApp.admin.links.prospects', compact('prospects', 'categories', 'select', 'perPage'));
     }
@@ -349,7 +349,7 @@ class ProspectController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Fournisseur', 'Client', 'Client et Fournisseur'];
+        $select = ['Fournisseur', 'Client', 'Fournisseur Client'];
         $search = $request->input('search');
         $prospect = Prospect::with(['categories.sousCategories', 'utilisateur'])
             ->where('nomSociete_prospect', 'LIKE', "%{$search}%")
@@ -470,7 +470,7 @@ class ProspectController extends Controller
 
             // Increment the value of 'addedToday' based on the tiersChange
             $setting->increment('addedToday', $tiersChange);
-        } else if ($selectedStatus === 'Client et Fournisseur') {
+        } else if ($selectedStatus === 'Fournisseur Client') {
 
             foreach ($prospectsGroup as $prospectItem) {
                 $fc = new FournisseurClient();

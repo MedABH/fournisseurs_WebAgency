@@ -108,7 +108,7 @@ class FournisseurController extends Controller
             $fournisseur->allCategories = $fournisseur->allCategories();
         }
 
-        $select = ['Tiers', 'Client', 'Client et Fournisseur'];
+        $select = ['Tiers', 'Client', 'Fournisseur Client'];
 
         $utilisateurs = User::where('role', 'utilisateur')->get();
 
@@ -352,7 +352,7 @@ class FournisseurController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Tiers', 'Client', 'Client et Fournisseur'];
+        $select = ['Tiers', 'Client', 'Fournisseur Client'];
         $search = $request->input('search');
         $supplier = Fournisseur::with(['categories.sousCategories', 'utilisateur'])
             ->where('tele_fournisseur', 'LIKE', "%{$search}%")
@@ -493,7 +493,7 @@ class FournisseurController extends Controller
                 ]);
             }
             $suppliersTracking->increment('deletedToday', $tiersChange);
-        } else if ($selectedStatus === 'Client et Fournisseur') {
+        } else if ($selectedStatus === 'Fournisseur Client') {
             foreach ($fournisseursGroup as $fournisseurItem) {
                 $fc = new FournisseurClient();
                 $fc->nom_fournisseurClient = $fournisseurItem->nom_fournisseur;
@@ -516,7 +516,7 @@ class FournisseurController extends Controller
 
                 $fournisseurItem->delete();
 
-                // Increment tiersChange for Client et Fournisseur
+                // Increment tiersChange for Fournisseur Client
                 $tiersChange++;
             }
 

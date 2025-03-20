@@ -190,17 +190,10 @@
                                 <th class="cell">Catégorie</th>
                                 <th class="cell">Contacté Par</th>
                                 <th class="cell text-end">
-                                    @if (auth()->user()->role == 'super-admin')
                                         <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
                                             data-bs-target="#add_fournisseurClient">
                                             Ajouter
                                         </button>
-                                    @elseif (auth()->user()->role == 'admin')
-                                        <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
-                                            data-bs-target="#add_fournisseurClient">
-                                            Ajouter
-                                        </button>
-                                    @endif
                                 </th>
                             </tr>
                         </thead>
@@ -452,6 +445,20 @@
                                                             <option value="{{ $user->id }}"
                                                                 {{ old('user_id') == $user->id ? 'selected' : '' }}>
                                                                 {{ $user->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </form>
+                                                <form class="fc-form"
+                                                    action="{{ route('fournisseurClient.select', $fc->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('POST')
+                                                    <select name="status" id=""
+                                                        class="form-select status-select">
+                                                        <option value="" selected>Selectionner la table</option>
+                                                        @foreach ($select as $item)
+                                                            <option value="{{ $item }}">{{ $item }}
                                                             </option>
                                                         @endforeach
                                                     </select>
