@@ -408,9 +408,8 @@
 
                                                     Details
                                                 </button>
-
                                                 <form class="prospect-form"
-                                                    action="{{ route('prospect.select', $prospect->id) }}"
+                                                    action="{{ route('prospect.select', $prospect->id ?? '') }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('POST')
@@ -1021,7 +1020,7 @@
                                                                     
                                                                 
                                                                         <form class="prospect-form"
-                                                                                action="{{ route('prospect.select', $prospect->id) }}"
+                                                                                action="{{ route('prospect.select', $prospect->id ?? '') }}"
                                                                                 method="POST">
                                                                                 @csrf
                                                                                 @method('POST')
