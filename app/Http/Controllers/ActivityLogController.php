@@ -27,10 +27,10 @@ class ActivityLogController extends Controller
         if ($search) {
             $logs = ActivityLog::whereHas('user', function($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%');  // Search by user name
-            })->latest()->paginate(5); // Paginate results, 10 per page;
+            })->latest()->paginate(10); // Paginate results, 10 per page;
         } else {
             // If no search query, get all logs with pagination
-            $logs = ActivityLog::latest()->paginate(5); // Paginate results, 10 per page
+            $logs = ActivityLog::latest()->paginate(10); // Paginate results, 10 per page
         }
 
         return view('myApp.admin.links.journaux', compact('logs'));
