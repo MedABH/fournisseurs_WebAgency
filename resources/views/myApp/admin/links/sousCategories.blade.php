@@ -8,14 +8,13 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.products') }}" method="GET"
+                        <form action="#" method="GET"
                             class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders"
-                                    placeholder="Search ... ">
+                                <input type="text" id="searchInput" name="search" class="form-control search-orders"
+                                    placeholder="Search ... " onkeyup="searchSousCategorie()">
                             </div>
                         </form>
-
                     </div><!--//col-->
                     <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
@@ -139,7 +138,7 @@
             <div class="app-card app-card-orders-table mb-5">
                 <div class="app-card-body">
                     <div class="table-responsive">
-                        <table class="table mb-0 text-center">
+                        <table id="souscategorie-table" class="table mb-0 text-center">
                             <thead>
                                 <tr>
                                     <th class="cell">Nom du produit</th>
@@ -435,159 +434,36 @@
 
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('search')
+  <script>
+    function searchSousCategorie() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById('souscategorie-table');
+        let tr = table.getElementsByTagName('tr');
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
+
+        for (let i = 1; i < tr.length; i++) {
+            let tds = tr[i].getElementsByTagName('td');
+            let matchFound = false;
+
+
+            for (let j = 0; j < tds.length; j++) {
+                let td = tds[j];
+                if (td) {
+                    if (td.textContent.toLowerCase().includes(filter)) {
+                        matchFound = true;
+                        break;
+                    }
                 }
-            });
-
-            const tbody = document.querySelector('tbody')
-
-            searchInput.addEventListener('input', function() {
-                const inputValue = searchInput.value
-
-                if (inputValue.length > 0) {
-                    fetch(`/search-products?search=${inputValue}`)
-                        .then(response => response.json())
-                        .then(data => {
-
-                            console.log(data)
-                            tbody.innerHTML = ''
+            }
 
 
-
-
-                            data.forEach(product => {
-
-                                const row = document.createElement('tr')
-                                const role = "{{ auth()->user()->role }}"
-
-                                row.innerHTML = `
-
-                                                    <td class="cell">${product.nom_produit }</td>
-
-                                                    <td class="cell">${product.categorie.nom_categorie }</td>
-                                                    ${role === "super-admin" ? `
-                                                                                        <td>
-                                                                                            <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
-                                                                                                data-bs-target="#updateProductModal"
-                                                                                                data-id=${product.id }
-                                                                                                data-name=${product.nom_produit }
-                                                                                                data-texte=${product.texte }
-                                                                                                data-categorie_id=${product.categorie_id }>Modifier</button>
-                                                                                        
-                                                                                            <!-- Button trigger modal -->
-                                                                                            <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#QueryModalProductDetail"
-                                                                                                data-name="${product.nom_produit }"
-                                                                                                data-category="${product.categorie.nom_categorie }"
-                                                                                                data-texte="${product.texte }"
-                                                                                                data-supplier="${product.categorie.fournisseurs.nom_fournisseur }"
-                                                                                                >
-                                                                                                Details
-                                                                                            </button>
-                                                                                        
-                                                                                           
-                                                                                                <form
-                                                                                                    action="/product/destroy/${product.id}"
-                                                                                                    method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                                                                    id="delete-form-${product.id }">
-                                                                                                    @csrf
-                                                                                                    @method('DELETE')
-                                                                                                    <button type="button" class="btn btn-outline-danger border-btn"
-                                                                                                        onclick="confirmDelete(${product.id })">Supprimer</button>
-                                                                                                </form>
-                                                                                           
-                                                                                        </td>
-
-                                                                                        ` : ""
-                                                     }
-                                                    ${role == 'admin' ?
-                                                    `
-                                                                                        <td>
-                                                                                            <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"
-                                                                                                data-bs-target="#updateProductModal"
-                                                                                                data-id=${product.id }
-                                                                                                data-name=${product.nom_produit }
-                                                                                                data-texte=${product.texte }
-                                                                                                data-categorie_id=${product.categorie_id }>Modifier</button>
-                                                                                        
-                                                                                            <!-- Button trigger modal -->
-                                                                                            <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#QueryModalProductDetail"
-                                                                                                data-name="${product.nom_produit }"
-                                                                                                data-category="${product.categorie.nom_categorie }"
-                                                                                                data-supplier="${product.categorie.fournisseurs.nom_fournisseur }"
-                                                                                                data-texte="${product.texte }">
-                                                                                                Details
-                                                                                            </button>
-                                                                                        </td>
-
-
-                                                                                        ` : ""
-
-                                                    }${role == 'utilisateur' ? `
-
-                                                         <td>
-                                                                                            
-                                                                                            <button type="button" class="btn btn-outline-info border-btn me-5 detailButton"
-                                                                                                data-bs-toggle="modal"
-                                                                                                data-bs-target="#QueryModalProductDetail"
-                                                                                                data-name="${product.nom_produit }"
-                                                                                                data-category="${product.categorie.nom_categorie }"
-                                                                                                data-supplier="${product.categorie.fournisseurs.nom_fournisseur }"
-                                                                                                data-texte="${product.texte }">
-                                                                                                Details
-                                                                                            </button>
-                                                                                        </td>
-                                                        
-                                                        
-                                                        
-                                                        `: ""}
-
-
-
-                                            `
-                                tbody.appendChild(row)
-
-
-                            })
-
-                            document.querySelectorAll('.detailButton').forEach(button => {
-                                button.addEventListener('click', function() {
-
-                                    const productName = this.getAttribute('data-name')
-                                    const productText = this.getAttribute('data-texte')
-                                    const productCategory = this.getAttribute(
-                                        'data-category')
-
-                                    document.getElementById('showProduct').innerText =
-                                        productName
-                                    document.getElementById('showTextProduct')
-                                        .innerText = productText
-                                    document.getElementById('showCategoryProduct')
-                                        .innerText = productCategory
-
-                                })
-                            })
-                        }).catch(error => {
-                            console.error('error fetching products : ', error);
-
-                        })
-
-                } else {
-                    location.reload()
-                };
-
-            })
-
-
-        })
-    </script>
+            if (matchFound) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+</script>
 @endsection
