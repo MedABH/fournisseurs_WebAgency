@@ -2,7 +2,7 @@
 @section('search-bar')
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0" style="color: #404242">LES FOURNISSEURS ET CLIENTS</h1>
+            <h1 class="app-page-title mb-0" style="color: #404242">LES FOURNISSEURS CLIENTS</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
@@ -71,8 +71,7 @@
         <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Les Tiers</a>
         <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Les Clients</a>
         <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Les Fournisseurs</a>
-        <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link active">Fournisseurs et
-            Clients</a>
+        <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link active">Fournisseurs Clients</a>
     </nav>
 @endsection
 @section('content')

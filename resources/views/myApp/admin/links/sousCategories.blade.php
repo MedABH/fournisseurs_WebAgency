@@ -48,8 +48,8 @@
 @endsection
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-        <a href="/categoriesSection" class="flex-sm-fill text-sm-center nav-link">Les Categories</a>
-        <a href="#" class="flex-sm-fill text-sm-center nav-link active">Les Sous-Categories</a>
+        <a href="/categoriesSection" class="flex-sm-fill text-sm-center nav-link">Categories</a>
+        <a href="#" class="flex-sm-fill text-sm-center nav-link active">Sous-Categories</a>
     </nav>
 @endsection
 
