@@ -8,17 +8,16 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="{{ route('search.prospects') }}" method="GET"
+                        <form action="#" method="GET"
                             class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders"
-                                    placeholder="Search ... ">
+                                <input type="text" id="searchInput" name="search" class="form-control search-orders"
+                                    placeholder="Search ... " onkeyup="searchProspects()">
                             </div>
                             <div class="col-auto">
-                                <button type="submit" class="btn app-btn-secondary">Search</button>
+                                <button type="submit" id="searchButton" class="btn app-btn-secondary">Search</button>
                             </div>
                         </form>
-
                     </div><!--//col-->
 
                     <div class="col-auto">
@@ -186,7 +185,7 @@
         <div class="app-card app-card-orders-table mb-5">
             <div class="app-card-body">
                 <div class="table-responsive">
-                    <table id="basic-datatables" class="table app-table-hover mb-0 text-center">
+                    <table id="prospect-table" class="table app-table-hover mb-0 text-center">
                         <thead>
                             <tr>
                                 <th class="cell">Nom de la société</th>
@@ -918,425 +917,38 @@
     </script>
 
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.querySelector('input[name="search"]');
+<script>
+    function searchProspects() {
+        let input = document.getElementById('searchInput');
+        let filter = input.value.toLowerCase();
+        let table = document.getElementById('prospect-table');
+        let tr = table.getElementsByTagName('tr');
 
-            searchInput.addEventListener('keydown', function(event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
+
+        for (let i = 1; i < tr.length; i++) {
+            let tds = tr[i].getElementsByTagName('td');
+            let matchFound = false;
+
+
+            for (let j = 0; j < tds.length; j++) {
+                let td = tds[j];
+                if (td) {
+                    if (td.textContent.toLowerCase().includes(filter)) {
+                        matchFound = true;
+                        break;
+                    }
                 }
-            });
-
-            searchInput.addEventListener('input', function() {
-                const searchQuery = searchInput.value;
-
-                if (searchQuery.length > 0) {
-                    fetch(`/search-prospects?search=${searchQuery}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error(`HTTP error! status: ${response.status}`);
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log(data);
-                            const { prospects, selectOptions } = data;
-
-                            const tbody = document.querySelector('tbody');
-                            tbody.innerHTML = '';
-
-                            prospects.forEach(prospect => {
-
-                                const categories = prospect.categories || [];
-
-                                let categoriesList = 'Non catégorisé';
-
-                                categories.forEach(category => {
-                                    categoriesList =
-                                        `${category.nom_categorie}`;
-                                });
+            }
 
 
-                                const row = document.createElement('tr');
-                                const role = "{{ auth()->user()->role }}"
-                                row.innerHTML =
-
-                                    `
-                                   
-                                    ${role === "super-admin" ? `
-                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.ville_prospect}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
-                                                                 <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#update_prospect"
-                                                                        data-id="${prospect.id}"
-                                                                        data-name="${prospect.nom_prospect}"
-                                                                        data-email="${prospect.email_prospect}"
-                                                                        data-tele="${prospect.tele_prospect}"
-                                                                        data-ville="${prospect.ville_prospect}"
-                                                                        data-society="${prospect.nomSociete_prospect}"
-                                                                        data-GSM1=" ${prospect.GSM1_prospect}"
-                                                                        data-GSM2="${prospect.GSM2_prospect}"
-                                                                        data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryProspectDetails"
-                                                                        data-name="${prospect.nom_prospect}"
-                                                                        data-email="${prospect.email_prospect}"
-                                                                        data-contact="${prospect.tele_prospect}"
-                                                                        data-ville="${prospect.ville_prospect}"
-                                                                        data-society-name="${prospect.nomSociete_prospect}"
-                                                                        data-GSM1="${prospect.GSM1_prospect}"
-                                                                        data-GSM2="${prospect.GSM2_prospect}"
-                                                                        data-remark="${prospect.remark}"
-                                                                        data-user="${prospect.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                    
-                                                                        <form
-                                                                            action="/prospect/destroy/${prospect.id}"
-                                                                            method="POST" style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;"
-                                                                            id="delete-form-${prospect.id}">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="button" class="btn btn-outline-danger border-btn me-4"
-                                                                                onclick="confirmDelete(${prospect.id})">Supprimer</button>
-                                                                        </form>
-                                                                    
-                                                                
-                                                                        <form class="prospect-form"
-                                                                                action="{{ route('prospect.select', $prospect->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                        </div>
-                                                                </td>
-
-                                                                `: ''}
-
-                                    ${role === "admin" ? `
-
-                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.ville_prospect}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
-                                                                <td class="button-container">
-                                                                    <div class="d-flex align-items-center gap-2"
-                                                                        style="display: inline; border-radius: 1cap; border-style: inherit; color: transparent;">
-                                                                    <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
-                                                                        data-bs-target="#update_prospect"
-                                                                        data-id="${prospect.id}"
-                                                                        data-name="${prospect.nom_prospect}"
-                                                                        data-email="${prospect.email_prospect}"
-                                                                        data-tele="${prospect.tele_prospect}"
-                                                                        data-ville="${prospect.ville_prospect}"
-                                                                        data-society="${prospect.nomSociete_prospect}"
-                                                                        data-GSM1=" ${prospect.GSM1_prospect}"
-                                                                        data-GSM2="${prospect.GSM2_prospect}"
-                                                                        data-category="${(prospect.categories && prospect.categories.length > 0) ? prospect.categories[0].id : ''}">Modifier
-                                                                    </button>
-                                                                
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryProspectDetails"
-                                                                        data-name="${prospect.nom_prospect}"
-                                                                        data-email="${prospect.email_prospect}"
-                                                                        data-contact="${prospect.tele_prospect}"
-                                                                        data-ville="${prospect.ville_prospect}"
-                                                                        data-society-name="${prospect.nomSociete_prospect}"
-                                                                        data-GSM1="${prospect.GSM1_prospect}"
-                                                                        data-GSM2="${prospect.GSM2_prospect}"
-                                                                        data-remark="${prospect.remark}"
-                                                                        data-user="${prospect.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                
-                                                                         <form class="prospect-form"
-                                                                                action="{{ route('prospect.select', $prospect->id) }}"
-                                                                                method="POST">
-                                                                                @csrf
-                                                                                @method('POST')
-                                                                                <select name="status" id=""
-                                                                                    class="form-select status-select">
-                                                                                    <option value="" selected>Selectionner la table</option>
-                                                                                    @foreach ($select as $item)
-                                                                                        <option value="{{ $item }}">{{ $item }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                        </form>
-                                                                    </div>
-                                                                </td>
-                                                                ` : ''} ${role === "utilisateur" ? `
-                                                                <td class="cell">${prospect.nomSociete_prospect || 'Particulier'}</td>
-                                                                <td class="cell">${prospect.GSM1_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.GSM2_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.nom_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.tele_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.email_prospect || 'Non disponible'}</td>
-                                                                <td class="cell">${prospect.ville_prospect}</td>
-                                                                <td class="cell">${categoriesList}</td>
-                                                                <td class="cell">${prospect.utilisateur.name || 'Personne'}</td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-outline-info detailButton border-btn me-4 detailButtonQuery"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#QueryProspectDetails"
-                                                                        data-name="${prospect.nom_prospect}"
-                                                                        data-email="${prospect.email_prospect}"
-                                                                        data-contact="${prospect.tele_prospect}"
-                                                                        data-ville="${prospect.ville_prospect}"
-                                                                        data-society-name="${prospect.nomSociete_prospect}"
-                                                                        data-GSM1="${prospect.GSM1_prospect}"
-                                                                        data-GSM2="${prospect.GSM2_prospect}"
-                                                                        data-remark="${prospect.remark}"
-                                                                        data-user="${prospect.utilisateur.name}"
-                                                                        data-categories="${encodeURIComponent(JSON.stringify(prospect.categories))}"
-                                                                    >
-                                                                    Détails
-                                                                    </button>
-                                                                </td>
-                                                                
-                                                                
-                                                                ` : ""}
-
-                                `
-
-                                tbody.appendChild(row);
-
-                                const selectElement = row.querySelector('.status-select');
-                                if (selectElement) { // Vérifiez que l'élément existe
-                                    selectElement.addEventListener('change', function() {
-                                        const form = this.closest('.prospect-form');
-                                        if (form) {
-                                            form
-                                                .submit(); // Exécute la logique seulement si l'élément existe
-                                        }
-                                    });
-                                }
-                                // Ajouter un événement de détail pour chaque bouton "Détails"
-                                const detailButtonsProspect = document.querySelectorAll(
-                                    '.detailButtonQuery');
-
-                                if (detailButtonsProspect.length >
-                                    0) { // Assurez-vous qu'il y a au moins un bouton
-                                    detailButtonsProspect.forEach(button => {
-                                        button.addEventListener('click', function() {
-                                            // Récupération des données du prospect
-                                            const prospectName = this
-                                                .getAttribute('data-name') ||
-                                                'Non disponible';
-                                            const prospectEmail = this
-                                                .getAttribute('data-email') ||
-                                                'Non disponible';
-                                            const prospectContact = this
-                                                .getAttribute('data-contact') ||
-                                                'Non disponible';
-                                            const prospectSociety = this
-                                                .getAttribute('data-society') ||
-                                                'Particulier';
-                                            const prospectGSM1 = this
-                                                .getAttribute('data-GSM1') ||
-                                                'Non disponible';
-                                            const prospectGSM2 = this
-                                                .getAttribute('data-GSM2') ||
-                                                'Non disponible';
-                                            const prospectVille = this
-                                                .getAttribute('data-ville');
-                                            const prospectRemark = this
-                                                .getAttribute('data-remark');
-                                            const prospectUser = this
-                                                .getAttribute('data-user') ||
-                                                'Personne';
-
-                                            // Mise à jour des éléments HTML
-                                            const updateTextContent = (selector,
-                                                text) => {
-                                                const element = document
-                                                    .querySelector(
-                                                        selector);
-                                                if (element) {
-                                                    element.innerText =
-                                                        text; // Défaut : 'N/A' si la donnée est vide
-                                                }
-                                            };
-
-                                            updateTextContent(
-                                                '#showNameProspect',
-                                                prospectName);
-                                            updateTextContent(
-                                                '#showEmailProspect',
-                                                prospectEmail);
-                                            updateTextContent(
-                                                '#showContactProspect',
-                                                prospectContact);
-                                            updateTextContent(
-                                                '#showSocietyProspect',
-                                                prospectSociety);
-                                            updateTextContent(
-                                                '#showGSM1Prospect',
-                                                prospectGSM1);
-                                            updateTextContent(
-                                                '#showGSM2Prospect',
-                                                prospectGSM2);
-                                            updateTextContent(
-                                                '#showVilleProspect',
-                                                prospectVille);
-                                            updateTextContent(
-                                                '#showRemarkProspect',
-                                                prospectRemark);
-                                            updateTextContent(
-                                                '#showUserProspect',
-                                                prospectUser);
-
-                                            // Gestion des catégories
-                                            const categories = JSON.parse(
-                                                decodeURIComponent(this
-                                                    .getAttribute(
-                                                        'data-categories')));
-                                            console.log(
-                                                "Données des catégories :",
-                                                categories);
-
-                                            if (categories && Array.isArray(
-                                                    categories)) {
-                                                let categoriesHTML =
-                                                    '<option value="" selected>Selectionner la catégorie</option>';
-                                                categories.forEach(category => {
-                                                    categoriesHTML +=
-                                                        `<option value="${category.id}">${category.nom_categorie}</option>`;
-                                                });
-
-                                                const categoriesSelect =
-                                                    document.querySelector(
-                                                        '#categoriesQuery-1');
-                                                if (categoriesSelect) {
-                                                    categoriesSelect.innerHTML =
-                                                        categoriesHTML;
-
-                                                    // Écouteur pour le changement de catégorie
-                                                    categoriesSelect
-                                                        .addEventListener(
-                                                            'change',
-                                                            function() {
-                                                                const
-                                                                    selectedCategoryId =
-                                                                    this.value;
-                                                                const
-                                                                    selectedCategory =
-                                                                    categories
-                                                                    .find(
-                                                                        category =>
-                                                                        category
-                                                                        .id ==
-                                                                        selectedCategoryId
-                                                                    );
-
-                                                                console.log(
-                                                                    "Catégorie sélectionnée :",
-                                                                    selectedCategory
-                                                                );
-
-                                                                let productsHTML =
-                                                                    '<option value="" selected>Voir les sous catégories associées</option>';
-                                                                if (selectedCategory &&
-                                                                    selectedCategory
-                                                                    .sous_categories
-                                                                ) {
-                                                                    console.log(
-                                                                        "Sous-catégories de cette catégorie :",
-                                                                        selectedCategory
-                                                                        .sous_categories
-                                                                    );
-                                                                    selectedCategory
-                                                                        .sous_categories
-                                                                        .forEach(
-                                                                            product => {
-                                                                                productsHTML
-                                                                                    +=
-                                                                                    `<option value="${product.id}" disabled>${product.nom_produit}</option>`;
-                                                                            });
-                                                                } else {
-                                                                    console.log(
-                                                                        "Aucune sous-catégorie trouvée pour cette catégorie."
-                                                                    );
-                                                                }
-
-                                                                const
-                                                                    productsSelect =
-                                                                    document
-                                                                    .querySelector(
-                                                                        '#productsQuery-1'
-                                                                    );
-                                                                if (
-                                                                    productsSelect
-                                                                    ) {
-                                                                    productsSelect
-                                                                        .innerHTML =
-                                                                        productsHTML;
-                                                                } else {
-                                                                    console.log(
-                                                                        "Le sélecteur de produits #productsQuery-1 n'existe pas."
-                                                                    );
-                                                                }
-                                                            });
-                                                } else {
-                                                    console.log(
-                                                        "Le sélecteur de catégories #categoriesQuery-1 n'existe pas."
-                                                    );
-                                                }
-                                            } else {
-                                                console.log(
-                                                    "Les données des catégories ne sont pas valides ou sont vides."
-                                                );
-                                            }
-                                        });
-                                    });
-                                }
-
-
-
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching prospects:', error);
-                        });
-                } else {
-                    location.reload();
-                }
-            });
-        });
-    </script>
+            if (matchFound) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+</script>
 @endsection
 @section('content2')
     <div class="modal fade" id="QueryProspectDetails" tabindex="-1" aria-labelledby="exampleModalLabel"

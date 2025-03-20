@@ -221,6 +221,10 @@ class ClientController extends Controller
             ->orWhere('nomSociete_client', 'LIKE', "%{$search}%")
             ->orWhere('nom_client', 'LIKE', "%{$search}%")
             ->get();
+            return response()->json([
+                'clients' => $client,
+                'selectOptions' => $select
+            ]);
        
     }
 
