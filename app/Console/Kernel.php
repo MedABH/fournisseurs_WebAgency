@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Schedule the custom command to reset addedToday and deletedToday daily at midnight
-        $schedule->command('app:reset-daily-value')->dailyAt('00:00');
+        $schedule->command('app:reset-daily-value')->everyMinute();
     }
 
     /**
