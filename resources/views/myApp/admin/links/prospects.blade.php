@@ -95,14 +95,14 @@
                         @enderror
 
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
-                        <input type="tel" class="form-control" name="GSM1_prospect" required
-                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_prospect') }}" />
+                        <input type="tel" class="form-control" name="GSM1_prospect"
+                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM1_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
-                        <input type="tel" class="form-control" name="GSM2_prospect" required
-                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_prospect') }}" />
+                        <input type="tel" class="form-control" name="GSM2_prospect"
+                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM2_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -116,8 +116,8 @@
                         @enderror
 
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
-                        <input type="tel" class="form-control" name="tele_prospect" required
-                            placeholder="Entrer le contact..." value="{{ old('tele_prospect') }}" />
+                        <input type="tel" class="form-control" name="tele_prospect"
+                            placeholder="Entrer le contact..." value="{{ old('tele_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('tele_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -617,7 +617,7 @@
                                 <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
                                 <input type="tel" class="form-control" name="newGSM1_prospect"
                                     placeholder="Entrer GSM1..." id="updateProspectGSM1"
-                                    value="{{ old('newGSM1_prospect', $prospect->GSM1_prospect) }}" />
+                                    value="{{ old('newGSM1_prospect', $prospect->GSM1_prospect) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM1_prospect'))
                                     <span class="text-danger">
                                         {{ $errors->first('newGSM1_prospect') }}</span><br>
@@ -628,7 +628,7 @@
                                 <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                                 <input type="tel" class="form-control" name="newGSM2_prospect"
                                     placeholder="Entrer GSM2..." id="updateProspectGSM2"
-                                    value="{{ old('newGSM2_prospect', $prospect->GSM2_prospect) }}" />
+                                    value="{{ old('newGSM2_prospect', $prospect->GSM2_prospect) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM2_prospect'))
                                     <span class="text-danger">
                                         {{ $errors->first('newGSM2_prospect') }}</span><br>
@@ -650,7 +650,7 @@
                                 <label class="form-label"><strong class="det">Numeroon De Téléphone</strong></label>
                                 <input id="updateProspectContact" type="tel" class="form-control"
                                     name="newTele_prospect" placeholder="Entrer le contact..."
-                                    value="{{ old('newTele_prospect', $prospect->tele_prospect) }}" />
+                                    value="{{ old('newTele_prospect', $prospect->tele_prospect) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newTele_prospect'))
                                     <span class="text-danger">
                                         {{ $errors->first('newTele_prospect') }}</span><br>

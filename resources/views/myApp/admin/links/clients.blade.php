@@ -1,6 +1,5 @@
 @extends('myApp.admin.adminLayout.adminPage')
 @section('search-bar')
-
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
             <h1 class="app-page-title mb-0" style="color: #404242">LES CLIENTS</h1>
@@ -9,8 +8,7 @@
             <div class="page-utilities">
                 <div class="row g-2 justify-content-start justify-content-md-end align-items-center">
                     <div class="col-auto">
-                        <form action="#" method="GET"
-                            class="table-search-form row gx-1 align-items-center">
+                        <form action="#" method="GET" class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
                                 <input type="text" id="searchInput" name="search" class="form-control search-orders"
                                     placeholder="Search ... " onkeyup="searchClients()">
@@ -86,48 +84,62 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+
                         <label class="form-label"><strong class="det">Nom de la société</strong></label><br>
-                        @error('nomSociete_client', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                    @enderror
                         <input type="text" class="form-control" name="nomSociete_client"
                             placeholder="Entrer le nom de la société..." value="{{ old('nomSociete_client') }}" />
+                        @error('nomSociete_client', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+
+
+
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label><br>
+                        <input type="tel" class="form-control" name="GSM1_client"
+                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_client') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM1_client', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                    @enderror
-                        <input type="tel" class="form-control" name="GSM1_client" required
-                            placeholder="Entrer le GSM1..." value="{{ old('GSM1_client') }}" />
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+
+
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label><br>
+                        <input type="tel" class="form-control" name="GSM2_client"
+                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_client') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM2_client', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                    @enderror
-                        <input type="tel" class="form-control" name="GSM2_client" required
-                            placeholder="Entrer le GSM2..." value="{{ old('GSM2_client') }}" />
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+
+
                         <label class="form-label"><strong class="det">Personne à contacter</strong></label><br>
+                        <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
+                            value="{{ old('nom_client') }}" />
                         @error('nom_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
-                            value="{{ old('nom_client') }}" />
+
+
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label><br>
+                        <input type="tel" class="form-control" name="tele_client"
+                            placeholder="Entrer le contact..." value="{{ old('tele_client') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('tele_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-                        <input type="tel" class="form-control" name="tele_client" required
-                            placeholder="Entrer le contact..." value="{{ old('tele_client') }}" />
+
+
                         <label class="form-label"><strong class="det">Email</strong></label><br>
-                        @error('email_client', 'default')
-                        <span class="text-danger">{{ $message }}</span> <br>
-                    @enderror
                         <input type="email" class="form-control" name="email_client" placeholder="Entrer l'émail..."
                             value="{{ old('email_client') }}" />
+                        @error('email_client', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_client" placeholder="Entrer la ville..."
                             value="{{ old('ville_client') }}" />
                         @error('ville_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
+
                         <label for="categorie" class="form-label"><strong class="det">Catégorie</strong></label>
                         <select id="categorie" class="form-control" name="categorie_id">
                             <option value="">Sélectionner la catégorie</option>
@@ -186,11 +198,11 @@
                             <th class="cell">Catégorie</th>
                             <th class="cell">Contacté Par</th>
                             <th class="cell text-end">
-                                    <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
-                                        data-bs-target="#add_client">
-                                        Ajouter
-                                    </button>
-                            
+                                <button type="button" class="btn app-btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#add_client">
+                                    Ajouter
+                                </button>
+
                             </th>
                         </tr>
                     </thead>
@@ -500,33 +512,48 @@
                                             <div class="row">
 
                                                 <div class="col-6 det" style="font-size: 18px">Nom de la socité</div>
-                                                <div class="col-6 showSocietyClient"><span style="font-size: 18px" id="showSocietyDetail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 showSocietyClient"><span style="font-size: 18px"
+                                                        id="showSocietyDetail-{{ $client->id }}"></span></div>
 
-                                                <div class="col-6 det" style="font-size: 18px">GSM1 de la société</strong></div>
-                                                <div class="col-6 showGSM1Client"><span style="font-size: 18px" id="showGSM1Detail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 det" style="font-size: 18px">GSM1 de la société</strong>
+                                                </div>
+                                                <div class="col-6 showGSM1Client"><span style="font-size: 18px"
+                                                        id="showGSM1Detail-{{ $client->id }}"></span></div>
 
-                                                <div class="col-6 det" style="font-size: 18px">GSM2 de la société</strong></div>
-                                                <div class="col-6 showGSM2Client"><span style="font-size: 18px" id="showGSM2Detail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 det" style="font-size: 18px">GSM2 de la société</strong>
+                                                </div>
+                                                <div class="col-6 showGSM2Client"><span style="font-size: 18px"
+                                                        id="showGSM2Detail-{{ $client->id }}"></span></div>
 
-                                                <div class="col-6 det" style="font-size: 18px">Personne à contacter</strong></div>
-                                                <div class="col-6 showNameClient"><span style="font-size: 18px" id="showNameDetail-{{ $client->id }}"></span></div>
-                                        
-                                                <div class="col-6 det" style="font-size: 18px">Numero De Telephone</strong></div>
-                                                <div class="col-6 showContactClient"><span style="font-size: 18px" id="showContactDetail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 det" style="font-size: 18px">Personne à
+                                                    contacter</strong></div>
+                                                <div class="col-6 showNameClient"><span style="font-size: 18px"
+                                                        id="showNameDetail-{{ $client->id }}"></span></div>
+
+                                                <div class="col-6 det" style="font-size: 18px">Numero De
+                                                    Telephone</strong></div>
+                                                <div class="col-6 showContactClient"><span style="font-size: 18px"
+                                                        id="showContactDetail-{{ $client->id }}"></span></div>
 
                                                 <div class="col-6 det" style="font-size: 18px">Email</strong></div>
-                                                <div class="col-6 showEmailClient"><span style="font-size: 18px" id="showEmailDetail-{{ $client->id }}"></span></div>
-                    
+                                                <div class="col-6 showEmailClient"><span style="font-size: 18px"
+                                                        id="showEmailDetail-{{ $client->id }}"></span></div>
+
                                                 <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
-                                                <div class="col-6 showVilleClient"><span style="font-size: 18px" id="showVilleDetail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 showVilleClient"><span style="font-size: 18px"
+                                                        id="showVilleDetail-{{ $client->id }}"></span></div>
 
 
 
-                                                <div class="col-6 det" style="font-size: 18px">Les catégories</strong></div>
+                                                <div class="col-6 det" style="font-size: 18px">Les catégories</strong>
+                                                </div>
                                                 <div class="col-6">
-                                                    <select class="form-select form-select-sm col-6 info-client showCategoryClient"
-                                                        aria-label=".form-select-sm example" id="categories-{{ $client->id }}" style="color: #5d6778">
-                                                        <option class="col-6" value="" selected>Voir la(les) catégories</option>
+                                                    <select
+                                                        class="form-select form-select-sm col-6 info-client showCategoryClient"
+                                                        aria-label=".form-select-sm example"
+                                                        id="categories-{{ $client->id }}" style="color: #5d6778">
+                                                        <option class="col-6" value="" selected>Voir la(les)
+                                                            catégories</option>
                                                         @foreach ($client->allCategories as $categorie)
                                                             <option value="{{ $categorie->id }}">
                                                                 {{ $categorie->nom_categorie }}
@@ -535,19 +562,27 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-6 det" style="font-size: 18px">Sous-Catégorie</strong></div>
+                                                <div class="col-6 det" style="font-size: 18px">Sous-Catégorie</strong>
+                                                </div>
                                                 <div class="col-6">
-                                                    <select class="form-select form-select-sm col-6 info-client showProductClient"
-                                                        aria-label=".form-select-sm example" id="products-{{ $client->id }}" style="color: #5d6778; font-size: 15px"><strong>
-                                                        <option class="col-6" value="" selected>Voir les produits associé</option></strong>
+                                                    <select
+                                                        class="form-select form-select-sm col-6 info-client showProductClient"
+                                                        aria-label=".form-select-sm example"
+                                                        id="products-{{ $client->id }}"
+                                                        style="color: #5d6778; font-size: 15px"><strong>
+                                                            <option class="col-6" value="" selected>Voir les
+                                                                produits associé</option>
+                                                        </strong>
                                                     </select>
                                                 </div>
 
                                                 <div class="col-6 det" style="font-size: 18px">Contacté Par</strong></div>
-                                                <div class="col-6 showUserClient"><span style="font-size: 18px" id="showUserDetail-{{ $client->id }}"></span></div>
-                                        
+                                                <div class="col-6 showUserClient"><span style="font-size: 18px"
+                                                        id="showUserDetail-{{ $client->id }}"></span></div>
+
                                                 <div class="col-6 det" style="font-size: 18px">Remarque</strong></div>
-                                                <div class="col-6 showRemarkClient"><span style="font-size: 18px" id="showRemarkDetail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 showRemarkClient"><span style="font-size: 18px"
+                                                        id="showRemarkDetail-{{ $client->id }}"></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -592,7 +627,7 @@
                                 <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
                                 <input type="tel" class="form-control" name="newGSM1_client"
                                     placeholder="Entrer GSM1..." id="updateClientGSM1"
-                                    value="{{ old('newGSM1_client', $client->GSM1_client) }}" />
+                                    value="{{ old('newGSM1_client', $client->GSM1_client) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM1_client'))
                                     <span class="text-danger">
                                         {{ $errors->first('newGSM1_client') }}</span> <br>
@@ -603,7 +638,7 @@
                                 <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                                 <input type="tel" class="form-control" name="newGSM2_client"
                                     placeholder="Entrer GSM2..." id="updateClientGSM2"
-                                    value="{{ old('newGSM2_client', $client->GSM2_client) }}" />
+                                    value="{{ old('newGSM2_client', $client->GSM2_client) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM2_client'))
                                     <span class="text-danger">
                                         {{ $errors->first('newGSM2_client') }}</span> <br>
@@ -625,7 +660,7 @@
                                 <label class="form-label"><strong class="det">Numéro De Téléphone</strong></label>
                                 <input id="updateClientContact" type="tel" class="form-control"
                                     name="newTele_client" placeholder="Entrer le contact..."
-                                    value="{{ old('newTele_client', $client->tele_client) }}" />
+                                    value="{{ old('newTele_client', $client->tele_client) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newTele_client'))
                                     <span class="text-danger">
                                         {{ $errors->first('newTele_client') }}</span> <br>
@@ -682,7 +717,7 @@
         </div>
     @endif
     <div>
-     
+
         <div>
             {{ $clients->links('vendor.pagination.bootstrap-4') }}
 
@@ -702,82 +737,82 @@
             });
         });
     </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Quand une catégorie est sélectionnée
-        $('#categorie').change(function() {
-            var categorieId = $(this).val();
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Quand une catégorie est sélectionnée
+            $('#categorie').change(function() {
+                var categorieId = $(this).val();
 
-            // Si une catégorie est sélectionnée
-            if (categorieId) {
-                // Afficher le champ des sous-catégories et son label
-                $('#label-sous-categorie').show();
-                $('#sous-categorie').show();
+                // Si une catégorie est sélectionnée
+                if (categorieId) {
+                    // Afficher le champ des sous-catégories et son label
+                    $('#label-sous-categorie').show();
+                    $('#sous-categorie').show();
 
-                // Faire une requête AJAX pour récupérer les sous-catégories
-                $.ajax({
-                    url: '/sous-categories/' + categorieId, // L'URL de ta route
-                    type: 'GET',
-                    success: function(response) {
-                        // Vider le select de sous-catégories
-                        $('#sous-categorie').empty();
-                        $('#sous-categorie').append(
-                            '<option value="">Sélectionner une sous-catégorie</option>');
+                    // Faire une requête AJAX pour récupérer les sous-catégories
+                    $.ajax({
+                        url: '/sous-categories/' + categorieId, // L'URL de ta route
+                        type: 'GET',
+                        success: function(response) {
+                            // Vider le select de sous-catégories
+                            $('#sous-categorie').empty();
+                            $('#sous-categorie').append(
+                                '<option value="">Sélectionner une sous-catégorie</option>');
 
-                        // Ajouter les sous-catégories au select
-                        $.each(response, function(index, sousCategorie) {
-                            $('#sous-categorie').append('<option value="' +
-                                sousCategorie.id + '">' + sousCategorie
-                                .nom_produit + '</option>');
-                        });
-                    },
-                    error: function(xhr, status, error) {
-                        // Si une erreur se produit
-                        console.log('Erreur :', error);
-                    }
-                });
-            } else {
-                // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
-                $('#label-sous-categorie').hide();
-                $('#sous-categorie').hide();
-            }
+                            // Ajouter les sous-catégories au select
+                            $.each(response, function(index, sousCategorie) {
+                                $('#sous-categorie').append('<option value="' +
+                                    sousCategorie.id + '">' + sousCategorie
+                                    .nom_produit + '</option>');
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            // Si une erreur se produit
+                            console.log('Erreur :', error);
+                        }
+                    });
+                } else {
+                    // Si aucune catégorie n'est sélectionnée, cacher le champ des sous-catégories et son label
+                    $('#label-sous-categorie').hide();
+                    $('#sous-categorie').hide();
+                }
+            });
         });
-    });
-</script>
- 
- </script>
+    </script>
 
- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const updateProspectModal = document.getElementById('update_client');
-        updateProspectModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
+    </script>
 
-            const clientId = button.getAttribute('data-id');
-            const clientName = button.getAttribute('data-name');
-            const clientEmail = button.getAttribute('data-email');
-            const clientContact = button.getAttribute('data-tele');
-            const clientVille = button.getAttribute('data-ville');
-            const clientSociety = button.getAttribute('data-society');
-            const clientGSM1 = button.getAttribute('data-GSM1');
-            const clientGSM2 = button.getAttribute('data-GSM2');
-            const clientCategory = button.getAttribute('data-category')
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const updateProspectModal = document.getElementById('update_client');
+            updateProspectModal.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
 
-            document.getElementById('updateClientId').value = clientId;
-            document.getElementById('updateClientName').value = clientName;
-            document.getElementById('updateClientEmail').value = clientEmail;
-            document.getElementById('updateClientContact').value = clientContact;
-            document.getElementById('updateClientVille').value = clientVille;
-            document.getElementById('updateClientSociety').value = clientSociety;
-            document.getElementById('updateClientGSM1').value = clientGSM1;
-            document.getElementById('updateClientGSM2').value = clientGSM2;
-            document.getElementById('updateClientCategory').value = clientCategory;
+                const clientId = button.getAttribute('data-id');
+                const clientName = button.getAttribute('data-name');
+                const clientEmail = button.getAttribute('data-email');
+                const clientContact = button.getAttribute('data-tele');
+                const clientVille = button.getAttribute('data-ville');
+                const clientSociety = button.getAttribute('data-society');
+                const clientGSM1 = button.getAttribute('data-GSM1');
+                const clientGSM2 = button.getAttribute('data-GSM2');
+                const clientCategory = button.getAttribute('data-category')
+
+                document.getElementById('updateClientId').value = clientId;
+                document.getElementById('updateClientName').value = clientName;
+                document.getElementById('updateClientEmail').value = clientEmail;
+                document.getElementById('updateClientContact').value = clientContact;
+                document.getElementById('updateClientVille').value = clientVille;
+                document.getElementById('updateClientSociety').value = clientSociety;
+                document.getElementById('updateClientGSM1').value = clientGSM1;
+                document.getElementById('updateClientGSM2').value = clientGSM2;
+                document.getElementById('updateClientCategory').value = clientCategory;
 
 
+            });
         });
-    });
-</script>
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const selects = document.querySelectorAll('.status-select');
@@ -897,40 +932,36 @@
 
 
     <script>
+        function searchClients() {
+            let input = document.getElementById('searchInput');
+            let filter = input.value.toLowerCase();
+            let table = document.getElementById('client-table');
+            let tr = table.getElementsByTagName('tr');
 
+            // Itérer à travers les lignes du tableau (commence à 1 pour ignorer l'entête)
+            for (let i = 1; i < tr.length; i++) {
+                let tds = tr[i].getElementsByTagName('td');
+                let matchFound = false;
 
-      function searchClients() {
-    let input = document.getElementById('searchInput');
-    let filter = input.value.toLowerCase();
-    let table = document.getElementById('client-table');
-    let tr = table.getElementsByTagName('tr');
+                // Vérifier chaque colonne pour la recherche
+                for (let j = 0; j < tds.length; j++) {
+                    let td = tds[j];
+                    if (td) {
+                        if (td.textContent.toLowerCase().includes(filter)) {
+                            matchFound = true;
+                            break;
+                        }
+                    }
+                }
 
-    // Itérer à travers les lignes du tableau (commence à 1 pour ignorer l'entête)
-    for (let i = 1; i < tr.length; i++) {
-        let tds = tr[i].getElementsByTagName('td');
-        let matchFound = false;
-
-        // Vérifier chaque colonne pour la recherche
-        for (let j = 0; j < tds.length; j++) {
-            let td = tds[j];
-            if (td) {
-                if (td.textContent.toLowerCase().includes(filter)) {
-                    matchFound = true;
-                    break;
+                // Afficher ou masquer la ligne en fonction de la correspondance
+                if (matchFound) {
+                    tr[i].style.display = '';
+                } else {
+                    tr[i].style.display = 'none';
                 }
             }
         }
-
-        // Afficher ou masquer la ligne en fonction de la correspondance
-        if (matchFound) {
-            tr[i].style.display = '';
-        } else {
-            tr[i].style.display = 'none';
-        }
-    }
-}
-
-
     </script>
 @endsection
 @section('content2')

@@ -62,7 +62,7 @@
                                         <input type="tel" id="newContact" name="newContact" class="item-data"
                                             value="{{ old('newContact', $user->contact) }}"
                                             style="border: none; background: transparent; width: 100%; 
-          font-size: inherit; color: #5d677c; outline: none;"
+                                                    font-size: inherit; color: #5d677c; outline: none;"
                                             required>
                                         @error('newContact')
                                             <div class="alert alert-danger">{{ $message }}</div>

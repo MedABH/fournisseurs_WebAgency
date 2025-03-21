@@ -16,12 +16,7 @@ class SousCategorieController extends Controller
         $validator =Validator::make($request->all(),
         [
             'nom_produit' => ['required','max:255','unique:sous_categories,nom_produit'],
-            'texte' => ['required',function ($attribute, $value, $fail) {
-                $wordCount = str_word_count($value);
-                if ($wordCount > 10) {
-                    $fail('La description ne doit pas dépasser 10 mots.');
-                }
-            }],
+            'texte' => ['nullable', 'string'], // Rendre le champ optionnel
             'categorie_id' => ['required','integer','exists:categories,id']
         ],
         [
@@ -42,7 +37,7 @@ class SousCategorieController extends Controller
 
         $sousCategorie = new SousCategorie();
         $sousCategorie->nom_produit = $request->nom_produit;
-        $sousCategorie->texte = $request->texte;
+        $sousCategorie->texte = $request->filled('texte') ? $request->texte : null;
         $sousCategorie->categorie_id = $request->categorie_id;
         $sousCategorie->save();
 

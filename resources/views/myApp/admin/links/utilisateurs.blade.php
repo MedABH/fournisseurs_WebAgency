@@ -119,7 +119,7 @@
                                         <div class="mb-3">
                                             <label class="form-label"><strong class="det">Contact</strong></label>
                                             <input type="tel" class="form-control" required name="contact" placeholder="Entrer le contact..."
-                                                value="{{ old('contact') }}">
+                                                value="{{ old('contact') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                                             @error('contact', 'default')
                                             <span class="text-danger">{{ $message }}</span> 
                                             @enderror
