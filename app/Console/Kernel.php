@@ -14,8 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        ResetDailyValue::class,  // Register the command here
-    ];
+        \App\Console\Commands\ResetDailyValue::class,
+    ];    
 
     /**
      * Define the application's command schedule.
