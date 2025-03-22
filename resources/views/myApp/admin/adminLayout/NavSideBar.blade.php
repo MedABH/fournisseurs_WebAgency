@@ -87,9 +87,9 @@
                 <div class="templatemo-flex-row">
                     <div class="templatemo-sidebar">
                         <header class="templatemo-site-header pt-3 pb-3">
-                            <h3>Visual Admin</h3>
+                            <h3>MATERIEL LEVAGE MAROC</h3>
                         </header>
-                        <div class="pb-3">
+                        <div class="">
                             <div class="custom-hr"></div>
                         </div>
                         <!-- Menu items (inside the sidebar) -->
@@ -104,26 +104,24 @@
                                     <li>
                                         <a href="{{ route('usersSection') }}"
                                             class="{{ request()->routeIs('usersSection') ? 'active' : '' }}">
-                                            <i class="fa fa-users fa-fw"></i> Les utilisateurs
+                                            <i class="fa fa-users fa-fw"></i> Liste des utilisateurs
                                         </a>
                                     </li>
                                 @endif
 
                                 <li><a href="{{ route('prospectsSection') }}"
                                     class="{{ request()->routeIs('prospectsSection', 'clientsSection', 'suppliersAndClientsSection', 'suppliersSection') ? 'active' : '' }}"><i
-                                        class="fas fa-users-cog"></i> Parties
-                                    Prenantes</a></li>
+                                        class="fas fa-users-cog"></i> Répertoire partenaires</a></li>
 
                                 <li><a href="{{ route('categoriesSection') }}"
                                         class="{{ request()->routeIs('categoriesSection' , 'productsSection') ? 'active' : '' }}"><i
-                                            class="fas fa-list"></i> Les
-                                        classifications</a></li>
+                                            class="fas fa-list"></i> Les catégories et sous catégories</a></li>
 
                                 @if (Auth::user()->role !== 'utilisateur')
                                     <li><a href="{{ route('historique') }}"
                                             class="{{ request()->routeIs('historique' , 'journaux.index') ? 'active' : '' }}"><i
                                                 class="fas fa-history"></i> Historique
-                                            et Journaux</a></li>
+                                            et Journaux de connexion</a></li>
                                 @endif
 
                                 <li><a href="{{ route('logout') }}"
