@@ -15,6 +15,7 @@ use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
 use App\Http\Controllers\ExportController;
+use App\Exports\ClientsExport;
 
 use App\Models\Categorie;
 use App\Models\Client;
@@ -160,11 +161,7 @@ Route::post('/contactFournisseurClient/remark/{id}', [FournisseurClientControlle
 
 // Route pour l'historique
 Route::get('/historique',[HistoriqueController::class,'showHistorique'])->name('historiqueSection');
-Route::get('/historiqueJournauxSection', [HistoriqueJournauxController::class, 'index'])->name('historiqueJournauxSection')->middleware('checkAdmins');
 Route::get('/historique', [HistoriqueController::class, 'index'])->name('historique')->middleware('checkAdmins');
-
-Route::get('/PartiesPrenantesSection', [PartiesPrenantesController::class, 'index'])->name('partiesPrenantesSection');
-Route::get('/classifications', [ClassificationsController::class, 'index'])->name('classificationsSection');
 
 
 
@@ -175,3 +172,8 @@ Route::get('/sous-categories/{categorieId}', [CategorieController::class, 'getSo
 
 
 Route::get('/journaux', [ActivityLogController::class, 'index'])->name('journaux.index')->middleware(['checkSuperAdmin']);
+Route::get('/export/excel', [ExportController::class, 'exportAllDataExcel'])->name('export.excel');
+Route::get('/export/clients', [ExportController::class, 'exportclients'])->name('export.clients');
+Route::get('/export/prospects', [ExportController::class, 'exportprospects'])->name('export.prospects');
+Route::get('/export/fournisseurs', [ExportController::class, 'exportfournisseurs'])->name('export.fournisseurs');
+Route::get('/export/fournisseurClients', [ExportController::class, 'exportfournisseurClients'])->name('export.fournisseurClients');

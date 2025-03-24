@@ -10,7 +10,7 @@
                     <div class="col-auto">
                         <form action="{{ route('historique') }}" method="GET" class="table-search-form row gx-1 align-items-center">
                             <div class="col-auto">
-                                <input type="text" name="search" class="form-control search-orders" placeholder="Search ..." value="{{ request('search') }}">
+                                <input type="text" name="search" class="form-control search-orders" placeholder="Recherche ..." value="{{ request('search') }}">
 
                             </div>
                         </form>
