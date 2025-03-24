@@ -323,7 +323,7 @@ class ProspectController extends Controller
         $prospect->GSM2_prospect = $request->newGSM2_prospect ?? '';
 
         if ($prospect->save()) {
-            alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            alert()->success('Succès', 'Le tier a été mis à jour avec succès.');
         }
 
         $prospectsSimilaires = Prospect::where('groupId_prospect', $prospect->groupId_prospect)
@@ -339,7 +339,7 @@ class ProspectController extends Controller
             $similarProspect->GSM1_prospect = $request->newGSM1_prospect ?? '';
             $similarProspect->GSM2_prospect = $request->newGSM2_prospect ?? '';
             if ($similarProspect->save()) {
-                alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+                alert()->success('Succès', 'Le tier a été mis à jour avec succès.');
             };
         }
 

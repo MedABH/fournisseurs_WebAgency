@@ -338,7 +338,7 @@ class FournisseurClientController extends Controller
         $fc->nomSociete_fournisseurClient = $request->newNomSociete_fournisseurClient ?? '';
 
         if ($fc->save()) {
-            alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            alert()->success('Succès', 'Le fournisseur client a été mis à jour avec succès.');
         }
 
         $FCSimilaires =  FournisseurClient::where('groupId_fournisseurClient', $fc->groupId_fournisseurClient)
@@ -354,7 +354,7 @@ class FournisseurClientController extends Controller
             $similarFC->GSM2_fournisseurClient = $request->newGSM2_fournisseurClient ?? '';
             $similarFC->nomSociete_fournisseurClient = $request->newNomSociete_fournisseurClient ?? '';
             if ($similarFC->save()) {
-                alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+                alert()->success('Succès', 'Le fournisseur client a été mis à jour avec succès.');
             }
         }
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\ProfileAuthController;
 use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
+use App\Http\Controllers\ExportController;
 
 use App\Models\Categorie;
 use App\Models\Client;
@@ -142,6 +143,8 @@ Route::get('/prospects/pdf', [ProspectController::class, 'prospectsPdf'])->name(
 Route::get('/fournisseurs/pdf', [FournisseurController::class, 'fournisseursPdf'])->name('fournisseurs.pdf');
 Route::get('/clients/pdf', [ClientController::class, 'clientsPdf'])->name('clients.pdf');
 Route::get('/fournisseurClients/pdf', [FournisseurClientController::class, 'fournisseurClientsPdf'])->name('fournisseurClients.pdf');
+Route::get('/allData/pdf', [ExportController::class, 'allDataPdf'])->name('allData.pdf');
+
 
 // Contact des utilisateurs
 Route::post('/contactSupplier/user/{id}', [FournisseurController::class, 'updateUserFournisseur'])->name('user.select');

@@ -315,7 +315,7 @@ class ClientController extends Controller
 
 
         if ($client->save()) {
-            alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+            alert()->success('Succès', 'Le client a été mis à jour avec succès.');
         }
 
         $clientsSimilaires = Client::where('groupId_client', $client->groupId_client)
@@ -332,7 +332,7 @@ class ClientController extends Controller
             $similarClient->nomSociete_client = $request->newNomSociete_client ?? '';
 
             if ($similarClient->save()) {
-                alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
+                alert()->success('Succès', 'Le client a été mis à jour avec succès.');
             }
         }
         ActivityLogController::logActivity("Modification", "Client", "A modifié " . $client->nom_client);
