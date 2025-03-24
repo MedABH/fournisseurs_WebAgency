@@ -19,11 +19,11 @@
                     <div class="col-auto">
                         @if (auth()->user()->role == 'super-admin')
                             <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter en pdf</a>
-                            <a href="{{ route('export.sous-categories') }}" class="btn app-btn-secondary"><i class="fas fa-file-excel"></i>Exporter en excel</a>
+                            <a href="{{ route('export.sous-categories') }}" class="btn app-btn-secondary"><i class="fas fa-file-excel"></i> Exporter en excel</a>
 
                         @elseif (auth()->user()->role == 'admin')
-                        <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}"><i class="fas fa-file-pdf"></i>Exporter en pdf</a>
-                        <a href="{{ route('export.sous-categories') }}" class="btn app-btn-secondary"><i class="fas fa-file-excel"></i>Exporter en excel</a>
+                        <a class="btn app-btn-secondary" href="{{ route('sousCategories.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter en pdf</a>
+                        <a href="{{ route('export.sous-categories') }}" class="btn app-btn-secondary"><i class="fas fa-file-excel"></i> Exporter en excel</a>
                         @endif
                     </div>
                 </div><!--//row-->
