@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Prospect;
+use App\Models\Categorie;
 use App\Models\Fournisseur;
+use App\Models\SousCategorie;
 use App\Models\FournisseurClient;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -42,7 +45,113 @@ class ExportController extends Controller
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', 'attachment; filename="all_data.pdf"');
     }
+    public function exportUsersExcel()
+    {
+        $users = User::all(); // Récupérer tous les utilisateurs
 
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        
+        // Ajouter les en-têtes
+        $sheet->setCellValue('A1', 'Nom');
+        $sheet->setCellValue('B1', 'Email');
+        $sheet->setCellValue('C1', 'Contact');
+        $sheet->setCellValue('D1', 'Adresse');
+        $sheet->setCellValue('E1', 'Role');
+
+        // Remplir les données des utilisateurs
+        $row = 2; // À partir de la deuxième ligne
+        foreach ($users as $user) {
+            $sheet->setCellValue('A' . $row, $user->name);
+            $sheet->setCellValue('B' . $row, $user->email);
+            $sheet->setCellValue('C' . $row, $user->contact);
+            $sheet->setCellValue('D' . $row, $user->adresse);
+            $sheet->setCellValue('E' . $row, $user->role);
+            $row++;
+        }
+
+        // Créer un écrivain Xlsx et forcer le téléchargement
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'users_export.xlsx';
+
+        return response()->stream(
+            function() use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
+    }
+    public function exportCategoriesExcel()
+    {
+        $categories = Categorie::all(); // Récupérer toutes les catégories
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Ajouter les en-têtes
+        $sheet->setCellValue('A1', 'Nom de la Catégorie');
+
+        // Remplir les données des catégories
+        $row = 2; // À partir de la deuxième ligne
+        foreach ($categories as $categorie) {
+            $sheet->setCellValue('A' . $row, $categorie->nom_categorie);
+            $row++;
+        }
+
+        // Créer un écrivain Xlsx et forcer le téléchargement
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'categories_export.xlsx';
+
+        return response()->stream(
+            function() use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
+    }
+
+    public function exportSousCategoriesExcel()
+    {
+        $sousCategories = SousCategorie::with('categorie')->get(); // Récupérer toutes les sous-catégories avec leur catégorie associée
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Ajouter les en-têtes
+        $sheet->setCellValue('A1', 'Nom du Produit');
+        $sheet->setCellValue('B1', 'Nom de la Catégorie');
+
+        // Remplir les données des sous-catégories
+        $row = 2; // À partir de la deuxième ligne
+        foreach ($sousCategories as $sousCategorie) {
+            $sheet->setCellValue('A' . $row, $sousCategorie->nom_produit); // Nom du produit
+            $sheet->setCellValue('B' . $row, $sousCategorie->categorie->nom_categorie ?? 'Non définie'); // Nom de la catégorie
+            $row++;
+        }
+
+        // Créer un écrivain Xlsx et forcer le téléchargement
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'sous_categories_export.xlsx';
+
+        return response()->stream(
+            function() use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            ]
+        );
+    }
      // Méthode pour exporter les données en Excel
      public function exportclients()
      {
@@ -395,3 +504,5 @@ class ExportController extends Controller
         );
     }
 }
+
+

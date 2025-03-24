@@ -173,7 +173,11 @@ Route::get('/sous-categories/{categorieId}', [CategorieController::class, 'getSo
 
 Route::get('/journaux', [ActivityLogController::class, 'index'])->name('journaux.index')->middleware(['checkSuperAdmin']);
 Route::get('/export/excel', [ExportController::class, 'exportAllDataExcel'])->name('export.excel');
+Route::get('/export/users', [ExportController::class, 'exportUsersExcel'])->name('export.users');
 Route::get('/export/clients', [ExportController::class, 'exportclients'])->name('export.clients');
 Route::get('/export/prospects', [ExportController::class, 'exportprospects'])->name('export.prospects');
+Route::get('/export/categories', [ExportController::class, 'exportCategoriesExcel'])->name('export.categories');
+Route::get('/export/allcategories', [ExportController::class, 'exportAllDataCategorieExcel'])->name('export.allcategories');
+Route::get('/export/sous-categories', [ExportController::class, 'exportSousCategoriesExcel'])->name('export.sous-categories');
 Route::get('/export/fournisseurs', [ExportController::class, 'exportfournisseurs'])->name('export.fournisseurs');
 Route::get('/export/fournisseurClients', [ExportController::class, 'exportfournisseurClients'])->name('export.fournisseurClients');

@@ -18,8 +18,9 @@
 
                     </div><!--//col-->
 
-                    <div class="col-auto">
-                        <a class="btn app-btn-secondary" href="{{ route('users.pdf') }}"><i class="fas fa-file-pdf"></i> EXPORTER</a>
+                    <div class="col-auto d-flex align-items-center gap-2">
+                        <a class="btn app-btn-secondary" href="{{ route('users.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter en pdf</a>
+                        <a href="{{ route('export.users') }}" class="btn app-btn-secondary"><i class="fas fa-file-excel"></i> Exporter en excel</a>
                     </div>
                 </div><!--//row-->
             </div><!--//table-utilities-->
