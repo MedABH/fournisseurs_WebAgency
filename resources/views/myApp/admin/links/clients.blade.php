@@ -249,22 +249,22 @@
                         @foreach ($clients as $client)
                             <tr>
                                 <td class="cell">
-                                    {{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}
+                                    {!! !empty($client->nomSociete_client) ? $client->nomSociete_client : '<span class="text-danger">Particulier</span>' !!}
                                 </td>
                                 <td class="cell">
-                                    {{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}
+                                    {!! !empty($client->GSM1_client) ? $client->GSM1_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
                                 <td class="cell">
-                                    {{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}
+                                    {!! !empty($client->GSM2_client) ? $client->GSM2_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
                                 <td class="cell">
-                                    {{ !empty($client->nom_client) ? $client->nom_client : 'Non disponible' }}
+                                    {!! !empty($client->nom_client) ? $client->nom_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
                                 <td class="cell">
-                                    {{ !empty($client->tele_client) ? $client->tele_client : 'Non disponible' }}
+                                    {!! !empty($client->tele_client) ? $client->tele_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
                                 <td class="cell">
-                                    {{ !empty($client->email_client) ? $client->email_client : 'Non disponible' }}
+                                    {!! !empty($client->email_client) ? $client->email_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
                                 <td class="cell">{{ $client->ville_client }}</td>
                                 <td class="cell">

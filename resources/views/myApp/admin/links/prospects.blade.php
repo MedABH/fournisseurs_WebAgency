@@ -123,20 +123,20 @@
                         <input type="text" class="form-control" name="nomSociete_prospect"
                             placeholder="Entrer le nom de la société..." value="{{ old('nomSociete_prospect') }}" />
                         @error('nomSociete_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
 
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM1_prospect"
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM1_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM2_prospect"
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM2_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
 
 
@@ -144,20 +144,20 @@
                         <input type="text" class="form-control" name="nom_prospect" placeholder="Entrer le prospect..."
                             value="{{ old('nom_prospect') }}" />
                         @error('nom_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
 
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
                         <input type="tel" class="form-control" name="tele_prospect"
                             placeholder="Entrer le contact..." value="{{ old('tele_prospect') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('tele_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Email</strong></label>
                         <input type="email" class="form-control" name="email_prospect" placeholder="Entrer l'émail..."
                             value="{{ old('email_prospect') }}" />
                         @error('email_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
 
 
@@ -165,7 +165,7 @@
                         <input type="text" class="form-control" name="ville_prospect"
                             placeholder="Entrer la ville..." value="{{ old('ville_prospect') }}" />
                         @error('ville_prospect', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
@@ -179,7 +179,7 @@
                             @endforeach
                         </select>
                         @error('categorie_id', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                          <!-- Label pour les sous-catégories, caché tant qu'une catégorie n'est pas sélectionnée -->
                          <label for="sous-categorie" class="form-label" id="label-sous-categorie"
@@ -241,22 +241,22 @@
                             @foreach ($prospects as $prospect)
                                 <tr>
                                     <td class="cell">
-                                        {{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}
+                                        {!! !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : '<span class="text-danger">Particulier</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}
+                                        {!! !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect :'<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}
+                                        {!! !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($prospect->nom_prospect) ? $prospect->nom_prospect : 'Non disponible' }}
+                                        {!! !empty($prospect->nom_prospect) ? $prospect->nom_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($prospect->tele_prospect) ? $prospect->tele_prospect : 'Non disponible' }}
+                                        {!! !empty($prospect->tele_prospect) ? $prospect->tele_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($prospect->email_prospect) ? $prospect->email_prospect : 'Non disponible' }}
+                                        {!! !empty($prospect->email_prospect) ? $prospect->email_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">{{ $prospect->ville_prospect }}</td>
                                     <td class="cell">

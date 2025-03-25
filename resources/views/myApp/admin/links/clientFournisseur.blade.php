@@ -124,44 +124,44 @@
                             placeholder="Entrer le nom de la société..."
                             value="{{ old('nomSociete_fournisseurClient') }}" />
                         @error('nomSociete_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">GSM1 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM1_fournisseurClient"
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_fournisseurClient') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM1_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">GSM2 de la société</strong></label>
                         <input type="tel" class="form-control" name="GSM2_fournisseurClient"
                             placeholder="Entrer le GSM2..." value="{{ old('GSM2_fournisseurClient') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM2_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Personne à contacter</strong></label>
                         <input type="text" class="form-control" name="nom_fournisseurClient"
                             placeholder="Entrer le fournisseurClient..." value="{{ old('nom_fournisseurClient') }}" />
                         @error('nom_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Numero de telephone</strong></label>
                         <input type="tel" class="form-control" name="tele_fournisseurClient"
                             placeholder="Entrer le contact..." value="{{ old('tele_fournisseurClient') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('tele_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Email</strong></label>
                         <input type="email" class="form-control" name="email_fournisseurClient"
                             placeholder="Entrer l'émail..." value="{{ old('email_fournisseurClient') }}" />
                         @error('email_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
 
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_fournisseurClient"
                             placeholder="Entrer la ville..." value="{{ old('ville_fournisseurClient') }}" />
                         @error('ville_fournisseurClient', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <label class="form-label"><strong class="det">Catégorie</strong></label>
                         <select class="form-select form-select-sm" aria-label=".form-select-sm example"
@@ -175,7 +175,7 @@
                             @endforeach
                         </select>
                         @error('categorie_id', 'default')
-                            <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span><br>
                         @enderror
                         <!-- Label pour les sous-catégories, caché tant qu'une catégorie n'est pas sélectionnée -->
                         <label for="sous-categorie" class="form-label" id="label-sous-categorie"
@@ -236,22 +236,22 @@
                             @foreach ($fournisseurClients as $fc)
                                 <tr>
                                     <td class="cell">
-                                        {{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}
+                                        {!! !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : '<span class="text-danger">Particulier</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}
+                                        {!! !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}
+                                        {!! !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : 'Non disponible' }}
+                                        {!! !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : 'Non disponible' }}
+                                        {!! !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">
-                                        {{ !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : 'Non disponible' }}
+                                        {!! !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
                                     <td class="cell">{{ $fc->ville_fournisseurClient }}</td>
                                     <td class="cell">
@@ -630,7 +630,7 @@
                                     value="{{ old('newNomSociete_fournisseurClient', $fc->nomSociete_fournisseurClient) }}" />
                                 @if ($errors->has('newNomSociete_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newNomSociete_fournisseurClient') }}</span>
+                                        {{ $errors->first('newNomSociete_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -642,7 +642,7 @@
                                     value="{{ old('newGSM1_fournisseurClient', $fc->GSM1_fournisseurClient) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM1_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newGSM1_fournisseurClient') }}</span>
+                                        {{ $errors->first('newGSM1_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -654,7 +654,7 @@
                                     value="{{ old('newGSM2_fournisseurClient', $fc->GSM2_fournisseurClient) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newGSM2_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newGSM2_fournisseurClient') }}</span>
+                                        {{ $errors->first('newGSM2_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -665,7 +665,7 @@
                                     value="{{ old('newNom_fournisseurClient', $fc->nom_fournisseurClient) }}" />
                                 @if ($errors->has('newNom_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newNom_fournisseurClient') }}</span>
+                                        {{ $errors->first('newNom_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -676,7 +676,7 @@
                                     value="{{ old('newTele_fournisseurClient', $fc->tele_fournisseurClient) }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                                 @if ($errors->has('newTele_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newTele_fournisseurClient') }}</span>
+                                        {{ $errors->first('newTele_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -687,7 +687,7 @@
                                     value="{{ old('newEmail_fournisseurClient', $fc->email_fournisseurClient) }}" />
                                 @if ($errors->has('newEmail_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newEmail_fournisseurClient') }}</span>
+                                        {{ $errors->first('newEmail_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -699,7 +699,7 @@
                                     value="{{ old('newVille_fournisseurClient', $fc->ville_fournisseurClient) }}" />
                                 @if ($errors->has('newVille_fournisseurClient'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newVille_fournisseurClient') }}</span>
+                                        {{ $errors->first('newVille_fournisseurClient') }}</span><br>
                                 @endif
 
                             </div>
@@ -717,7 +717,7 @@
                                 </select>
                                 @if ($errors->has('newCategorie_id'))
                                     <span class="text-danger">
-                                        {{ $errors->first('newCategorie_id') }}</span>
+                                        {{ $errors->first('newCategorie_id') }}</span><br>
                                 @endif
                             </div>
                         </div>
