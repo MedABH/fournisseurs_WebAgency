@@ -751,16 +751,17 @@
                     @endif
                 </div>
             </div>
+        </div> 
+        <div >
+            <div>
+                {{ $fournisseurs->links('vendor.pagination.bootstrap-4') }}
+    
+            </div>
+    
         </div>
     </div>
     </div>
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            {{ $fournisseurs->links('vendor.pagination.bootstrap-4') }}
-
-        </div>
-
-    </div>
+    
 @endsection
 
 
