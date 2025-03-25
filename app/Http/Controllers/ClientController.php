@@ -234,7 +234,7 @@ class ClientController extends Controller
             'newNom_client' => ['nullable', 'max:50', 'string'],
             'newGSM1_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newGSM2_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
-            'newEmail_client' => ['nullable', 'email:rfc,dns', 'string', 'max:266'],
+            'newEmail_client' => ['nullable', 'string', 'max:266'],
             'newTele_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newVille_client' => ['required', 'max:60', 'string'],
             'newNomSociete_client' => ['nullable', 'max:200'],

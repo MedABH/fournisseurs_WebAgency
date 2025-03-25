@@ -23,7 +23,7 @@ class ProspectController extends Controller
     {
         $rules = [
             'nom_prospect' => ['nullable', 'max:50', 'string'],
-            'email_prospect' => ['nullable', 'email:rfc,dns', 'string', 'max:266', 'unique:prospects,email_prospect'],
+            'email_prospect' => ['nullable', 'string', 'max:266', 'unique:prospects,email_prospect'],
             'tele_prospect' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:prospects,tele_prospect'],
             'ville_prospect' => ['required', 'max:60', 'string'],
             'nomSociete_prospect' => ['nullable', 'max:200', 'unique:prospects,nomSociete_prospect'],
@@ -244,7 +244,7 @@ class ProspectController extends Controller
 
         $rules = [
             'newNom_prospect' => ['nullable', 'max:50', 'string'],
-            'newEmail_prospect' => ['nullable', 'email:rfc,dns', 'string', 'max:266'],
+            'newEmail_prospect' => ['nullable','string', 'max:266'],
             'newTele_prospect' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newVille_prospect' => ['required', 'max:60', 'string'],
             'newNomSociete_prospect' => ['nullable', 'max:200'],

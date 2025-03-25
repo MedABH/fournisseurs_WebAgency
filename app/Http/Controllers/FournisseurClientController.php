@@ -21,7 +21,7 @@ class FournisseurClientController extends Controller
     {
         $rules = [
             'nom_fournisseurClient' => ['nullable', 'max:50', 'string'],
-            'email_fournisseurClient' => ['nullable', 'email:rfc,dns', 'string', 'max:266', 'unique:fournisseur_clients,email_fournisseurClient'],
+            'email_fournisseurClient' => ['nullable', 'string', 'max:266', 'unique:fournisseur_clients,email_fournisseurClient'],
             'tele_fournisseurClient' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseur_clients,tele_fournisseurClient'],
             'ville_fournisseurClient' => ['required', 'max:60', 'string'],
             'nomSociete_fournisseurClient' => ['nullable', 'max:200', 'unique:fournisseur_clients,nomSociete_fournisseurClient'],
@@ -257,7 +257,7 @@ class FournisseurClientController extends Controller
 
         $rules = [
             'newNom_fournisseurClient' => ['nullable', 'max:50', 'string'],
-            'newEmail_fournisseurClient' => ['nullable', 'email:rfc,dns', 'string', 'max:266'],
+            'newEmail_fournisseurClient' => ['nullable','string', 'max:266'],
             'newTele_fournisseurClient' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newVille_fournisseurClient' => ['required', 'max:60', 'string'],
             'newNomSociete_fournisseurClient' => ['nullable', 'max:200'],
