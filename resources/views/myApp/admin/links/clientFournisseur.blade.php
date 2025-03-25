@@ -729,7 +729,7 @@
             </div>
         </div>
     @endif
-    <div class="d-flex justify-content-between align-items-center">
+    <div>
       
         <div>
             {{ $fournisseurClients->links('vendor.pagination.bootstrap-4') }}
