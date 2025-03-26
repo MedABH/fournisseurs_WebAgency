@@ -240,26 +240,26 @@
                             @endphp
                             @foreach ($prospects as $prospect)
                                 <tr>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : '<span class="text-danger">Particulier</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect :'<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->nom_prospect) ? $prospect->nom_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->tele_prospect) ? $prospect->tele_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($prospect->email_prospect) ? $prospect->email_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">{{ $prospect->ville_prospect }}</td>
-                                    <td class="cell">
+                                    <td class="cell2">{{ $prospect->ville_prospect }}</td>
+                                    <td class="cell2">
                                         @forelse ($prospect->categorieProspects as $assoc)
                                             @if ($assoc->categorie)
                                                 {{ $assoc->categorie->nom_categorie }}
@@ -268,7 +268,7 @@
                                             Non catégorisé
                                         @endforelse
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}
                                     </td>
 

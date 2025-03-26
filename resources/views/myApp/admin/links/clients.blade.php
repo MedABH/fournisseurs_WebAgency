@@ -248,26 +248,26 @@
                         @endphp
                         @foreach ($clients as $client)
                             <tr>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->nomSociete_client) ? $client->nomSociete_client : '<span class="text-danger">Particulier</span>' !!}
                                 </td>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->GSM1_client) ? $client->GSM1_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->GSM2_client) ? $client->GSM2_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->nom_client) ? $client->nom_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->tele_client) ? $client->tele_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
-                                <td class="cell">
+                                <td class="cell2">
                                     {!! !empty($client->email_client) ? $client->email_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
-                                <td class="cell">{{ $client->ville_client }}</td>
-                                <td class="cell">
+                                <td class="cell2">{{ $client->ville_client }}</td>
+                                <td class="cell2">
                                     @forelse ($client->categorieClients as $assoc)
                                         @if ($assoc->categorie)
                                             {{ $assoc->categorie->nom_categorie }}
@@ -277,7 +277,7 @@
                                     @endforelse
                                 </td>
 
-                                <td class="cell">
+                                <td class="cell2">
                                     {{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}
                                 </td>
 

@@ -119,7 +119,7 @@
                                     <tbody>
                                         @foreach ($categories as $categorie)
                                             <tr>
-                                                <td class="cell">{{ $categorie->nom_categorie }}</td>
+                                                <td class="cell2">{{ $categorie->nom_categorie }}</td>
 
                                                 @if (auth()->user()->role == 'super-admin')
                                                 <td>
@@ -395,7 +395,7 @@
                                         const role = "{{ auth()->user()->role }}"
                                         row.innerHTML = `
 
-                                                <td class="cell">${category.nom_categorie}</td>
+                                                <td class="cell2">${category.nom_categorie}</td>
                                                  ${role === "super-admin" ? `
                                                  <td>
                                                         <button type="button" class="btn btn-outline-primary border-btn me-5" data-bs-toggle="modal"

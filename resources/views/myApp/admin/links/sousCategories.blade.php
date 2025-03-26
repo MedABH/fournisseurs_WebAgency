@@ -148,8 +148,8 @@
                             <tbody>
                                 @foreach ($getSousCategories as $sousCategorie)
                                     <tr>
-                                        <td class="cell">{{ $sousCategorie->nom_produit }}</td>
-                                        <td class="cell">{{ $sousCategorie->categorie->nom_categorie }}</td>
+                                        <td class="cell2">{{ $sousCategorie->nom_produit }}</td>
+                                        <td class="cell2">{{ $sousCategorie->categorie->nom_categorie }}</td>
                                         @if (auth()->user()->role == 'super-admin')
                                             <td>
                                                 <button type="button" class="btn btn-outline-primary border-btn me-5"

@@ -235,26 +235,26 @@
                             @endphp
                             @foreach ($fournisseurClients as $fc)
                                 <tr>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : '<span class="text-danger">Particulier</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->nom_fournisseurClient) ? $fc->nom_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->tele_fournisseurClient) ? $fc->tele_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {!! !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
-                                    <td class="cell">{{ $fc->ville_fournisseurClient }}</td>
-                                    <td class="cell">
+                                    <td class="cell2">{{ $fc->ville_fournisseurClient }}</td>
+                                    <td class="cell2">
                                         @forelse ($fc->categorieClientFournisseurs as $assoc)
                                             @if ($assoc->categorie)
                                                 {{ $assoc->categorie->nom_categorie }}
@@ -263,7 +263,7 @@
                                             Non catégorisé
                                         @endforelse
                                     </td>
-                                    <td class="cell">
+                                    <td class="cell2">
                                         {{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}
                                     </td>
 

@@ -172,11 +172,11 @@
 
                                                     @foreach ($users as $user)
                                                     <tr>
-                                                        <td class="cell">{{ $user->name }}</td>
-                                                        <td class="cell">{{ $user->email }}</td>
-                                                        <td class="cell">{{ $user->contact }}</td>
-                                                        <td class="cell">{{ $user->adresse }}</td>
-                                                        <td class="cell">{{ $user->role }}</td>
+                                                        <td class="cell2">{{ $user->name }}</td>
+                                                        <td class="cell2">{{ $user->email }}</td>
+                                                        <td class="cell2">{{ $user->contact }}</td>
+                                                        <td class="cell2">{{ $user->adresse }}</td>
+                                                        <td class="cell2">{{ $user->role }}</td>
                                                         <td><button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#updateUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                                                                 data-email="{{ $user->email }}" data-contact="{{ $user->contact }}" data-adresse="{{ $user->adresse }}"
@@ -494,12 +494,12 @@
 
                                        const row = document.createElement('tr');
                                        row.innerHTML = `
-                                        <td class="cell">${user.name}</td>
-                                        <td class="cell">${user.email}</td>
-                                        <td class="cell">${user.contact}</td>
-                                        <td class="cell">${user.adresse}</td>
-                                        <td class="cell">${user.role}</td>
-                                        <td class="cell">
+                                        <td class="cell2">${user.name}</td>
+                                        <td class="cell2">${user.email}</td>
+                                        <td class="cell2">${user.contact}</td>
+                                        <td class="cell2">${user.adresse}</td>
+                                        <td class="cell2">${user.role}</td>
+                                        <td class="cell2">
                                                        <a class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                            data-bs-target="#updateUserModal"
                                                            data-id="${user.id}"
