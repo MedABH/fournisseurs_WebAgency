@@ -333,6 +333,11 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             document.getElementById('delete-form-' + categoryId).submit();
+                            Swal.fire(
+                                "Supprimé !",
+                                "La catégorie a été supprimé avec succès.",
+                                "success"
+                            );
                         }
                     });
                 }

@@ -79,7 +79,7 @@ class FournisseurController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->fournisseurs()->attach($fournisseur->id);
 
-        ActivityLogController::logActivity("Ajout", "Fournisseur", "A ajouté " . $fournisseur->nom_fournisseur);
+        ActivityLogController::logActivity("Ajout", "Fournisseur", "A ajouté " . $fournisseur->nomSociete_fournisseur);
 
         // Track the supplier addition
         $setting = Setting::where('key', 'suppliersTracking')->first();

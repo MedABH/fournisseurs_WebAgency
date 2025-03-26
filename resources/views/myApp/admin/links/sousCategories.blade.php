@@ -397,6 +397,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + productId).submit();
+                    Swal.fire(
+                        "Supprimé !",
+                        "Le produit a été supprimé avec succès.",
+                        "success"
+                    );
                 }
             });
         }

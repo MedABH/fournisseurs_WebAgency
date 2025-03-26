@@ -858,8 +858,8 @@
 <script>
     function confirmDelete(fcId) {
         Swal.fire({
-            title: 'Supprimer le client&fournisseur !',
-            text: "êtes-vous sûr que vous voulez supprimer ce client&fournisseur ?",
+            title: 'Supprimer le fournisseur-client !',
+            text: "êtes-vous sûr que vous voulez supprimer ce fournisseur-client ?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -867,10 +867,17 @@
             cancelButtonText: 'Annuler',
             confirmButtonText: 'Oui, Supprimer-le !'
         }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('delete-form-' + fcId).submit();
-            }
-        });
+    if (result.isConfirmed) {
+        document.getElementById('delete-form-' + fcId).submit();
+        
+        Swal.fire(
+            "Supprimé !",
+            "Le fournisseur-client a été supprimé avec succès.",
+            "success"
+        );
+    }
+});
+
     }
 </script>
 

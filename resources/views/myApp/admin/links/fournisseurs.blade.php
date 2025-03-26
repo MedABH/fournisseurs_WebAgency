@@ -883,8 +883,8 @@
     <script>
         function confirmDelete(supplierId) {
             Swal.fire({
-                title: 'Supprimer le supplier !',
-                text: "êtes-vous sûr que vous voulez supprimer ce supplier ?",
+                title: 'Supprimer le fournisseur !',
+                text: "êtes-vous sûr que vous voulez supprimer ce fournisseur ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -894,6 +894,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + supplierId).submit();
+                    Swal.fire(
+                        "Supprimé !",
+                        "Le fournisseur a été supprimé avec succès.",
+                        "success"
+                    );
                 }
             });
         }

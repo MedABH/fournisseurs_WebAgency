@@ -436,6 +436,11 @@
                    }).then((result) => {
                        if (result.isConfirmed) {
                            document.getElementById('delete-form-' + userId).submit();
+                           Swal.fire(
+                                "Supprimé !",
+                                "L'utilisateur' a été supprimé avec succès.",
+                                "success"
+                            );
                        }
                    });
                }

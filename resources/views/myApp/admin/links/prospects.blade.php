@@ -866,8 +866,8 @@
     <script>
         function confirmDelete(prospectId) {
             Swal.fire({
-                title: 'Supprimer le prospect !',
-                text: "êtes-vous sûr que vous voulez supprimer ce prospect ?",
+                title: 'Supprimer le tier !',
+                text: "êtes-vous sûr que vous voulez supprimer ce tier ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -877,6 +877,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + prospectId).submit();
+                    Swal.fire(
+                        "Supprimé !",
+                        "Le tier a été supprimé avec succès.",
+                        "success"
+                    );
                 }
             });
         }

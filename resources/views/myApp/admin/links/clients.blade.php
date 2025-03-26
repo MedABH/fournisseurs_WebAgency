@@ -891,6 +891,11 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     document.getElementById('delete-form-' + clientId).submit();
+                    Swal.fire(
+                        "Supprimé !",
+                        "Le client a été supprimé avec succès.",
+                        "success"
+                    );
                 }
             });
         }
