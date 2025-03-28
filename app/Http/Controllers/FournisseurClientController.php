@@ -430,7 +430,7 @@ class FournisseurClientController extends Controller
             $setting->save();
         }
 
-    } else if ($selectedStatus === 'Client') {
+    } else if ($selectedStatus === 'Prosperts') {
         foreach ($fcsGroup as $fcItem) {
             $client = new Client();
             $client->nom_client = $fcItem->nom_fournisseurClient;

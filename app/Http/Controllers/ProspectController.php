@@ -438,7 +438,7 @@ class ProspectController extends Controller
 
             // Increment the value of 'addedToday' based on the tiersChange
             $setting->increment('addedToday', $tiersChange);
-        } else if ($selectedStatus === 'Client') {
+        } else if ($selectedStatus === 'Prosperts') {
 
             foreach ($prospectsGroup as $prospectItem) {
                 $client = new Client();

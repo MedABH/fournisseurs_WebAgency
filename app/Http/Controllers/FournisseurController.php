@@ -455,7 +455,7 @@ class FournisseurController extends Controller
                 ]);
             }
             $suppliersTracking->increment('deletedToday', $tiersChange);
-        } else if ($selectedStatus === 'Client') {
+        } else if ($selectedStatus === 'Prosperts') {
             foreach ($fournisseursGroup as $fournisseurItem) {
                 $client = new Client();
                 $client->nom_client = $fournisseurItem->nom_fournisseur;
