@@ -23,7 +23,8 @@ class ProspectController extends Controller
     {
         $rules = [
             'nom_prospect' => ['nullable', 'max:50', 'string'],
-            'email_prospect' => ['nullable', 'string', 'max:266', 'unique:prospects,email_prospect'],
+            'email_prospect' => ['nullable','email', 'string', 'max:266', 'unique:prospects,email_prospect'],
+            'lien_prospect' => ['nullable','url', 'string', 'max:266', 'unique:prospects,lien_prospect'],
             'tele_prospect' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:prospects,tele_prospect'],
             'ville_prospect' => ['required', 'max:60', 'string'],
             'nomSociete_prospect' => ['nullable', 'max:200', 'unique:prospects,nomSociete_prospect'],
@@ -38,6 +39,7 @@ class ProspectController extends Controller
             // 'email_prospect.required' => "L'émail est obligatoire!",
             'email_prospect.string' => "L'émail doit être en chaine de caractère!",
             'email_prospect.unique' => "L'émail doit être unique!",
+            'lien_prospect.string' => "Lien doit être en chaine de caractère!",
             'ville_prospect.required' => "La ville est obligatoire!",
             'ville_prospect.string' => 'La ville doit être en chaine de caractère!',
             // 'tele_prospect.required' => 'Le contact est obligatoire!',
@@ -67,6 +69,7 @@ class ProspectController extends Controller
         $prospect->nom_prospect = $request->nom_prospect ?? '';
         $prospect->GSM1_prospect = $request->GSM1_prospect ?? '';
         $prospect->GSM2_prospect = $request->GSM2_prospect ?? '';
+        $prospect->lien_prospect = $request->lien_prospect ?? '';
         $prospect->ville_prospect = $request->ville_prospect;
         $prospect->tele_prospect = $request->tele_prospect ?? '';
         $prospect->email_prospect = $request->email_prospect ?? '';
@@ -176,7 +179,7 @@ class ProspectController extends Controller
             $prospect->allCategories = $prospect->allCategories();
         }
 
-        $select = ['Fournisseur', 'Client', 'Fournisseur Client'];
+        $select = ['Fournisseur', 'Prosperts', 'Fournisseur Client'];
 
         return view('myApp.admin.links.prospects', compact('prospects', 'categories', 'select', 'perPage'));
     }
@@ -250,6 +253,7 @@ class ProspectController extends Controller
             'newNomSociete_prospect' => ['nullable', 'max:200'],
             'newGSM1_prospect' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newGSM2_prospect' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newLien_prospect' => ['nullable','string', 'max:266'],
             'newCategorie_id' => ['required', 'integer', 'exists:categories,id'],
         ];
 
@@ -264,6 +268,7 @@ class ProspectController extends Controller
             'newTele_prospect.regex' => 'Le numéro de téléphone doit être valide!',
             'newGSM1_prospect.regex' => 'Le numéro de téléphone doit être valide!',
             'newGSM2_prospect.regex' => 'Le numéro de téléphone doit être valide!',
+            'newLien_prospect.string' => "Lien doit être en chaine de caractère!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'newCategorie_id.integer' => 'La catégorie doit être un entier!',
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
@@ -284,6 +289,7 @@ class ProspectController extends Controller
         $tele = $request->newTele_prospect ?? '';
         $GSM1 = $request->newGSM1_prospect ?? '';
         $GSM2 = $request->newGSM2_prospect ?? '';
+        $lien = $request->newLien_prospect ?? '';
         $newCategorieId = $request->newCategorie_id;
         $existingProspect = Prospect::where('nom_prospect', $name)
             ->where('email_prospect', $email)
@@ -292,6 +298,7 @@ class ProspectController extends Controller
             ->where('nomSociete_prospect', $nomSociety)
             ->where('GSM1_prospect', $GSM1)
             ->where('GSM2_prospect', $GSM2)
+            ->where('lien_prospect', $lien)
             ->whereHas('categories', function ($query) use ($newCategorieId) {
                 $query->where('categories.id', $newCategorieId);
             })
@@ -321,6 +328,7 @@ class ProspectController extends Controller
         $prospect->nomSociete_prospect = $request->newNomSociete_prospect ?? '';
         $prospect->GSM1_prospect = $request->newGSM1_prospect ?? '';
         $prospect->GSM2_prospect = $request->newGSM2_prospect ?? '';
+        $prospect->lien_prospect = $request->newLien_prospect ?? '';
 
         if ($prospect->save()) {
             alert()->success('Succès', 'Le tier a été mis à jour avec succès.');
@@ -338,6 +346,7 @@ class ProspectController extends Controller
             $similarProspect->nomSociete_prospect = $request->newNomSociete_prospect ?? '';
             $similarProspect->GSM1_prospect = $request->newGSM1_prospect ?? '';
             $similarProspect->GSM2_prospect = $request->newGSM2_prospect ?? '';
+            $similarProspect->lien_prospect = $request->newLien_prospect ?? '';
             if ($similarProspect->save()) {
                 alert()->success('Succès', 'Le tier a été mis à jour avec succès.');
             };
@@ -349,7 +358,7 @@ class ProspectController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Fournisseur', 'Client', 'Fournisseur Client'];
+        $select = ['Fournisseur', 'Prosperts', 'Fournisseur Client'];
         $search = $request->input('search');
         $prospect = Prospect::with(['categories.sousCategories', 'utilisateur'])
             ->where('nomSociete_prospect', 'LIKE', "%{$search}%")
@@ -372,7 +381,8 @@ class ProspectController extends Controller
             $prospect->ville_prospect !== $request->newVille_prospect ||
             $prospect->nomSociete_prospect !== ($request->newNomSociete_prospect ?? '') ||
             $prospect->GSM1_prospect !== ($request->newGSM1_prospect ?? '') ||
-            $prospect->GSM2_prospect !== ($request->newGSM2_prospect ?? '');
+            $prospect->GSM2_prospect !== ($request->newGSM2_prospect ?? '') ||
+            $prospect->lien_prospect !== ($request->newLien_prospect ?? '');
     }
 
     public function prospect(Request $request, $id)
@@ -395,6 +405,7 @@ class ProspectController extends Controller
                 $fournisseur->nomSociete_fournisseur = $prospectItem->nomSociete_prospect;
                 $fournisseur->GSM1_fournisseur = $prospectItem->GSM1_prospect;
                 $fournisseur->GSM2_fournisseur = $prospectItem->GSM2_prospect;
+                $fournisseur->lien_fournisseur = $prospectItem->lien_prospect;
                 $fournisseur->user_id = $prospectItem->user_id;
                 $fournisseur->remark = $prospectItem->remark;
                 $fournisseur->groupId_fournisseur = $prospectItem->groupId_prospect;
@@ -438,6 +449,7 @@ class ProspectController extends Controller
                 $client->nomSociete_client = $prospectItem->nomSociete_prospect;
                 $client->GSM1_client = $prospectItem->GSM1_prospect;
                 $client->GSM2_client = $prospectItem->GSM2_prospect;
+                $client->lien_client = $prospectItem->lien_prospect;
                 $client->user_id = $prospectItem->user_id;
                 $client->remark = $prospectItem->remark;
                 $client->groupId_client = $prospectItem->groupId_prospect;
@@ -481,6 +493,7 @@ class ProspectController extends Controller
                 $fc->nomSociete_fournisseurClient = $prospectItem->nomSociete_prospect;
                 $fc->GSM1_fournisseurClient = $prospectItem->GSM1_prospect;
                 $fc->GSM2_fournisseurClient = $prospectItem->GSM2_prospect;
+                $fc->lien_fournisseurClient = $prospectItem->lien_prospect;
                 $fc->user_id = $prospectItem->user_id;
                 $fc->remark = $prospectItem->remark;
                 $fc->groupId_fournisseurClient = $prospectItem->groupId_prospect;

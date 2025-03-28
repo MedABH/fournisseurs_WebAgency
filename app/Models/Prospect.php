@@ -23,6 +23,7 @@ class Prospect extends Model
         'nomSociete_prospect',
         'GSM1_prospect',
         'GSM2_prospect',
+        'lien_prospect',
         'user_id',
         'remark'
     ];

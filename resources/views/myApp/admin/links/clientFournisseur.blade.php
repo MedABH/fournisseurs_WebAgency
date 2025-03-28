@@ -24,7 +24,7 @@
                                 <i class="fas fa-file-pdf"></i> Exporter en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -37,7 +37,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -51,7 +51,7 @@
                                 <i class="fas fa-file-pdf"></i> Exporter en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -64,7 +64,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -156,7 +156,12 @@
                         @error('email_fournisseurClient', 'default')
                             <span class="text-danger">{{ $message }}</span><br>
                         @enderror
-
+                        <label class="form-label"><strong class="det">Lien de la société</strong></label>
+                        <input type="url" class="form-control" name="lien_fournisseurClient"
+                            placeholder="Entrer le Lien..." value="{{ old('lien_fournisseurClient') }}"/>
+                        @error('lien_fournisseurClient', 'default')
+                            <span class="text-danger">{{ $message }}</span><br>
+                        @enderror
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_fournisseurClient"
                             placeholder="Entrer la ville..." value="{{ old('ville_fournisseurClient') }}" />
@@ -218,6 +223,7 @@
                                 <th class="cell">Personne à contacter</th>
                                 <th class="cell">Numero De Telephone</th>
                                 <th class="cell">Email</th>
+                                <th class="cell">Lien de la société</th>
                                 <th class="cell">Ville</th>
                                 <th class="cell">Catégorie</th>
                                 <th class="cell">Contacté Par</th>
@@ -253,6 +259,15 @@
                                     <td class="cell2">
                                         {!! !empty($fc->email_fournisseurClient) ? $fc->email_fournisseurClient : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
+                                    <td class="cell2">
+                                        @if(!empty($fc->lien_fournisseurClient))
+                                            <a href="{{ $fc->lien_fournisseurClient }}" target="_blank" class="text-primary">
+                                                {{ Str::limit($fc->lien_fournisseurClient, 20) }} <!-- Limite l'affichage -->
+                                            </a>
+                                        @else
+                                            <span class="text-danger">Non disponible</span>
+                                        @endif
+                                    </td>
                                     <td class="cell2">{{ $fc->ville_fournisseurClient }}</td>
                                     <td class="cell2">
                                         @forelse ($fc->categorieClientFournisseurs as $assoc)
@@ -278,6 +293,7 @@
                                                     data-society="{{ $fc->nomSociete_fournisseurClient }}"
                                                     data-GSM1="{{ $fc->GSM1_fournisseurClient }}"
                                                     data-GSM2="{{ $fc->GSM2_fournisseurClient }}"
+                                                    data-lien="{{ $fc->lien_fournisseurClient }}"
                                                     data-name="{{ $fc->nom_fournisseurClient }}"
                                                     data-tele="{{ $fc->tele_fournisseurClient }}"
                                                     data-email="{{ $fc->email_fournisseurClient }}"
@@ -306,6 +322,7 @@
                                                     data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($fc->lien_fournisseurClient) ? $fc->lien_fournisseurClient : 'Non disponible' }}"
                                                     data-remark="{{ $fc->remark }}"
                                                     data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}">
 
@@ -369,6 +386,7 @@
                                                     data-society="{{ $fc->nomSociete_fournisseurClient }}"
                                                     data-GSM1="{{ $fc->GSM1_fournisseurClient }}"
                                                     data-GSM2="{{ $fc->GSM2_fournisseurClient }}"
+                                                    data-lien="{{ $fc->lien_fournisseurClient }}"
                                                     data-name="{{ $fc->nom_fournisseurClient }}"
                                                     data-tele="{{ $fc->tele_fournisseurClient }}"
                                                     data-email="{{ $fc->email_fournisseurClient }}"
@@ -395,6 +413,7 @@
                                                     data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($fc->lien_fournisseurClient) ? $fc->lien_fournisseurClient : 'Non disponible' }}"
                                                     data-remark="{{ $fc->remark }}"
                                                     data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}">
 
@@ -459,6 +478,7 @@
                                                     data-society-name="{{ !empty($fc->nomSociete_fournisseurClient) ? $fc->nomSociete_fournisseurClient : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($fc->GSM1_fournisseurClient) ? $fc->GSM1_fournisseurClient : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($fc->GSM2_fournisseurClient) ? $fc->GSM2_fournisseurClient : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($fc->lien_fournisseurClient) ? $fc->lien_fournisseurClient : 'Non disponible' }}"
                                                     data-remark="{{ $fc->remark }}"
                                                     data-user="{{ !empty($fc->utilisateur->name) ? $fc->utilisateur->name : 'Personne' }}">
 
@@ -562,6 +582,11 @@
                                                     <div class="col-6 det" style="font-size: 18px">Email</strong></div>
                                                     <div class="col-6 showEmailfc"><span style="font-size: 18px" id="showEmailDetail-{{ $fc->id }}"></span></div>
                                             
+                                                    <div class="col-6 det" style="font-size: 18px">Lien de la société</strong></div>
+                                                    <div class="col-6 showLienfc"><a href="{{ $fc->lien_fournisseurClient }}" target="_blank" class="text-primary" style="font-size: 18px">
+                                                        {{ Str::limit($fc->lien_fournisseurClient, 20) }} <!-- Limite l'affichage -->
+                                                    </a></div>
+
                                                     <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
                                                     <div class="col-6 showVillefc"><span style="font-size: 18px" id="showVilleDetail-{{ $fc->id }}"></span></div>
                                             
@@ -691,7 +716,18 @@
                                 @endif
 
                             </div>
+                            <div>
+                                <label class="form-label">Lien de la
+                                    société</label>
+                                <input type="tel" class="form-control" name="newLien_fournisseurClient"
+                                    placeholder="Entrer Lien..." id="updateFCLien"
+                                    value="{{ old('newLien_fournisseurClient', $fc->lien_fournisseurClient) }}"/>
+                                @if ($errors->has('newLien_fournisseurClient'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newLien_fournisseurClient') }}</span><br>
+                                @endif
 
+                            </div>
                             <div>
                                 <label class="form-label">Ville</label>
                                 <input id="updateFCVille" type="text" class="form-control"
@@ -811,6 +847,7 @@
             const fcSociety = button.getAttribute('data-society');
             const fcGSM1 = button.getAttribute('data-GSM1');
             const fcGSM2 = button.getAttribute('data-GSM2');
+            const fcLien = button.getAttribute('data-lien');
             const fcCategory = button.getAttribute('data-category')
 
             document.getElementById('updateFCId').value = fcId;
@@ -821,6 +858,7 @@
             document.getElementById('updateFCSociety').value = fcSociety;
             document.getElementById('updateFCGSM1').value = fcGSM1;
             document.getElementById('updateFCGSM2').value = fcGSM2;
+            document.getElementById('updateFCLien').value = fcLien;
             document.getElementById('updateFCCategory').value = fcCategory;
 
 
@@ -893,6 +931,7 @@
             const fcSociety = this.getAttribute('data-society-name')
             const fcGSM1 = this.getAttribute('data-GSM1')
             const fcGSM2 = this.getAttribute('data-GSM2')
+            const fcLien = this.getAttribute('data-lien')
             const fcRemark = this.getAttribute('data-remark')
             const fcUser = this.getAttribute('data-user')
 
@@ -903,6 +942,7 @@
             document.querySelector(`#showSocietyDetail-${fcId}`).innerText = fcSociety
             document.querySelector(`#showGSM1Detail-${fcId}`).innerText = fcGSM1
             document.querySelector(`#showGSM2Detail-${fcId}`).innerText = fcGSM2
+            document.querySelector(`#showLienDetail-${fcId}`).innerText = fcLien
             document.querySelector(`#showRemarkDetail-${fcId}`).innerText = fcRemark
             document.querySelector(`#showUserDetail-${fcId}`).innerText = fcUser
         })
@@ -1023,7 +1063,11 @@
                         </h6>
                     </div>
 
-
+                    <div class="show-info-fournisseurClient show-society">
+                        <label class="label-detail-fournisseurClient">Lien de la société</label>
+                        <h6 class="info-fournisseurClient" id="showLienfc">
+                        </h6>
+                    </div>
 
                     <div class="show-info-fournisseurClient show-ville">
                         <label class="label-detail-fournisseurClient">Ville</label>

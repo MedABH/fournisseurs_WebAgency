@@ -24,7 +24,7 @@
                                 <i class="fas fa-file-pdf"></i> Exporter en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -37,7 +37,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -51,7 +51,7 @@
                                 <i class="fas fa-file-pdf"></i> Exporter en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -64,7 +64,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -159,7 +159,12 @@
                         @error('email_prospect', 'default')
                             <span class="text-danger">{{ $message }}</span><br>
                         @enderror
-
+                        <label class="form-label"><strong class="det">Lien de la société</strong></label>
+                        <input type="url" class="form-control" name="lien_prospect"
+                            placeholder="Entrer le lien..." value="{{ old('lien_prospect') }}"/>
+                        @error('lien_prospect', 'default')
+                            <span class="text-danger">{{ $message }}</span><br>
+                        @enderror
 
                         <label class="form-label"><strong class="det">Ville</strong></label>
                         <input type="text" class="form-control" name="ville_prospect"
@@ -223,6 +228,7 @@
                                 <th class="cell">Personne à contacter</th>
                                 <th class="cell">Numero de telephone</th>
                                 <th class="cell">Email</th>
+                                <th class="cell">Lien de la société</th>
                                 <th class="cell">Ville</th>
                                 <th class="cell">Catégorie</th>
                                 <th class="cell">Contacté Par</th>
@@ -258,6 +264,15 @@
                                     <td class="cell2">
                                         {!! !empty($prospect->email_prospect) ? $prospect->email_prospect : '<span class="text-danger">Non disponible</span>' !!}
                                     </td>
+                                    <td class="cell2">
+                                        @if(!empty($prospect->lien_prospect))
+                                            <a href="{{ $prospect->lien_prospect }}" target="_blank" class="text-primary">
+                                                {{ Str::limit($prospect->lien_prospect, 20) }} <!-- Limite l'affichage -->
+                                            </a>
+                                        @else
+                                            <span class="text-danger">Non disponible</span>
+                                        @endif
+                                    </td>
                                     <td class="cell2">{{ $prospect->ville_prospect }}</td>
                                     <td class="cell2">
                                         @forelse ($prospect->categorieProspects as $assoc)
@@ -282,6 +297,7 @@
                                                     data-society="{{ $prospect->nomSociete_prospect }}"
                                                     data-GSM1="{{ $prospect->GSM1_prospect }}"
                                                     data-GSM2="{{ $prospect->GSM2_prospect }}"
+                                                    data-lien="{{ $prospect->lien_prospect }}"
                                                     data-name="{{ $prospect->nom_prospect }}"
                                                     data-tele="{{ $prospect->tele_prospect }}"
                                                     data-email="{{ $prospect->email_prospect }}"
@@ -311,6 +327,7 @@
                                                     data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($prospect->lien_prospect) ? $prospect->lien_prospect : 'Non disponible' }}"
                                                     data-remark="{{ $prospect->remark }}"
                                                     data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">
 
@@ -377,6 +394,7 @@
                                                     data-society="{{ $prospect->nomSociete_prospect }}"
                                                     data-GSM1="{{ $prospect->GSM1_prospect }}"
                                                     data-GSM2="{{ $prospect->GSM2_prospect }}"
+                                                    data-lien="{{ $prospect->lien_prospect }}"
                                                     data-name="{{ $prospect->nom_prospect }}"
                                                     data-tele="{{ $prospect->tele_prospect }}"
                                                     data-email="{{ $prospect->email_prospect }}"
@@ -424,6 +442,7 @@
                                                     data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($prospect->lien_prospect) ? $prospect->lien_prospect : 'Non disponible' }}"
                                                     data-remark="{{ $prospect->remark }}"
                                                     data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">
 
@@ -470,6 +489,7 @@
                                                     data-society-name="{{ !empty($prospect->nomSociete_prospect) ? $prospect->nomSociete_prospect : 'Particulier' }}"
                                                     data-GSM1="{{ !empty($prospect->GSM1_prospect) ? $prospect->GSM1_prospect : 'Non disponible' }}"
                                                     data-GSM2="{{ !empty($prospect->GSM2_prospect) ? $prospect->GSM2_prospect : 'Non disponible' }}"
+                                                    data-lien="{{ !empty($prospect->lien_prospect) ? $prospect->lien_prospect : 'Non disponible' }}"
                                                     data-remark="{{ $prospect->remark }}"
                                                     data-user="{{ !empty($prospect->utilisateur->name) ? $prospect->utilisateur->name : 'Personne' }}">
 
@@ -574,6 +594,11 @@
                                                     <div class="col-6 det" style="font-size: 18px">Email</strong></div>
                                                     <div class="col-6 showEmailProspect"><span style="font-size: 18px" id="showEmailDetail-{{ $prospect->id }}"></span></div>
                                             
+                                                    <div class="col-6 det" style="font-size: 18px">Lien de la société</strong></div>
+                                                    <div class="col-6 showLienProspect"><a href="{{ $prospect->lien_prospect }}" target="_blank" class="text-primary" style="font-size: 18px">
+                                                        {{ Str::limit($prospect->lien_prospect, 20) }} <!-- Limite l'affichage -->
+                                                    </a></div>
+
                                                     <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
                                                     <div class="col-6 showVilleProspect"><span style="font-size: 18px" id="showVilleDetail-{{ $prospect->id }}"></span></div>
                                             
@@ -700,6 +725,17 @@
                                 @endif
 
                             </div>
+                            <div>
+                                <label class="form-label"><strong class="det">Lien de la société</strong></label>
+                                <input type="tel" class="form-control" name="newLien_prospect"
+                                    placeholder="Entrer le lien..." id="updateProspectLien"
+                                    value="{{ old('newLien_prospect', $prospect->lien_prospect) }}"/>
+                                @if ($errors->has('newLien_prospect'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newLien_prospect') }}</span><br>
+                                @endif
+
+                            </div>
 
                             <div>
                                 <label class="form-label"><strong class="det">Ville</strong></label>
@@ -819,6 +855,7 @@
                 const prospectSociety = button.getAttribute('data-society');
                 const prospectGSM1 = button.getAttribute('data-GSM1');
                 const prospectGSM2 = button.getAttribute('data-GSM2');
+                const prospectLien = button.getAttribute('data-lien');
                 const prospectCategory = button.getAttribute('data-category')
 
                 document.getElementById('updateProspectId').value = prospectId;
@@ -829,6 +866,7 @@
                 document.getElementById('updateProspectSociety').value = prospectSociety;
                 document.getElementById('updateProspectGSM1').value = prospectGSM1;
                 document.getElementById('updateProspectGSM2').value = prospectGSM2;
+                document.getElementById('updateProspectLien').value = prospectLien;
                 document.getElementById('updateProspectCategory').value = prospectCategory;
 
 
@@ -899,6 +937,7 @@
                 const prospectSociety = this.getAttribute('data-society-name')
                 const prospectGSM1 = this.getAttribute('data-GSM1')
                 const prospectGSM2 = this.getAttribute('data-GSM2')
+                const prospectLien = this.getAttribute('data-lien')
                 const prospectRemark = this.getAttribute('data-remark')
                 const prospectUser = this.getAttribute('data-user')
 
@@ -909,6 +948,7 @@
                 document.querySelector(`#showSocietyDetail-${prospectId}`).innerText = prospectSociety
                 document.querySelector(`#showGSM1Detail-${prospectId}`).innerText = prospectGSM1
                 document.querySelector(`#showGSM2Detail-${prospectId}`).innerText = prospectGSM2
+                document.querySelector(`#showLienDetail-${prospectId}`).innerText = prospectLien
                 document.querySelector(`#showRemarkDetail-${prospectId}`).innerText = prospectRemark
                 document.querySelector(`#showUserDetail-${prospectId}`).innerText = prospectUser
             })
@@ -1028,7 +1068,11 @@
                         <h6 class="info-prospect" id="showEmailProspect">
                         </h6>
                     </div>
-
+                    <div class="show-info-prospect show-society">
+                        <label class="label-detail-prospect">Lien de la société</label>
+                        <h6 class="info-prospect" id="showLienProspect">
+                        </h6>
+                    </div>
 
                     <div class="show-info-prospect show-ville">
                         <label class="label-detail-prospect">Ville</label>

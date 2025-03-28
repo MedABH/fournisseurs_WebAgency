@@ -23,6 +23,7 @@ class Fournisseur extends Model
         'nomSociete_fournisseur',
         'GSM1_fournisseur',
         'GSM2_fournisseur',
+        'lien_fournisseur',
         'user_id',
         'remark'
     ];

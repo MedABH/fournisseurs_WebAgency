@@ -24,12 +24,13 @@ class FournisseurController extends Controller
     {
         $rules = [
             'nom_fournisseur' => ['nullable', 'max:50', 'string'],
-            'email_fournisseur' => ['nullable', 'string', 'max:266', 'unique:fournisseurs,email_fournisseur'],
+            'email_fournisseur' => ['nullable','email', 'string', 'max:266', 'unique:fournisseurs,email_fournisseur'],
             'tele_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,tele_fournisseur'],
             'ville_fournisseur' => ['required', 'max:60', 'string'],
             'nomSociete_fournisseur' => ['nullable', 'max:200', 'unique:fournisseurs,nomSociete_fournisseur'],
             'GSM1_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,GSM1_fournisseur'],
             'GSM2_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:fournisseurs,GSM2_fournisseur'],
+            'lien_fournisseur' => ['nullable','url', 'string', 'max:266', 'unique:fournisseurs,lien_fournisseur'],
             'categorie_id' => ['required', 'integer', 'exists:categories,id'],
         ];
 
@@ -48,6 +49,8 @@ class FournisseurController extends Controller
             'GSM1_fournisseur.unique' => 'Le contact de la société doit être unique!',
             'GSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'GSM2_fournisseur.unique' => 'Le contact de la société doit être unique!',
+            'lien_fournisseur.unique' => 'Lien de la société doit être unique!',
+            'lien_fournisseur.string' => "Lien de la société doit être en chaine de caractère!",
             'nomSociete_fournisseur.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
@@ -71,6 +74,7 @@ class FournisseurController extends Controller
         $fournisseur->nomSociete_fournisseur = $request->nomSociete_fournisseur ?? '';
         $fournisseur->GSM1_fournisseur = $request->GSM1_fournisseur ?? '';
         $fournisseur->GSM2_fournisseur = $request->GSM2_fournisseur ?? '';
+        $fournisseur->lien_fournisseur = $request->lien_fournisseur ?? '';
         $fournisseur->user_id = null;
 
         $fournisseur->groupId_fournisseur = Str::uuid();
@@ -108,7 +112,7 @@ class FournisseurController extends Controller
             $fournisseur->allCategories = $fournisseur->allCategories();
         }
 
-        $select = ['Tiers', 'Client', 'Fournisseur Client'];
+        $select = ['Tiers', 'Prosperts', 'Fournisseur Client'];
 
         $utilisateurs = User::where('role', 'utilisateur')->get();
 
@@ -245,6 +249,7 @@ class FournisseurController extends Controller
             'newNomSociete_fournisseur' => ['nullable', 'max:200', 'string'],
             'newGSM1_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newGSM2_fournisseur' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newLien_fournisseur' => ['nullable', 'string', 'max:266'],
             'newCategorie_id' => ['required', 'integer', 'exists:categories,id']
         ];
 
@@ -260,6 +265,7 @@ class FournisseurController extends Controller
             'newVille_fournisseur.string' => 'La ville doit être en chaine de caractère!',
             'newGSM1_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'newGSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
+            'newLien_fournisseur.string' => 'Lien doit être en chaine de caractère!',
             'newCategorie_id.required' => 'La catégorie est obligatoire!',
             'newCategorie_id.integer' => 'La catégorie doit être un entier!',
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
@@ -282,6 +288,7 @@ class FournisseurController extends Controller
         $tele = $request->newTele_fournisseur ?? '';
         $GSM1 = $request->newGSM1_fournisseur ?? '';
         $GSM2 = $request->newGSM2_fournisseur ?? '';
+        $lien = $request->newlien_fournisseur ?? '';
 
         $newCategorieId = $request->newCategorie_id;
 
@@ -292,6 +299,7 @@ class FournisseurController extends Controller
             ->where('nomSociete_fournisseur', $nomSociety)
             ->where('GSM1_fournisseur', $GSM1)
             ->where('GSM2_fournisseur', $GSM2)
+            ->where('lien_fournisseur', $lien)
             ->whereHas('categories', function ($query) use ($newCategorieId) {
                 $query->where('categories.id', $newCategorieId);
             })
@@ -322,6 +330,7 @@ class FournisseurController extends Controller
         $fournisseur->ville_fournisseur = $request->newVille_fournisseur;
         $fournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
         $fournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
+        $fournisseur->lien_fournisseur = $request->newLien_fournisseur ?? '';
         $fournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
 
         if ($fournisseur->save()) {
@@ -339,6 +348,7 @@ class FournisseurController extends Controller
             $similarFournisseur->nomSociete_fournisseur = $request->newNomSociete_fournisseur ?? '';
             $similarFournisseur->GSM1_fournisseur = $request->newGSM1_fournisseur ?? '';
             $similarFournisseur->GSM2_fournisseur = $request->newGSM2_fournisseur ?? '';
+            $similarFournisseur->lien_fournisseur = $request->newLien_fournisseur ?? '';
             if ($similarFournisseur->save()) {
                 alert()->success('Succès', 'Le fournisseur a été mis à jour avec succès.');
             }
@@ -352,7 +362,7 @@ class FournisseurController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Tiers', 'Client', 'Fournisseur Client'];
+        $select = ['Tiers', 'Prosperts', 'Fournisseur Client'];
         $search = $request->input('search');
         $supplier = Fournisseur::with(['categories.sousCategories', 'utilisateur'])
             ->where('tele_fournisseur', 'LIKE', "%{$search}%")
@@ -381,7 +391,8 @@ class FournisseurController extends Controller
             $fournisseur->ville_fournisseur !== $request->newVille_fournisseur ||
             $fournisseur->nomSociete_fournisseur !== ($request->newNomSociete_fournisseur ?? '') ||
             $fournisseur->GSM1_fournisseur !== ($request->newGSM1_fournisseur ?? '') ||
-            $fournisseur->GSM2_fournisseur !== ($request->newGSM2_fournisseur ?? '');
+            $fournisseur->GSM2_fournisseur !== ($request->newGSM2_fournisseur ?? '') ||
+            $fournisseur->lien_fournisseur !== ($request->newLien_fournisseur ?? '');
     }
 
     public function fournisseur(Request $request, $id)
@@ -401,6 +412,7 @@ class FournisseurController extends Controller
                 $prospect->tele_prospect = $fournisseurItem->tele_fournisseur;
                 $prospect->GSM1_prospect = $fournisseurItem->GSM1_fournisseur;
                 $prospect->GSM2_prospect = $fournisseurItem->GSM2_fournisseur;
+                $prospect->lien_prospect = $fournisseurItem->lien_fournisseur;
                 $prospect->ville_prospect = $fournisseurItem->ville_fournisseur;
                 $prospect->nomSociete_prospect = $fournisseurItem->nomSociete_fournisseur;
                 $prospect->user_id = $fournisseurItem->user_id;
@@ -451,6 +463,7 @@ class FournisseurController extends Controller
                 $client->tele_client = $fournisseurItem->tele_fournisseur;
                 $client->GSM1_client = $fournisseurItem->GSM1_fournisseur;
                 $client->GSM2_client = $fournisseurItem->GSM2_fournisseur;
+                $client->lien_client = $fournisseurItem->lien_fournisseur;
                 $client->ville_client = $fournisseurItem->ville_fournisseur;
                 $client->nomSociete_client = $fournisseurItem->nomSociete_fournisseur;
                 $client->user_id = $fournisseurItem->user_id;
@@ -501,6 +514,7 @@ class FournisseurController extends Controller
                 $fc->tele_fournisseurClient = $fournisseurItem->tele_fournisseur;
                 $fc->GSM1_fournisseurClient = $fournisseurItem->GSM1_fournisseur;
                 $fc->GSM2_fournisseurClient = $fournisseurItem->GSM2_fournisseur;
+                $fc->lien_fournisseurClient = $fournisseurItem->lien_fournisseur;
                 $fc->ville_fournisseurClient = $fournisseurItem->ville_fournisseur;
                 $fc->nomSociete_fournisseurClient = $fournisseurItem->nomSociete_fournisseur;
                 $fc->user_id = $fournisseurItem->user_id;

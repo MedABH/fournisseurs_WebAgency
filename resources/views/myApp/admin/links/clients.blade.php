@@ -171,7 +171,7 @@
                         @enderror
 
 
-                        <label class="form-label"><strong class="det">lien de la société</strong></label><br>
+                        <label class="form-label"><strong class="det">Lien de la société</strong></label><br>
                         <input type="url" class="form-control" name="lien_client"
                             placeholder="Entrer le lien..." value="{{ old('lien_client') }}"/>
                         @error('lien_client', 'default')
@@ -239,7 +239,7 @@
                             <th class="cell">Personne à contacter</th>
                             <th class="cell">Numero de telephone</th>
                             <th class="cell">Email</th>
-                            <th class="cell">lien de la société</th>
+                            <th class="cell">Lien de la société</th>
                             <th class="cell">Ville</th>
                             <th class="cell">Catégorie</th>
                             <th class="cell">Contacté Par</th>
@@ -600,10 +600,11 @@
                                                         id="showEmailDetail-{{ $client->id }}"></span></div>
                                                 
                                                 
-                                                <div class="col-6 det" style="font-size: 18px">lien de la société</strong>
+                                                <div class="col-6 det" style="font-size: 18px">Lien de la société</strong>
                                                 </div>
-                                                <div class="col-6 showLienClient"><span style="font-size: 18px"
-                                                        id="showLienDetail-{{ $client->id }}"></span></div>
+                                                <div class="col-6 showLienClient"><a href="{{ $client->lien_client }}" target="_blank" class="text-primary" style="font-size: 18px">
+                                                    {{ Str::limit($client->lien_client, 20) }} <!-- Limite l'affichage -->
+                                                </a></div>
 
                                                 <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
                                                 <div class="col-6 showVilleClient"><span style="font-size: 18px"
@@ -746,7 +747,7 @@
                             </div>
 
                             <div>
-                                <label class="form-label"><strong class="det">lien de la société</strong></label>
+                                <label class="form-label"><strong class="det">Lien de la société</strong></label>
                                 <input type="url" class="form-control" name="newLien_client"
                                     placeholder="Entrer le lien..." id="updateClientLien"
                                     value="{{ old('newLien_client', $client->lien_client) }}"/>
@@ -1089,7 +1090,7 @@
                         </h6>
                     </div>
                     <div class="show-info-client show-society">
-                        <label class="label-detail-client">lien de la société</label>
+                        <label class="label-detail-client">Lien de la société</label>
                         <h6 class="info-client" id="showLienClient">
                         </h6>
                     </div>
