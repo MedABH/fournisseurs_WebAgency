@@ -101,7 +101,7 @@
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Tiers</a>
-        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Clients</a>
+        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Prosperts</a>
         <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs</a>
         <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs Clients</a>
     </nav>

@@ -26,6 +26,7 @@ class ClientController extends Controller
             'nom_client' => ['nullable', 'max:50', 'string'],
             'GSM1_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,GSM1_client'],
             'GSM2_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,GSM2_client'],
+            'lien_client' => ['nullable', 'url', 'string', 'max:266', 'unique:clients,lien_client'],
             'email_client' => ['nullable', 'email', 'string', 'max:266', 'unique:clients,email_client'],
             'tele_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/', 'unique:clients,tele_client'],
             'nomSociete_client' => ['nullable', 'max:200', 'unique:clients,nomSociete_client'],
@@ -39,6 +40,7 @@ class ClientController extends Controller
             'GSM1_client.unique' => 'Le contact de la societe doit être unique!',
             'GSM2_client.regex' => 'Le numéro de téléphone doit être valide!',
             'GSM2_client.unique' => 'Le contact de la societe doit être unique!',
+            'lien_client.string' => 'Le lien de la societe doit être valide!',
             'email_client.string' => "L'émail doit être en chaine de caractère!",
             'email_client.unique' => "L'émail doit être unique!",
             'ville_client.required' => "La ville est obligatoire!",
@@ -66,6 +68,7 @@ class ClientController extends Controller
         $client->nom_client = $request->nom_client ?? '';
         $client->GSM1_client = $request->GSM1_client ?? '';
         $client->GSM2_client = $request->GSM2_client ?? '';
+        $client->lien_client = $request->lien_client ?? '';
         $client->ville_client = $request->ville_client;
         $client->tele_client = $request->tele_client ?? '';
         $client->email_client = $request->email_client ?? '';
@@ -234,6 +237,7 @@ class ClientController extends Controller
             'newNom_client' => ['nullable', 'max:50', 'string'],
             'newGSM1_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newGSM2_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
+            'newLien_client' => ['nullable', 'string', 'max:266'],
             'newEmail_client' => ['nullable', 'string', 'max:266'],
             'newTele_client' => ['nullable', 'regex:/^\+?[0-9]{9,15}$/'],
             'newVille_client' => ['required', 'max:60', 'string'],
@@ -246,6 +250,7 @@ class ClientController extends Controller
             'newNom_client.string' => 'Le nom doit être en chaine de caractère!',
             // 'newEmail_client.required' => "L'émail est obligatoire!",
             'newEmail_client.string' => "L'émail doit être en chaine de caractère!",
+            'newLien_client.string' => "Lien de la societe doit être en chaine de caractère!",
             'newVille_client.required' => "La ville est obligatoire!",
             'newVille_client.string' => 'La ville doit être en chaine de caractère!',
             // 'newTele_client.required' => 'Le contact est obligatoire!',
@@ -269,6 +274,7 @@ class ClientController extends Controller
         $nomSociety = $request->newNomSociete_client ?? '';
         $GSM1 = $request->newGSM1_client ?? '';
         $GSM2 = $request->newGSM2_client ?? '';
+        $lien = $request->newLien_client ?? '';
         $email = $request->newEmail_client ?? '';
         $name = $request->newNom_client ?? '';
         $tele = $request->newTele_client ?? '';
@@ -278,6 +284,7 @@ class ClientController extends Controller
             ->where('tele_client', $tele)
             ->where('GSM1_client', $GSM1)
             ->where('GSM2_client', $GSM2)
+            ->where('lien_client', $lien)
             ->where('ville_client', $request->newVille_client)
             ->where('nomSociete_client', $nomSociety)
 
@@ -309,6 +316,7 @@ class ClientController extends Controller
         $client->tele_client = $request->newTele_client ?? '';
         $client->GSM1_client = $request->newGSM1_client ?? '';
         $client->GSM2_client = $request->newGSM2_client ?? '';
+        $client->lien_client = $request->newLien_client ?? '';
         $client->ville_client = $request->newVille_client;
         $client->nomSociete_client = $request->newNomSociete_client ?? '';
 
@@ -328,6 +336,7 @@ class ClientController extends Controller
             $similarClient->tele_client = $request->newTele_client ?? '';
             $similarClient->GSM1_client = $request->newGSM1_client ?? '';
             $similarClient->GSM2_client = $request->newGSM2_client ?? '';
+            $similarClient->lien_client = $request->newLien_client ?? '';
             $similarClient->ville_client = $request->newVille_client;
             $similarClient->nomSociete_client = $request->newNomSociete_client ?? '';
 
@@ -348,6 +357,7 @@ class ClientController extends Controller
             $client->tele_client !== ($request->newTele_client ?? '') ||
             $client->GSM1_client !== ($request->newGSM1_client ?? '') ||
             $client->GSM2_client !== ($request->newGSM2_client ?? '') ||
+            $client->lien_client !== ($request->newLien_client ?? '') ||
             $client->ville_client !== $request->newVille_client ||
             $client->nomSociete_client !== ($request->newNomSociete_client ?? '');
     }
@@ -369,6 +379,7 @@ class ClientController extends Controller
                 $fournisseur->tele_fournisseur = $clientItem->tele_client;
                 $fournisseur->GSM1_fournisseur = $clientItem->GSM1_client;
                 $fournisseur->GSM2_fournisseur = $clientItem->GSM2_client;
+                $fournisseur->lien_fournisseur = $clientItem->lien_client;
                 $fournisseur->ville_fournisseur = $clientItem->ville_client;
                 $fournisseur->nomSociete_fournisseur = $clientItem->nomSociete_client;
                 $fournisseur->user_id = $clientItem->user_id;
@@ -419,6 +430,7 @@ class ClientController extends Controller
                 $prospect->tele_prospect = $clientItem->tele_client;
                 $prospect->GSM1_prospect = $clientItem->GSM1_client;
                 $prospect->GSM2_prospect = $clientItem->GSM2_client;
+                $prospect->lien_prospect = $clientItem->lien_client;
                 $prospect->ville_prospect = $clientItem->ville_client;
                 $prospect->nomSociete_prospect = $clientItem->nomSociete_client;
                 $prospect->user_id = $clientItem->user_id;
@@ -469,6 +481,7 @@ class ClientController extends Controller
                 $fc->tele_fournisseurClient = $clientItem->tele_client;
                 $fc->GSM1_fournisseurClient = $clientItem->GSM1_client;
                 $fc->GSM2_fournisseurClient = $clientItem->GSM2_client;
+                $fc->lien_fournisseurClient = $clientItem->lien_client;
                 $fc->ville_fournisseurClient = $clientItem->ville_client;
                 $fc->nomSociete_fournisseurClient = $clientItem->nomSociete_client;
                 $fc->user_id = $clientItem->user_id;

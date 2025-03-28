@@ -22,6 +22,7 @@ class Client extends Model
         'nomSociete_client',
         'GSM1_client',
         'GSM2_client',
+        'lien_client',
         'user_id',
         'remark'
     ];

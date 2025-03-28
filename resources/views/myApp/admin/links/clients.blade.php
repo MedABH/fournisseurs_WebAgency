@@ -2,7 +2,7 @@
 @section('search-bar')
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0" style="color: #404242">LES CLIENTS</h1>
+            <h1 class="app-page-title mb-0" style="color: #404242">LES Prosperts</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
@@ -23,7 +23,7 @@
                                 <i class="fas fa-file-pdf"></i> Exporter en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prospert</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -36,7 +36,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prospert</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -47,10 +47,10 @@
                         @elseif (auth()->user()->role == 'admin')
                         <div class="dropdown">
                             <button class="btn app-btn-secondary dropdown-toggle" type="button" id="exportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-file-pdf"></i> EXPORTER
+                                <i class="fas fa-file-pdf"></i> EXPORTER en pdf
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prospert</a></li>
                                 <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
@@ -63,7 +63,7 @@
                                 <i class="fas fa-file-excel"></i> Exporter en Excel
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
-                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prospert</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
@@ -84,7 +84,7 @@
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
         <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Tiers</a>
-        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link active">Clients</a>
+        <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link active">Prosperts</a>
         <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs</a>
         <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs Clients</a>
     </nav>
@@ -135,6 +135,7 @@
                             placeholder="Entrer le GSM1..." value="{{ old('GSM1_client') }}" pattern="[0-9]{10,15}" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
                         @error('GSM1_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
+
                         @enderror
 
 
@@ -144,8 +145,8 @@
                         @error('GSM2_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
-
-
+                        
+                        
                         <label class="form-label"><strong class="det">Personne à contacter</strong></label><br>
                         <input type="text" class="form-control" name="nom_client" placeholder="Entrer le client..."
                             value="{{ old('nom_client') }}" />
@@ -166,6 +167,14 @@
                         <input type="email" class="form-control" name="email_client" placeholder="Entrer l'émail..."
                             value="{{ old('email_client') }}" />
                         @error('email_client', 'default')
+                            <span class="text-danger">{{ $message }}</span> <br>
+                        @enderror
+
+
+                        <label class="form-label"><strong class="det">lien de la société</strong></label><br>
+                        <input type="url" class="form-control" name="lien_client"
+                            placeholder="Entrer le lien..." value="{{ old('lien_client') }}"/>
+                        @error('lien_client', 'default')
                             <span class="text-danger">{{ $message }}</span> <br>
                         @enderror
 
@@ -230,6 +239,7 @@
                             <th class="cell">Personne à contacter</th>
                             <th class="cell">Numero de telephone</th>
                             <th class="cell">Email</th>
+                            <th class="cell">lien de la société</th>
                             <th class="cell">Ville</th>
                             <th class="cell">Catégorie</th>
                             <th class="cell">Contacté Par</th>
@@ -266,6 +276,15 @@
                                 <td class="cell2">
                                     {!! !empty($client->email_client) ? $client->email_client : '<span class="text-danger">Non disponible</span>' !!}
                                 </td>
+                                <td class="cell2">
+                                    @if(!empty($client->lien_client))
+                                        <a href="{{ $client->lien_client }}" target="_blank" class="text-primary">
+                                            {{ Str::limit($client->lien_client, 20) }} <!-- Limite l'affichage -->
+                                        </a>
+                                    @else
+                                        <span class="text-danger">Non disponible</span>
+                                    @endif
+                                </td>
                                 <td class="cell2">{{ $client->ville_client }}</td>
                                 <td class="cell2">
                                     @forelse ($client->categorieClients as $assoc)
@@ -291,6 +310,7 @@
                                                 data-society="{{ $client->nomSociete_client }}"
                                                 data-GSM1="{{ $client->GSM1_client }}"
                                                 data-GSM2="{{ $client->GSM2_client }}"
+                                                data-lien="{{ $client->lien_client }}"
                                                 data-name="{{ $client->nom_client }}"
                                                 data-tele="{{ $client->tele_client }}"
                                                 data-email="{{ $client->email_client }}"
@@ -320,6 +340,7 @@
                                                 data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
                                                 data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
                                                 data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                data-lien="{{ !empty($client->lien_client) ? $client->lien_client : 'Non disponible' }}"
                                                 data-remark="{{ $client->remark }}"
                                                 data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
 
@@ -379,6 +400,7 @@
                                                 data-society="{{ $client->nomSociete_client }}"
                                                 data-GSM1="{{ $client->GSM1_client }}"
                                                 data-GSM2="{{ $client->GSM2_client }}"
+                                                data-lien="{{ $client->lien_client }}"
                                                 data-name="{{ $client->nom_client }}"
                                                 data-tele="{{ $client->tele_client }}"
                                                 data-email="{{ $client->email_client }}"
@@ -423,6 +445,7 @@
                                                 data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
                                                 data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
                                                 data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                data-lien="{{ !empty($client->lien_client) ? $client->lien_client : 'Non disponible' }}"
                                                 data-remark="{{ $client->remark }}"
                                                 data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
 
@@ -467,6 +490,7 @@
                                                 data-society-name="{{ !empty($client->nomSociete_client) ? $client->nomSociete_client : 'Particulier' }}"
                                                 data-GSM1="{{ !empty($client->GSM1_client) ? $client->GSM1_client : 'Non disponible' }}"
                                                 data-GSM2="{{ !empty($client->GSM2_client) ? $client->GSM2_client : 'Non disponible' }}"
+                                                data-lien="{{ !empty($client->lien_client) ? $client->lien_client : 'Non disponible' }}"
                                                 data-remark="{{ $client->remark }}"
                                                 data-user="{{ !empty($client->utilisateur->name) ? $client->utilisateur->name : 'Personne' }}">
 
@@ -574,6 +598,12 @@
                                                 <div class="col-6 det" style="font-size: 18px">Email</strong></div>
                                                 <div class="col-6 showEmailClient"><span style="font-size: 18px"
                                                         id="showEmailDetail-{{ $client->id }}"></span></div>
+                                                
+                                                
+                                                <div class="col-6 det" style="font-size: 18px">lien de la société</strong>
+                                                </div>
+                                                <div class="col-6 showLienClient"><span style="font-size: 18px"
+                                                        id="showLienDetail-{{ $client->id }}"></span></div>
 
                                                 <div class="col-6 det" style="font-size: 18px">Ville</strong></div>
                                                 <div class="col-6 showVilleClient"><span style="font-size: 18px"
@@ -716,6 +746,18 @@
                             </div>
 
                             <div>
+                                <label class="form-label"><strong class="det">lien de la société</strong></label>
+                                <input type="url" class="form-control" name="newLien_client"
+                                    placeholder="Entrer le lien..." id="updateClientLien"
+                                    value="{{ old('newLien_client', $client->lien_client) }}"/>
+                                @if ($errors->has('newLien_client'))
+                                    <span class="text-danger">
+                                        {{ $errors->first('newLien_client') }}</span> <br>
+                                @endif
+
+                            </div>
+
+                            <div>
                                 <label class="form-label"><strong class="det">Ville</strong></label>
                                 <input id="updateClientVille" type="text" class="form-control" name="newVille_client"
                                     placeholder="Entrer la ville..."
@@ -833,6 +875,7 @@
                 const clientSociety = button.getAttribute('data-society');
                 const clientGSM1 = button.getAttribute('data-GSM1');
                 const clientGSM2 = button.getAttribute('data-GSM2');
+                const clientLien = button.getAttribute('data-lien');
                 const clientCategory = button.getAttribute('data-category')
 
                 document.getElementById('updateClientId').value = clientId;
@@ -843,6 +886,7 @@
                 document.getElementById('updateClientSociety').value = clientSociety;
                 document.getElementById('updateClientGSM1').value = clientGSM1;
                 document.getElementById('updateClientGSM2').value = clientGSM2;
+                document.getElementById('updateClientLien').value = clientLien;
                 document.getElementById('updateClientCategory').value = clientCategory;
 
 
@@ -913,6 +957,7 @@
                 const clientSociety = this.getAttribute('data-society-name')
                 const clientGSM1 = this.getAttribute('data-GSM1')
                 const clientGSM2 = this.getAttribute('data-GSM2')
+                const clientLien = this.getAttribute('data-lien')
                 const clientRemark = this.getAttribute('data-remark')
                 const clientUser = this.getAttribute('data-user')
 
@@ -923,6 +968,7 @@
                 document.querySelector(`#showSocietyDetail-${clientId}`).innerText = clientSociety
                 document.querySelector(`#showGSM1Detail-${clientId}`).innerText = clientGSM1
                 document.querySelector(`#showGSM2Detail-${clientId}`).innerText = clientGSM2
+                document.querySelector(`#showLienDetail-${clientId}`).innerText = clientLien
                 document.querySelector(`#showRemarkDetail-${clientId}`).innerText = clientRemark
                 document.querySelector(`#showUserDetail-${clientId}`).innerText = clientUser
             })
@@ -1042,7 +1088,11 @@
                         <h6 class="info-client" id="showEmailClient">
                         </h6>
                     </div>
-
+                    <div class="show-info-client show-society">
+                        <label class="label-detail-client">lien de la société</label>
+                        <h6 class="info-client" id="showLienClient">
+                        </h6>
+                    </div>
 
 
                     <div class="show-info-client show-ville">
