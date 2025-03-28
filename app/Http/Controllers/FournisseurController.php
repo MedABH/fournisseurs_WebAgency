@@ -48,9 +48,7 @@ class FournisseurController extends Controller
             'GSM1_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'GSM1_fournisseur.unique' => 'Le contact de la société doit être unique!',
             'GSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            'GSM2_fournisseur.unique' => 'Le contact de la société doit être unique!',
-            'lien_fournisseur.unique' => 'Lien de la société doit être unique!',
-            'lien_fournisseur.string' => "Lien de la société doit être en chaine de caractère!",
+            'lien_fournisseur.string' => "Lien de la société doit être valide!",
             'nomSociete_fournisseur.unique' => "Le nom de la société doit être unique!",
             'categorie_id.required' => 'La catégorie est obligatoire!',
             'categorie_id.integer' => 'La catégorie doit être un entier!',
@@ -265,7 +263,7 @@ class FournisseurController extends Controller
             'newVille_fournisseur.string' => 'La ville doit être en chaine de caractère!',
             'newGSM1_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
             'newGSM2_fournisseur.regex' => 'Le numéro de téléphone doit être valide!',
-            'newLien_fournisseur.string' => 'Lien doit être en chaine de caractère!',
+            'newLien_fournisseur.string' => 'Lien de la societe doit être en chaine de caractère!',
             'newCategorie_id.required' => 'La catégorie est obligatoire!',
             'newCategorie_id.integer' => 'La catégorie doit être un entier!',
             'newCategorie_id.exists' => 'Cette catégorie n\'existe pas!',
@@ -288,7 +286,7 @@ class FournisseurController extends Controller
         $tele = $request->newTele_fournisseur ?? '';
         $GSM1 = $request->newGSM1_fournisseur ?? '';
         $GSM2 = $request->newGSM2_fournisseur ?? '';
-        $lien = $request->newlien_fournisseur ?? '';
+        $lien = $request->newLien_fournisseur ?? '';
 
         $newCategorieId = $request->newCategorie_id;
 
