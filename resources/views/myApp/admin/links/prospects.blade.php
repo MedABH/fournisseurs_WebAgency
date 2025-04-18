@@ -2,7 +2,7 @@
 @section('search-bar')
     <div class="row g-3 mb-4 align-items-center justify-content-between">
         <div class="col-auto">
-            <h1 class="app-page-title mb-0" style="color: #404242">LES TIERS</h1>
+            <h1 class="app-page-title mb-0" style="color: #404242">LES Clients</h1>
         </div>
         <div class="col-auto">
             <div class="page-utilities">
@@ -25,7 +25,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
-                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -38,7 +38,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
-                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -52,7 +52,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prosperts</a></li>
-                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -65,7 +65,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prosperts</a></li>
-                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -100,7 +100,7 @@
 @endsection
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Tiers</a>
+        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link active">Clients</a>
         <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link">Prosperts</a>
         <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs</a>
         <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs Clients</a>
@@ -115,7 +115,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Tier</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un Client</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -569,7 +569,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5>Details du tier</h5>
+                                                <h5>Details du Client</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -654,7 +654,7 @@
                         @csrf
                         <input type="hidden" name="id" id="updateProspectId">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modifier le tiers</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Modifier le Clients</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
@@ -904,8 +904,8 @@
     <script>
         function confirmDelete(prospectId) {
             Swal.fire({
-                title: 'Supprimer le tier !',
-                text: "êtes-vous sûr que vous voulez supprimer ce tier ?",
+                title: 'Supprimer le Client !',
+                text: "êtes-vous sûr que vous voulez supprimer ce Client ?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
@@ -917,7 +917,7 @@
                     document.getElementById('delete-form-' + prospectId).submit();
                     Swal.fire(
                         "Supprimé !",
-                        "Le tier a été supprimé avec succès.",
+                        "Le Client a été supprimé avec succès.",
                         "success"
                     );
                 }

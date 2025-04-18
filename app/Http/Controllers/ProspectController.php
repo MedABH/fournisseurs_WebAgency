@@ -81,7 +81,7 @@ class ProspectController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->prospects()->attach($prospect->id);
 
-        ActivityLogController::logActivity("Ajout", "Tiers",  " A ajouté" . $prospect->nom_prospect );
+        ActivityLogController::logActivity("Ajout", "Clients",  " A ajouté" . $prospect->nom_prospect );
 
         // Update the 'addedToday' in the settings table
         $setting = Setting::where('key', 'tiersTracking')->first();
@@ -121,7 +121,7 @@ class ProspectController extends Controller
         }
 
 
-        ActivityLogController::logActivity("Contacté par", "Tiers","L'utilisateur a modifié qui contacté  " . $prospect->nom_prospect);
+        ActivityLogController::logActivity("Contacté par", "Clients","L'utilisateur a modifié qui contacté  " . $prospect->nom_prospect);
         return redirect()->back();
     }
 
@@ -159,7 +159,7 @@ class ProspectController extends Controller
             $p->save();
         }
         
-        ActivityLogController::logActivity("Remarque", "Tiers","L'utilisateur a ajouté une remarque a  " . $prospect->nom_prospect);
+        ActivityLogController::logActivity("Remarque", "Clients","L'utilisateur a ajouté une remarque a  " . $prospect->nom_prospect);
 
         return redirect()->back();
     }
@@ -232,7 +232,7 @@ class ProspectController extends Controller
             $setting->increment('deletedToday');
         }
 
-        ActivityLogController::logActivity("Suppression", "Tiers",  " A supprimé  " . $prospect->nom_prospect );
+        ActivityLogController::logActivity("Suppression", "Clients",  " A supprimé  " . $prospect->nom_prospect );
         return redirect()->to(url()->previous());
     }
 
@@ -352,7 +352,7 @@ class ProspectController extends Controller
             };
         }
 
-        ActivityLogController::logActivity("Modification", "Tiers",  " A modifié  " . $prospect->nom_prospect );
+        ActivityLogController::logActivity("Modification", "Clients",  " A modifié  " . $prospect->nom_prospect );
         return redirect()->back();
     }
 
@@ -533,7 +533,7 @@ class ProspectController extends Controller
         if ($setting) {
             $setting->increment('deletedToday', $tiersChange);
         }
-        ActivityLogController::logActivity("Transfert", "Tiers","L'utilisateur a transféré " . $tiersChange . " Tiers à " . $selectedStatus);
+        ActivityLogController::logActivity("Transfert", "Clients","L'utilisateur a transféré " . $tiersChange . " Clients à " . $selectedStatus);
 
         return redirect()->to(url()->previous());
     }

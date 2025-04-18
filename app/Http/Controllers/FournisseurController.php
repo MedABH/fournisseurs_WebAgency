@@ -110,7 +110,7 @@ class FournisseurController extends Controller
             $fournisseur->allCategories = $fournisseur->allCategories();
         }
 
-        $select = ['Tiers', 'Prosperts', 'Fournisseur Client'];
+        $select = ['Clients', 'Prosperts', 'Fournisseur Client'];
 
         $utilisateurs = User::where('role', 'utilisateur')->get();
 
@@ -360,7 +360,7 @@ class FournisseurController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Tiers', 'Prosperts', 'Fournisseur Client'];
+        $select = ['Clients', 'Prosperts', 'Fournisseur Client'];
         $search = $request->input('search');
         $supplier = Fournisseur::with(['categories.sousCategories', 'utilisateur'])
             ->where('tele_fournisseur', 'LIKE', "%{$search}%")
@@ -402,7 +402,7 @@ class FournisseurController extends Controller
         // Set initial $tiersChange value
         $tiersChange = 0;
 
-        if ($selectedStatus === 'Tiers') {
+        if ($selectedStatus === 'Clients') {
             foreach ($fournisseursGroup as $fournisseurItem) {
                 $prospect = new Prospect();
                 $prospect->nom_prospect = $fournisseurItem->nom_fournisseur;

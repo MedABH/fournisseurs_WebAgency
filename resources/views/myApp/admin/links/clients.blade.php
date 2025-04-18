@@ -24,7 +24,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prospert</a></li>
-                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -37,7 +37,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prospert</a></li>
-                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -51,7 +51,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('clients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Prospert</a></li>
-                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('prospects.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurs.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('fournisseurClients.pdf') }}"><i class="fas fa-file-pdf"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -64,7 +64,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <li><a class="dropdown-item" href="{{ route('export.clients') }}"><i class="fas fa-file-excel"></i> Exporter Prospert</a></li>
-                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Tiers</a></li>
+                                <li><a class="dropdown-item" href="{{ route('export.prospects') }}"><i class="fas fa-file-excel"></i> Exporter Clients</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurs') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseurs</a></li>
                                 <li><a class="dropdown-item" href="{{ route('export.fournisseurClients') }}"><i class="fas fa-file-excel"></i> Exporter Fournisseur Clients</a></li>
                                 <li><hr class="dropdown-divider"></li>
@@ -83,7 +83,7 @@
 
 @section('parties-prenantes')
     <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-4">
-        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Tiers</a>
+        <a href="/prospectsSection" class="flex-sm-fill text-sm-center nav-link">Clients</a>
         <a href="/clientsSection" class="flex-sm-fill text-sm-center nav-link active">Prosperts</a>
         <a href="/suppliersSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs</a>
         <a href="/suppliersAndClientsSection" class="flex-sm-fill text-sm-center nav-link">Fournisseurs Clients</a>

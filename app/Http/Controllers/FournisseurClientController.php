@@ -170,7 +170,7 @@ class FournisseurClientController extends Controller
             $fc->allCategories = $fc->allCategories();
         }
 
-        $select = ['Fournisseur', 'Prosperts', 'Tiers'];
+        $select = ['Fournisseur', 'Prosperts', 'Clients'];
 
         return view('myApp.admin.links.clientFournisseur', compact('categories', 'fournisseurClients', 'select', 'perPage'));
     }
@@ -237,7 +237,7 @@ class FournisseurClientController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Fournisseur', 'Prosperts', 'Tiers'];
+        $select = ['Fournisseur', 'Prosperts', 'Clients'];
         $search = $request->input('search');
         $fc = FournisseurClient::with(['categories.sousCategories', 'utilisateur'])
             ->where('nom_fournisseurClient', 'LIKE', "%{$search}%")
@@ -463,7 +463,7 @@ class FournisseurClientController extends Controller
             $setting->save();
         }
 
-    } else if ($selectedStatus === 'Tiers') {
+    } else if ($selectedStatus === 'Clients') {
         foreach ($fcsGroup as $fcItem) {
             $prospect = new Prospect();
             $prospect->nom_prospect = $fcItem->nom_fournisseurClient;

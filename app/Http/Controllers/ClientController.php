@@ -164,7 +164,7 @@ class ClientController extends Controller
             $client->allCategories = $client->allCategories();
         }
 
-        $select = ['Fournisseur', 'Tiers', 'Fournisseur Client'];
+        $select = ['Fournisseur', 'Clients', 'Fournisseur Client'];
 
         return view('myApp.admin.links.clients', compact('categories', 'clients', 'select', 'perPage'));
     }
@@ -214,7 +214,7 @@ class ClientController extends Controller
 
     public function search(Request $request)
     {
-        $select = ['Fournisseur', 'Tiers', 'Fournisseur Client'];
+        $select = ['Fournisseur', 'Clients', 'Fournisseur Client'];
         $search = $request->input('search');
         $client = Client::with(['categories.sousCategories', 'utilisateur'])
             ->where('tele_client', 'LIKE', "%{$search}%")
@@ -422,7 +422,7 @@ class ClientController extends Controller
                 ]);
             }
             $clientTracking->increment('deletedToday', $tiersChange);
-        } else if ($selectedStatus === 'Tiers') {
+        } else if ($selectedStatus === 'Clients') {
             foreach ($clientsGroup as $clientItem) {
                 $prospect = new Prospect();
                 $prospect->nom_prospect = $clientItem->nom_client;

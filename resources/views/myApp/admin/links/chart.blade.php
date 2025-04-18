@@ -9,7 +9,7 @@
              <div class="col-6 col-lg-3">
                  <div class="app-card app-card-stat shadow-sm h-100">
                      <div class="app-card-body p-3 p-lg-4">
-                         <h4 class="stats-type mb-1">Les Tiers</h4>
+                         <h4 class="stats-type mb-1">Les Clients</h4>
                          <div class="stats-figure">{{ $sumTiers }}</div>
                          <div class="stats-meta text-success">
                              @if ($tiersChange > 0)
@@ -33,7 +33,7 @@
              <div class="col-6 col-lg-3">
                  <div class="app-card app-card-stat shadow-sm h-100">
                      <div class="app-card-body p-3 p-lg-4">
-                         <h4 class="stats-type mb-1">Les Clients</h4>
+                         <h4 class="stats-type mb-1">Les Prosperts</h4>
                          <div class="stats-figure">{{ $sumClients }}</div>
                          <div class="stats-meta text-success">
                              @if ($clientsChange > 0)
