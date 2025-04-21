@@ -15,6 +15,7 @@ use App\Http\Controllers\ProspectController;
 use App\Http\Controllers\HistoriqueJournauxController;
 use App\Http\Controllers\PartiesPrenantesController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\PermissionController;
 use App\Exports\ClientsExport;
 
 use App\Models\Categorie;
@@ -181,3 +182,8 @@ Route::get('/export/allcategories', [ExportController::class, 'exportAllDataCate
 Route::get('/export/sous-categories', [ExportController::class, 'exportSousCategoriesExcel'])->name('export.sous-categories');
 Route::get('/export/fournisseurs', [ExportController::class, 'exportfournisseurs'])->name('export.fournisseurs');
 Route::get('/export/fournisseurClients', [ExportController::class, 'exportfournisseurClients'])->name('export.fournisseurClients');
+
+Route::prefix('admin/permissions')->middleware(['auth'])->group(function () {
+    Route::get('/{user}/edit', [PermissionController::class, 'edit'])->name('admin.permissions.edit');
+    Route::put('/{user}', [PermissionController::class, 'update'])->name('admin.permissions.update');
+});
