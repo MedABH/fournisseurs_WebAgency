@@ -177,7 +177,10 @@
                                                         <td class="cell2">{{ $user->contact }}</td>
                                                         <td class="cell2">{{ $user->adresse }}</td>
                                                         <td class="cell2">{{ $user->role }}</td>
-                                                        <td><button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
+                                                        <td><a href="{{ route('admin.permissions.edit', $user->id) }}" class="btn btn-outline-warning border-btn me-4">
+                                                            <i class="bi bi-shield-lock"></i> Gérer permissions
+                                                        </a>
+                                                            <button type="button" class="btn btn-outline-primary border-btn me-4" data-bs-toggle="modal"
                                                                 data-bs-target="#updateUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}"
                                                                 data-email="{{ $user->email }}" data-contact="{{ $user->contact }}" data-adresse="{{ $user->adresse }}"
                                                                 data-role="{{ $user->role }}">Modifier</button>
