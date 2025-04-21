@@ -169,6 +169,10 @@ class ProspectController extends Controller
 
     public function index(Request $request)
     {
+        if (!auth()->user()->permission || !auth()->user()->permission->can_see_prospects) {
+            return view('errors.permission_denied');
+        }
+        
 
         $perPage = $request->get('per_page', 10);
         $prospects = Prospect::with('categories', 'categorieProspects.categorie', 'utilisateur')->paginate($perPage);
