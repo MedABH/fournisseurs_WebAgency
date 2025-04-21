@@ -184,7 +184,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        
+
         ActivityLogController::logActivity("Suppression", "Compte",  " A supprimé " . $user->name);
         return redirect()->to(url()->previous());
     }
@@ -258,7 +258,7 @@ class UserController extends Controller
     // Afficher une alerte de succès
     alert()->success('Succès', $user->name . " a été mis à jour avec succès");
 
-    
+
     ActivityLogController::logActivity("Modification", "Compte",  " A modifié " . $user->name);
     // Rediriger vers la page précédente
     return redirect()->to(url()->previous());
