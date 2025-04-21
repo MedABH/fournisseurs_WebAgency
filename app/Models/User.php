@@ -60,6 +60,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Historique::class);
     }
+    public function permission()
+{
+    return $this->hasOne(Permission::class);
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *
