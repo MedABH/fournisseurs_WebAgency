@@ -163,6 +163,10 @@ class FournisseurClientController extends Controller
     }
     public function index(Request $request)
     {
+        if (!auth()->user()->permission || !auth()->user()->permission->can_see_fournisseurs_clients) {
+            return view('errors.permission_denied');
+        }
+        
         $perPage = $request->get('per_page', 10);
         $fournisseurClients = FournisseurClient::with('categories', 'categorieClientFournisseurs.categorie', 'utilisateur')->paginate($perPage);
         $categories = Categorie::with('sousCategories')->get();

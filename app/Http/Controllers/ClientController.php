@@ -154,6 +154,10 @@ class ClientController extends Controller
     public function index(Request $request)
     {
 
+        if (!auth()->user()->permission || !auth()->user()->permission->can_see_clients) {
+            return view('errors.permission_denied');
+        }
+        
         $perPage = $request->get('per_page', 10);
         $clients = Client::with('categories', 'categorieClients.categorie', 'utilisateur')->paginate($perPage);
 

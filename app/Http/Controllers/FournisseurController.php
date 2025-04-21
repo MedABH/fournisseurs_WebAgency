@@ -100,6 +100,10 @@ class FournisseurController extends Controller
 
     public function index(Request $request)
     {
+        if (!auth()->user()->permission || !auth()->user()->permission->can_see_fournisseurs) {
+            return view('errors.permission_denied');
+        }
+        
 
         $perPage = $request->get('per_page', 10);
         $fournisseurs = Fournisseur::with('categories', 'categorieFournisseur.categorie', 'utilisateur')->paginate($perPage);
