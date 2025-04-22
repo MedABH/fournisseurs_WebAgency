@@ -10,8 +10,8 @@
 </nav>
     <div class="container mt-5">
         <div class="alert alert-warning text-center">
-            <h4 class="alert-heading">Accès refusé</h4>
-            <p>Vous n'avez pas la permission d'accéder à cette section. Veuillez contacter l'administrateur.</p>
+            <h4 class="alert-heading" style="font-size: 50px">Accès refusé</h4>
+            <p style="font-size: 20px">Vous n'avez pas la permission d'accéder à cette section. Veuillez contacter l'administrateur.</p>
         </div>
     </div>
 @endsection
