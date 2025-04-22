@@ -79,7 +79,7 @@ class ClientController extends Controller
         $categorie = Categorie::find($request->categorie_id);
         $categorie->clients()->attach($client->id);
 
-        ActivityLogController::logActivity("Ajout", "Client","L'utilisateur a ajouté " . $client->nom_client);
+        ActivityLogController::logActivity("Ajout", "Prosperts","a ajouté " . $client->nom_client);
         // Track the added client
         $setting = Setting::where('key', 'clientsTracking')->first();
         if ($setting) {
@@ -108,7 +108,7 @@ class ClientController extends Controller
         }
 
         
-        ActivityLogController::logActivity("Contacté par", "Client","L'utilisateur a modifié qui contacté  " . $client->nom_client);
+        ActivityLogController::logActivity("Contacté par", "Prosperts","A modifié qui contacté  " . $client->nom_client);
 
 
         return redirect()->back();
@@ -148,7 +148,7 @@ class ClientController extends Controller
             $c->save();
         }
 
-        ActivityLogController::logActivity("Remarque", "Client","L'utilisateur a ajouté une remarque a  " . $client->nom_client);
+        ActivityLogController::logActivity("Remarque", "Prosperts","A ajouté une remarque a  " . $client->nom_client);
         return redirect()->back();
     }
     public function index(Request $request)
@@ -210,7 +210,7 @@ class ClientController extends Controller
                 $setting->increment('deletedToday');
             }
         }
-        ActivityLogController::logActivity("Suppression", "Client","A supprimé " . $client->nom_client);
+        ActivityLogController::logActivity("Suppression", "Prosperts","A supprimé " . $client->nom_client);
         return redirect()->to(url()->previous());
     }
 
@@ -348,7 +348,7 @@ class ClientController extends Controller
                 alert()->success('Succès', 'Le client a été mis à jour avec succès.');
             }
         }
-        ActivityLogController::logActivity("Modification", "Client", "A modifié " . $client->nom_client);
+        ActivityLogController::logActivity("Modification", "Prosperts", "A modifié " . $client->nom_client);
 
         return redirect()->back();
     }
@@ -529,7 +529,7 @@ class ClientController extends Controller
             }
             $clientTracking->increment('deletedToday', $tiersChange);
         }
-        ActivityLogController::logActivity("Transfert", "Client","L'utilisateur a transferé " . $tiersChange . " Client à " . $selectedStatus);
+        ActivityLogController::logActivity("Transfert", "Prosperts","A transferé " . $tiersChange . " Client à " . $selectedStatus);
 
         return redirect()->to(url()->previous());
     }
