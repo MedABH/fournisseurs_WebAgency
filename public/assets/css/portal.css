@@ -14683,6 +14683,7 @@ button.close:focus {
     border-color: #e7e9ed;
     color: #000;
     vertical-align: middle;
+    text-align: left;
     font-size: 1rem;
 }
 
