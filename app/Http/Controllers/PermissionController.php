@@ -38,6 +38,8 @@ class PermissionController extends Controller
             'can_see_fournisseurs' => false,
             'can_see_fournisseurs_clients' => false,
         ];
+
+        
     
         // Mettre à jour les valeurs en fonction des permissions envoyées (cochees = true)
         foreach ($permissionsData as $key => $value) {
@@ -56,6 +58,11 @@ class PermissionController extends Controller
             // Sinon, on crée une nouvelle ligne de permissions pour l'utilisateur
             $user->permission()->create($data);
         }
+        ActivityLogController::logActivity(
+            "Permission",
+            "Compte",
+            auth()->user()->name . " A mis à jour les permissions de " . $user->name
+        );
     
         // Retourner à la page précédente avec un message de succès
         return redirect()->back()->with('success', 'Permissions mises à jour avec succès.');
